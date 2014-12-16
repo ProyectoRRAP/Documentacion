@@ -12,11 +12,11 @@ Routers Reconfigurables de Altas Prestaciones (RRAP) es un proyecto de grado de 
 
 Si lo que te interesa es conocer un poco más acerca de que es RRAP, quienes formamos parte de este equipo, que hacemos y cuales son nuestros proyectos te recomendamos que le heches una leída a nuestra wiki
 
-[RRAP Wiki](https://github.com/efviodo/RRAP/wiki)
+[RRAP Wiki](https://github.com/ProyectoRRAP/Documentacion/wiki)
 
 Si estas buscando familiarizarte con los conceptos de SDN, OpenFlow, NetFPGA, Ryu, OpenDaylight, OpenVSwitch te invitamos a que visisites nuestra wiki de conceptos y tecnologías
 
-[Como empezar con SDN OpenFlow y NetFPGA](https://github.com/efviodo/RRAP/wiki/Como-empezar-con-SDN-OpenFlow-y-NetFPGA)
+[Como empezar con SDN OpenFlow y NetFPGA](https://github.com/ProyectoRRAP/Documentacion/wiki/Como-empezar-con-SDN-OpenFlow-y-NetFPGA)
 
 Por otro lado si lo que estas buscando son los desarrollos de RRAP, te invitamos a que visites nuestro repositorio de código fuente en
 
