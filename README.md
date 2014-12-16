@@ -20,7 +20,7 @@ Si estas buscando familiarizarte con los conceptos de SDN, OpenFlow, NetFPGA, Ry
 
 Por otro lado si lo que estas buscando son los desarrollos de RRAP, te invitamos a que visites nuestro repositorio de código fuente en
 
-[RRAP Código Fuente](https://github.com/efviodo/RRAP/wiki/Como-empezar-con-SDN-OpenFlow-y-NetFPGA)
+[RRAP Código Fuente](https://github.com/ProyectoRRAP/LiveCode)
 
 Esperamos que encuentres útil la información y desarrollos que hemos puestos a vuestra disposición mediante esta página. 
 
