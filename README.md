@@ -25,3 +25,5 @@ Por otro lado si lo que estas buscando son los desarrollos de RRAP, te invitamos
 Esperamos que encuentres útil la información y desarrollos que hemos puestos a vuestra disposición mediante esta página. 
 
 Cualquier sugerencia o comentario será más que bienvenido!
+
+--- El equipo de RRAP ---
