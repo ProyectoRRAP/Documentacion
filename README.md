@@ -3,7 +3,7 @@ RRAP
 
 Bienvenido al sitio de RRAP!
 
-Aquí encontraras información relacionada al proyecro RRAP, ¿que es?, ¿que hacemos?, ¿quienes somos?, así como una wiki elaborada a partir de nuestra experiencia con información acerca de SDN, OpenFlow, NetFPGA, OpenVSwitch, entre otros conceptos y tecnologías, y el repositorio de código fuente de RRAP.
+Aquí encontraras información relacionada al proyecro RRAP, ¿que es?, ¿que hacemos?, ¿quienes somos?, así como una wiki elaborada a partir de nuestra experiencia con información acerca de SDN, OpenFlow, NetFPGA, OpenVSwitch, entre otros conceptos y tecnologías. También encontrarás aquí el repositorio de código fuente de RRAP.
 
 #### Entonces que es RRAP?
 
@@ -24,6 +24,6 @@ Por otro lado si lo que estas buscando son los desarrollos de RRAP, te invitamos
 
 Esperamos que encuentres útil la información y desarrollos que hemos puestos a vuestra disposición mediante esta página. 
 
-Cualquier sugerencia o comentario será más que bienvenido!
+Cualquier sugerencia o comentario será más que bienvenida!
 
 --- El equipo de RRAP ---
