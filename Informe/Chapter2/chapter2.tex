@@ -1,0 +1,53 @@
+%*******************************************************************************
+%****************************** Second Chapter *********************************
+%*******************************************************************************
+
+\chapter{An\'alisis del problema}
+
+\ifpdf
+    \graphicspath{{Chapter2/Figs/Raster/}{Chapter2/Figs/PDF/}{Chapter2/Figs/}}
+\else
+    \graphicspath{{Chapter2/Figs/Vector/}{Chapter2/Figs/}}
+\fi
+
+
+\section[Short title]{Motivaci\'on}
+
+\section[Short title]{Definici\'on del problema}
+
+\subsection[Short title]{Enunciado}
+
+La problem\'atica identificada como motivaci\'on para el desarrollo de este trabajo es la siguiente:
+
+\begin{quote}
+\textit{Implementar un prototipo para la nueva Red Académica Uruguaya (RAU2) de
+Altas Prestaciones, en cuanto a cobertura, velocidad, capacidad y programa-
+bilidad. Explorando la idea de Software Defined Networking (Redes Defeanidas
+por Software -SDN), y basándose en routers construidos en base a PCs con
+placas de red aceleradas en hardware recongurable, fruto un desarrollo de
+la universidad de Stanford denominado NetFPGA (Field Programmable Ga-
+te Arrays). Se debe además elaborar una prueba de concepto consistente en
+unos pocos nodos con enlaces ópticos sobre la que se ejecutará un conjun-
+to exhaustivo de pruebas que permitan validar la idea de implantación de la
+RAU2}
+\end{quote}
+
+Adicionalmente el desarrollo del prototipo se encuentra condicionado a una serie de requerimientos que explicamos en la siguiente secci\'on.
+
+\subsection[Short title]{Requerimientos}
+
+\begin{enumerate}
+\item \textbf{Clasificación de tráfico:} Una de las necesidades y objetivos de la futura actualizaci\'on de la RAU, es la facilidad para clasificar tráfico. Alineado con las actuales necesidades, en particular se precisa al menos diferenciar las siguientes 3 categorías: (a)público, (b)académico y (c)servicios de contenido.
+
+\item \textbf{Grandes volúmenes de datos (BIG Data):} En la RAU intervienen instituciones como el Instituto Pasteur, Centro Uruguayo de Imagenología Molecular (CUDIM) entre otros; en donde la generación e intercambio de grandes volúmenes de datos como los son los exámenes PET del Pasteur o una secuenciación de ADN del CUDIM entre otros.
+
+\item \textbf{Escalabilidad:} Se espera alcanzar en un mediano plazo a un total de 11.000 Docentes, 7.000 Funcionarios y 140.000 Estudiantes; por lo que el prototipo para la nueva RAU2 debe ser escalable en la cantidad de usuarios de la infraestructura.
+
+\item \textbf{Red de entrega de contenidos (Content Delivery Network):} Resulta sumamente útil tomar un enfoque de red de entrega de contenidos para el diseño de la red académica. Las organizaciones partícipes de la misma tienen y generan grandes volúmenes de información de gran interés por parte de otras organizaciones de la RAU. Una red de distribución de contenidos garantiza un mejor acceso en tiempo real a dicha información por parte de múltiples organizaciones en simultáneo. 
+ 
+\end{enumerate}
+
+\section[Short title]{¿Porque utilizar SDN?}
+
+\section[Short title]{¿Porque utilizar NetFPGA}
+
