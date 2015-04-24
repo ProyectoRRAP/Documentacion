@@ -7,7 +7,7 @@
     \graphicspath{{Chapter3/Figs/Vector/}{Chapter3/Figs/}}
 \fi
 
-En este cap\'itulo se exponen las principales caracter\'isticas relacionadas al dise\~no de la soluci\'on alcanzada, as\'i como la f. A su vez se exponen, de los problemas y decisiones de dise\~no encontrados aquellos que a nuestro entender resultan m\'as interesantes de mencionar en este cap\'itulo. 
+En este cap\'itulo se exponen las principales caracter\'isticas relacionadas al dise\~no de la soluci\'on alcanzada. A su vez se exponen, de los problemas y decisiones de dise\~no encontrados aquellos que a nuestro entender resultan m\'as interesantes de mencionar en este cap\'itulo. 
  
 \section[Enfoque utilizado]{Enfoque utilizado}
 
@@ -37,27 +37,77 @@ Por ello, la versi\'on m\'as b\'asica de OpenFlow que da soporte a las restricci
 
 M\'as adelante veremos en la siguiente secci\'on, que esta destinada a la programaci\'on de la placa NetFPGA, que es de inter\'es trabajar con la versi\'on de OpenFlow m\'as sencilla y minimalista que soprte todas las funcionalidades y restricciones impuestas sobre el protot\'ipo. Entonces la versi\'on de OpenFlow a utilizar es la 1.3.
 
-\section[Alternativas de dise\~nio para el router]{Alternativas de dise\~nio para el router}
+\section[Alternativas de dise\~no para el router]{Alternativas de dise\~no para el router}
 
-Otra conclusi\'on relevante que se desprende del estudio del estado del arte en las tarjetas NetFPGA, es la existencia de una gran variedad de proyectos open source accesibles sin costo a trav\'es del repositorio de software de NetFPGA. Dentro de este conjunto de proyectos se encuentran en particular, un proyecto para programar la tarjeta para que se comporte como un switch OpenFlow, un proyecto para programar la tarjeta para que se comporte como una tarjeta de red de un PC convencional, entre otros.\\
+Como se menciona anteriormente en este informe, una de las premisas para la elaboraci\'on del router open source es la utilizaci\'on del hardware NetFPGA. A su vez, partiendo de este hardware es necesario llegar a un dispositivo o switch compatible con OpenFlow.\\ 
+
+Existen dos estrategias bien definidas para la construcci\'on un switch OpenFlow, partiendo del hardware mencionado, y utilizando los diferentes proyectos disponibles para la programaci\'on del mismo. Una de ellas es programar el hardware para que se comporte como un switch compatible con el protocolo OpenFlow. La otra alternativa es programar el hardware para que se comporte como una tarjeta de red estandar, e implementar todo el comportamiento de un switch OpenFlow en software.\\
+
+Para la primer estrat\'egia se cuenta con un proyecto desarrollado previamente para la plataforma NetFPGA, y disponible libremente en el repositorio de software de dicho producto. No obstante este proyecto presenta una dificultad y es que a pesar de haber sido dise\~ado para soportar en un futuro cualquier versi\'on disponible del protocolo OpenFlow, en su veri\'on actual solamente soporta un conjunto reducido de funcionalidades de la versi\'on 1.0 de este protocolo. \\
+Como se mencion\'o anteriormente la versi\'on m\'as b\'asica de este protocolo que permite soportar el conjunto de funcionalidades relevadas como requerimientos para este proyecto es la versi\'on 1.3. Esto conlleva a la ncesidad de extender el proyecto existente, para soprtar las nuevas caracter\'isticas incorporadas en las sucesivas versiones posteriores a la 1.0; o al menos aquellas que son escenciales para soportar las caracter\'isticas pretendidas sobre el prototipo.\\
+
+Para la segunda estrat\'egia se cuenta con un proyecto tambi\'en desarrollado previamente para la plataforma NetFPGA, llamado ReferenceNIC. Este proyecto habilita a programar el hardware para que se comporte como una placa de red estandar. Adicionalmente se debe incluir o desarrollar herramientas que permitan implementar por software el comportamiento de un switch OpenFlow. En particular sobre este \'ultimo punto vale la pena destacar la existencia de Open vSwitch, herramienta que entre otras caracter\'isticas realiza esto mismo, utilizando hardware tradicional como una placa de red estandar.
+
+Contextualizando ambas alternativas en el marco de la realizaci\'on de este proyecto de fin de carrera, ambas alternativas presentan sus ventajas y desventajas; no siendo ninguna de ellas a priori mejor que la otra. Por ello a continuaci\'on se exponen comparativamente las principales ventajas y desventajas de cada alternativa, a modo de sustentar la elecci\'on de una ellas. 
+
+\newpage
+%%% Tabla Ventajas y Desventajas de ambas alternativas
+\begin{table}[!Ht]\centering\small
+\begin{tabularx}{\textwidth}{|>{\setlength\hsize{1.0\hsize}\setlength\linewidth{\hsize}}X|>{\setlength\hsize{1.0\hsize}\setlength\linewidth{\hsize}}X|}
+\hline
+\multicolumn{2}{|c|}{Ventajas}\\ \hline 
+\hline
+Extender proyecto OpenFlow NetFPGA & ReferenceNIC + Open vSwitch\\
+\hline
+\begin{itemize}
+\item \'Optimo aprovechamiento de la capacidad de c\'omputo y procesamiento del hardware disponible.
+\item Mayor posibilidad de lograr velocidades de procesamiento competitivas con productos comerciales similares.
+\item Mayor posibilidad de obtener resultados aceptables, en performance y rendimiento para puesta en producción.
+
+\end{itemize}
+&
+\begin{itemize}
+\item No se tiene la necesidad de modificar o desarrollar software en el lenguaje y en el entorno de programaci\'on de la tarjeta NetFPGA.
+
+\item Evitar desarrollar software para la NetFPGA ahorra tiempo de proyecto que se puede invertir en otras l\'ineas de trabajo, igualmente importantes. 
+
+\item Programar el harware NetFPGA con proyectos precompilados como el ReferenceNIC requiere \'unicamente de licencias de software que son accesibles sin costo ya sea mediante licencias gratuitas o de prueba.
+\end{itemize}
+\\
+\hline
+\end{tabularx}
+\end{table}
+
+\begin{table}[!HT]\centering\small
+\begin{tabularx}{\textwidth}{|>{\setlength\hsize{1.0\hsize}\setlength\linewidth{\hsize}}X|>{\setlength\hsize{1.0\hsize}\setlength\linewidth{\hsize}}X|}
+\hline
+\multicolumn{2}{|c|}{Desventajas}\\ \hline
+\hline
+Extender proyecto OpenFlow NetFPGA & ReferenceNIC + Open vSwitch\\
+\hline
+\begin{itemize}
+
+\item Extender el proyecto existente, en si mismo constituye un empresa del porte de un proyecto de fin de carrera
+\item El conocimiento técnico necesario se perfila m\'as al de un Ingeniero Eléctrico que al de un Ingeniero en Computación, lo cual constituye un riesgo del proyecto.
+\item Desarrollar software para el hardware NetFPGA y compilarlo requiere de licencias de software costosas.
+\end{itemize}
+
+&
+
+\begin{itemize}
+\item No se aprovecha de forma óptima las capacidades de procesamiento del hardware disponible. En otras palabras se tiene hardwre ``caro'' y potente en forma ociosa.
+\item Los resultados obtenidos en relaci\'on al rendimiento del prototipo, muy probablemente no sean los esperados para una equipo de producción.
+\end{itemize}
+\\
+\hline
+\end{tabularx}
+\end{table}
 
 
+%%%%%%%%%% 
 
-Otra conclusión importante, fruto del estudio del estado del arte es la existencia de
-proyectos para programar las placas NetFPGA, el nivel de dicultad para programar
-las placas con los mismos, y el estado de desarrollo de estos; que hacen realmente y
-que no hacen.
-Dada la respuesta a la pregunta anterior surge la necesidad de implementar un
-switch OpenFlow. Decidimos implementar una arquitectura OpenFlow basada en
-SDN, y por tanto nuestros dispositivos de la capa de Infraestructura deben ser Open-
-Flow compatibles, o dicho de otro modo switches OpenFlow. Esto en el contexto de
-nuestro proyecto signica que debemos hacer que las placas NetFPGA se conviertan
-en un switch OpenFlow, o utilizar a las mismas como una componente más en la
-construcción de un switch OpenFlow.
-
-Aca hablamos en que existen muchos proyectos para programar las placas, y que uno de ellos es el openflow.
-necesitamos tener dispositivos de openflow asi que queremos que la programacion de la placa responda a esto.
-
+\newpage
+\clearpage
 
 \section[Alternativas de dise\~nio]{Plano de Control centralizado vs distribu\'ido}
 
