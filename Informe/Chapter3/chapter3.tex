@@ -161,128 +161,62 @@ De esta forma, el prototipo para la nueva versi\'on de la red acad\'emica, se co
 
 \section[RAUFlow]{RAUFlow}
 
-\subsubsection{First subsub section in the third subsection}
-\dots and some more in the first subsub section otherwise it all looks the same
-doesn't it? well we can add some text to it and some more and some more and
-some more and some more and some more and some more and some more \dots
+En las secciones anteriores se ha explicado en detalle las caracter\'isticas m\'as importantes del prototipo para la nueva red acad\'emica, as\'i como las principales componentes del router open source y del controlador. No obstante, esta pendiente explicar en detalle el dise\~no de la aplicaci\'on que se di\'o a llamar RauFlow. Por ello en la siguiente secci\'on se propone un an\'alisis de dicha componente, siguiendo un proceso tradicional de Ingenier\'ia de Software, para el an\'alisis y dise\~no del mismo. La presente secci\'on consta de un apartado para el an\'alisis de los requerimientos relevados, un apartado para el relevamiento de los principales casos de uso, otro apartado donde se explica el modelo de datos alcanzado, y finalmente una apartado donde se explica en detalle la arquitectura de la aplicaci\'on.  
 
-\subsubsection{Second subsub section in the third subsection}
-\dots and some more in the first subsub section otherwise it all looks the same
-doesn't it? well we can add some text to it \dots
+\subsection[An\'alisi de requerimientos]{An\'alisis de requerimientos}
 
-\section{Second section of the third chapter}
-and here I write more \dots
+Anteriormente se han descrito los requerimientos relevados sobre el prototipo pretendido por este trabajo. De ellos y de un trabajo de an\'alisis sobre la realidad modelada, se desprende la siguiente tabla de requerimientos.
 
-\section{The layout of formal tables}
-This section has been modified from ``Publication quality tables in \LaTeX*''
- by Simon Fear.
-
-The layout of a table has been established over centuries of experience and 
-should only be altered in extraordinary circumstances. 
-
-When formatting a table, remember two simple guidelines at all times:
-
-\begin{enumerate}
-  \item Never, ever use vertical rules (lines).
-  \item Never use double rules.
-\end{enumerate}
-
-These guidelines may seem extreme but I have
-never found a good argument in favour of breaking them. For
-example, if you feel that the information in the left half of
-a table is so different from that on the right that it needs
-to be separated by a vertical line, then you should use two
-tables instead. Not everyone follows the second guideline:
-
-There are three further guidelines worth mentioning here as they
-are generally not known outside the circle of professional
-typesetters and subeditors:
-
-\begin{enumerate}\setcounter{enumi}{2}
-  \item Put the units in the column heading (not in the body of
-          the table).
-  \item Always precede a decimal point by a digit; thus 0.1
-      {\em not} just .1.
-  \item Do not use `ditto' signs or any other such convention to
-      repeat a previous value. In many circumstances a blank
-      will serve just as well. If it won't, then repeat the value.
-\end{enumerate}
-
-A frequently seen mistake is to use `\textbackslash begin\{center\}' \dots `\textbackslash end\{center\}' inside a figure or table environment. This center environment can cause additional vertical space. If you want to avoid that just use `\textbackslash centering'
-
-
-\begin{table}
-\caption{A badly formatted table}
-\centering
-\label{table:bad_table}
-\begin{tabular}{|l|c|c|c|c|}
-\hline 
-& \multicolumn{2}{c}{Species I} & \multicolumn{2}{c|}{Species II} \\ 
+\clearpage
+\begin{table}[Htl]\centering
+\begin{tabularx}{\textwidth}{|>{\setlength\hsize{1.0\hsize}\setlength\linewidth{\hsize}}X|}
 \hline
-Dental measurement  & mean & SD  & mean & SD  \\ \hline 
+Requerimientos Funcionales\\ \hline
 \hline
-I1MD & 6.23 & 0.91 & 5.2  & 0.7  \\
-\hline 
-I1LL & 7.48 & 0.56 & 8.7  & 0.71 \\
-\hline 
-I2MD & 3.99 & 0.63 & 4.22 & 0.54 \\
-\hline 
-I2LL & 6.81 & 0.02 & 6.66 & 0.01 \\
-\hline 
-CMD & 13.47 & 0.09 & 10.55 & 0.05 \\
-\hline 
-CBL & 11.88 & 0.05 & 13.11 & 0.04\\ 
-\hline 
-\end{tabular}
+\begin{itemize}
+\item El Sistema debe de proveer la facilidad para obtener la informaci\'on asociada a cada nodo de la red, permitiendo a su vez agregar informaci\'on que facilite la identificaci\'on del mismo para un usuario.
+\item El Sistema debe proveer la facilidad para agregar, modificar y eliminar redes virtuales. En particular al trabajar con redes virtuales se debe soportar el manejo de datos como la numeraci\'on IP del tr\'afico asociado a una red virtual, informaci\'on de capa de transporte, entre otros.
+\item El Sistema debe proveer la facilidad para obtener toda la informaci\'on relevante de una red virtual.
+\item El Sistema debe permitir visualizar de alguna forma los caminos existentes para el tr\'afico de una red virtual en particular, a trav\'es de la red del protot\'ipo.
+\item El Sistema debe proveer la facilidad para visualizar el estado de las tablas de flujos asociadas a cualquier nodo de la red del protot\'ipo.
+\end{itemize}\\
+\hline
+\end{tabularx}
 \end{table}
 
-\begin{table}
-\caption{A nice looking table}
-\centering
-\label{table:nice_table}
-\begin{tabular}{l c c c c}
-\hline 
-\multirow{2}{*}{Dental measurement} & \multicolumn{2}{c}{Species I} & \multicolumn{2}{c}{Species II} \\ 
-\cline{2-5}
-  & mean & SD  & mean & SD  \\ 
+\begin{table}[Htl]\centering
+\begin{tabularx}{\textwidth}{|>{\setlength\hsize{1.0\hsize}\setlength\linewidth{\hsize}}X|}
 \hline
-I1MD & 6.23 & 0.91 & 5.2  & 0.7  \\
-
-I1LL & 7.48 & 0.56 & 8.7  & 0.71 \\
-
-I2MD & 3.99 & 0.63 & 4.22 & 0.54 \\
-
-I2LL & 6.81 & 0.02 & 6.66 & 0.01 \\
-
-CMD & 13.47 & 0.09 & 10.55 & 0.05 \\
-
-CBL & 11.88 & 0.05 & 13.11 & 0.04\\ 
-\hline 
-\end{tabular}
+Requerimientos no Funcionales\\ \hline
+\hline
+\begin{itemize}
+\item Se debe utilizar siempre que sea posible herramientas de software libre y c\'odigo abierto.
+\end{itemize}\\
+\hline
+\end{tabularx}
 \end{table}
 
+Teniendo en cuenta la anterior tabla de requerimientos, se realiza un relevamiento de los posibles casos de uso; llegando a un conjunto de casos de uso esenciales, los cuales se presentan en el siguiente apartado.
 
-\begin{table}
-\caption{Even better looking table using booktabs}
-\centering
-\label{table:good_table}
-\begin{tabular}{l c c c c}
-\toprule
-\multirow{2}{*}{Dental measurement} & \multicolumn{2}{c}{Species I} & \multicolumn{2}{c}{Species II} \\ 
-\cmidrule{2-5}
-  & mean & SD  & mean & SD  \\ 
-\midrule
-I1MD & 6.23 & 0.91 & 5.2  & 0.7  \\
+\subsection[Modelo de datos]{Modelo de datos}
 
-I1LL & 7.48 & 0.56 & 8.7  & 0.71 \\
+\subsection[Relevamiento de casos de uso]{Relevamiento de casos de uso}
 
-I2MD & 3.99 & 0.63 & 4.22 & 0.54 \\
+Como se menciono anteriormente se realizo un relevamiento de casos de uso inicial, del cual se desprende la lista de casos de uso que se presenta a continuaci\'on. No obstante antes de dedicarse a hablar de la misma, vale la pena resaltar que dada la complejidad de la realidad modelada, asi como la enorme existencia de una gran cantidad de funcionalidades potenciales, se debio optar por resolver en este trabajo solamente el conjunto de funcionalidades b\'asicas que permitan explorar la potencialidad de la aplicaci\'on del enfoque de SDN en la nueva versi\'on de la red acad\'emica. Sin m\'as preambulos la lista de casos de uso relevados es la siguiente:
 
-I2LL & 6.81 & 0.02 & 6.66 & 0.01 \\
+\begin{itemize}
+\item listar servicios
+\item agregar servicio
+\item modificar servicio
+\item eliminar servicio
+\item ver topolog\'ia
+\item ver informaci\'on b\'asica nodo
+\item ver tabla de flujos nodo
+\item filtrar lsps
+\item editar informaci\'on extra nodo
+\item editar informaci\'on extra interfaz
+\end{itemize}
 
-CMD & 13.47 & 0.09 & 10.55 & 0.05 \\
 
-CBL & 11.88 & 0.05 & 13.11 & 0.04\\ 
-\bottomrule
-\end{tabular}
-\end{table}
+\subsection[Arquitectura de RauFlow]{Arquitectura de RauFlow}
+
