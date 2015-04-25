@@ -112,11 +112,52 @@ Optando por la segunda estrat\'egia presentada se logra obtener de forma tempran
 
 \section[Alternativas de dise\~nio]{Plano de Control centralizado vs distribu\'ido}
 
-\section[Dise\~o general del prototipo]{Dise\~o general del prototipo}
+\section[Dise\~no general del prototipo]{Dise\~no general del prototipo}
 
-En esta secci\'on se presenta a modo de resumen de las anteriores secciones, el dise\~o general que adopta la soluci\'on, cuando se asumen las decisiones presentadas anteriormente.
+En esta secci\'on se presenta a modo de resumen de las anteriores secciones, la estructura general que adopta la soluci\'on planteada, al asumir todas las decisiones de dise\~no discutidas anteriormente.\\
 
-En la imagen [ref a la imagen] se puede apreciar las diferentes componentes que constituyen al proptotipo; tanto las que forman parte del router open source como las que no.
+Comenzando con la estructura del router open source, en ~\ref{fig:OpenSourceRArch} puede apreciarse las principales componentes que lo constituyen; tanto a nivel de hardware como de software.\\
+Enfocandos\'e en las componentes del hardware, el router se compone de una PC de escritorio convencional, y una tarjeta NetFPGA, programada con el proyecto Reference NIC. Por detalles en particular respecto de la arquitectura de dicha PC por favor referirse al siguiente anexo [link al anexo].\\  
+Por otro lado en relaci\'on a las componentes de software, el router se compone de un Sistema Operativo estandar, con las instalaciones de Open vSwitch, Quagga y el agente de gesti\'on SNMP. Nuevamente por mayores detalles acerca de las versiones de software utilizadas, sistema operativo entre otros detalles referirse al siguiente anexo [link al anexo].\\
+
+\newpage
+\begin{figure}[htbp!] 
+\centering    
+\includegraphics[width=0.7\textwidth]{Arch_Figure1}
+\caption[OpenSourceRArch]{Diagrama de componentes del router open source}
+\label{fig:OpenSourceRArch}
+\end{figure}
+
+Luego como puede verse en la imagen ~\ref{fig:OpenSourceRArch2}, el router open source es programado por la entidad Controlador, mediante el protocolo de comunicaci\'on OpenFlow.
+
+
+\begin{figure}[htbp!] 
+\centering    
+\includegraphics[width=0.7\textwidth]{Arch_Figure2}
+\caption[OpenSourceRArch2]{Interacci\'on entre Router y Controlador}
+\label{fig:OpenSourceRArch2}
+\end{figure}
+
+\newpage
+Por otro lado enfoc\'andose en la estructura de la entidad que se dio a conocer como Controlador, vale la pena destacar solamente aquellas componentes de software; puesto que en relaci\'on al hardware, el mismo esta basado en una PC estandar. En la imagen ~\ref{fig:OpenSourceRArch3} se aprecian los componentes que constituyen al controlador.\\
+
+Al igual que el router open source, el controlador consta de un Sistema Operativo sobre el cual posteriormente se instalan las diferentes componentes de software utilizadas. En particular el controlador se compone de un software de ruteo Quagga, un modulo encargado de sincronizar la infirmaci\'on topl\'ogica, un gerente SNMP, y finalmente el softwrare de control Ryu, sobre el cual se ejecuta el programa RauFlow encargado de implementar el plano de control de la red.
+
+\begin{figure}[htbp!] 
+\centering    
+\includegraphics[width=0.6\textwidth]{Arch_Figure3}
+\caption[OpenSourceRArch3]{Diagrama de componentes del Controlador}
+\label{fig:OpenSourceRArch3}
+\end{figure}
+
+De esta forma, el prototipo para la nueva versi\'on de la red acad\'emica, se compone principalmente de varios nodos construidos en base al router open source, y un controlador. Como se puede observar en la imagen \ref{fig:OpenSourceRArch4} los nodos se comunican con el controlador mediante el protocolo OpenFlow como se explico con anterioridad, habilitando de esta forma a que el plano de datos sea programado por el plano de control. Por otro lado las diferentes instancias de Quagga distribu\'idas en cada nodo de la red y en el controlador, se comunican mediante el canal IP pcon el objetivo de aprender la topolog\'ia y diseminar informaci\'on de ruteo. Finalmente el gerente SNMP interactua con los diferentes agentes SNMP localizados en cada nodo mediante un canal IP, para obtener infirmaci\'on adicional acerca de cada nodo. 
+
+\begin{figure}[htbp!] 
+\centering    
+\includegraphics[width=0.9\textwidth]{Arch_Figure4}
+\caption[OpenSourceRArch4]{Vista l\'ogica del prototipo}
+\label{fig:OpenSourceRArch4}
+\end{figure}
 
 \section[RAUFlow]{RAUFlow}
 
