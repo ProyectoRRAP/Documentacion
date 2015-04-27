@@ -200,23 +200,42 @@ Teniendo en cuenta la anterior tabla de requerimientos, se realiza un relevamien
 
 \subsection[Modelo de datos]{Modelo de datos}
 
+En la figura ~\ref{fig:ModeloDeDominio} se presenta el modelo de dominio realizado a partir de la realidad a modelar. En el mismo se destacan en color amarillo aquellas entidades que se entiende se corresponden al modelado de la topolog\'ia y sus diferentes elementos como lo son los Nodos y sus Interfaces. Por otro lado en rosado se destacan aquellas entidades relacionadas al concepto de MPLS, que se consideran importante; como lo son las tablas FTN, ILM y NHLFE. Finalmente vale la pena destacar el concepto de Servicio, con el cual se decidi\'o representar a las redes virtuales soportadas en el protot\'ipo. Interesa destacar adem\'as del concepto de Servicio, que es una redefinici\'on desde una visi\'on centralizada del concepto FEC en la teor\'ia de MPLS, concepto que en la literatura de MPLS tradicional se esta vinculado a un solo nodo en una red, y no a muchos como se propone en este trabajo.  
+
+\begin{figure}[ht!] 
+\centering    
+\includegraphics[width=0.7\textwidth]{Disenio_Figure1}
+\caption[ModeloDeDominio]{Modelo de Dominio}
+\label{fig:ModeloDeDominio}
+\end{figure}
+
+Sobre este modelo de dominio se trabaj\'o hasta llegar finalmente al diagrama de clase de dise\~no que se presenta a continuaci\'on en la figura [ref].
+
+\newpage
 \subsection[Relevamiento de casos de uso]{Relevamiento de casos de uso}
 
 Como se menciono anteriormente se realizo un relevamiento de casos de uso inicial, del cual se desprende la lista de casos de uso que se presenta a continuaci\'on. No obstante antes de dedicarse a hablar de la misma, vale la pena resaltar que dada la complejidad de la realidad modelada, asi como la enorme existencia de una gran cantidad de funcionalidades potenciales, se debio optar por resolver en este trabajo solamente el conjunto de funcionalidades b\'asicas que permitan explorar la potencialidad de la aplicaci\'on del enfoque de SDN en la nueva versi\'on de la red acad\'emica. Sin m\'as preambulos la lista de casos de uso relevados es la siguiente:
 
 \begin{itemize}
-\item listar servicios
-\item agregar servicio
-\item modificar servicio
-\item eliminar servicio
-\item ver topolog\'ia
-\item ver informaci\'on b\'asica nodo
-\item ver tabla de flujos nodo
-\item filtrar lsps
-\item editar informaci\'on extra nodo
-\item editar informaci\'on extra interfaz
+\item Listar Servicios
+\item Agregar Servicio
+\item Modificar Servicio
+\item Eliminar Servicio
+\item Ver Topolog\'ia
+\item Ver informaci\'on b\'asica Nodo
+\item Ver tabla de Flujos Nodo
+\item Filtrar Lsps
+\item Editar Informaci\'on extra Nodo
+\item Editar Informaci\'on extra Interfaz
 \end{itemize}
 
-
+\newpage
 \subsection[Arquitectura de RauFlow]{Arquitectura de RauFlow}
+
+\begin{figure}[ht!] 
+\centering    
+\includegraphics[width=1.0\textwidth]{Disenio_Figure2}
+\caption[Diagrama de componentes]{Diagrama de componentes}
+\label{fig:ModeloDeDominio}
+\end{figure}
 
