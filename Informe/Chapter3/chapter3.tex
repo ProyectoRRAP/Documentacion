@@ -117,8 +117,8 @@ Optando por la segunda estrat\'egia presentada se logra obtener de forma tempran
 En esta secci\'on se presenta a modo de resumen de las anteriores secciones, la estructura general que adopta la soluci\'on planteada, al asumir todas las decisiones de dise\~no discutidas anteriormente.\\
 
 Comenzando con la estructura del router open source, en ~\ref{fig:OpenSourceRArch} puede apreciarse las principales componentes que lo constituyen; tanto a nivel de hardware como de software.\\
-Enfocandos\'e en las componentes del hardware, el router se compone de una PC de escritorio convencional, y una tarjeta NetFPGA, programada con el proyecto Reference NIC. Por detalles en particular respecto de la arquitectura de dicha PC por favor referirse al siguiente anexo [link al anexo].\\  
-Por otro lado en relaci\'on a las componentes de software, el router se compone de un Sistema Operativo estandar, con las instalaciones de Open vSwitch, Quagga y el agente de gesti\'on SNMP. Nuevamente por mayores detalles acerca de las versiones de software utilizadas, sistema operativo entre otros detalles referirse al siguiente anexo [link al anexo].\\
+Enfocandos\'e en las componentes del hardware, el router se compone de una PC de escritorio convencional, y una tarjeta NetFPGA, programada con el proyecto Reference NIC. Por detalles en particular respecto de la arquitectura de dicha PC refierase al anexo [link al anexo].\\  
+Por otro lado en relaci\'on a las componentes de software, el router se compone de un Sistema Operativo estandar, con las instalaciones de Open vSwitch, Quagga y el agente de gesti\'on SNMP. Nuevamente por mayores detalles acerca de las versiones de software utilizadas, sistema operativo entre otros detalles refierase al anexo [link al anexo].\\
 
 \newpage
 \begin{figure}[htbp!] 
@@ -150,7 +150,7 @@ Al igual que el router open source, el controlador consta de un Sistema Operativ
 \label{fig:OpenSourceRArch3}
 \end{figure}
 
-De esta forma, el prototipo para la nueva versi\'on de la red acad\'emica, se compone principalmente de varios nodos construidos en base al router open source, y un controlador. Como se puede observar en la imagen \ref{fig:OpenSourceRArch4} los nodos se comunican con el controlador mediante el protocolo OpenFlow como se explico con anterioridad, habilitando de esta forma a que el plano de datos sea programado por el plano de control. Por otro lado las diferentes instancias de Quagga distribu\'idas en cada nodo de la red y en el controlador, se comunican mediante el canal IP pcon el objetivo de aprender la topolog\'ia y diseminar informaci\'on de ruteo. Finalmente el gerente SNMP interactua con los diferentes agentes SNMP localizados en cada nodo mediante un canal IP, para obtener infirmaci\'on adicional acerca de cada nodo. 
+De esta forma, el prototipo para la nueva versi\'on de la red acad\'emica, se compone principalmente de varios nodos construidos en base al router open source, y un controlador. Como se puede observar en la imagen \ref{fig:OpenSourceRArch4} los nodos se comunican con el controlador mediante el protocolo OpenFlow como se explico con anterioridad, habilitando de esta forma a que el plano de datos sea programado por el plano de control. Por otro lado las diferentes instancias de Quagga distribu\'idas en cada nodo de la red y en el controlador, se comunican mediante el canal IP con el objetivo de aprender la topolog\'ia y diseminar informaci\'on de ruteo. Finalmente el gerente SNMP interactua con los diferentes agentes SNMP localizados en cada nodo mediante un canal IP, para obtener infirmaci\'on adicional acerca de cada nodo. 
 
 \begin{figure}[htbp!] 
 \centering    
@@ -229,13 +229,51 @@ Como se menciono anteriormente se realizo un relevamiento de casos de uso inicia
 \item Editar Informaci\'on extra Interfaz
 \end{itemize}
 
+De esta forma quedan presentados los requerimientos relevados sobre RauFlow, el modelo de datos alcanzado, y los casos de uso relevados. Resta entonces presentar un esbozo de la arquitectura de la aplicaci\'on RauFlow, para que el lector finalmente este en condiciones de comprender el dise\~'no del prototipo en su totoalidad.
+
 \newpage
 \subsection[Arquitectura de RauFlow]{Arquitectura de RauFlow}
+
+En la figura ~\ref{fig:VistaComponentes1} se presenta esquema de las componentes l\'ogicas que forman parte de la aplicaci\'on denominada RauFlow. Como se explico anteriormente en la arquitectura de Ryu, el plano de control debe ser implementado mediante una aplicaci\'on desarrollada en el lenguaje de programaci\'on Phyton. Si bien Ryu ofrece un entorno para la ejecuci\'on de m\'ultiples aplicaciones, asi como un mecanismo para la comunicaci\'on entre ellas, por simplicidad se opto por basar el dise\~no de RauFlow en una \'unica aplicaci\'on Ryu, m\'as un conjunto de componentes adicionales.\\
+
+La aplicaci\'on acepta su divisi'on en 3 capas l\'ogicas. Por un lado se tienen una capa de Presentaci\'on y una capa Negocios en las que se encuentran diferentes componentes de software adicionales, y finalmente una capa de Aplicaciones Ryu en la que se encuentra la aplicaci\'on de Ryu propiamente dicha. Esta \'ultima capa tiene sentido como tal, cuando el prototipo requiere de la ejecuci\'on de m\'ultiples aplicaciones Ryu, aspecto que ser\'a retomado m\'as adelante en esta secci\'on.\\
+
+M\'as en detalle, en la capa de Aplicaciones Ryu, se encuentra el programa encargado de implementar los procesos y protocolos del plano de control. Naturalmente el mismo esta dise\~nado bajo el esquema de una aplicaci\'on Ryu. No obstante toda l\'ogica de negocios asociada a la realidad modelada se encuentra en la capa de Negocios, desacoplada totalmente de dicha aplicaci\'on. Esto obedece a un criterio de dise\~no en el cual se busca mantener la l\'ogica de la aplicaci\'on de Ryu lo m\'as simple posible, haciendola responzable \'unicamente por los eventos asociados al protocolo OpenFlow a grandes rasgos. 
 
 \begin{figure}[ht!] 
 \centering    
 \includegraphics[width=1.0\textwidth]{Disenio_Figure2}
+\caption[Vista l\'ogica]{Vista l\'ogica}
+\label{fig:VistaComponentes1}
+\end{figure}
+
+
+Ahora se explica la capa de negocios.\\
+
+El bloque logica de negocios y como interactua con RauFlow.py.\\
+
+La API Rest y como interactua con la logica de negocios.\\
+
+EL modulo de aplicaciones de estion.\\
+
+
+Finalmente se explica la capa de presentacion.\\
+
+Se explica que hace controller y como interactua con la api rest. Se explica que hace el otro script y como interactua con las otras 3 aplicaciones de Ryu.\\
+
+\begin{figure}[ht!] 
+\centering    
+\includegraphics[width=1.0\textwidth]{Disenio_Figure3}
 \caption[Diagrama de componentes]{Diagrama de componentes}
 \label{fig:ModeloDeDominio}
 \end{figure}
+
+\subsubsection[Vista en capas con tecnolog\'ias asociadas]{Vista en capas con tecnolog\'ias asociadas}
+
+[Mismo diagrama que el anterior pero con las tecnologias asociadas a cada cajita]
+
+\subsubsection[Vista de despliegue]{Vista de despliegue}
+
+[Aca esta bueno poner un diagrama de despliegue con todas las componentes del prototipo, incluyendo OVS, Quagga, etc mostrando que va en cada PC y mostrando las diferentes componentes de RauFlow. Como para tener una vision global]
+
 
