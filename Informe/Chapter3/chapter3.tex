@@ -7,11 +7,13 @@
     \graphicspath{{Chapter3/Figs/Vector/}{Chapter3/Figs/}}
 \fi
 
-En este cap\'itulo se exponen las principales caracter\'isticas relacionadas al dise\~no de la soluci\'on. A su vez se exponen, de los problemas y decisiones de dise\~no encontrados aquellos que a nuestro entender resultan m\'as interesantes de mencionar en este cap\'itulo. 
+Durante el desarrollo de un proyecto de esta naturaleza, se plantean interrogantes, problemas, soluciones a estas interrogantes y problemas, y se toman decisiones. Estas decisiones pueden ser de diferente \'indole. 
 
-[HAY QUE MENCIONAR EL ORDEN DE PROCEDENCIA DE QUE VAMOS A HABLAR ES UN MINI RESUMEN SIEMPRE AL INICIO DE UN CAPITULO]
+En este capitulo nos interesamos por aquellos problemas e interrogantes y principalmente aquellas decisiones, que impactan en el dise\~no del prototipo.\\
+
+Por otro lado, SDN es una abstracci\'on, un enfoque a seguir. Por ello, dise\~nar una soluci\'on tecnol\'ogica basada en este enfoque implica una gran cantidad de decisiones de dise\~no en particular. Algunas de ellas son que arquitectura basada en SDN utilizar, que propuesta utilizar para el software de control, como se construye un dispositivo compatible con el plano de control de SDN y en particular partiendo del hardware NetFPGA, entre otras decisiones. En el presente cap\'itulo se intenta brindar una respuesta a todas estas interrogantes, comenzando por la elecci\'on de la arquitectura SDN a utilizar. Luego se presenta el dise\~no asumido para la construcci\'on del router opensource, y sus principales componentes. Tambi\'en se presentan las componentes que constituyen a la entidad Controlador dentro del prototipo, y finalmente se detalla el dise\~no de la aplicaci\'on encargada de implementar el plano de control SDN.
  
-\section[Enfoque utilizado]{Enfoque utilizado}
+\section[Elecci\'on de una arquitectura SDN]{Elecci\'on de una arquitectura SDN}
 
 %En el cap\'itulo dedicado al estado del arte de las redes definidas por software, se explica en profundidad la arquitectura de SDN, y a partir del mismo queda completamente sanjada la diferencia entre los conceptos de SDN y OpenFlow por ejemplo.\\
 

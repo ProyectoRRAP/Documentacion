@@ -1,71 +1,121 @@
 %*******************************************************************************
-%*********************************** First Chapter *****************************
+%****************************** Second Chapter *********************************
 %*******************************************************************************
 
-\chapter{Getting started}  %Title of the First Chapter
+\chapter{An\'alisis del problema}
 
 \ifpdf
-    \graphicspath{{Chapter1/Figs/Raster/}{Chapter1/Figs/PDF/}{Chapter1/Figs/}}
+    \graphicspath{{Chapter2/Figs/Raster/}{Chapter2/Figs/PDF/}{Chapter2/Figs/}}
 \else
-    \graphicspath{{Chapter1/Figs/Vector/}{Chapter1/Figs/}}
+    \graphicspath{{Chapter2/Figs/Vector/}{Chapter2/Figs/}}
 \fi
 
 
-%********************************** %First Section  **************************************
-\section{What is loren ipsum? Title with math \texorpdfstring{$\sigma$}{[sigma]}} %Section - 1.1 
+\section[Motivaci\'on]{Motivaci\'on}
 
-Este es emiliano un capo~\citep{emiR}\\
+%Bueno basicamente tenemos dos motivaciones, la motivacion RAU, porque se quiere %actualizar la red academica.
+
+%La motivacion de porque usar SDN y NetFPGA tal ves...
+
+\section[Definici\'on del problema]{Definici\'on del problema}
+
+\subsection[Enunciado]{Enunciado}
+
+
+En pocas palabras, la problem\'atica identificada como motivaci\'on para el desarrollo de este trabajo es la siguiente:
+
+\begin{quote}
+\textit{Implementar un prototipo para la nueva Red Académica Uruguaya (RAU2) de
+Altas Prestaciones, en cuanto a cobertura, velocidad, capacidad y programa-
+bilidad. Explorando la idea de Software Defined Networking (Redes Defeanidas
+por Software -SDN), y basándose en routers construidos en base a PCs con
+placas de red aceleradas en hardware recongurable, fruto un desarrollo de
+la universidad de Stanford denominado NetFPGA (Field Programmable Ga-
+te Arrays). Se debe además elaborar una prueba de concepto consistente en
+unos pocos nodos con enlaces ópticos sobre la que se ejecutará un conjun-
+to exhaustivo de pruebas que permitan validar la idea de implantación de la
+RAU2}
+\end{quote}
+
+A su vez, de la nueva Red Académica Uruguaya se conocen el siguiente conjunto de requisitos:
+
+%Por otro se tienen identificados una serie de requisitos generales sobre la futura modernizaci\'on de la red aced\'emica, los cuales interesa tener en cuenta en el disenio de la soluci\'on planteada para el problema presentado. A continuaci\'on explicamos dichos requisitos:
+
+\begin{enumerate}
+\item \textbf{Clasificación de tráfico:} Una de las necesidades y objetivos de la futura actualizaci\'on de la RAU, es la facilidad para clasificar tráfico. Alineado con las actuales necesidades, en particular se precisa al menos diferenciar las siguientes 3 categorías: (a)público, (b)académico y (c)servicios de contenido.
+
+\item \textbf{Grandes volúmenes de datos (BIG Data):} En la RAU intervienen instituciones como el Instituto Pasteur, Centro Uruguayo de Imagenología Molecular (CUDIM) entre otros; en donde la generación e intercambio de grandes volúmenes de datos como los son los exámenes PET del Pasteur o una secuenciación de ADN del CUDIM entre otros.
+
+\item \textbf{Escalabilidad:} Se espera alcanzar en un mediano plazo a un total de 11.000 Docentes, 7.000 Funcionarios y 140.000 Estudiantes; por lo que el prototipo para la nueva RAU2 debe ser escalable en la cantidad de usuarios de la infraestructura.
+
+\item \textbf{Red de entrega de contenidos (Content Delivery Network):} Resulta sumamente útil tomar un enfoque de red de entrega de contenidos para el diseño de la red académica. Las organizaciones partícipes de la misma tienen y generan grandes volúmenes de información de gran interés por parte de otras organizaciones de la RAU. Una red de distribución de contenidos garantiza un mejor acceso en tiempo real a dicha información por parte de múltiples organizaciones en simultáneo. 
  
-Lorem Ipsum is simply dummy text of the printing and typesetting industry (see 
-Section~\ref{section1.3}). Lorem Ipsum~\citep{Aup91} has been the industry's 
-standard dummy text ever since the 1500s, when an unknown printer took a galley 
-of type and scrambled it to make a type specimen book. It has survived not only 
-five centuries, but also the leap into electronic typesetting, remaining 
-essentially unchanged. It was popularised in the 1960s with the release of 
-Letraset sheets containing Lorem Ipsum passages, and more recently with desktop 
-publishing software like Aldus PageMaker including versions of Lorem 
-Ipsum~\citep{AAB95,Con90,LM65}.
+\end{enumerate}
 
-The most famous equation in the world: $E^2 = (m_0c^2)^2 + (pc)^2$, which is 
-known as the \textbf{energy-mass-momentum} relation as an in-line equation.
+Por tano se espera que el prototipo este orientado a tales requisitos.
 
-A {\em \LaTeX{} class file}\index{\LaTeX{} class file@LaTeX class file} is a file, which holds style information for a particular \LaTeX{}.
+\newpage
+\subsection[An\'alisis de requerimientos]{An\'alisis de requerimientos}
+
+A partir del enunciado del problema y del conjunto de requisitos planteados sobre la nueva versi\'on de la RAU, se infiere la siguiente especificaci\'on de requerimientos para el prototipo a desarrollar.
 
 
-\begin{align}
-CIF: \hspace*{5mm}F_0^j(a) = \frac{1}{2\pi \iota} \oint_{\gamma} \frac{F_0^j(z)}{z - a} dz
-\end{align}
+\begin{table}[H]\centering
+\begin{tabularx}{\textwidth}{|>{\setlength\hsize{1.0\hsize}\setlength\linewidth{\hsize}}X|}
+\hline
+Requerimientos Funcionales\\
+\hline
+\begin{itemize}
+\item Dada una organización o aplicación, el Sistema debe tener la capacidad de clasificar y distinguir el tráfico asociada a la misma de cualquier otro tipo de tráfico.
+\item Dado un t\'ipo de tr\'afico, el Sistema debe poder asignar un porcentaje de los recursos disponibles de la red para el procesamiento del mismo.
+\item Dadas dos subredes interconectadas mediante el Sistema, se debe garantizar que la  numeración IP del tráfico generado por una de las subredes sea mantenida al ser entregado a la segunda subred; manteniendo de esta forma la identidad de los usuarios en ambas subredes. 
+\end{itemize}\\
+\hline
+\end{tabularx}
+\end{table}
 
-\nomenclature[z-cif]{$CIF$}{Cauchy's Integral Formula}                                % first letter Z is for Acronyms 
-\nomenclature[a-F]{$F$}{complex function}                                                   % first letter A is for Roman symbols
-\nomenclature[g-p]{$\pi$}{ $\simeq 3.14\ldots$}                                             % first letter G is for Greek Symbols
-\nomenclature[g-i]{$\iota$}{unit imaginary number $\sqrt{-1}$}                      % first letter G is for Greek Symbols
-\nomenclature[g-g]{$\gamma$}{a simply closed curve on a complex plane}  % first letter G is for Greek Symbols
-\nomenclature[x-i]{$\oint_\gamma$}{integration around a curve $\gamma$} % first letter X is for Other Symbols
-\nomenclature[r-j]{$j$}{superscript index}                                                       % first letter R is for superscripts
-\nomenclature[s-0]{$0$}{subscript index}                                                        % first letter S is for subscripts
+\begin{table}[H]\centering
+\begin{tabularx}{\textwidth}{|>{\setlength\hsize{1.0\hsize}\setlength\linewidth{\hsize}}X|}
+\hline
+Requerimientos no Funcionales\\
+\hline
+
+\begin{itemize}
+
+\item Open Source: En la medida que sea posible interesa utilizar herramientas y componentes libres y abiertas como software libre y de código abierto, hardware libre, etc.
+
+\end{itemize}\\
+\hline
+\end{tabularx}
+\end{table}
 
 
-%********************************** %Second Section  *************************************
-\section{Why do we use loren ipsum?} %Section - 1.2
+\clearpage
+\section[¿Porque utilizar SDN?]{¿Porque utilizar SDN?}
+
+Las bondades y fortalezas del enfoque de SDN fueron explicadas con anterioridad en el capitulo dedicado al estado del arte en dicha tem\'atica. En el mismo se deja constancia de las caracter\'isticas que plantea este enfoque; de las cuales muchas de ellas pueden explotarse en favor del desarrollo de funcionalidades y caracter\'isticas nuevas para el prototipo de la red acad\'emica.\\
+
+Sin embargo, existen varias alternativas tecnol\'ogicas para la implementaci\'on del prototipo de la red acad\'emica ademas de SDN; por lo cual resulta interesante desarrollar los fundamentos en los que se basa la utilizaci\'on de este enfoque.\\  
+
+SDN propone desacoplar los planos de datos y control, lo cual en si misma es una caracter\'istica fundamental del enfoque.\\ 
+Si bien existen argumentos en favor de una infraestructura con un plano de control centralizado, tambi\'en existen argumentos v\'alidos en favor de un plano de control distribu\'ido; y esta disyuntiva entre plano centralizado y distribu\'ido no puede ser tomada a la ligera puesto que ambos enfoques pueden ser sumamente v\'alidos dependiendo del contexto en que se utilicen.\\
+
+En el contexto del desarrollo del prototipo planteado, el enfoque centralizado adoptado por SDN resulta ventajoso sobre un enfoque distribu\'ido. Permite operar con una infraestructura de red heterog\'enea sin dependencias tecnol\'ogicas con las diferentes marcas comerciales de equipos.\\
+
+SDN propone un mecanismo estandar para la manipulaci\'on de los diferentes dispositivos de red. Al estar estandarizada la interfaz de comunicaci\'on entre el plano de datos y el plano de control, por citar un ejemplo el protocolo OpenFlow; queda determinado el mecanismo de comunicaci\'on y las capacidades funcionales con cualquier dispositivo del plano de datos independientemente de sus, arquitectura, api de funcionalidades, de si sea de naturaleza abierto o cerrado o marca comercial.\\ 
+
+Por otro lado el mecanismo estandar y transparente que propone SDN para manipular los diferentes dispositivos de red, brinda flexibilidad y agilidad para el desarrollo de nuevos protocolos, facilitando la investigaci\'on e innovaci\'on.\\
+
+A su vez SDN permite que la investigaci\'on y el desarrollo de nuevos servicios y protocolos convivan con servicios comerciales en una misma infraestructura; permitiendo de esta forma utilizar adicionalmente la plataforma de hardware disponible para la investigaco\'on. 
 
 
-It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using `Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for `lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+\section[¿Porque utilizar NetFPGA?]{¿Porque utilizar NetFPGA?}
 
-%********************************** % Third Section  *************************************
-\section{Where does it come from?}  %Section - 1.3 
-\label{section1.3}
+Se necesita para el desarrollo de este proyecto una plataforma tecnol\'ogica compatible con SDN, y en particular con el protocolo OpenFlow.\\
+NetFPGA en especial brinda una plataforma de desarrollo y pruebas compatible con OpenFlow a un precio significativamente menor que el de un equipo comercial, y brinda funcionalidades y capacidades suficientes para el desarrollo del prototipo planteado en este trabajo.\\
 
-Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
+A su vez la plataforma NetFPGA al utilizar hardware reconfigurable resulta ser sumamente versatil y flexible; permitiendo prototipar diferentes dispositivos en un mismo hardware f\'isico y al precio de una tarjeta NetFPGA. Esto otorga la facilidad de incorporar diferentes dispositivos al prototipo, y a un bajo costo.\\
 
-The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from ``de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham
+Por otro lado no solo se puede hacer uso de los proyectos existentes para programar las tarjetas; si no que como se vera m\'as adelante en este trabajo gracias a la extensa documentaci\'on disponible sobre la plataforma y a que los proyectos existentes son de software libre y abierto resulta posible el desarrollo de nuevos proyectos con los que programar a dicho hardware. De esta forma es posible prototipar equipos con caracter\'isticas especiales pensadas en funci\'on de los requerimientos de la nueva red acad\'emica.\\
 
-``Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-
-Section 1.10.32 of ``de Finibus Bonorum et Malorum", written by Cicero in 45 BC: ``Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
-
-1914 translation by H. Rackham: ``But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?"
-
-Section 1.10.33 of ``de Finibus Bonorum et Malorum", written by Cicero in 45 BC: ``At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat."
-
-1914 translation by H. Rackham: ``On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness of will, which is the same as saying through shrinking from toil and pain. These cases are perfectly simple and easy to distinguish. In a free hour, when our power of choice is untrammelled and when nothing prevents our being able to do what we like best, every pleasure is to be welcomed and every pain avoided. But in certain circumstances and owing to the claims of duty or the obligations of business it will frequently occur that pleasures have to be repudiated and annoyances accepted. The wise man therefore always holds in these matters to this principle of selection: he rejects pleasures to secure other greater pleasures, or else he endures pains to avoid worse pains."
+Finalmente la utilizaci\'on de hardware abierto, en conjunci\'on con software libre y de codigo abierto posibilitan la construcci\'on de lo que se dio a llamar ''router open source'' dentro del desarrollo de este prototipo de red acad\'emica. Esto tiene como ventajes una mayor versatilidad en su uso y capacidades de reutilizaci\'on puesto que puede ser mantenido, modificado y extendido por cualquier usuario o equipo de desarrollo en un futuro. Esto supone un valor agregado cosiderable. 
