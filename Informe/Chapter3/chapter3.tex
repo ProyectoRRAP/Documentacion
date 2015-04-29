@@ -225,12 +225,13 @@ En la figura ~\ref{fig:ModeloDeDominio} se presenta el modelo de dominio realiza
 \label{fig:ModeloDeDominio}
 \end{figure}
 
-Sobre este modelo de dominio se trabaj\'o hasta llegar finalmente al diagrama de clase de dise\~no que se presenta a continuaci\'on en la figura [ref].
+Sobre este modelo de dominio se trabaj\'o hasta llegar finalmente al diagrama de clase de dise\~no que se presenta a continuaci\'on en la figura [ref].\\
 
-\newpage
+Teniendo en cuenta los requerimientos mencionados, y el modelado de la realidad presentado, se procede con el relevamiento de los casos de uso. Los resultados obtenidos se presentan en la siguiente secci\'on.
+
 \subsection[Relevamiento de casos de uso]{Relevamiento de casos de uso}
 
-Como se menciono anteriormente se realizo un relevamiento de casos de uso inicial, del cual se desprende la lista de casos de uso que se presenta a continuaci\'on. No obstante antes de dedicarse a hablar de la misma, vale la pena resaltar que dada la complejidad de la realidad modelada, asi como la enorme existencia de una gran cantidad de funcionalidades potenciales, se debio optar por resolver en este trabajo solamente el conjunto de funcionalidades b\'asicas que permitan explorar la potencialidad de la aplicaci\'on del enfoque de SDN en la nueva versi\'on de la red acad\'emica. Sin m\'as preambulos la lista de casos de uso relevados es la siguiente:
+La lista de casos de uso presentada a continuaci\'on se corresponde con un conjunto de funcionalidades b\'asicas, que permitan la exploraci\'on de la potencialidad del enfoque SDN aplicado a nuestro problema. 
 
 \begin{itemize}
 \item Listar Servicios
@@ -245,9 +246,8 @@ Como se menciono anteriormente se realizo un relevamiento de casos de uso inicia
 \item Editar Informaci\'on extra Interfaz
 \end{itemize}
 
-De esta forma quedan presentados los requerimientos relevados sobre RauFlow, el modelo de datos alcanzado, y los casos de uso relevados. Resta entonces presentar un esbozo de la arquitectura de la aplicaci\'on RauFlow, para que el lector finalmente este en condiciones de comprender el dise\~'no del prototipo en su totoalidad.
+De esta forma quedan presentados los requerimientos relevados sobre RauFlow, el modelado de la realidad, y los casos de uso relevados. Resta entonces presentar un esbozo de la arquitectura de la aplicaci\'on RauFlow, para que el lector finalmente este en condiciones de comprender el dise\~'no del prototipo en su totoalidad.
 
-\newpage
 \subsection[Arquitectura de RauFlow]{Arquitectura de RauFlow}
 
 En la figura ~\ref{fig:VistaComponentes2} se presenta un esquema con las componentes l\'ogicas que forman parte de la aplicaci\'on denominada RauFlow. Como se explico anteriormente, Ryu habilita la programaci\'on del plano de control mediante aplicaci\'ones desarrolladas en lenguaje Phyton con una cierta estructura particular. Por consiguiente RauFlow esta basado en al menos una aplicaci\'on de este tipo.\\
