@@ -52,6 +52,8 @@ El hardware NetFPGA se programa utilizando un cable programador JTAG, y la herra
 
 Esta estaci\'on de trabajo puede o bien ser la propia PC utilizada para el router opensource(alternativa utilizada en este proyecto), o bien puede ser una PC independiente a la utilizada para la construcci\'on de cada router.\\
 
+Cabe destacar que en la b\'usqueda de una plataforma compatible para la programaci\'on del hardware se probo con diferentes sistemas operativos como se menciono, logrando programarse el mismo en Windows XP y Ubuntu 12.04.
+
 \subsubsection{Programaci\'on simple}
 El hardware puede programarse de varias formas, una de ellas es lo que denominamos aqu\'i como programaci\'on simple. Esta estrategia consiste en la utilizaci\'on de la herramienta Impact y el cable JTAG para programar en los chip FPGA y CPLD la implementaci\'on y la arquitectura del proyecto ideado para programar el hardware.
 
@@ -59,15 +61,18 @@ Esta estrategia presenta como ventajas su simplicidad, no requiere de licencias 
 
 Sin embargo presenta una desventaja importante; al producirse un ciclo completo de corriente (apagado y encendido del equipo), el hardware se desprograma por completo. Concretamente el contenido del chip FPGA es eliminado, perdurando solamente el del chip CPLD.\\
 
-Tras constatarse este comportamiento, luego de revisar la documentaci\'on de la plataforma y recurrir a foros de la comunidad de NetFPGA, se establecieron comunicaciones con el equipo de desarrollo de NetFPGA mediante una mailing list. Esta comunicaci\'on desemboco en la segunda estrategia de programaci\'on.
+Tras constatarse este comportamiento, luego de revisar la documentaci\'on de la plataforma y recurrir a foros de la comunidad de NetFPGA, se establecieron comunicaciones con el equipo de desarrollo de NetFPGA mediante una lista de correos. Esta comunicaci\'on desemboco en la segunda estrategia de programaci\'on.
 
 \subsubsection{Programaci\'on persistente}
 El hardware NetFPGA cuenta en su arquitectura con dos unidades de memoria flash(Flash A y Flash B). En la programaci\'on persistente estas unidades se utilizan para almacenar la programaci\'on del hardware, permitiendo que en cada encendido el chip FPGA se programe a partir del contenido de una de estas unidades. Por defecto el chip siempre se programa con el contenido de la memoria Flash A, habilitando su reprogramaci\'on desde la memoria Flash B a trav\'es de un comando por PCIe.\\
 
 No cualquier proyecto puede ser utilizado bajo esta modalidad de programaci\'on del hardware; debe presentar una arquitectura particular. Cabe destacar de todos modos, que el proyecto Reference NIC presenta dicha arquitectura por lo que es compatible con este tipo de programaci\'on.\\
 
-El procedimiento empleado implica, programar la tarjeta con un proyecto denominado PCIPrograming(se encuentra dentro de los proyectos con los que viene la placa). Luego utilizando la utilidad [nombre] de la plataforma NetFPGA(que a su ves utiliza herramientas de la suite de Xilinx) se convierte el bitfile utilizado para programar la tarjeta NetFPGA en la forma simple en un archivo binario. Finalmente con la utilidad [nombre de la utilidad] tambien de la plataforma NetFPGA, se graba en la memoria Flash seleccionada el contenido de este binario.\\
+El procedimiento empleado implica, programar inicialmente la tarjeta con el proyecto ReferenceNIC. Luego utilizando la utilidad \textbf{bit2bin} de la plataforma NetFPGA(que a su ves utiliza herramientas de la suite de Xilinx) se convierte el bitfile utilizado para programar la tarjeta NetFPGA en la forma simple en un archivo binario. Finalmente con la utilidad \textbf{pcieprog}  tambien de la plataforma NetFPGA, se transfiere a la memoria Flash seleccionada el contenido del binario generado.\\
 
+Cabe destacar que durante la ejecuci\'on de este procedimiento se detectaron algunos errores y comportamientos inesperados por parte del hardware. Esto fue reportado al equipo de soporte de NetFPGA nuevamente a traves de la lista de correos, reportandose en total 2 bugs que fueron solucionados y contemplados en la siguiente actualizaci\'on del repositorio de c\'odigo fuente. Por m\'as detalles acerca de estos bugs y su resoluci\'on referirse al siguiente ap\'endice[link al apendice].
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Cabe destacar que este procedimiento no funciona correctamente. El proyecto PCIPrograming presenta alg\'un tipo de BUG(al momento de grabar una memoria se queda en loop), y tras reportar este comportamiento en la comunidad de NetFPGA se nos suguiere utilizar el proyecto ReferenceNIC que presenta el diseno de la arquitectura similar al PCIPrograming. Siguiendo esta sugerencia se logra programar correctamente el hardware de forma persistente, constatandose que al realizar un ciclo de corriente completo el hardware no se desprograma. Por esta raz\'on la estrategia de programaci\'on utilizada en el hardware es la programaci\'on persistente aqu\'i detallada.\\
 
 Vale la pena destacar tambi\'en, que al programarse el hardware desde cualquiera de las unidades de memoria Flash, en particular con el proyecto Reference NIC el hardware no se comportaba de la forma esperada. Tras constatarse que esto no sucedia con versiones anteriores del c\'odigo fuente del proyecto, nuevamente se le reporta lo sucedido al soporte de NetFPGA obteniendo como respuesta una sugereencia para emparchar el c\'odigo, y la promesa de que ser\'ia solucionado en la siguiente versi\'on (lo cual pudimos constatar).

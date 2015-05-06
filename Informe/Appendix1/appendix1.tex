@@ -1,131 +1,106 @@
 % ******************************* Thesis Appendix A ****************************
-\chapter{How to install \LaTeX} 
+\chapter{Soluci\'on a errores encontrados en la plataforma NetFPGA} 
 
-\section*{Windows OS}
+Durante el tiempo que se trabajo con el hardware NetFPGA, se detectaron errores y comportamientos inesperados en el mismo. En particular se encontraron errores de severidad alta en relaci'on al  impacto sobre el prototipo; durante el proceso de programaci\'on persistente del hardware con el proyecto ReferenceNIC.\\
 
-\subsection*{TeXLive package - full version}
+En total se detectaron dos bugs, los cuales fueron reportados a la comunidad de NetFPGA y al equipo de soporte atraves de la lista de correos. El equipo de NetFPGA r\'apidamente confirmo los mismos,
+ofreciendonos soluciones a ambos errores. Luego se constato que estos errores fueron solucionados en la siguiente versi\'on del c\'odigo fuente de la plataforma.\\ 
+
+Cabe destacar que estos errores fueron detectados trabajanfo con la versi\'on 5.0.5 del c\'odigo fuente.
+ 
+\section*{Problema con la herramienta pcieprog y ReferenceNIC}
+El primer error detectado se encuentra en la herramienta \textbf{pcieprog} dentro de la plataforma de NetFPGA. La misma se utiliza para transferir el archivo binario generado a partir del bitfile del proyecto (en este caso ReferenceNIC) a una de las memorias Flash del hardware.
+
+Al ejecutarse esta herramienta con el binario generado para el proyecto ReferenceNIC, la misma se estancaba durante horas con un 100\% de utilizaci\'on de la CPU. Tras probar con varias ejecuciones de la misma herramienta, se realizo la misma prueba con dos proyectos m\'as (reference\_ switch y reference\_ router), compatibles con la programaci\'on persistente. 
+
+Para estos proyectos no se detecto el mismo comportamiento an\'omalo, por lo que se presumi\'o la presencia de un bug en el c\'odigo del proyecto ReferenceNIC. A su vez se procedio con la inspecci\'on del c\'odigo de la herramienta \textbf{pcieprog}, hasta que finalmente se logro aislar la porci\'on del mismo donde el programa se estancaba. En particular el programa quedaba estancado en un loop infinito porque no se cumplia la condici\'on de salida nunca.\\ 
+
+Este comportamiento fue reportado al grupo de soporte a traves de una lista de correos(ver correos en anexo [link al anexo]), obteniendose el siguiente parche para solucionar el problema:
+
 \begin{enumerate}
-\item	Download the TeXLive ISO (2.2GB) from\\
-\href{https://www.tug.org/texlive/}{https://www.tug.org/texlive/}
-\item	Download WinCDEmu (if you don't have a virtual drive) from \\
-\href{http://wincdemu.sysprogs.org/download/}
-{http://wincdemu.sysprogs.org/download/}
-\item	To install Windows CD Emulator follow the instructions at\\
-\href{http://wincdemu.sysprogs.org/tutorials/install/}
-{http://wincdemu.sysprogs.org/tutorials/install/}
-\item	Right click the iso and mount it using the WinCDEmu as shown in \\
-\href{http://wincdemu.sysprogs.org/tutorials/mount/}{
-http://wincdemu.sysprogs.org/tutorials/mount/}
-\item	Open your virtual drive and run setup.pl
+\item Dentro del directorio donde se encuentra el c\'odigo fuente de la plataforma, posicionarse en 
+	  projects/reference\_nic/hw/. Abrir el archivo system.mhs.\\
+	  Cambiar:
+\begin{center}
+	"PORT axi\_ emc\_ 0\_ Mem\_ DQ\_ pin = axi\_ emc\_ 0\_ Mem\_ DQ, DIR = IO, VEC = [*7*:0]"
+\end{center}
+por
+\begin{center}
+"PORT axi\_ emc\_0 \_Mem\_ DQ\_ pin = axi\_ emc\_ 0\_ Mem\_ DQ, DIR = IO, VEC = [*31*:0]"
+\end{center}
+
+\item Posicionarse ahora en projects/reference\_nic/hw/. Abrir el archivo xflow.opt.\\
+	  Cambiar:
+\begin{center}
+"-t *1*"
+\end{center}
+por
+\begin{center}
+"-t *5*"
+\end{center}
+
+\item Recompilar el proyecto ReferenceNIC ejecutando el comando make en el directorio projects/reference\_ nic/
+
+\item Utilizar el nuevo bitfile generado para programar el hardware, generar un nuevo archivo binario y transerir a la memoria Flash.
 \end{enumerate}
 
-or
+\section*{Error en driver para ReferenceNIC}
+El segundo error detectado con este proyecto, tambi\'en en la modalidad de programaci\'on persistente  se encuentra relacionado al driver utilizado para la interacci\'on entre el hardware y el sistema operativo anfitrion.\\
 
-\subsection*{Basic MikTeX - \TeX~ distribution}
+Este error fue detectado experimentalmente al realizar pruebas de funcionamiento entre varios nodos utilizando el hardware programado con el proyecto ReferenceNIC, y se detalla a continuaci\'on:
+
+\begin{itemize}
+\item \textbf{Descripci\'on:}\\
+Al programarse el hardware con el proyecto ReferenceNIC desde la memoria Flash utilizando la programaci\'on pcie, no funciona correctamente cuando la placa NetFPGA tiene conectados enlaces en sus puertos. En particular para que el hardware funcione correctamente debe ser encendido sin cables conectados en los puertos, y luego conectar manualmente cada uno de ellos una ves que el equipo completo el encendido.
+
+\item \textbf{Escenario:}
+\begin{itemize}
+\item Dos PCs cada una con una tarjeta NetFPGA instalada
+\item Las tarjetas estan conectadas por cuatro enlaces de fibra \'optica (nf0-nf0, nf1-nf1, nf2-nf2 y nf3-nf3)
+\item Ambas tarjetas estan programadas con el proyecto ReferenceNIC via programaci\'on pcie.
+\item Se utiliza la versi\'on 5.0.5 de c\'odigo fuente, con el parche mencionado anteriormente.
+\end{itemize}
+
+\item \textbf{Efecto:}\\
+Incapacidad parar ejecutar exitosamente el comando ping entre cualquier par de interfaces conectadas
+
+\item \textbf{Reproducci\'on:}\\
+Partiendo de ambas PCs apagadas
 \begin{enumerate}
-\item	Download Basic-MiK\TeX (32bit or 64bit) from\\
-\href{http://miktex.org/download}{http://miktex.org/download}
-\item	Run the installer 
-\item	To add a new package go to Start >> All Programs >> MikTex >> Maintenance (Admin) and choose Package Manager
-\item	Select or search for packages to install
+\item Encender una de las PC, teniendo conectados los enlaces \'opticos entre ambas PCs
+\item Cargar el driver nf10 y configurar manualmente direcciones IP para cada interaz (nf0 \dots nf3)
+\item Luego realizar el mismo procedimiento para la otra PC
+\item Leds asociados a cada puerto en una de las tarjetas NetFPGA son encendidos por completo, mientras que en la otra tarjeta solamente la mitad de los Leds se encuentran encendidos.
+\item Si se apaga y enciendo la PC con la tarjeta NetFPGA cuyos leds se encuentran todos prendidos, luego la otra tarjeta enciende todos sus leds, mientras que la primera enciende solo la mitad de sus leds. 
+\item El \'ultimo paso puede repetirse, y el comportamiento observado se mantiene. En particular la tarjeta que es iniciada al final funciona correctamente mientras que la otra no.
+\end{enumerate} 
+
+\item \textbf{Soluci\'on:}
+\begin{enumerate}
+\item Apagar ambas PCs
+\item Desconectar todos los enlaces \'opticos
+\item Encender ambas PCs(cargar el driver nf10 y configurar cada interfaz con una direcci\'on IP apropiada)
+\item Luego de que cada PC esta encendida y configurada conectar los enlaces \'opticos uno a uno.
 \end{enumerate}
 
-\subsection*{TexStudio - \TeX~ editor}
+\end{itemize}
+
+Este reporte tambi\'en fue enviado a la comunidad de NetFPGA (ver anexo con emails [link al email]), en donde se constato nuevamente la presencia de un error, esta vez en la configuraci\'on de los chips PHY de la tarjeta. 
+
+La soluci\'on planteada por el equipo de NetFPGA fue la siguiente:
+
 \begin{enumerate}
-\item	Download TexStudio from\\
-\href{http://texstudio.sourceforge.net/\#downloads}
-{http://texstudio.sourceforge.net/\#downloads} 
-\item	Run the installer
+\item Dentro del directorio donde se encuentra el c\'odigo fuente de la plataforma, posicionarse en 
+	  projects/reference\_ nic/sw/host/driver/. Abrir el archivo nf10\_ phy\_ conf.c .
+\item Comentar las lineas 217,219 y 240.
+\item Recompilar el driver nf10
+\item Reiniciar la PC y cargar el nuevo driver
 \end{enumerate}
 
-\section*{Mac OS X}
-\subsection*{MacTeX - \TeX~ distribution}
-\begin{enumerate}
-\item	Download the file from\\
-\href{https://www.tug.org/mactex/}{https://www.tug.org/mactex/}
-\item	Extract and double click to run the installer. It does the entire configuration, sit back and relax.
-\end{enumerate}
+Tras esta correcci\'on el proyecto ReferenceNIC funciona correctamente, comportandose el hardware como una tarjeta de red convencional. A su vez cada vez que la PC es encendida el hardware se reprograma desde la memoria flash apropiadamente.
 
-\subsection*{TexStudio - \TeX~ editor}
-\begin{enumerate}
-\item	Download TexStudio from\\
-\href{http://texstudio.sourceforge.net/\#downloads}
-{http://texstudio.sourceforge.net/\#downloads} 
-\item	Extract and Start
-\end{enumerate}
+%Cabe destacar que este procedimiento no funciona correctamente. El proyecto PCIPrograming presenta alg\'un tipo de BUG(al momento de grabar una memoria se queda en loop), y tras reportar este comportamiento en la comunidad de NetFPGA se nos suguiere utilizar el proyecto ReferenceNIC que presenta el diseno de la arquitectura similar al PCIPrograming. Siguiendo esta sugerencia se logra programar correctamente el hardware de forma persistente, constatandose que al realizar un ciclo de corriente completo el hardware no se desprograma. Por esta raz\'on la estrategia de programaci\'on utilizada en el hardware es la programaci\'on persistente aqu\'i detallada.\\
 
+%Vale la pena destacar tambi\'en, que al programarse el hardware desde cualquiera de las unidades de memoria Flash, en particular con el proyecto Reference NIC el hardware no se comportaba de la forma esperada. Tras constatarse que esto no sucedia con versiones anteriores del c\'odigo fuente del proyecto, nuevamente se le reporta lo sucedido al soporte de NetFPGA obteniendo como respuesta una sugereencia para emparchar el c\'odigo, y la promesa de que ser\'ia solucionado en la siguiente versi\'on (lo cual pudimos constatar).
 
-\section*{Unix/Linux}
-\subsection*{TeXLive - \TeX~ distribution}
-\subsubsection*{Getting the distribution:}
-\begin{enumerate}
-\item	TexLive can be downloaded from\\
-\href{http://www.tug.org/texlive/acquire-netinstall.html}
-{http://www.tug.org/texlive/acquire-netinstall.html}.
-\item	TexLive is provided by most operating system you can use (rpm,apt-get or yum) to get TexLive distributions
-\end{enumerate}
-
-\subsubsection*{Installation}
-\begin{enumerate}
-\item	Mount the ISO file in the mnt directory
-\begin{verbatim}
-mount -t iso9660 -o ro,loop,noauto /your/texlive####.iso /mnt
-\end{verbatim}
-
-\item	Install wget on your OS (use rpm, apt-get or yum install)
-\item	Run the installer script install-tl.
-\begin{verbatim}
-	cd /your/download/directory
-	./install-tl
-\end{verbatim}
-\item	Enter command `i' for installation
-
-\item	Post-Installation configuration:\\
-\href{http://www.tug.org/texlive/doc/texlive-en/texlive-en.html\#x1-320003.4.1}
-{http://www.tug.org/texlive/doc/texlive-en/texlive-en.html\#x1-320003.4.1} 
-\item	Set the path for the directory of TexLive binaries in your .bashrc file
-\end{enumerate}
-
-\subsubsection*{For 32bit OS}
-For Bourne-compatible shells such as bash, and using Intel x86 GNU/Linux and a default directory setup as an example, the file to edit might be \begin{verbatim}
-edit $~/.bashrc file and add following lines
-PATH=/usr/local/texlive/2011/bin/i386-linux:$PATH; 
-export PATH 
-MANPATH=/usr/local/texlive/2011/texmf/doc/man:$MANPATH;
-export MANPATH 
-INFOPATH=/usr/local/texlive/2011/texmf/doc/info:$INFOPATH;
-export INFOPATH
-\end{verbatim}
-\subsubsection*{For 64bit OS}
-\begin{verbatim}
-edit $~/.bashrc file and add following lines
-PATH=/usr/local/texlive/2011/bin/x86_64-linux:$PATH;
-export PATH 
-MANPATH=/usr/local/texlive/2011/texmf/doc/man:$MANPATH;
-export MANPATH 
-INFOPATH=/usr/local/texlive/2011/texmf/doc/info:$INFOPATH;
-export INFOPATH
-
-\end{verbatim}
-
-
-
-%\subsection{Installing directly using Linux packages} 
-\subsubsection*{Fedora/RedHat/CentOS:}
-\begin{verbatim} 
-sudo yum install texlive 
-sudo yum install psutils 
-\end{verbatim}
-
-
-\subsubsection*{SUSE:}
-\begin{verbatim}
-sudo zypper install texlive
-\end{verbatim}
-
-
-\subsubsection*{Debian/Ubuntu:}
-\begin{verbatim} 
-sudo apt-get install texlive texlive-latex-extra 
-sudo apt-get install psutils
-\end{verbatim}
+%Tras estas modificaciones se logra obtener el hardware programado de forma persistente. De todos modos luego de ejecutarse una serie de pruebas se constatan comportamientos an\'omalos en capa f\'isica de las interfaces de la placa (podemos meter la descripcion). Nuevamente se reporta el comportamiento a la comunidad de NetFPGA desde donde se nos suguiere un parche para el driver, aparentemente causante del error. Se realizan los cambios y todo anda yuju!  
