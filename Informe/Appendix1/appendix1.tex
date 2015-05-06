@@ -1,14 +1,13 @@
 % ******************************* Thesis Appendix A ****************************
 \chapter{Soluci\'on a errores encontrados en la plataforma NetFPGA} 
 
-Durante el tiempo que se trabajo con el hardware NetFPGA, se detectaron errores y comportamientos inesperados en el mismo. En particular se encontraron errores de severidad alta en relaci'on al  impacto sobre el prototipo; durante el proceso de programaci\'on persistente del hardware con el proyecto ReferenceNIC.\\
+Durante el tiempo en que se trabajo con el hardware NetFPGA, utilizando la versi\'on 5.0.5 del c\'odigo fuente de la plataforma, se detectaron errores y comportamientos inesperados. En particular se encontraron errores de severidad alta, en relaci\'on al impacto que tienen sobre el prototipo, durante el proceso de programaci\'on persistente del hardware con el proyecto ReferenceNIC.\\
 
-En total se detectaron dos bugs, los cuales fueron reportados a la comunidad de NetFPGA y al equipo de soporte atraves de la lista de correos. El equipo de NetFPGA r\'apidamente confirmo los mismos,
-ofreciendonos soluciones a ambos errores. Luego se constato que estos errores fueron solucionados en la siguiente versi\'on del c\'odigo fuente de la plataforma.\\ 
+En total se detectaron dos bugs importantes, los cuales fueron reportados a la comunidad y equipo de desarrollo de NetFPGA; atraves de una lista de correos[poner referencia a la lista de correos]. Estos errores fueron confirmados por el equipo de desarrollo de NetFPGA, y se nos brindo soluciones a ambos errores. 
 
-Cabe destacar que estos errores fueron detectados trabajanfo con la versi\'on 5.0.5 del c\'odigo fuente.
+Por otro lado se constato que estos errores fueron solucionados en la siguiente versi\'on del c\'odigo fuente de la plataforma.\\ 
  
-\section*{Problema con la herramienta pcieprog y ReferenceNIC}
+\section{Problema con la herramienta pcieprog y ReferenceNIC}
 El primer error detectado se encuentra en la herramienta \textbf{pcieprog} dentro de la plataforma de NetFPGA. La misma se utiliza para transferir el archivo binario generado a partir del bitfile del proyecto (en este caso ReferenceNIC) a una de las memorias Flash del hardware.
 
 Al ejecutarse esta herramienta con el binario generado para el proyecto ReferenceNIC, la misma se estancaba durante horas con un 100\% de utilizaci\'on de la CPU. Tras probar con varias ejecuciones de la misma herramienta, se realizo la misma prueba con dos proyectos m\'as (reference\_ switch y reference\_ router), compatibles con la programaci\'on persistente. 
@@ -44,14 +43,16 @@ por
 \item Utilizar el nuevo bitfile generado para programar el hardware, generar un nuevo archivo binario y transerir a la memoria Flash.
 \end{enumerate}
 
-\section*{Error en driver para ReferenceNIC}
+Una vez que se realizaron estos cambios, se constato que la herramienta pcieprog funcionaba correctamente, transfiriendo el binario a la memoria Flash correctamente.
+ 
+\section{Error en driver para ReferenceNIC}
 El segundo error detectado con este proyecto, tambi\'en en la modalidad de programaci\'on persistente  se encuentra relacionado al driver utilizado para la interacci\'on entre el hardware y el sistema operativo anfitrion.\\
 
 Este error fue detectado experimentalmente al realizar pruebas de funcionamiento entre varios nodos utilizando el hardware programado con el proyecto ReferenceNIC, y se detalla a continuaci\'on:
 
 \begin{itemize}
 \item \textbf{Descripci\'on:}\\
-Al programarse el hardware con el proyecto ReferenceNIC desde la memoria Flash utilizando la programaci\'on pcie, no funciona correctamente cuando la placa NetFPGA tiene conectados enlaces en sus puertos. En particular para que el hardware funcione correctamente debe ser encendido sin cables conectados en los puertos, y luego conectar manualmente cada uno de ellos una ves que el equipo completo el encendido.
+Al programarse el hardware con el proyecto ReferenceNIC desde la memoria Flash utilizando la programaci\'on pcie, no funciona correctamente cuando la placa NetFPGA tiene conectados enlaces en sus puertos. En particular para que el hardware funcione correctamente debe ser encendido sin cables conectados en los puertos, y luego conectar manualmente cada uno de ellos una vez que el equipo completo el encendido.
 
 \item \textbf{Escenario:}
 \begin{itemize}
@@ -85,7 +86,7 @@ Partiendo de ambas PCs apagadas
 
 \end{itemize}
 
-Este reporte tambi\'en fue enviado a la comunidad de NetFPGA (ver anexo con emails [link al email]), en donde se constato nuevamente la presencia de un error, esta vez en la configuraci\'on de los chips PHY de la tarjeta. 
+Este reporte tambi\'en fue enviado a la comunidad de NetFPGA (ver anexo con emails [link al email]), en donde se constato nuevamente la presencia de un error, esta vez en la configuraci\'on de los chips PHY de la tarjeta.\\ 
 
 La soluci\'on planteada por el equipo de NetFPGA fue la siguiente:
 
