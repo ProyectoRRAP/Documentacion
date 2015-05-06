@@ -786,7 +786,7 @@ VIEW_PDF	?= xpdf
 VIEW_GRAPHICS	?= display
 
 # Xindy glossaries
-XINDYLANG	?= english
+XINDYLANG	?= spanish
 XINDYENC	?= utf8
 
 # If cygpath is present, then we create a path-norm function that uses it,
