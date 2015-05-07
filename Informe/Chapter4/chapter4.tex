@@ -146,8 +146,21 @@ se garantiza el soporte a MPLS en las operaciones de match, push y pop, para una
 Se explicaron las principales caracter\'isticas del dise\~no e implementaci\'on del router, ahora es el turno del Controlador.
 
 \section{Entidad Controlador}
-Con respecto al Controlador, vale la pena destacar solamente las componentes de software dado que en relaci\'on al hardware, el mismo esta basado en una PC de escritorio. En la imagen ~\ref{fig:OpenSourceRArch3} se aprecian los componentes que constituyen al Controlador.\\
+Cada nodo del prototipo responde a una entidad denominada Controlador. Esta entidad esta compuesta por varias partes(ver figura \ref{fig:OpenSourceRArch3}).
 
+\section{Software de Control Ryu}
+[yo]
+
+\section{Quagga}
+[ficha]
+
+\section{LSDB Sync}
+[ficha]
+
+\section{Gerente SNMP}
+[ficha]
+
+%%%%%
 Al igual que el router, el Controlador consta de un sistema operativo sobre el cual posteriormente se instalan las diferentes componentes de software utilizadas. Particularmente esta compuesto por la suite de ruteo Quagga, un modulo encargado de la sincronizaci\'on de la informaci\'on topl\'ogica, un gerente SNMP, y finalmente el software de control SDN Ryu, sobre el cual se ejecuta la aplicaci\'on RauFlow.
 
 \begin{figure}[htbp!] 
