@@ -2,9 +2,16 @@
 
 \chapter{Desaf\'ios t\'ecnicos encontrados}
 
+% **************************** Define Graphics Path **************************
+\ifpdf
+    \graphicspath{{Appendix2/Figs/Raster/}{Appendix2/Figs/PDF/}{Appendix2/Figs/}}
+\else
+    \graphicspath{{Appendix2/Figs/Vector/}{Appendix2/Figs/}}
+\fi
+
 Durante toda la ejecuci\'on del proyecto, nos enfrentamos a desaf\'ios y en particular de caracter t\'ecnico. Dentro de estos desaf\'ios podemos encontrar algunos que se destacan por su complejidad y dificultad para resolverlos; y otros que se destacan por su severidad como riesgo tecnol\'ogico dentro del proyecto. Por ello consideramos apropiado incluir un ap\'endice para hacer menci\'on a los mismos y a sus respectivas resoluciones.
 
-\section{Problemas con SFPIs y Patchcoords}
+\section{Problemas con SFPs y Patchcoords}
 
 Aca debemos hablar del problema que tuvimos con los patchcoords que en principio pensamos que eran de los SFPIs.
 
@@ -20,7 +27,60 @@ Esta bueno mencionar que el chino consigui licencias.
 Si mal no recuerdo tuvimos algun problema en relacion a esto. Tengo la vaga idea de que yo queria usar algo de linux que te permite correr drivers no recuerdo si viejos.... Fa capaz me estoy mareando con lo de la wireless de asus.
 
 \section{Inconsistencias en las releases notes de Open vSwitch}
-Bueno aca mencionamos el problema de OVS de como si bien en las faqs y en las release notes dice que funcionaba el push/pop y match de single label no andaba el pop. De como luego se corrigio esto y funcionaba para hasta 3 labels. De que de ahi en mas se usa la ovs-master
+
+Open vSwitch es uno de los pilares fundamentales del router opensource, puesto que es el encargado de implementar el plano de datos de OpenFlow. Durante el tiempo en que se trabaj\'o con esta herramienta se genero experiencia y conocimiento en relaci\'on aspectos importantes sobre esta herramienta, que no son triviales y vale la pena mencionar.\\ 
+
+\begin{enumerate}
+\item Parte de las funcionalidades de Open vSwitch, esta\'an implementadas para funcionar en modo kernel, y parte en modo usuario. Estas \'ultimas presentan un nivel de performance muy pobre en comparaci\'on a la primera; y en particular las funcionalidades de MPLS se encuentran solamente disponibles en modo usuario.
+
+\item De acuerdo a las notas de liberaci\'on de la \'ultima versi\'on oficial de Open vSwitch(2.3.1), 
+esta garantizado el soporte a MPLS en las operaciones de match, push y pop, para una \'unica etiqueta, as\'i como el posterior procesamiento del paquete de acuerdo al pipe de OpenFlow, funcionando en modo usuario.
+
+\item Originalmente las notas de liberaci\'on de Open v Switch v2.3.1, y la p\'agina de preguntas frecuentes no se correspond\'ian con el comportamiento del software. En particular se garantizaba el soporte para match, push, pop y posterior procesamiento de un paquete MPLS en una \'unica etiqueta.
+Experimentalmente se comprobo que las operaciones de match y push funcionaban cprrectamente para una \'unica etiqueta. No obstante la operaci\'on de POP no estaba soportada. Este comportamiento fue detectado y reportado por otros usuarios de Open vSwitch, resolviendose en poco tiempo en la versi\'on de desarrollo de Open vSwitch.
+
+\item Trabajando con la versi\'on m\'as reciente de Open vSwcitch en el repositorio de desarrollo, se comprobo experimentalmente soporte para las operaciones de match, push y pop hasta 3 etiquetas, y el posterior procesamiento del paquete seg\'un el pipe de procesamiento de OpenFlow.
+
+\item \textbf{Puertos OpenFlow con direcciones IP}
+%Una condici\'on necesaria en la arquitectura del prototipo es la capacidad de asignar direcciones IP a cada interaz del router opensource.
+ 
+Para lograr que cada interfaz f\'isica de la tarjeta NetFPGA se comporte tanto como un puerto OpenFlow, como una interfaz IP, es necesario:
+
+\begin{enumerate}
+\item Crear un bridge con Open vSwitch, y agregar cada interaz f\'isica como un puerto OpenFlow al mismo.
+\item Asignar una direccion IP a la propia intefaz f\'isica (por ejemplo utilizando el comando ifconfig).
+\end{enumerate}
+
+Debido al comportamiento de un bridge en Linux, esta estrategia que parece natural e inmediata, no se comporta en la pr\'actica como necesitamos. El comportamiento deseado de una interfaz h\'ibrida IP/OpenFlow en el prototipo ser\'ia el que se indica en la gigura [referencia a la figura].
+
+Un paquete ingresa al router a trav\'es de la interfaz f\'isica \textbf{nf0}
+
+\newpage
+\begin{figure}[htbp!] 
+\centering    
+\includegraphics[width=0.3\textwidth]{ovs_figure1}
+\caption[OVSInterfaces1]{Descripci\'on esquematica de interfaces en ovs}
+\label{fig:OVSInterfaces1}
+\end{figure}
+
+\begin{figure}[htbp!] 
+\centering    
+\includegraphics[width=0.3\textwidth]{ovs_figure2}
+\caption[OVSInterfaces2]{Descripci\'on esquematica de interfaces propuesta}
+\label{fig:OVSInterfaces2}
+\end{figure}
+
+
+Originalmente, para constru\'ir una interfaz IP con un puerto OpenFlow 
+
+\begin{itemize}
+\item Como se esperaria que se cmportara
+\item Como se esta comportando
+\item Porque se comporta asi
+\item Como lo solucionamos
+\end{itemize}
+
+\end{enumerate}
 
 \section{MPLS Linux y Quagga LDP}
 Bueno creo que es aca donde sacarnos las ganas de hablar de Quagga LDP y MPLS linux
