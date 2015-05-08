@@ -53,11 +53,19 @@ Para lograr que cada interfaz f\'isica de la tarjeta NetFPGA se comporte tanto c
 
 Debido al comportamiento de un bridge en Linux, esta estrategia que parece natural e inmediata, no se comporta en la pr\'actica como necesitamos. 
 
-El comportamiento deseado de una interfaz h\'ibrida IP/OpenFlow en el prototipo ser\'ia el que se muestra en la figura [referencia a la figura] en la parte izquierda.
+El comportamiento deseado de una interfaz h\'ibrida IP/OpenFlow en el prototipo ser\'ia el que se muestra en la figura ~\ref{fig:OVSInterfaces} en la parte izquierda.
 
 El paquete ingresa al router atrav\'es de la interfaz f\'isica \textbf{nf0} y de ah\'i en m\'as el procesamiento del mismo es delegado al m\'odulo de Open vSwitch en el kernel de Linux. Aqu\'i el paquete es procesado y tratado en consecuencia a lo que indica la tabla de flujos en Open vSwitch. En el prototipo, para este paquete existen dos alternativas: (1) se procesa el contenido del mismo y se reenv\'ia por otra interfaz acorde a la regla correspondiente, (2) es contemplado por una regla con la acci\'on \textit{NORMAL}, y por tanto es procesado como lo har\'ia un switch legado(en este caso como lo procesar\'ia el kernel de linux).\\
 
 No obstante, el procesamiento del paquete al ingresar por la interfaz f\'isica \textbf{nf0} difiere(ver im\'agen de la derecha). El paquete es procesado por Open vSwitch como se describi\'o anteriormente, pero tambi\'en es enviado para su procesamiento en el kernel de linux.
+
+\begin{figure}[htbp!] 
+\centering    
+\includegraphics[width=0.75\textwidth]{ovs_figure3}
+\caption[OVSInterfaces]{Descripci\'on esquematica de interfaces propuesta}
+\label{fig:OVSInterfaces}
+\end{figure}
+
 
 \newpage
 \begin{figure}[htbp!] 
