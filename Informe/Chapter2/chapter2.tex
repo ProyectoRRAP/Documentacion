@@ -13,10 +13,9 @@
 En este capítulo se presentan los resultados obtenidos en el trabajo de investigación sobre el estado
 del arte de las Redes Definidas por Software(Software Defined Networking), lenguajes
 de programación y herramientas para el desarrollo sobre dicha arquitectura, hardware NetFPGA, y otros conceptos esenciales para el desarrollo de este trabajo. En caso de que el lector desee profundizar en alguno de los conceptos presentados en este capitulo, o consultar enfoques alternativos
-y/o complementarios recomendamos los siguientes trabajos~\citep{StateOfArt1}~\citep{StateOfArt2}. Para el caso particular en que el lector este familiarizándose con el enfoque de las Redes Definidas por Software, se recomienda también 
-la siguiente lista de lecturas recomendadas[1], así como el libro[9].\\
+y/o complementarios recomendamos los siguientes trabajos~\citep{StateOfArt1}~\citep{StateOfArt2}. Para el caso particular en que el lector este familiarizándose con el enfoque de las Redes Definidas por Software, se sugiere también la siguiente lista de lecturas[1] y el libro[9].\\
 
-En relación a como se divide este capitulo, primero se introduce el concepto de Software Defined Netoworking(SDN) analizando sus principales antecedentes y finalmente brindando una definición. Luego se presenta y analiza en profundidad una de las arquitecturas existentes, basadas en este enfoque y en particular utilizada por este trabajo para la construcción del prototipo. Se continua con la introducción de algunos conceptos esenciales para el desarrollo de este trabajo como el concepto de Redes Privadas Virtuales y Multi Label Protocol Switch entre otros. Finalmente se presentan el relevamiento en el estado del arte realizado sobre la plataforma NetFPGA.  
+En relación a como se divide este capitulo, primero se introduce el concepto de Software Defined Netoworking(SDN) analizando sus principales antecedentes y finalmente brindando una definición. Luego se presenta y analiza en profundidad una de las arquitecturas existentes, basadas en este enfoque y en particular utilizada por este trabajo para la construcción del prototipo. Se continua con la introducción de algunos conceptos esenciales para el desarrollo de este trabajo como el concepto de Redes Privadas Virtuales y Multilabel Protocol Switch entre otros. Finalmente se presentan el relevamiento en el estado del arte realizado sobre la plataforma NetFPGA.  
 
 %********************************** %First Section  **************************************
 \section{Antecedentes a SDN} %Section - 1.1
@@ -83,42 +82,44 @@ En otras palabras el plano de decisión es responsable de crear la configuració
 
 \section{Software Defined Networking}
 
-Definir el concepto de Software Defined Networking no es una tarea simple, puesto que no se encuentra por completo estandarizado, y existen varias organizaciones trabajando en la temática. En particular se pueden destacar al grupo de trabajo Software-Defined Networking Research Group(SDNRG) dentro del IRTF, quien se encuentra trabajando en la redacción de las definiciones y estándares para este concepto, y por otro lado a la Open Networking Foundation organización que concentra gran cantidad de material y documentación sobre SDN, y se encuentra trabajando en el desarrollo del protocolo OpenFlow el cual se explica mas adelante en este trabajo.\\
+Definir el concepto de Software Defined Networking no es una tarea simple, puesto que no se encuentra por completo estandarizado a pesar de que existen varias organizaciones trabajando en la temática. En particular se pueden destacar al grupo de trabajo Software-Defined Networking Research Group(SDNRG) dentro del IRTF, quien se encuentra trabajando en la redacción de las definiciones y estándares para este concepto, y por otro lado a la Open Networking Foundation organización que concentra gran cantidad de material y documentación sobre SDN, y se encuentra trabajando en el desarrollo del protocolo OpenFlow el cual se explica mas adelante en este trabajo.\\
 
-Utilizando la definición que provista por la Open Networking Foundation, SDN puede resumirse como:
+Acorde a la Open Networking Foundation, SDN puede resumirse como:
 
 \begin{quote}
 \textit{``La separación física del plano de control de la red del plano de datos, y donde el plano de control controla varios dispositivos.''}
 \end{quote}
 
-Más en detalle y siguiendo la visión de la ONF, SDN es una arquitectura de red que desacopla los planos de control y de datos, moviendo el plano de control (inteligencia de la red, construcción y calculo de políticas de red) hacia una entidad denominada controlador. Esto le brinda la capacidad al control de red de ser directamente programable, y a la infraestructura subyacente ser abstraída por las aplicaciones y servicios de red.\\ 
+Más en detalle, SDN es una arquitectura de red que desacopla los planos de control y de datos, moviendo el plano de control (inteligencia de la red, construcción y calculo de políticas de red) hacia una entidad denominada Controlador. Esto le habilita al control de la red a ser directamente programable, y a la infraestructura subyacente ser abstraída por las aplicaciones y servicios de red.\\ 
 
 La ONF presenta a Software Defined Networking como una arquitectura emergente, dinámica, escalable, rentable y adaptable, haciéndola ideal para aplicaciones de naturaleza dinámica y exigentes de los recursos de red disponibles. En particular destaca las cualidades de presentar una gestión centralizada, y de estar basada en estándares abiertos neutrales a los vendedores.\\
 
 \begin{figure}[htbp!] 
 \centering    
 \includegraphics[width=10cm]{SDNArchitecture}
-\caption[Capas de la arquitectura 4D]{Arquitectura de SDN}
+\caption[Arquitectura de SDN - Capas lógicas]{Arquitectura de SDN - Capas lógicas}
 \label{fig:SDNArchitecture}
 \end{figure}
 
 El enfoque de SDN propone tres capas lógicas(ver imagen ~\ref{fig:SDNArchitecture}): (1) capa de aplicaciones (Application Layer), (2) capa de control (Control Layer) y (3) capa de infraestructura (Infraestructure Layer).\\
 
-La capa de infraestructura se compone por los dispositivos de red tradicionales como switches y routers, en particular compatibles con la arquitectura SDN. La inteligencia de dichos dispositivos, a diferencia de switches y routers convencionales es desacoplada de los mismos, y se traslada a la capa de control.\\
+La capa de infraestructura se compone por los dispositivos de red tradicionales como switches y routers, en particular compatibles con la arquitectura SDN. La inteligencia de dichos dispositivos a diferencia de switches y routers convencionales es desacoplada de los mismos, y se traslada a la capa de control.\\
 
-En la capa de control se encuentra el software de control encargado de implementar el plano de control en el modelo. Usualmente se denomina Controlador a dicho software.\\ El Controlador implementa una API de operaciones que expone a las aplicaciones de la capa de Aplicación para la manipulación de los dispositivos de la capa de infraestructura.
+En la capa de control se encuentra el software de control encargado de implementar el plano de control en el modelo. Usualmente se denomina Controlador a dicho software.
 
-Finalmente la capa de aplicaciones, contiene implementados en software como aplicaciones toda la inteligencia que originalmente se agregaba en un dispositivo de la capa de infraestructura; por ejemplo la implementaci\'on de protocolos de red.
+El Controlador implementa una API de operaciones que expone a las aplicaciones de la capa de Aplicación para la manipulación de los dispositivos de la capa de infraestructura.\\
+
+Por otro lado la capa de aplicaciones, contiene implementados en software como aplicaciones toda la inteligencia que originalmente se agregaba en un dispositivo de la capa de infraestructura; por ejemplo la implementaci\'on de protocolos de red.
 
 En dicha capa se pueden implementar desde protocolos de ruteo como OSPF y RIP, backbones sobre MPLS, políticas de seguridad, hasta aplicaciones de ingeniería de tráfico.\\
 
-De esta forma Software Defined Networking, centraliza el control de la red en una aplicación de software (Controlador); y transforma los algoritmos, procesos de control, políticas de seguridad y toda la inteligencia antiguamente acoplados a los dispositivos de red en aplicaciones programadas sobre los controladores.\\
+De esta forma Software Defined Networking, centraliza el control de la red en una aplicación de software (Controlador); y transforma algoritmos, procesos de control, políticas de seguridad y toda la inteligencia antiguamente acoplados a los dispositivos de red, en aplicaciones de controlador.\\
 
 \section{Arquitecturas basadas en SDN}
-Existen varias arquitecturas o implementaciones que de una forma u otra puede encontrarse argumentos para afirmar que siguen el enfoque de SDN. Este trabajo se basa en la utilización de la arquitectura OpenFlow; pero existen otras arquitecturas basadas en este enfoque como ForCES. [de repente podemos mencionar algunas de las de cisco/hp].
+Existen varias arquitecturas o implementaciones que de una forma u otra puede encontrarse argumentos para afirmar que siguen el enfoque de SDN. Este trabajo se basa en la utilización de la arquitectura OpenFlow pero existen otras arquitecturas basadas en este enfoque como ForCES. [de repente podemos mencionar algunas de las de cisco/hp].
 
 \subsection{OpenFlow}
-Orientado por el enfoque en tres capas de SDN, y bajo la misma premisa de desacoplar completamente los planos de datos y control, OpenFlow\cite{mckeown2008openflow} brinda una implementaci\'on estándar para el mecanismo de comunicación entre las capas de control e infraestructura; interfaz sur. En otras palabras, provee de un protocolo de comunicación estándar para manipular los distintos dispositivos de la red y así el plano de datos.\\ 
+Orientado por el enfoque en tres capas de SDN y bajo la misma premisa de desacoplar completamente los planos de datos y control, OpenFlow\cite{mckeown2008openflow} brinda una implementaci\'on estándar para el mecanismo de comunicación entre las capas de control e infraestructura; interfaz sur. En otras palabras, provee de un protocolo de comunicación estándar para manipular los distintos dispositivos de la red y así el plano de datos.\\ 
 
 OpenFlow se basa en tres componentes(ver figura ~\ref{fig:OpenFlowArch}): (1) Controlador OpenFlow compatible, (2) Protocolo OpenFlow y (3) Switch OpenFlow compatible.
 
