@@ -9,39 +9,78 @@
     \graphicspath{{Appendix2/Figs/Vector/}{Appendix2/Figs/}}
 \fi
 
-Durante toda la ejecuci\'on del proyecto, nos enfrentamos a desaf\'ios y en particular de caracter t\'ecnico. Dentro de estos desaf\'ios podemos encontrar algunos que se destacan por su complejidad y dificultad para resolverlos; y otros que se destacan por su severidad como riesgo tecnol\'ogico dentro del proyecto. Por ello consideramos apropiado incluir un ap\'endice para hacer menci\'on a los mismos y a sus respectivas resoluciones.
+Durante toda la ejecuci\'on del proyecto, nos enfrentamos a desaf\'ios y en particular de carácter t\'ecnico. Dentro de estos desaf\'ios podemos encontrar algunos que se destacan por su complejidad y dificultad para resolverlos; y otros que se destacan por su severidad como riesgo tecnol\'ogico dentro del proyecto. Por ello consideramos apropiado incluir un ap\'endice para hacer menci\'on a los mismos y a sus respectivas resoluciones.
 
 \section{Problemas con SFPs y Patchcoords}
 
-Aca debemos hablar del problema que tuvimos con los patchcoords que en principio pensamos que eran de los SFPIs.
+Los tranceptores SFP+ o transceivers SFP+, son una componente de hardware utilizados en cada puerto f\'isico de la tarjeta NetFPGA en el protot\'ipo.\\ 
+ 
+Or\'iginalmente se trabajo con dos tranceptores SFP+ y patchords de f\'ibra \'optica monomodo. En este punto el hardware funcionaba correctamente. Luego se incorporaron m\'as unidades de SFP+ con el objetivo de constru\'ir el testbed mencionado en [linik a la secci\'on de pruebas donde se presenta el testbed]. En este caso se detectaron problemas para establecer conexiones exitosas para cualquier par de nodos en que se utilizara al menos uno de los SFP nuevos.\\
 
-\section{Desprogramaci\'on de la placa}
-Aca hablamos del problema de desprogramacion de la placa, como constatamos que la placa se desprogrmaba (mirando unos bits en la placa con Impact), y que mandamos email a la comunidad de NetFPGA tras revisar  ademas foros de NetFPGA. Nos contestan que usemos pci programacion, y bueno probamos con esto. Hacer incapie en que probramos reference flash y pcieprog pero no nos andaba y nos mareamos.
+Tras varias pruebas que confirmaran el error, se consulto con la documentaci\'on y con el equipo generado con ANTEL. Tras la sugerencia de utilizar fibra multimodo en vez de monomodo se logro establecer conexiones exitosas entre todos los pares de interfaces del hardware.\\
+
+Como conclusi\'on general, para el hardware utilizado se debe utilizar patchcords de fibra multimodo.
+
+
+\section{Desprogramaci\'on del hardware NetFPGA}
+\label{apendiceB2}
+
+Para la programación del hardware NetFPGA, se utiliza inicialmente el procedimiento indicado en el manual de ejecuci\'on del Test de Producci\'on ~\citep{ProdTestManual}. Tras experimentarse un tiempo con este procedimiento y el hardware se constata que esta técnica de programación no es persistente. Esto significa que tras apagar y encender el equipo(ciclo completo de encendido) el mismo pierde la programación. 
+
+Utilizando la herramienta Impact, observando el comportamiento de LEDs en la placa y corroborando con el el manual de la misma, se constata que el contenido del chip CPLD no es borrado, pero el del chip FPGA si.\\
+
+Con esta información se consulta la documentación de la plataforma, y se buscan experiencias similares por partes de otros usuarios de la misma. No se encuentran problemas o experiencias similares, pero se encuentra dentro de los proyectos de la plataforma un desarrollo de nombre Reference Flash, cuya funcionalidad es habilitar la programación persistente del hardware.\\
+
+Este proyecto utiliza las dos unidades de memoria flash del equipo. Mientras que en la Flash A se almacena un bitstream de configuración para el equipo (bootstrap bitstream), la  Flash B queda disponible para almacenar un bitstream a elección del programador. 
+
+La configuración del equipo es siempre manejada por el chip CPLD, el cual en el tiempo de encendido programa al equipo con el contenido de la Flash A. Luego el equipo puede ser reprogramado desde la Flash B a través de la interfaz PCIe.
+
+Basándose en este proyecto, se prueba como solución al problema de la desprogramacion del equipo esta alternativa, utilizando como bitstream para la Flash B, el proyecto ReferenceNIC.\\
+
+Esta estrategia funciona en relación a la desprogramacion del hardware, puesto que tal como su documentación lo indica se programa a partir del contenido de la Flash A; y luego utilizando la interfaz PCIe es existosamente reprogramada desde la Flash B. No obstante el comportamiento final del hardware no es el correcto. En particular tras reprogramar el equipo desde la Flash B no se puede insertar el driver para el ReferenceNIC en el kernel del sistema operativo(Linux).\\
+
+Finalmente se utiliza una lista de correos en la que participan usuarios y desarrolladores de la plataforma. Aquí se explica el problema de la desprogrmacion del hardware, y las alternativas exploradas (ver anexo [link al anexo con el email]). 
+
+Afortunadamente, por parte del equipo de desarrolladores de NetFPGA se nos contesta que este comportamiento se debe a una incorrecta programacion del hardware. Si bien se entiende correctamente la funcionalidad del proyecto ReferenceFlash, el proyecto ReferenceNIC precisa de módulos adicionales en el diseño de la CPLD que el ReferenceFlash no tiene. 
+
+Sin embargo, el proyecto ReferenceNIC ya tiene incorporado el modulo de persistencia que se presenta en ReferenceFlash. Para lograr una programacion persistente, ademas de programar el equipo con el ReferenceNIC, se debe utilizar la herramienta \textbf{pcieprog}(dentro del mismo proyecto), para cargar en la memoria Flash A, un archivo bitstream con el contenido del mismo proyecto. De esta forma al producirse el encendido del equipo, este se programa con el contenido de la memoria Flash A.\\ 
+
+Esta es la solución al problema de la desprogramacion del hardware, y es lo que se da a conocer en este trabajo como la estrategia de programación persistente.
 
 \section{Falta de licencias para suite de Xilinx ISE SDK}
+\label{apendiceB3}
 
-Aca debemos hablar del problema que tuvimos con las licencias, en particular podriamos intentar recreear el problema para ver en que se mancaba. Detallar las licencias que se disponia y las que se consiguieron para que ande.
-Esta bueno mencionar que el chino consigui licencias.
+La suite de Xilinx ISE SDK, se componen por un conjunto extenso de herramientas y entornos de desarrollo. Dentro de la suite se encuentran herramientas habilitadas para su uso bajo licencias gratuitas, otras bajo licencias de prueba (tipicamente 30 dias), y otras solamente bajo licencias pagas.\\
+
+En particular en este proyecto se comienza trabajando con un paquete de licencias gratuitas. Seguir explicando \dots\\
+
+
+Por otro lado, esta estrat\'egia de programaci\'on utiliza herramientas de la suite de Xilinx que requieren de licencias pagas. Este detalle se constato experimentalmente en la ejecuci\'on del proyecto. Cabe destacar que la informaci\'on de error proporcionada por la herramienta al intentar ejecutarla sin las licencias correspondientes, asi como la documentaci\'on disponible no suguieren de forma intuitiva un problema de licencias. Por ello, teniendo la intuici\'on de que se trataba efectivamente de un problema de licenciamiento se solicitaron licencias adicionales a trav\'es del programa de apoyo universitario de Xilinx.
+
+Tras pasar varias semanas a la espera de una respuesta, se establecio un contacto con docentes del IIE de Facultad de Ingenieria. Desde el IIE se contesto que no trabajaban con esta plataforma pero que lo hab\'ian hecho en un pasado; facilit\'andonos un conjunto de licencias con el que se logro resolver el problema de licenciamiento. 
+
+Mucho tiempo despu\'es el programa universitario de Xilinix don\'o un paquete de licencias entre las cuales se encontraban las necesarias. Por m\'as detalles acerca de este problema referirse al siguiente ap\'endice [link al apendice y problema tecnico].
 
 \section{Falta de driver para cable JTAG Xilinx}
 Si mal no recuerdo tuvimos algun problema en relacion a esto. Tengo la vaga idea de que yo queria usar algo de linux que te permite correr drivers no recuerdo si viejos.... Fa capaz me estoy mareando con lo de la wireless de asus.
 
-\section{Inconsistencias en las releases notes de Open vSwitch}
+\section{Desaf\'ios con Open vSwitch}
+\label{apendiceB5}
 
 Open vSwitch es uno de los pilares fundamentales del router opensource, puesto que es el encargado de implementar el plano de datos de OpenFlow. Durante el tiempo en que se trabaj\'o con esta herramienta se genero experiencia y conocimiento en relaci\'on aspectos importantes sobre esta herramienta, que no son triviales y vale la pena mencionar.\\ 
 
 \begin{enumerate}
-\item Parte de las funcionalidades de Open vSwitch, esta\'an implementadas para funcionar en modo kernel, y parte en modo usuario. Estas \'ultimas presentan un nivel de performance muy pobre en comparaci\'on a la primera; y en particular las funcionalidades de MPLS se encuentran solamente disponibles en modo usuario.
+\item Parte de las funcionalidades de Open vSwitch, est\'an implementadas para funcionar en modo kernel, y parte en modo usuario. Estas \'ultimas presentan un nivel de performance muy pobre en comparaci\'on a la primera; y en particular las funcionalidades de MPLS se encuentran solamente disponibles en modo usuario.
 
 \item De acuerdo a las notas de liberaci\'on de la \'ultima versi\'on oficial de Open vSwitch(2.3.1), 
 esta garantizado el soporte a MPLS en las operaciones de match, push y pop, para una \'unica etiqueta, as\'i como el posterior procesamiento del paquete de acuerdo al pipe de OpenFlow, funcionando en modo usuario.
 
 \item Originalmente las notas de liberaci\'on de Open v Switch v2.3.1, y la p\'agina de preguntas frecuentes no se correspond\'ian con el comportamiento del software. En particular se garantizaba el soporte para match, push, pop y posterior procesamiento de un paquete MPLS en una \'unica etiqueta.
-Experimentalmente se comprobo que las operaciones de match y push funcionaban cprrectamente para una \'unica etiqueta. No obstante la operaci\'on de POP no estaba soportada. Este comportamiento fue detectado y reportado por otros usuarios de Open vSwitch, resolviendose en poco tiempo en la versi\'on de desarrollo de Open vSwitch.
+Experimentalmente se comprobo que las operaciones de match y push funcionaban correctamente para una \'unica etiqueta. No obstante la operaci\'on de POP no estaba soportada. Este comportamiento fue detectado y reportado por otros usuarios de Open vSwitch, resolviéndose posteriormente en la versi\'on de desarrollo de Open vSwitch~\citep{OVSSourceCode}.
 
-\item Trabajando con la versi\'on m\'as reciente, bajada directamente desde el repositorio de desarrollo de Open vSwitch , se comprobo experimentalmente soporte para las operaciones de match, push y pop de hasta 3 etiquetas, y el posterior procesamiento del paquete seg\'un el pipe de procesamiento de OpenFlow.
+\item Trabajando con la versi\'on m\'as del HEAD, en el repositorio de desarrollo de Open vSwitch~\citep{OVSSourceCode}, se comprueba experimentalmente el soporte para las operaciones de match, push y pop de hasta 3 etiquetas, y el posterior procesamiento del paquete seg\'un el pipe de procesamiento de OpenFlow.
 
-\item \textbf{Puertos OpenFlow con direcciones IP}
+\item Puertos OpenFlow con direcciones IP
 %Una condici\'on necesaria en la arquitectura del prototipo es la capacidad de asignar direcciones IP a cada interaz del router opensource.
  
 Para lograr que cada interfaz f\'isica de la tarjeta NetFPGA se comporte tanto como un puerto OpenFlow, como una interfaz IP, es necesario:
@@ -77,6 +116,8 @@ Para solucionar este problema se utilizan interfaces virtuales. Ficha por favor 
 \label{fig:OVSInterfaces2}
 \end{figure}
 
+
+\end{enumerate}
 
 \section{MPLS Linux y Quagga LDP}
 Bueno creo que es aca donde sacarnos las ganas de hablar de Quagga LDP y MPLS linux

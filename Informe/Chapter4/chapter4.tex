@@ -29,6 +29,15 @@ Se tienen entonces dos claras lineas de trabajo; el desarrollo del router openso
 
 Cada nodo del prototipo, es lo que en este trabajo se denomin\'o router opensource. Dicho router a su vez puede dividirse en diferentes componentes como se muestra en la figura~\ref{fig:OpenSourceRArch}.
 
+\newpage
+\begin{figure}[htbp!] 
+\centering    
+\includegraphics[width=0.7\textwidth]{Arch_Figure1}
+\caption[OpenSourceRArch]{Diagrama de componentes del router open source}
+\label{fig:OpenSourceRArch}
+\end{figure}
+
+
 \subsection{Plataforma de la PC}
 El router esta constru\'ido sobre la plataforma de una PC de escritorio convencional. En particular se trabaja con un procesador Intel Core i7 de 64 bits, una Mother ASUS ROG Maximus Formula VI impuesta por los requerimientos de funcionamiento del hardware NetFPGA, 16GB de memoria DDR3, y un disco r\'igio de 1TB de capacidad. En el anexo [link] al anexo pueden encontrarse los detalles t\'ecnicos de la PC.
 
@@ -63,105 +72,62 @@ Esta estrategia presenta como ventajas su simplicidad. No requiere de licencias 
 
 Sin embargo presenta una desventaja importante; al producirse un ciclo completo de corriente (apagado y encendido del equipo), el hardware se desprograma. Concretamente el contenido del chip FPGA es borrado, y solo perdura el contenido del chip CPLD.\\
 
-Tras constatarse este comportamiento, luego de revisar la documentaci\'on de la plataforma y recurrir al foro de la comunidad NetFPGA, se accedio a una lista de correos mediante la cual se establecio una comunicaci\'on con el equipo de desarrollo de NetFPGA[poner link al apendice de problemas tecnicos]. Este di\'alogo adem\'as de ayudarnos a comprender mejor el funcionamiento de la plataforma, desemboco en la segunda estrategia de programaci\'on.
+Tras constatarse este comportamiento, luego de revisar la documentaci\'on de la plataforma y recurrir al foro de la comunidad NetFPGA, se accedio a una lista de correos mediante la cual se establecio una comunicaci\'on con el equipo de desarrollo de NetFPGA(ver ap\'endice ~\ref{apendiceB2}). Este di\'alogo adem\'as de ayudarnos a comprender mejor el funcionamiento de la plataforma, desemboco en la segunda estrategia de programaci\'on.
 
 \subsubsection{Programaci\'on persistente}
-El hardware NetFPGA cuenta en su arquitectura con dos unidades de memoria flash(Flash A y Flash B). En la programaci\'on persistente estas unidades se utilizan para almacenar la programaci\'on del hardware, permitiendo que en cada encendido el chip FPGA se programe a partir del contenido de una de estas unidades. Por defecto el chip siempre se programa con el contenido de la memoria Flash A, habilitando su reprogramaci\'on desde la memoria Flash B v\'ia el bus PCIe.\\
+El hardware NetFPGA cuenta en su arquitectura con dos unidades de memoria flash(Flash A y Flash B). En la programaci\'on persistente estas unidades se utilizan para almacenar la programaci\'on del hardware, permitiendo que en cada encendido el chip FPGA sea programado a partir del contenido de una de estas unidades. Por defecto el chip siempre se programa con el contenido de la memoria Flash A, habilitando su reprogramaci\'on desde la memoria Flash B v\'ia la interfaz PCIe (por mayores detalles ver ~\citep{PCIEProgProject}).\\
 
-Para que un proyecto se pueda persistir en una de las memorias Flash, y luego reprogramar el chip FPGA a partir de dicha memoria, debe presentar cierta arquitectura especial. En particular el proyecto ReferenceNIC, asi como tambi\'en ReferenceSwitch y Reference Router tienen esta caracter\'istica.
+Reprogramar el contenido del chip FPGA en tiempo de encendido, así como también mediante la interfaz PCIe, requiere de módulos adicionales tanto en el contenido del chip FPGA, como en el del CPLD. En particular los proyectos ReferenceNIC, ReferenceSwitch~\citep{ReferenceSwitchProject} y ReferenceRouter~\citep{ReferenceRouterProject} entre otros incorporan estas características.\\
 
 En el procedimiento empleado, inicialmente se programa el hardware con el proyecto ReferenceNIC utilizando la Programaci\'on Simple. Luego es necesario transformar la implementaci\'on del proyecto(archivo bitfile) en un archivo con el formato requerido para la memoria flash(archivo binario). Esto \'ultimo se realiza utilizando herramientas que incluye la plataforma de NetFPGA. Finalmente utilizando la herramienta \textbf{pcieprog} de la plataforma, se transfiere el archivo generado a una de las memorias flash.\\
 
-Cabe destacar que durante la ejecuci\'on de este procedimiento se detectaron algunos errores y comportamientos inesperados en el hardware. Esto fue reportado al equipo de desarrollo de NetFPGA a traves de una lista de correos, reportandose en total 2 bugs que fueron solucionados y contemplados en la siguiente actualizaci\'on del repositorio de c\'odigo fuente. Por m\'as detalles acerca de estos bugs y su resoluci\'on referirse al siguiente ap\'endice[link al apendice].\\
+Cabe destacar que durante la ejecuci\'on de este procedimiento se detectaron algunos errores y comportamientos inesperados en el hardware. Esto fue reportado al equipo de desarrollo de NetFPGA a traves de una lista de correos, reportandose en total 2 bugs que fueron solucionados y contemplados en la siguiente actualizaci\'on del repositorio de c\'odigo fuente. Por m\'as detalles acerca de estos bugs y su resoluci\'on referirse al ap\'endice~\ref{apendiceA}.\\
 
-Por otro lado, esta estrat\'egia de programaci\'on utiliza herramientas de la suite de Xilinx que requieren de licencias pagas. Este detalle se constato experimentalmente en la ejecuci\'on del proyecto. Cabe destacar que la informaci\'on de error proporcionada por la herramienta al intentar ejecutarla sin las licencias correspondientes, asi como la documentaci\'on disponible no suguieren de forma intuitiva un problema de licencias. Por ello, teniendo la intuici\'on de que se trataba efectivamente de un problema de licenciamiento se solicitaron licencias adicionales a trav\'es del programa de apoyo universitario de Xilinx.
+Un detalle no menor de esta estrategia, es que utiliza herramientas de la suite de Xilinx que requieren de licencias especiales pagas. En el marco de este proyecto, se solicit\'o apoyo en relaci\'on a este tema a docentes del Instituto de Ingeniería Eléctrica de la Facultad de Ingenieria (IIE), y a través del programa de apoyo universitario de Xilinx. 
 
-Tras pasar varias semanas a la espera de una respuesta, se establecio un contacto con docentes del IIE de Facultad de Ingenieria. Desde el IIE se contesto que no trabajaban con esta plataforma pero que lo hab\'ian hecho en un pasado; facilit\'andonos un conjunto de licencias con el que se logro resolver el problema de licenciamiento. 
+Cabe destacar ademas, que a través de este ultimo, se logra obtener una donación de licencias realmente interesante, con las que se habilitan a la real explotación de la plataforma NetFPGA disponible. Por mayores detalles acerca de este problema puede consultarse el anexo~\ref{apendiceB3}.\\
 
-Mucho tiempo despu\'es el programa universitario de Xilinix don\'o un paquete de licencias entre las cuales se encontraban las necesarias. Por m\'as detalles acerca de este problema referirse al siguiente ap\'endice [link al apendice y problema tecnico].
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%Cabe destacar que este procedimiento no funciona correctamente. El proyecto PCIPrograming presenta alg\'un tipo de BUG(al momento de grabar una memoria se queda en loop), y tras reportar este comportamiento en la comunidad de NetFPGA se nos suguiere utilizar el proyecto ReferenceNIC que presenta el diseno de la arquitectura similar al PCIPrograming. Siguiendo esta sugerencia se logra programar correctamente el hardware de forma persistente, constatandose que al realizar un ciclo de corriente completo el hardware no se desprograma. Por esta raz\'on la estrategia de programaci\'on utilizada en el hardware es la programaci\'on persistente aqu\'i detallada.\\
-
-%Vale la pena destacar tambi\'en, que al programarse el hardware desde cualquiera de las unidades de memoria Flash, en particular con el proyecto Reference NIC el hardware no se comportaba de la forma esperada. Tras constatarse que esto no sucedia con versiones anteriores del c\'odigo fuente del proyecto, nuevamente se le reporta lo sucedido al soporte de NetFPGA obteniendo como respuesta una sugereencia para emparchar el c\'odigo, y la promesa de que ser\'ia solucionado en la siguiente versi\'on (lo cual pudimos constatar).
-
-%Tras estas modificaciones se logra obtener el hardware programado de forma persistente. De todos modos luego de ejecutarse una serie de pruebas se constatan comportamientos an\'omalos en capa f\'isica de las interfaces de la placa (podemos meter la descripcion). Nuevamente se reporta el comportamiento a la comunidad de NetFPGA desde donde se nos suguiere un parche para el driver, aparentemente causante del error. Se realizan los cambios y todo anda yuju!  
-
-%\subsubsection{Programaci\'on vol\'atil y persistente}
-%El hardware puede programarse en forma vol\'atil(la programaci\'on se pierde al cortarse la corriente), y en forma persistente mediante una unidad flash de memoria.
-
-%La primera alternativa tiene la ventaja que implica un procedimiento simple, no requiere de licencias de software pagas puesto que se realiza utilizando la herramienta Impact(viene en la suite de Xilinx ISE) para la cual se pueden obtener una licencia gratuita, y a su vez es el procedimiento empleado en la documnetaci\'on disponible del hardware NetFPGA. Por estas razones, esta estrat\'egia es la utilizada inicialmente para la programaci\'on del hardware NetFPGA en el router.
-
-%No obstante un nodo del prototipo de red para la RAU, no puede desprogramarse ante un posible corte de corriente, quedando in\'util e incapaz de recuperarse en forma independiente. Debe ser capaz de recuperarse de forma aut\'onoma, al menos en lo que concierne a la programaci\'on del hardware NetFPGA.\\
-
-%La segunda alternativa por otro lado no presenta este inconveniente, y por ello es la estrat\'egia utilizada finalmente para la programaci\'on del hardware. No obstante como se menciona anteriormente dicha estrat\'egia no figura claramente dentro de la documentaci\'on de la plataforma NetFPGA. Es por ello que tras iniciar una comunicaci\'on con el equipo de desarrollo de dicha plataforma, y utilizando diferentes herramientas como un foro de la comunidad de NetFPGA y una lista de correos, se logra dar con esta estrat\'egia de progrmaci\'on, gracias a la pronta respuesta de el equipo de NetFPGA.
-
-%Existen dos formas de programar el hardware NetFPGA: una vol\'atil en memoria y otra persistente mediante una unidad flash de memoria. La primera alternativa fue utilizada en el inicio de este proyecto en principio por ignorancia, detectandose en cierto punto que tras realizar un ciclo de apagado y encendido del equipo la tarjeta se desprogramaba. No obstante esta modalidad tiene la ventaja que no requiere de licencias especiales para programar la placa; solo se requiere la herramienta Impact(disponible mediante una licencia gratuita) y el bitfile precompilado del proyecto con el cual se vaya a programar el hardware.
-
-%Por otro lado, programar el hardware de forma persistente tiene la ventaja de que no debe ser reprogramado cada vez que el equipo es apagado y prendido nuevamente(proceso que requiere de abrir la PC, conectar el cable programador JTAG y cargar los m\'odulos con un tiempo aproximado no menor a 10 minutos). Este comportamiento se condice m\'as con el esperado por el router opensource; es entendible que un nodo del prototipo se quede sin corriente y se apague momentaneamente. Luego el mismo debe ser capaz de recuperarse correctamente sin la intervenci\'on de un programador.
-
-%En el prototipo, cada nodo es programado utilizando el m\'etodo persistente. Esto implica primero cambiar la modalidad de programaci\'on del hardware a PCIe, lo cual se hace cambiando de posici\'on tres switches en la placa. Luego, para programar en particular el hardware con el proyecto Reference NIC, se programa de forma vol\'atil el mismo con dicho proyecto. Una vez finalizada la programaci\'on se generan un archivo binario a partir del bitfile del proyecto Reference NIC, con el cual luego utilizando la utilidad \textbf{pciprog} que viene con la suite de proyectos y herramientas de NetFPGA se almacena la programaci\'on de la tarjeta en una de las dos memorias flash con las que cuenta el hardware(en el prototipo siempre se utiliza la memoria A). De esta forma el hardware en cada ciclo de interrupci\'on de corriente, se programa desde la memoria flash.\\
-
-%[Aca hay que reformular lo de arriba para decir, hubieron 2 bugs. Uno que impedia programar el hardware con el proyecto pci programing y que terminamos usando el reference nic (quedaba en loop cuando se queria escribir en las memorias). Luego que se pudo proramar pero cuando levantaba desde las flash no andaba como tarjeta pero si en programacion normal. Esto llevo a hablar con netfpga, parche correciones a archivos, solucionado. Se incorpora en nueva version.]
-
-[que paso con las licencias]
-
-%%%%%%%%%%%%%%%%%%
-%Por otro lado en cuanto al hardware NetFPGA, como se menciona anteriormente el mismo se encuentra programado para comportarse como una tarjeta de red convencional, mediante el proyecto ReferenceNIC. Inicialmente se tuvieron inconvenientes para lograr persistir la programaci\'on de dicha placa. En un principio por falta de experiencia la programaci\'on del chip FPGA se estaba realizando en forma vol\'atil. Luego se aprendi\'o la forma correcta para programar dicho hardware en forma persistente pero el comportamiento era el mismo. Esto se debi\'o a una serie de BUGs en el proyecto Reference NIC que tras ser reportados en la lista de correos del equipo de soporte de NetFPGA, se nos comunico una parche para solucionar dicho problema. Tras esta intervenci\'on la persistencia en la programaci\'on del hardware se logro exitosamente.\\
-
-%Tambi\'en se tuvieron problemas con la suite de desarrollo y programaci\'on Xilinx ISE con la que se programa el hardware. En particular este software asi como otras herramientas del SDK de Xilinx son licenciadas. Algunas de estas licencias no solo son costosas si no que distinguen a su vez entre las herramientas de la suite sobre las que se tiene derechos y el hardware utilizado. En particular para la arquitectura del chip FPGA utilizado por la placa NetFPGA(Virtex5), las licencias gratuitas o de prueba no contemplan las herramientas de compilaci\'on. Entonces si bien la programaci\'on vol\'atil del hardware con el proyecto Reference NIC es posible pura y exclusivamente utilizando licencias gratuitas, dado que este proyecto viene precompilado, la programaci\'on persistente del hardware con el mismo proyecto no lo es. Esto se debe a que se debe compilar otro proyecto (NOMBRARLPO) y generar archivos especiales que posteriormente se guardan en unidades flash de memoria de la NetFPGA; y estas acciones requieren de licencias pagas. 
-
-%Finalmente tras solicitar estas licencias atrav\'es del plan de apoyo a universidades de la empresa Xilinx, se obtuvieron X-licencias entre las cuales se consiguieron las licencias requeridas. Por m\'as detalles acerca del procedimiento de programaci\'on del hardware referirse al anexo [link al anexo] secci\'on [numero de secci\'on]. 
- 
 \subsection{Open vSwitch}
+Dentro de la arquitectura del router, Open vSwitch es el encargado de implementar el plano de datos de OpenFlow. Por lo tanto, la compatibilidad con el protocolo OpenFlow se encuentra restringida a la implementacion de Open vSwitch.\\
 
-En el router, el plano de datos de OpenFlow es implementado totalmente por Open vSwitch; por ello tambi\'em se encuentra condicionado a las funcionalidades de Open vSwitch. En relaci\'on a estos aspectos, durante el desarrollo del prototipo se relevo lo siguiente:
+Inicialmente se utiliza la versi\'on comercial m\'as reciente de esta herramienta (versi\'on 2.3.1). Acorde a las notas de liberaci\'on y a la secci\'on de preguntas frecuentes se garantiza soporte para un conjunto de funcionalidades de la versi\'on 1.3 del protocolo OpenFlow, entre las cuales se destacan la capacidad para match, push y pop de una \'unica etiqueta MPLS, así como su posterior procesamiento en el pipe de OpenFlow. No obstante como se explica en el apéndice ~\ref{apendiceB5} junto a otras características a destacar de Open vSwitch, esto comportamiento no es el que realmente presenta esta versi\'on de la herramienta. En particular la operación de Pop no funciona correctamente, así como el posterior tratamiento de un paquete acorde al pipe de OpenFlow.\\ 
 
-\begin{enumerate}
-\item Parte de las funcionalidades de Open vSwitch, se encuentran disponibles en modo kernel, y otra parte en modo usuario. Estas \'ultimas presentan un nivel de performance muy pobre en comparaci\'on a la primera; y en particular las funcionalidades de MPLS se encuentran solamente disponibles en modo usuario.
+Afortunadamente este error, se encontraba reportado como bug, y fue resuelto en la versi\'on de desarrollo~\citep{OVSSourceCode}; la cual a su vez tras instalarse en el router se comprobó que soporta match, push y pop de hasta tres etiquetas MPLS, y el posterior procesamiento del paquete. De esta forma la versi\'on de Open vSwitch con la que opera el router se actualiza a la versi\'on 2.3.9 de desarrollo.\\
 
-\item De acuerdo a las notas de liberaci\'on de la \'ultima versi\'on oficial de Open vSwitch(2.3.1), 
-se garantiza el soporte a MPLS en las operaciones de match, push y pop, para una \'unica etiqueta, as\'i como el posterior procesamiento del paquete de acuerdo al pipe de OpenFlow. A su vez dichas operaciones son soportadas solamente en modo usuario.
-
-\item Experimentalmente se comprobo que si bien las operaciones de match y Push funcionaban correctaente para Open vSwitch v2.3.1, la operaci\'on de Pop no funcionaba correctamente. Este comportamiento se encontraba reportado como bug, y fue solucionado en la versi\'on de desarrollo de Open vSwitch. A su vez junto con esta mejora se incorporo el soporte para las operaciones de match, push y pop en hasta 3 etiquetas MPLS en modo usuario, lo cual fue comprobado experimentalmente en este trabajo.
-
-\item Problema con interfaces con IP
-
-\end{enumerate}
+Cabe destacar por otro lado, que las operaciones de match, push y pop de MPLS son implementadas por Open vSwitch en modo usuario.
 
 %Por otro lado en relaci\'on a las componentes de software, el router se compone de un sistema operativo escritorio basado en linux, con las instalaciones de Open vSwitch, Quagga y el agente de gesti\'on SNMP. Nuevamente por mayores detalles acerca de las versiones de software utilizadas, sistema operativo entre otros detalles refierase al anexo [link al anexo].\\
 
-\newpage
-\begin{figure}[htbp!] 
-\centering    
-\includegraphics[width=0.7\textwidth]{Arch_Figure1}
-\caption[OpenSourceRArch]{Diagrama de componentes del router open source}
-\label{fig:OpenSourceRArch}
-\end{figure}
-
 \subsection{Quagga}
+En cada nodo se ejecuta una instancia del software de enrutamiento Quagga, configurada para ejecutar el demonio ospf.\\ 
+
+El demonio ospf implementa el protocolo de igual nombre y se utiliza para obtener información de cada nodo y sus adyacencias en la topolog\'ia, guardando dicha información en una base de datos local a cada nodo(Link-State-Database, LSDB). Entre los datos que se incluyen en esta base de datos topologica se destaca por ejemplo el costo asociado a cada adyacencia.\\ 
+
+El protocolo OSPF también implementa mecanismos para mantener actualizada dicha base de datos, asi como para calcular el mejor camino entre cualquier par de nodos en la topolog\'ia a través del algoritmo Dijkstra. Si bien en un inicio se pensó en trabajar con la salida de dicho algoritmo, finalmente se decidió trabajar con un algoritmo de ruteo centralizado implementado en el Controlador, que a su vez permita incorporar restricciones(CSPF)[poner referencia a sec imp de alg rut en RauFLow]. Por ello en la version final del prototipo no se utiliza la salida de este algoritmo, aunque la arquitectura permite utilizar dicha información para alimentar la entrada de los procesos que se ejecutan en el Controlador.\\
+
+Entonces cada switch del prototipo así como el propio Controlador ejecuta una instancia de Quagga con el demonio ospf configurado como se muestra en el apéndice[poner referencia al apendice]. Cabe destacar de dicha configuración, que la adyacencia entre un switch y el Controlador(enlace utilizado para el canal de comunicación OpenFlow) tiene asociado costo infinito para evitar que sea utilizado por el algoritmo de ruteo de OSPF en la construcción de algún camino. En la implementaci\'on de Quagga el costo infinito es representado por el numero 65535(16 bits).
 
 \subsection{Agente SNMP}
+El protocolo de comunicación OpenFlow, dentro de las estructuras de datos utilizadas para el intercambio de información entre un switch y el Controlador, no provee una forma de comunicar el direccionamiento IP propio del equipo(direcciones IP de cada interfaz física). En particular la estructura \textit{ofp\_port} utilizada por el mensaje \textit{OFPMP\_PORT\_DESCRIPTION} no provee de dicho campo\citep{ofv133spec}. Por esta razón es necesaria una forma de comunicar al controlador información adicional sobre características de cada nodo, como la dirección IP de una interfaz, que no puede ser enviada a través del protocolo OpenFlow. Para esto se utiliza el agente SNMP.\\
 
-Se explicaron las principales caracter\'isticas del dise\~no e implementaci\'on del router, ahora es el turno del Controlador.
+SNMP definido a través de los RFC1065~\citep{rose1990structure}, RFC1157~\citep{case1989simple} entre otros, es un protocolo que permite intercambio de información entre dispositivos de red y una entidad administradora. Para su despliegue en una red son necesarias tres componentes: 
+
+\begin{enumerate}
+
+\item Dispositivo administrado: Es el dispositivo de red que se quiere monitorear.
+
+\item Agente: Es el software que se ejecuta en el dispositivo administrado y se encarga de comunicarse mediante el protocolo snmp con el sistema administrador de red.
+
+\item Sistema administrador de red: El dispositivo que se encargara de realizar las consultas sobre la informacion que se desee a los dispositivos administrados.
+
+\end{enumerate}	
+
+En el prototipo, un agente snmp es instalado en cada switch(dispositivo administrado), para enviar la correspondencia entre números de puerto OpenFlow y direcciones IP al Controlador(sistema administrador).\\
+
+No es el objetivo de este trabajo entrar en detalle sobre el protocolo SNMP, por lo que si el lector desea profundizar en estos conceptos se recomienda seguir las referencia mencionadas.\\
 
 \section{Entidad Controlador}
-Cada nodo del prototipo responde a una entidad denominada Controlador. Esta entidad esta compuesta por varias partes(ver figura \ref{fig:OpenSourceRArch3}).
-
-\section{Software de Control Ryu}
-[yo]
-
-\section{Quagga}
-[ficha]
-
-\section{LSDB Sync}
-[ficha]
-
-\section{Gerente SNMP}
-[ficha]
-
-%%%%%
-Al igual que el router, el Controlador consta de un sistema operativo sobre el cual posteriormente se instalan las diferentes componentes de software utilizadas. Particularmente esta compuesto por la suite de ruteo Quagga, un modulo encargado de la sincronizaci\'on de la informaci\'on topl\'ogica, un gerente SNMP, y finalmente el software de control SDN Ryu, sobre el cual se ejecuta la aplicaci\'on RauFlow.
+Como se muestra en \ref{fig:OpenSourceRArch0}, cada nodo del prototipo responde a una entidad denominada Controlador. Esta entidad en la pr\'actica es una PC convencional con determinadas componentes de software(ver figura \ref{fig:OpenSourceRArch3}).
 
 \begin{figure}[htbp!] 
 \centering    
@@ -169,6 +135,23 @@ Al igual que el router, el Controlador consta de un sistema operativo sobre el c
 \caption[OpenSourceRArch3]{Diagrama de componentes del Controlador}
 \label{fig:OpenSourceRArch3}
 \end{figure}
+
+\section{Software de Control Ryu}
+[yo]
+
+\section{Quagga}
+Como se menciona anteriormente, el Controlador ejecuta una instancia de Quagga. De esta forma tiene acceso local a la información de la base de datos topologica construida por OSPF.
+
+\section{LSDB Sync}
+LSDB Sync se encarga de tomar la información de la base de datos topologica una vez que el algoritmo ospf converge, procesarla y enviársela a las aplicaciones que se ejecutan en el software de control(Ryu), en este caso principalmente a la aplicación RAUFlow.\\
+
+Esta componente consta de dos módulos. El primero se encarga de escuchar los mensajes del protocolo ospf que envia Quagga; generando un evento cuando ospf reconverge luego de producirse un cambio en la topologia, y es tomado por el segundo modulo.\\
+
+Una vez capturado el evento anterior, el segundo m\'odulo toma la informacion topologica en la base local del Controlador y la procesa para ser enviada a la aplicación de control.
+
+\section{Administrador SNMP}
+
+El administrador SNMP es utilizado para consultar al agente snmp de un nodo en particular, por la correspondencia entre números de puerto OpenFlow y direcciones IP. Esta componente es utilizada por la aplicación de gestión RAUFlow cada vez que es preciso obtener esta información de mapeo para un nodo en particular(por ejemplo en el proceso de actualización de la topolog\'ia).
 
 \section{Dise\~no general}
 

@@ -25,7 +25,9 @@
 
 % ************************* Algorithms and Pseudocode **************************
 
-%\usepackage{algpseudocode}
+\usepackage{algpseudocode}
+\usepackage[]{algorithm2e}
+%\usepackage{listings}
 
 
 % ********************Captions and Hyperreferencing / URL **********************
@@ -96,17 +98,28 @@
 
 % Add `custombib' in the document class option to use this section
 \ifuseCustomBib
-   \RequirePackage[square, sort, numbers, authoryear]{natbib} % CustomBib
+   %\RequirePackage[square, sort, numbers, authoryear]{natbib} % CustomBib
 
 % If you would like to use biblatex for your reference management, as opposed to the default `natbibpackage` pass the option `custombib` in the document class. Comment out the previous line to make sure you don't load the natbib package. Uncomment the following lines and specify the location of references.bib file
 
-%\RequirePackage[backend=biber, style=numeric-comp, citestyle=numeric, sorting=nty, natbib=true]{biblatex}
-%\bibliography{References/references} %Location of references.bib only for biblatex
+\RequirePackage[backend=biber, style=numeric-comp, citestyle=numeric, sorting=none, natbib=true]{biblatex}
+\bibliography{References/references} %Location of references.bib only for biblatex
 
 \fi
 
 % changes the default name `Bibliography` -> `References'
-\renewcommand{\bibname}{References}
+\renewcommand{\bibname}{Bibliografía}
+
+
+\def\acknowledgementsname{acknowledgements}
+\renewcommand{\acknowledgementsname}{Agradecimientos}
+
+%\renewcommand*\abstractname{Summary}
+
+
+%\usepackage[utf8]{}
+%\usepackage[english]{babel}
+%\addto\captionsenglish{\renewcommand*\abstractname{Summary}}
 
 
 % *****************************************************************************
@@ -127,6 +140,8 @@
 %\newcommand{\PostContentTitleFormat}{\PreContentTitleFormat}
 %\PreContentTitleFormat
 
+\renewcommand{\chaptername}{Capítulo}
+
 
 % ******************************************************************************
 % ************************* User Defined Commands ******************************
@@ -134,9 +149,9 @@
 
 % *********** To change the name of Table of Contents / LOF and LOT ************
 
-%\renewcommand{\contentsname}{My Table of Contents}
-%\renewcommand{\listfigurename}{My List of Figures}
-%\renewcommand{\listtablename}{My List of Tables}
+\renewcommand{\contentsname}{Índice general}
+\renewcommand{\listfigurename}{Índice de figuras}
+\renewcommand{\listtablename}{Índice de cuadros}
 
 
 % ********************** TOC depth and numbering depth *************************
@@ -156,8 +171,8 @@
 
 % The default value of both \appendixtocname and \appendixpagename is `Appendices'. These names can all be changed via:
 
-%\renewcommand{\appendixtocname}{List of appendices}
-%\renewcommand{\appendixname}{Appndx}
+\renewcommand{\appendixtocname}{Lista de apendices}
+\renewcommand{\appendixname}{Apendice}
 
 % ******************************** Draft Mode **********************************
 
@@ -193,3 +208,118 @@
 % Example todo: \mynote{Hey! I have a note}
 
 \usepackage{tabularx}
+
+% ************************* Algorithms and Pseudocode **************************
+\usepackage{color}
+\usepackage{listings}
+\usepackage{setspace}
+
+\definecolor{Code}{rgb}{0,0,0}
+\definecolor{Decorators}{rgb}{0.5,0.5,0.5}
+\definecolor{Numbers}{rgb}{0.5,0,0}
+\definecolor{MatchingBrackets}{rgb}{0.25,0.5,0.5}
+\definecolor{Keywords}{rgb}{0,0,1}
+\definecolor{self}{rgb}{0,0,0}
+\definecolor{Strings}{rgb}{0,0.63,0}
+\definecolor{Comments}{rgb}{0,0.63,1}
+\definecolor{Backquotes}{rgb}{0,0,0}
+\definecolor{Classname}{rgb}{0,0,0}
+\definecolor{FunctionName}{rgb}{0,0,0}
+\definecolor{Operators}{rgb}{0,0,0}
+\definecolor{Background}{rgb}{0.98,0.98,0.98}
+\definecolor{BashBackground}{rgb}{0.18, 0.04, 0.14}
+\definecolor{BashText}{rgb}{1,1,1}
+
+\lstnewenvironment{python}[1][]{
+\lstset{
+numbers=left,
+numberstyle=\footnotesize,
+numbersep=1em,
+xleftmargin=1em,
+framextopmargin=2em,
+framexbottommargin=2em,
+showspaces=false,
+showtabs=false,
+showstringspaces=false,
+frame=l,
+tabsize=4,
+% Basic
+basicstyle=\ttfamily\small\setstretch{1},
+backgroundcolor=\color{Background},
+language=Python,
+% Comments
+commentstyle=\color{Comments}\slshape,
+% Strings
+stringstyle=\color{Strings},
+morecomment=[s][\color{Strings}]{"""}{"""},
+morecomment=[s][\color{Strings}]{'''}{'''},
+% keywords
+morekeywords={import,from,class,def,for,while,if,is,in,elif,else,not,and,or,print,break,continue,return,True,False,None,access,as,,del,except,exec,finally,global,import,lambda,pass,print,raise,try,assert},
+keywordstyle={\color{Keywords}\bfseries},
+% additional keywords
+morekeywords={[2]@invariant},
+keywordstyle={[2]\color{Decorators}\slshape},
+emph={self},
+emphstyle={\color{self}\slshape},
+%
+}}{}
+
+
+\lstnewenvironment{bash}[1][]{
+\lstset{
+numbers=left,
+numberstyle=\footnotesize,
+numbersep=1em,
+xleftmargin=1em,
+framextopmargin=2em,
+framexbottommargin=2em,
+showspaces=false,
+showtabs=false,
+showstringspaces=false,
+%frame=l,
+tabsize=4,
+% Basic
+basicstyle=\ttfamily\small\setstretch{1}\color{BashText},
+backgroundcolor=\color{BashBackground},
+language=bash,
+% Comments
+commentstyle=\color{BashText}\slshape,
+% Strings
+stringstyle=\color{BashText},
+morecomment=[s][\color{BashText}]{"""}{"""},
+morecomment=[s][\color{BashText}]{'''}{'''},
+morecomment=[s][\color{BashText}]{"-"},
+% keywords
+morekeywords={\color{BashText}},
+keywordstyle={\color{BashText}\slshape},
+% additional keywords
+morekeywords={[2]@invariant},
+keywordstyle={[2]\color{BashText}},
+emph={self},
+emphstyle={\color{self}\slshape},
+rulecolor=\color{BashText},
+rulesepcolor=\color{BashText}
+%
+}}{}
+
+% ************************* Creates Annex styles to add document **************************
+
+% Create Roman Numeral Labelled Annexes
+\newcommand{\annexname}{Anexo}
+\makeatletter % treat @ as a letter instead of a control word.
+\newcommand\annex{\par
+\setcounter{chapter}{0}
+\setcounter{section}{0}
+\renewcommand\appendixname{Anexos}
+\renewcommand\appendixpagename{Anexos}
+\renewcommand{\appendixtocname}{Anexos}
+\gdef\@chapapp{\annexname}
+\gdef\thechapter{\@Roman\c@chapter}
+\renewcommand{\theHchapter}{\annexname.\thechapter}
+\addappheadtotoc
+}
+\makeatother
+
+
+% ************************* General Styles ***********************************************
+\renewcommand{\labelitemii}{$\circ$}

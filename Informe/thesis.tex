@@ -11,7 +11,7 @@
 % ******************************* PhD Thesis Template **************************
 % Please have a look at the README.md file for info on how to use the template
 
-\documentclass[a4paper,12pt,times,numbered,print,index]{Classes/PhDThesisPSnPDF}
+\documentclass[a4paper,12pt,times,numbered,print,index,custombib]{Classes/PhDThesisPSnPDF}
 
 % ******************************************************************************
 % ******************************* Class Options ********************************
@@ -101,7 +101,8 @@
 
 \ifdefineAbstract
  \pagestyle{empty}
- \includeonly{Declaration/declaration, Abstract/abstract}
+ %\includeonly{Declaration/declaration, Abstract/abstract}
+ \includeonly{Abstract/abstract}
 \fi
 
 % ***************************** Chapter Mode ***********************************
@@ -111,7 +112,7 @@
 % To use choose `chapter' option in the document class
 
 \ifdefineChapter
- \includeonly{Chapter3/chapter3}
+ \includeonly{Chapter1/chapter1}
 \fi
 
 % ******************************** Front Matter ********************************
@@ -125,7 +126,7 @@
 
 
 \include{Dedication/dedication}
-\include{Declaration/declaration}
+%\include{Declaration/declaration}
 \include{Acknowledgement/acknowledgement}
 \include{Abstract/abstract}
 
@@ -191,6 +192,13 @@
 \include{Appendix3/appendix3}
 
 \end{appendices}
+
+
+% ********************************** Anexos ************************************
+
+\annex
+
+\include{Anexo1/anexo1}
 
 % *************************************** Index ********************************
 \printthesisindex % If index is present
