@@ -11,9 +11,9 @@ Este cap\'itulo esta destinado a la comprensi\'on de los aspectos principales qu
 
 \section{Aspectos generales}
 
-Como se menciona en el estado del arte, de acuerdo al enfoque SDN, en la arquitectura OpenFlow se tienen los planos de datos y control. En la arquitectura de OpenFlow, el plano de control es implementado por un software de control o comunmente llamado Controlador, y el plano de datos esta compuesto por los diferentes dispositivos de la red compatibles con OpenFlow.\\
+Como se menciona en el estado del arte, de acuerdo al enfoque SDN, en la arquitectura OpenFlow se tienen los planos de datos y control. En la arquitectura de OpenFlow, el plano de control es implementado por un software de control o comúnmente llamado Controlador, y el plano de datos esta compuesto por los diferentes dispositivos de la red compatibles con OpenFlow.\\
 
-La arquitetcura del prototipo, como puede apreciarse en la imagen ~\ref{fig:OpenSourceRArch0} se condice con esta estructura. Por un lado se tiene una red h\'ibrida IP/MPLS, donde cada nodo es uno de los routers opensource, cuya arquitectura se definir\'a m\'as adelante; y por otro se tiene a la entidad de control o Controlador sobre la cual se ejecuta la aplicaci\'on encargada de programar el comportamiento de cada uno de estos nodos. Finalmente, mediante el protocolo OpenFlow esta aplicaci\'on instala la configuraci\'on necesaria en cada nodo, para por ejemplo la implementaci\'on de un servicio de VPN particular.\\
+La arquitetcura del prototipo, como puede apreciarse en la imagen ~\ref{fig:OpenSourceRArch0} se condice con esta estructura. Por un lado se tiene una red h\'ibrida IP/MPLS, donde cada nodo es un switch MPLS/Openflow híbrido, cuya arquitectura se definir\'a m\'as adelante; y por otro se tiene la entidad de control o Controlador sobre la cual se ejecuta la aplicaci\'on encargada de programar el comportamiento de cada uno de estos nodos. Finalmente, mediante el protocolo OpenFlow esta aplicaci\'on instala la configuraci\'on necesaria en cada nodo, para por ejemplo la implementaci\'on de un servicio de VPN particular.\\
 
 \newpage
 \begin{figure}[htbp!] 
@@ -23,23 +23,22 @@ La arquitetcura del prototipo, como puede apreciarse en la imagen ~\ref{fig:Open
 \label{fig:OpenSourceRArch0}
 \end{figure}
 
-Se tienen entonces dos claras lineas de trabajo; el desarrollo del router opensource y el desarrollo de la entidad Controlador. 
+Se tienen entonces dos claras lineas de trabajo; el desarrollo del switch, de aquí en mas RAU-Switch y el desarrollo de la entidad Controlador. 
 
-\section{Router opensource}
-
-Cada nodo del prototipo, es lo que en este trabajo se denomin\'o router opensource. Dicho router a su vez puede dividirse en diferentes componentes como se muestra en la figura~\ref{fig:OpenSourceRArch}.
+\section{RAU-Switch}
+Cada nodo del prototipo es implementado por lo que en este trabajo se denomin\'o RAU-Switch; un switch MPLS/OpenFlow híbrido. Este switch se divide en diferentes componentes como se muestra en la figura~\ref{fig:OpenSourceRArch}.
 
 \newpage
 \begin{figure}[htbp!] 
 \centering    
 \includegraphics[width=0.7\textwidth]{Arch_Figure1}
-\caption[OpenSourceRArch]{Diagrama de componentes del router open source}
+\caption[RAU-Switch - diagrama de componentes]{RAU-Switch - diagrama de componentes}
 \label{fig:OpenSourceRArch}
 \end{figure}
 
 
 \subsection{Plataforma de la PC}
-El router esta constru\'ido sobre la plataforma de una PC de escritorio convencional. En particular se trabaja con un procesador Intel Core i7 de 64 bits, una Mother ASUS ROG Maximus Formula VI impuesta por los requerimientos de funcionamiento del hardware NetFPGA, 16GB de memoria DDR3, y un disco r\'igio de 1TB de capacidad. En el anexo [link] al anexo pueden encontrarse los detalles t\'ecnicos de la PC.
+El switch esta constru\'ido sobre la plataforma de una PC de escritorio convencional. En particular se trabaja con un procesador Intel Core i7 de 64 bits, una Mother ASUS ROG Maximus Formula VI, 16GB de memoria DDR3, y un disco HDD de 1TB de capacidad. En el apéndice \ref{C.1} al anexo pueden encontrarse estos detalles con mayor profundidad.
 
 \subsection{Sistema Operativo}
 Sobre el sistema operativo, se decidio trabajar con Ubuntu 12.04 sobre una arquitectura de 64 bits. Esta elecci\'on responde a dos criterios esencialmente. Por un lado la premisa de trabajar con sotware libre y de c\'odigo abierto preferentemente, nos llevo a buscar entre alternativas de sistemas operativos basado en GNU/Linux.
