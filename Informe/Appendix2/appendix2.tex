@@ -21,7 +21,6 @@ Tras varias pruebas que confirmaran el error, se consulto con la documentaci\'on
 
 Como conclusi\'on general, para el hardware utilizado se debe utilizar patchcords de fibra multimodo.
 
-
 \section{Desprogramaci\'on del hardware NetFPGA}
 \label{apendiceB2}
 
@@ -53,7 +52,6 @@ Esta es la solución al problema de la desprogramacion del hardware, y es lo que
 La suite de Xilinx ISE SDK, se componen por un conjunto extenso de herramientas y entornos de desarrollo. Dentro de la suite se encuentran herramientas habilitadas para su uso bajo licencias gratuitas, otras bajo licencias de prueba (tipicamente 30 dias), y otras solamente bajo licencias pagas.\\
 
 En particular en este proyecto se comienza trabajando con un paquete de licencias gratuitas. Seguir explicando \dots\\
-
 
 Por otro lado, esta estrat\'egia de programaci\'on utiliza herramientas de la suite de Xilinx que requieren de licencias pagas. Este detalle se constato experimentalmente en la ejecuci\'on del proyecto. Cabe destacar que la informaci\'on de error proporcionada por la herramienta al intentar ejecutarla sin las licencias correspondientes, asi como la documentaci\'on disponible no suguieren de forma intuitiva un problema de licencias. Por ello, teniendo la intuici\'on de que se trataba efectivamente de un problema de licenciamiento se solicitaron licencias adicionales a trav\'es del programa de apoyo universitario de Xilinx.
 
@@ -116,7 +114,6 @@ Para solucionar este problema se utilizan interfaces virtuales. Ficha por favor 
 \label{fig:OVSInterfaces2}
 \end{figure}
 
-
 \end{enumerate}
 
 \section{MPLS Linux y Quagga LDP}
@@ -141,6 +138,8 @@ Se podian insertar cosas en las tablas de MPLS y el quagga por si solo andaba. N
 [make menuconfig]
 
 \section{Instalaci\'on de Sistema Operativo}
+\label{B.7}
+
 Instalamos Fedora 14 y no booteaba. Desactivamos el uefi de la bios y tampoco. Probamos con varias versiones de Fedora incluso con un dvd de la uri y descargada de internet. Probamos con dvd y usb.
 
 Fedeora 20 era compatible con la mother pero no encontrabamos driver para el cable programador.

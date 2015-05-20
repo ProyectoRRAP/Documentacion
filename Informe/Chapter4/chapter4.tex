@@ -36,16 +36,15 @@ Cada nodo del prototipo es implementado por lo que en este trabajo se denomin\'o
 \label{fig:OpenSourceRArch}
 \end{figure}
 
-
 \subsection{Plataforma de la PC}
-El switch esta constru\'ido sobre la plataforma de una PC de escritorio convencional. En particular se trabaja con un procesador Intel Core i7 de 64 bits, una Mother ASUS ROG Maximus Formula VI, 16GB de memoria DDR3, y un disco HDD de 1TB de capacidad. En el apéndice \ref{C.1} al anexo pueden encontrarse estos detalles con mayor profundidad.
+El switch esta constru\'ido sobre la plataforma de una PC de escritorio convencional. En particular se trabaja con un procesador Intel Core i7 de 64 bits, una Mother ASUS ROG Maximus Formula VI, 16GB de memoria DDR3, y un disco HDD de 1TB de capacidad. En el apéndice \ref{C.1} pueden encontrarse estos detalles con mayor profundidad.
 
 \subsection{Sistema Operativo}
 Sobre el sistema operativo, se decidio trabajar con Ubuntu 12.04 sobre una arquitectura de 64 bits. Esta elecci\'on responde a dos criterios esencialmente. Por un lado la premisa de trabajar con sotware libre y de c\'odigo abierto preferentemente, nos llevo a buscar entre alternativas de sistemas operativos basado en GNU/Linux.
 
-Por otro lado, el hardware NetFPGA asi como los proyectos existentes para su programaci\'on fueron desarrollados trabajando sobre la plataforma Fedora14. Teniendo presente esto, se intento infructuosamente instalar y configurar el hardware sobre dicha plataforma. Se probaron versiones m\'as recientes de esta plataforma como Fedora17 y Fedora19 obteniendo los mismos resultados. Entre las causas se detectaron incompatibilidades entre la Mother de la PC y algunas de las versiones del sistema operativo mencionado, falta de drivers apropiados para cable JTag con el que se programa el hardware, entre otros.
+Por otro lado, el hardware NetFPGA asi como los proyectos existentes para su programaci\'on fueron desarrollados trabajando sobre la plataforma Fedora14. Teniendo presente esto, se intento infructuosamente instalar y configurar el hardware sobre dicha plataforma. Se probaron versiones m\'as recientes de esta plataforma como Fedora17 y Fedora19 obteniendo los mismos resultados. Entre las causas se detectaron incompatibilidades entre la Mother de la PC y algunas de las versiones del sistema operativo mencionado, falta de drivers apropiados para cable JTag con el que se programa el hardware, entre otros. En el apéndice \ref{B.7} se explica con mayor detalle este problema.
 
-Finalmente tras probar con otras alternativas, se logro instalar y configurar exitosamente el hardware sobre la plataforma Ubuntu 12.04.\\
+Finalmente tras probar con otras alternativas, se logro instalar y configurar exitosamente el hardware sobre la plataforma Ubuntu 12.04.
 
 \subsection{Hardware NetFPGA}
 
@@ -56,18 +55,16 @@ El hardware NetFPGA funciona tanto conectado a una PC medianta un slot PCIe(modo
 
 \subsubsection{Herramientas de Programaci\'on}
 
-El hardware NetFPGA se programa utilizando un cable programador JTAG, y la herramienta Impact dentro de la suite de herramientas de Xilinx ISE. Para ello es indispensable contar con una estaci\'on de trabajo con dichas herramientas instaladas, habilitando la programaci\'on  del hardware NetFPGA que luego es colocado en la PC de cada router opensource. Cabe destacar adem\'as que la suite se compone por varias herramientas licenciadas para diferentes arquitecturas de chips; por ello es indispensable contar con el paquete de licencias apropiado al modelo de chip con que se trabaja (en nuestro caso Virtex5), y a las herramientas utilizadas. 
+El hardware NetFPGA se programa utilizando un cable programador JTAG y la herramienta Impact de la suite de herramientas de Xilinx ISE. Para ello es indispensable contar con una estaci\'on de trabajo con dichas herramientas instaladas, habilitando la programaci\'on  del hardware NetFPGA que luego es colocado en la PC de cada nodo. Cabe destacar adem\'as que la suite se compone por varias herramientas licenciadas para diferentes arquitecturas de chips; por ello es indispensable contar con el paquete de licencias apropiado al modelo de chip con que se trabaja (en nuestro caso Virtex5), y a las herramientas utilizadas. 
 
-Esta estaci\'on de trabajo puede o bien ser la propia PC utilizada para el router opensource(alternativa utilizada en este proyecto), o bien puede ser una PC independiente a la utilizada para la construcci\'on de cada router.\\
+Esta estaci\'on de trabajo puede o bien ser la propia PC utilizada para el switch(alternativa utilizada en este proyecto), o bien puede ser una PC independiente. Por ello no se incluye explicitamente esta componente en el diagrama, aunque puede formar parte de la arquitectura.
 
 %Cabe destacar que en la b\'usqueda de una plataforma compatible para la programaci\'on del hardware se probo con diferentes sistemas operativos como se menciono, logrando programarse el mismo en Windows XP y Ubuntu 12.04.
 
 \subsubsection{Programaci\'on simple}
-El hardware puede programarse de varias formas, una de ellas es lo que denominamos aqu\'i como programaci\'on simple. 
+El hardware puede programarse de varias formas, una de ellas es lo que denominamos aqu\'i como programaci\'on simple. Esta estrategia consiste en la utilizaci\'on de la herramienta Impact y el cable JTAG para programar los chips FPGA y CPLD del hardware, con la implementaci\'on(bitfile) y arquitectura del proyecto con que se quiere programar la tarjeta.
 
-Esta estrategia consiste en la utilizaci\'on de la herramienta Impact y el cable JTAG para programar los chips FPGA y CPLD del hardware, con la implementaci\'on(bitfile) y arquitectura del proyecto con que se quiere programar la tarjeta.
-
-Esta estrategia presenta como ventajas su simplicidad. No requiere de licencias pagas (puede descargarse una licencia gratuita para la herramienta Impact), y es el procedimiento descrito en la documentaci\'on de la plataforma NetFPGA.
+Como principales ventajas se destacan su simplicidad, no requiere de licencias pagas (puede descargarse una licencia gratuita para la herramienta Impact), y es el procedimiento descrito en la documentaci\'on de la plataforma NetFPGA.
 
 Sin embargo presenta una desventaja importante; al producirse un ciclo completo de corriente (apagado y encendido del equipo), el hardware se desprograma. Concretamente el contenido del chip FPGA es borrado, y solo perdura el contenido del chip CPLD.\\
 
@@ -84,14 +81,14 @@ Cabe destacar que durante la ejecuci\'on de este procedimiento se detectaron alg
 
 Un detalle no menor de esta estrategia, es que utiliza herramientas de la suite de Xilinx que requieren de licencias especiales pagas. En el marco de este proyecto, se solicit\'o apoyo en relaci\'on a este tema a docentes del Instituto de Ingeniería Eléctrica de la Facultad de Ingenieria (IIE), y a través del programa de apoyo universitario de Xilinx. 
 
-Cabe destacar ademas, que a través de este ultimo, se logra obtener una donación de licencias realmente interesante, con las que se habilitan a la real explotación de la plataforma NetFPGA disponible. Por mayores detalles acerca de este problema puede consultarse el anexo~\ref{apendiceB3}.\\
+Cabe destacar ademas, que a través de este ultimo, se logra obtener una donación de licencias realmente interesante, con las que se habilitan a la real explotación de la plataforma NetFPGA disponible. Por mayores detalles acerca de este problema puede consultarse el anexo~\ref{apendiceB3}.
 
 \subsection{Open vSwitch}
 Dentro de la arquitectura del router, Open vSwitch es el encargado de implementar el plano de datos de OpenFlow. Por lo tanto, la compatibilidad con el protocolo OpenFlow se encuentra restringida a la implementacion de Open vSwitch.\\
 
 Inicialmente se utiliza la versi\'on comercial m\'as reciente de esta herramienta (versi\'on 2.3.1). Acorde a las notas de liberaci\'on y a la secci\'on de preguntas frecuentes se garantiza soporte para un conjunto de funcionalidades de la versi\'on 1.3 del protocolo OpenFlow, entre las cuales se destacan la capacidad para match, push y pop de una \'unica etiqueta MPLS, así como su posterior procesamiento en el pipe de OpenFlow. No obstante como se explica en el apéndice ~\ref{apendiceB5} junto a otras características a destacar de Open vSwitch, esto comportamiento no es el que realmente presenta esta versi\'on de la herramienta. En particular la operación de Pop no funciona correctamente, así como el posterior tratamiento de un paquete acorde al pipe de OpenFlow.\\ 
 
-Afortunadamente este error, se encontraba reportado como bug, y fue resuelto en la versi\'on de desarrollo~\citep{OVSSourceCode}; la cual a su vez tras instalarse en el router se comprobó que soporta match, push y pop de hasta tres etiquetas MPLS, y el posterior procesamiento del paquete. De esta forma la versi\'on de Open vSwitch con la que opera el router se actualiza a la versi\'on 2.3.9 de desarrollo.\\
+Afortunadamente este error, se encontraba reportado como bug, y fue resuelto en la versi\'on de desarrollo~\citep{OVSSourceCode}; la cual a su vez tras instalarse en el switch se comprobó que soporta match, push y pop de hasta tres etiquetas MPLS, y el posterior procesamiento del paquete. De esta forma la versi\'on de Open vSwitch utilizada es la de desarrollo.\\
 
 Cabe destacar por otro lado, que las operaciones de match, push y pop de MPLS son implementadas por Open vSwitch en modo usuario.
 
