@@ -7,13 +7,13 @@
     \graphicspath{{Chapter4/Figs/Vector/}{Chapter4/Figs/}}
 \fi
 
-Este cap\'itulo esta destinado a la comprensi\'on de los aspectos principales que hacen al dise\~no e implementaci\'on del prototipo para la nueva red aca\'emica. Cabe destacar que en el mismo se toman como punto de partida las decisiones asumidas en el cap\'itulo anterior.
+Este cap\'itulo esta destinado a la comprensi\'on de los aspectos principales que hacen al dise\~no e implementaci\'on del prototipo para la nueva red aca\'emica. Cabe destacar que en el mismo se toman como punto de partida las decisiones asumidas en el cap\'itulo anterior.\\
 
 \section{Aspectos generales}
 
-Como se menciona en el estado del arte, de acuerdo al enfoque SDN, en la arquitectura OpenFlow se tienen los planos de datos y control. En la arquitectura de OpenFlow, el plano de control es implementado por un software de control o comúnmente llamado Controlador, y el plano de datos esta compuesto por los diferentes dispositivos de la red compatibles con OpenFlow.\\
+Como se menciona en el capitulo 2, en l arquitectura OpenFlow/SDN se tiene dos entidades fundamentalmente: el Controlador y los switches OpenFlow. La arquitectura del prototipo parte de esta definición y se le incorporan algunas modificaciones.\\
 
-La arquitetcura del prototipo, como puede apreciarse en la imagen ~\ref{fig:OpenSourceRArch0} se condice con esta estructura. Por un lado se tiene una red h\'ibrida IP/MPLS, donde cada nodo es un switch MPLS/Openflow híbrido, cuya arquitectura se definir\'a m\'as adelante; y por otro se tiene la entidad de control o Controlador sobre la cual se ejecuta la aplicaci\'on encargada de programar el comportamiento de cada uno de estos nodos. Finalmente, mediante el protocolo OpenFlow esta aplicaci\'on instala la configuraci\'on necesaria en cada nodo, para por ejemplo la implementaci\'on de un servicio de VPN particular.\\
+Como puede apreciarse en la imagen ~\ref{fig:OpenSourceRArch0} en el prototipo se tienen por un lado una red h\'ibrida IP/MPLS, donde cada nodo es un switch MPLS/Openflow híbrido, cuya arquitectura se definir\'a m\'as adelante; y por otro se tiene la entidad de control o Controlador sobre la cual se ejecuta la aplicaci\'on encargada de programar el comportamiento de cada uno de estos nodos. Finalmente, mediante el protocolo OpenFlow esta aplicaci\'on instala la configuraci\'on necesaria en cada nodo, para por ejemplo la implementaci\'on de un servicio de VPN particular.\\
 
 \newpage
 \begin{figure}[htbp!] 
@@ -23,10 +23,14 @@ La arquitetcura del prototipo, como puede apreciarse en la imagen ~\ref{fig:Open
 \label{fig:OpenSourceRArch0}
 \end{figure}
 
-Se tienen entonces dos claras lineas de trabajo; el desarrollo del switch, de aquí en mas RAU-Switch y el desarrollo de la entidad Controlador. 
+Básicamente se agregan a la arquitectura esencial deOpenFlow/SDN compatibilidad con MPLS en cada switch, y se define el plano de reenvió de la red como IP/MPLS híbrido.\\ 
+ 
+Se tienen entonces dos claras lineas de trabajo; el desarrollo del switch, que de aquí en mas llamaremos RAU-Switch y el desarrollo de la entidad Controlador. 
 
 \section{RAU-Switch}
-Cada nodo del prototipo es implementado por lo que en este trabajo se denomin\'o RAU-Switch; un switch MPLS/OpenFlow híbrido. Este switch se divide en diferentes componentes como se muestra en la figura~\ref{fig:OpenSourceRArch}.
+Cada nodo del prototipo es implementado por lo que en este trabajo se denomin\'o RAU-Switch; un switch MPLS/OpenFlow híbrido. Es un switch OpenFlow porque esta construido en base a dicha arquitectura, y maneja el plano de reenvío en base a tablas de flujos. A su vez es MPLS porque conceptualmente el reenvío de paquetes se hace mediante conmutación de etiquetas.\\
+
+La estructura del switch se divide en diferentes componentes como se muestra en la figura~\ref{fig:OpenSourceRArch}.
 
 \newpage
 \begin{figure}[htbp!] 
@@ -35,6 +39,8 @@ Cada nodo del prototipo es implementado por lo que en este trabajo se denomin\'o
 \caption[RAU-Switch - diagrama de componentes]{RAU-Switch - diagrama de componentes}
 \label{fig:OpenSourceRArch}
 \end{figure}
+
+A continuación se explican en detalle cada componente.
 
 \subsection{Plataforma de la PC}
 El switch esta constru\'ido sobre la plataforma de una PC de escritorio convencional. En particular se trabaja con un procesador Intel Core i7 de 64 bits, una Mother ASUS ROG Maximus Formula VI, 16GB de memoria DDR3, y un disco HDD de 1TB de capacidad. En el apéndice \ref{C.1} pueden encontrarse estos detalles con mayor profundidad.
@@ -123,7 +129,7 @@ En el prototipo, un agente snmp es instalado en cada switch(dispositivo administ
 No es el objetivo de este trabajo entrar en detalle sobre el protocolo SNMP, por lo que si el lector desea profundizar en estos conceptos se recomienda seguir las referencia mencionadas.\\
 
 \section{Entidad Controlador}
-Como se muestra en \ref{fig:OpenSourceRArch0}, cada nodo del prototipo responde a una entidad denominada Controlador. Esta entidad en la pr\'actica es una PC convencional con determinadas componentes de software(ver figura \ref{fig:OpenSourceRArch3}).
+Como se muestra en \ref{fig:OpenSourceRArch0}, cada nodo del prototipo responde a una entidad denominada Controlador. Esta entidad en la pr\'actica es una PC convencional con determinadas componentes de software(ver figura \ref{fig:OpenSourceRArch3}).\\
 
 \begin{figure}[htbp!] 
 \centering    
@@ -133,7 +139,9 @@ Como se muestra en \ref{fig:OpenSourceRArch0}, cada nodo del prototipo responde 
 \end{figure}
 
 \section{Software de Control Ryu}
-[yo]
+Ryu es el Controlador o software de control utilizado para implementar el plano de control OpenFlow. Sobre este controlador se ejecuta una aplicación Ryu encargada de implementar exactamente el plano de control del prototipo. Esto es el modelado de la realidad como los conceptos de VPN y clasificación de trafico, las reglas de negocio como las políticas de QoS y asignación de etiquetas, algoritmos de ruteo entre algunos ejemplos. 
+
+M\'as adelante en el capitulo \ref{Capítulo 5} se explica en detalle la arquitectura de esta aplicación denominada RAUFlow.\\
 
 \section{Quagga}
 Como se menciona anteriormente, el Controlador ejecuta una instancia de Quagga. De esta forma tiene acceso local a la información de la base de datos topologica construida por OSPF.
@@ -145,13 +153,12 @@ Esta componente consta de dos módulos. El primero se encarga de escuchar los me
 
 Una vez capturado el evento anterior, el segundo m\'odulo toma la informacion topologica en la base local del Controlador y la procesa para ser enviada a la aplicación de control.
 
-\section{Administrador SNMP}
+\begin{section}{Administrador SNMP}
+El administrador SNMP es utilizado para consultar al agente snmp de un nodo en particular, por la correspondencia entre números de puerto OpenFlow y direcciones IP. Esta componente es utilizada por la aplicación de gestión RAUFlow cada vez que es preciso obtener esta información de mapeo para un nodo en particular(por ejemplo en el proceso de actualización de la topolog\'ia).\\\\\
 
-El administrador SNMP es utilizado para consultar al agente snmp de un nodo en particular, por la correspondencia entre números de puerto OpenFlow y direcciones IP. Esta componente es utilizada por la aplicación de gestión RAUFlow cada vez que es preciso obtener esta información de mapeo para un nodo en particular(por ejemplo en el proceso de actualización de la topolog\'ia).
+\end{section}
 
-\section{Dise\~no general}
-
-De esta forma, el prototipo para la nueva versi\'on de la red acad\'emica, se compone principalmente de algunos nodos construidos en base al router opensource, y un dispositivo controlador. Como se puede observar en la imagen \ref{fig:OpenSourceRArch4} los nodos se comunican con el Controlador mediante el protocolo OpenFlow como se explico con anterioridad, habilitando de esta forma a que el plano de datos sea programado por el plano de control. Por otro lado las diferentes instancias de Quagga distribu\'idas en cada nodo de la red y en el dispositivo controlador, se comunican mediante un canal IP con el objetivo de aprender la topolog\'ia y diseminar la informaci\'on de ruteo. Finalmente el gerente SNMP interactua con los diferentes agentes SNMP localizados en cada nodo mediante el canal IP, para obtener infirmaci\'on adicional acerca de cada nodo. 
+En resumen, el prototipo se compone de nodos construidos en base al hardware NetFPGA y una PC convencional m\'as agregados de software, implementando un switch MPLS/OpenFlow. y una PC con el Controlador Ryu mas algunas otras componentes de software implementando el plano de control. Como se muestra en la figura\ref{fig:OpenSourceRArch4}, luego la comunicacion entre cada par de nodos es IP/MPLS, mientras que cada nodo es manipulado por el protocolo OpenFlow. Adicionalmente se tiene un canal IP entre cada nodo y el plano de control por donde se comunican cada agente snmp con el administrador.\\
 
 \begin{figure}[htbp!] 
 \centering    
