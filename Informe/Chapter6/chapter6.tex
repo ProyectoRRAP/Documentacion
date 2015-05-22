@@ -7,3 +7,61 @@
     \graphicspath{{Chapter6/Figs/Vector/}{Chapter6/Figs/}}
 \fi
 
+Para validar funcionalmente el prototipo implementado, es preciso la construcción de un laboratorio de experimentación basado en el prototipo, sobre el cual ejecutar un conjunto exhaustivo de pruebas. Estas pruebas están orientadas a verificar aspectos importantes del prototipo como la clasificación de trafico, el algoritmo de ruteo dinámico, algoritmo de distribución de etiquetas, entre otros.\\
+
+El siguiente capitulo esta destinado a la presentación del laboratorio de pruebas construido, y a la definición y ejecución de las diferentes pruebas realizadas.
+
+% **************************** Construccion del TestBed ************************** 
+\section{Definición del Laboratorio}
+
+\section{Pruebas}
+
+\subsection{Asignación de etiquetas}
+
+\subsubsection{Objetivos}
+\begin{enumerate}
+\item Probar que el algoritmo de distribución de etiquetas funciona correctamente en relación a: (a) asignación de etiquetas identificadoras a nuevos servicios(segundo nivel de etiquetas) y (b) asignación de etiquetas a caminos LSP.
+\item Analizar el comportamiento de este algoritmo cuando se prueba con un rango amplio de etiquetas dentro del espacio de etiquetas disponible.
+\end{enumerate}
+
+\subsubsection{Descripción de la prueba:}
+[Crear muchisimos servicios para utilizar gran parte del arango de etiquetas disponibles. Tomar un muestreo de servicios que utilicen etiquetas que creamos convenientes y analizar el comportamiento del prototipo para el trafico generado en estos servicios en:]
+
+\begin{itemize}
+\item Trafico asociado a una VPN es correctamente etiquetado a la entrada del prototipo
+\item Trafico asociado a una VPN sale de la red del laboratorio por el nodo de salida y la interfaz de salida prevista, sin etiquetas.
+\end{itemize}
+
+\subsubsection{Resultados obtenidos:}
+
+\subsection{Clasificación de tr\'afico}
+
+\subsubsection{Objetivos}
+\begin{enumerate}
+\item Verificar la clasificación de trafico en base a los matching fields de OpenFlow en los nodos de ingreso
+\item Verificar la clasificación de tr\'afico en función a los campos puerto de entrada y etiqueta en los nodos internos(LSRs)
+\end{enumerate}
+
+\subsubsection{Descripción de la prueba}
+[Hacemos capturas de pantalla en nodos de entrada y en nodos del medio para ver que el trafico se clasifica correctamente. Para esto debemos crear varios servicios]
+
+\subsubsection{Resultados obtenidos}
+
+\subsection{Algoritmo de ruteo dinámico}
+
+\subsubsection{Objetivos:}
+
+
+\subsubsection{Descripción de la prueba:}
+
+
+\subsubsection{Resultados obtenidos:}
+
+
+\subsection{Numeraciones superpuestas}
+
+\textbf{Objetivos}
+
+\textbf{Descripción de la prueba}
+
+\textbf{Resultados obtenidos}
