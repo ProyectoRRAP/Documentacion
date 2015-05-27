@@ -2,20 +2,20 @@
 \chapter{Soluci\'on a errores encontrados en la plataforma NetFPGA} 
 \label{apendiceA}
 
-Durante el tiempo en que se trabajo con el hardware NetFPGA, utilizando la versi\'on 5.0.5 del c\'odigo fuente de la plataforma, se detectaron errores y comportamientos inesperados. En particular se encontraron errores de severidad alta, en relaci\'on al impacto que tienen sobre el prototipo, durante el proceso de programaci\'on persistente del hardware con el proyecto ReferenceNIC.\\
+Durante el tiempo en que se trabajo con el hardware NetFPGA, utilizando la versi\'on 5.0.5 del c\'odigo fuente de la plataforma, se detectaron errores en el mismo. En particular se encontraron errores de severidad alta en relaci\'on al impacto que tienen en el diseño del el prototipo.\\
 
-En total se detectaron dos bugs importantes, los cuales fueron reportados a la comunidad y equipo de desarrollo de NetFPGA; atraves de una lista de correos[poner referencia a la lista de correos]. Estos errores fueron confirmados por el equipo de desarrollo de NetFPGA, y se nos brindo soluciones a ambos errores. 
+En total se detectaron dos errores, los cuales fueron reportados a la comunidad y equipo de desarrollo de NetFPGA, a través de una lista de correos\citep{NetFPGABetaMailing}. El equipo de NetFPGA confirmo ambos errores y sugirió soluciones pasajeras a ambos problemas.
 
-Por otro lado se constato que estos errores fueron solucionados en la siguiente versi\'on del c\'odigo fuente de la plataforma.\\ 
+A su vez estos errores fueron solucionados en la siguiente versi\'on del c\'odigo fuente de la plataforma.
  
 \section{Problema con la herramienta pcieprog y ReferenceNIC}
-El primer error detectado se encuentra en la herramienta \textbf{pcieprog} dentro de la plataforma de NetFPGA. La misma se utiliza para transferir el archivo binario generado a partir del bitfile del proyecto (en este caso ReferenceNIC) a una de las memorias Flash del hardware.
+El primer error detectado se encuentra en la herramienta \textbf{pcieprog} dentro de la plataforma de NetFPGA. La misma se utiliza para transferir el archivo binario generado a partir del bitfile del proyecto (en este caso ReferenceNIC) a una de las memorias flash del hardware.
 
-Al ejecutarse esta herramienta con el binario generado para el proyecto ReferenceNIC, la misma se estancaba durante horas con un 100\% de utilizaci\'on de la CPU. Tras probar con varias ejecuciones de la misma herramienta, se realizo la misma prueba con dos proyectos m\'as (reference\_ switch y reference\_ router), compatibles con la programaci\'on persistente. 
+Al ejecutarse esta herramienta con el binario generado para el proyecto ReferenceNIC, la misma se ejecutaba durante horas con un 100\% de utilizaci\'on de la CPU, sin indicios de terminar su ejecución en algún momento. Tras probar con varias ejecuciones, se realizo la misma prueba con dos proyectos adicionales(reference\_ switch y reference\_ router), compatibles también con la programaci\'on persistente. 
 
-Para estos proyectos no se detecto el mismo comportamiento an\'omalo, por lo que se presumi\'o la presencia de un bug en el c\'odigo del proyecto ReferenceNIC. A su vez se procedio con la inspecci\'on del c\'odigo de la herramienta \textbf{pcieprog}, hasta que finalmente se logro aislar la porci\'on del mismo donde el programa se estancaba. En particular el programa quedaba estancado en un loop infinito porque no se cumplia la condici\'on de salida nunca.\\ 
+Para estos proyectos la ejecucion del programa terminaba tras algunos minutos, por lo que se presumi\'o la presencia de algún error en el c\'odigo del proyecto ReferenceNIC. Por otro lado se realizo una inspecci\'on al c\'odigo de la herramienta \textbf{pcieprog}, para determinar en que momento el programa se estancaba. Se detecto que el programa quedaba trancado en un bucle infinito dado que no se cumplía nunca la condici\'on de salida.\\ 
 
-Este comportamiento fue reportado al grupo de soporte a traves de una lista de correos(ver correos en anexo [link al anexo]), obteniendose el siguiente parche para solucionar el problema:
+Tras reportarse este comportamiento a la lista en correos\citep{NetFPGABetaMailing}, se confirmo el error y se proporciono la siguiente solución transitoria:
 
 \begin{enumerate}
 \item Dentro del directorio donde se encuentra el c\'odigo fuente de la plataforma, posicionarse en 
@@ -41,26 +41,26 @@ por
 
 \item Recompilar el proyecto ReferenceNIC ejecutando el comando make en el directorio projects/reference\_ nic/
 
-\item Utilizar el nuevo bitfile generado para programar el hardware, generar un nuevo archivo binario y transerir a la memoria Flash.
+\item Utilizar el nuevo bitfile generado para programar el hardware, generar un nuevo archivo binario y transerir a la memoria flash.
 \end{enumerate}
 
-Una vez que se realizaron estos cambios, se constato que la herramienta pcieprog funcionaba correctamente, transfiriendo el binario a la memoria Flash correctamente.
+Una vez realizados estos cambios la herramienta pcieprog funciono correctamente, transfiriendo el contenido del archivo binario a la memoria flash.
  
-\section{Error en driver para ReferenceNIC}
-El segundo error detectado con este proyecto, tambi\'en en la modalidad de programaci\'on persistente  se encuentra relacionado al driver utilizado para la interacci\'on entre el hardware y el sistema operativo anfitrion.\\
+\section{Error en el driver para el proyecto ReferenceNIC}
+El segundo error detectado trabajando con este proyecto en la modalidad de programaci\'on persistente  se encuentra relacionado al driver del proyecto, utilizado en la interacción entre el hardware y el sistema operativo anfitrión.\\
 
 Este error fue detectado experimentalmente al realizar pruebas de funcionamiento entre varios nodos utilizando el hardware programado con el proyecto ReferenceNIC, y se detalla a continuaci\'on:
 
 \begin{itemize}
 \item \textbf{Descripci\'on:}\\
-Al programarse el hardware con el proyecto ReferenceNIC desde la memoria Flash utilizando la programaci\'on pcie, no funciona correctamente cuando la placa NetFPGA tiene conectados enlaces en sus puertos. En particular para que el hardware funcione correctamente debe ser encendido sin cables conectados en los puertos, y luego conectar manualmente cada uno de ellos una vez que el equipo completo el encendido.
+Al programarse el hardware con el proyecto ReferenceNIC desde la memoria flash utilizando la programaci\'on pcie (programación persistente), si el equipo es encendido con los enlaces de fibra óptica conectados en cada uno de los puertos físicos, el hardware deja de funcionar correctamente. Por otro lado si el equipo es encendido sin enlaces conectados a algún puerto, y luego son conectados manualmente una vez que el encendido ha terminado, el hardware funciona correctamente.
 
 \item \textbf{Escenario:}
 \begin{itemize}
 \item Dos PCs cada una con una tarjeta NetFPGA instalada
 \item Las tarjetas estan conectadas por cuatro enlaces de fibra \'optica (nf0-nf0, nf1-nf1, nf2-nf2 y nf3-nf3)
 \item Ambas tarjetas estan programadas con el proyecto ReferenceNIC via programaci\'on pcie.
-\item Se utiliza la versi\'on 5.0.5 de c\'odigo fuente, con el parche mencionado anteriormente.
+\item Se utiliza la versi\'on 5.0.5 de c\'odigo fuente, con el parche mencionado en la sección anterior.
 \end{itemize}
 
 \item \textbf{Efecto:}\\
@@ -69,27 +69,27 @@ Incapacidad parar ejecutar exitosamente el comando ping entre cualquier par de i
 \item \textbf{Reproducci\'on:}\\
 Partiendo de ambas PCs apagadas
 \begin{enumerate}
-\item Encender una de las PC, teniendo conectados los enlaces \'opticos entre ambas PCs
-\item Cargar el driver nf10 y configurar manualmente direcciones IP para cada interaz (nf0 \dots nf3)
+\item Encender una de las PCs, teniendo conectados los enlaces \'opticos entre ambas equipos
+\item Cargar el driver y configurar manualmente direcciones IP para cada interfaz (nf0 \dots nf3)
 \item Luego realizar el mismo procedimiento para la otra PC
-\item Leds asociados a cada puerto en una de las tarjetas NetFPGA son encendidos por completo, mientras que en la otra tarjeta solamente la mitad de los Leds se encuentran encendidos.
-\item Si se apaga y enciendo la PC con la tarjeta NetFPGA cuyos leds se encuentran todos prendidos, luego la otra tarjeta enciende todos sus leds, mientras que la primera enciende solo la mitad de sus leds. 
-\item El \'ultimo paso puede repetirse, y el comportamiento observado se mantiene. En particular la tarjeta que es iniciada al final funciona correctamente mientras que la otra no.
+\item LEDs asociados a cada puerto en una de las tarjetas NetFPGA son encendidos por completo, mientras que en la otra tarjeta solamente la mitad de los LEDs se encuentran encendidos.
+\item Si se apaga y enciendo la PC con la tarjeta NetFPGA cuyos LEDs se encuentran todos encendidos, luego la otra tarjeta enciende todos sus LEDs, mientras que la primera enciende solo la mitad.
+\item El \'ultimo paso puede repetirse y el comportamiento observado se mantiene. En particular la tarjeta que es iniciada al final funciona correctamente mientras que la otra no.
 \end{enumerate} 
 
 \item \textbf{Soluci\'on:}
 \begin{enumerate}
 \item Apagar ambas PCs
 \item Desconectar todos los enlaces \'opticos
-\item Encender ambas PCs(cargar el driver nf10 y configurar cada interfaz con una direcci\'on IP apropiada)
+\item Encender ambas PCs(cargar el driver y configurar cada interfaz con una direcci\'on IP apropiada)
 \item Luego de que cada PC esta encendida y configurada conectar los enlaces \'opticos uno a uno.
 \end{enumerate}
 
 \end{itemize}
 
-Este reporte tambi\'en fue enviado a la comunidad de NetFPGA (ver anexo con emails [link al email]), en donde se constato nuevamente la presencia de un error, esta vez en la configuraci\'on de los chips PHY de la tarjeta.\\ 
+Este reporte fue enviado a la comunidad NetFPGA, en donde se constata nuevamente la presencia de un error, esta vez en la configuraci\'on de los chips PHY de la tarjeta.\\ 
 
-La soluci\'on planteada por el equipo de NetFPGA fue la siguiente:
+La soluci\'on propuesta por el equipo de NetFPGA es la siguiente:
 
 \begin{enumerate}
 \item Dentro del directorio donde se encuentra el c\'odigo fuente de la plataforma, posicionarse en 

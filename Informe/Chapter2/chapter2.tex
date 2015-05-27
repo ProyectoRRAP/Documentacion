@@ -19,7 +19,7 @@ En relación a como se divide este capitulo, primero se introduce el concepto de
 
 %********************************** %First Section  **************************************
 \section{Antecedentes a SDN} %Section - 1.1
-Software Defined Networking, Redes Definidas por Software en español o simplemente SDN por su sigla en ingles, es un concepto relativamente nuevo ya que bajo este nombre puede contextualizarse en la ultima década. No obstante la idea que yace detrás de este enfoque ha sido propuesta en reiteradas ocasiones en el pasado, eliminando algunas variantes claro esta. Por ello vale la pena repasar los principales antecedentes que desde nuestra perspectiva contribuyeron al enfoque de SDN. 
+Software Defined Networking, Redes Definidas por Software en español o simplemente SDN por su sigla en ingles, es un concepto relativamente nuevo ya que bajo este nombre puede contextualizarse en la ultima década. No obstante muchas de las idea que yacen detrás de este enfoque han sido introducidas en diferentes propuestas en el pasado. Por ello vale la pena repasar los principales antecedentes que desde nuestra perspectiva contribuyeron al enfoque de SDN. 
 
 \subsection{Open Signaling}
 En el año 1995 el grupo de investigación OPENSIG\cite{campbell1999open} dentro del IETF, comenzó a trabajar en alternativas para hacer ATM, Internet y las redes móviles ``más'' abiertas, extensibles y programables.
@@ -52,7 +52,7 @@ se encontraba limitado justamente a las capacidades de los protocolos de comunic
 \subsection{ForCES Protocol}
 Otro grupo de trabajo dentro del IETF denominado ForCES(Forwarding and Control Element Separation) comenzó a trabajar a mediados del año 2007 en un protocolo que permita la separación entre los dispositivos de red y la inteligencia que los gobierna. Dicho protocolo fue especificado como una propuesta de estándar y publicado en el año 2010 bajo el nombre ForCES Protocol\citep{doria2010forwarding}.
 
-Este enfoque plantea dos entidades logicas denominadas Elementos de Control(CE) y Elementos de Reenvió(FE), así como un protocolo de comunicación entre ambas entidades.Mas adelante en \ref{sec:ForCES} se trata con mayor profundidad este protocolo.
+Este enfoque plantea dos entidades logicas denominadas Elementos de Control(CE) y Elementos de Reenvió(FE), así como un protocolo de comunicación entre ambas entidades.
 
 \subsection{4D Project}
 En el año 2004 el proyecto 4D \citep{rexford2004network}\citep{greenberg2005clean} propone una re-estructuración arquitectónica basada en tres principios claves: 
@@ -81,6 +81,7 @@ Los objetivos al nivel de un AS son especificados en el plano de decisiones, y m
 En otras palabras el plano de decisión es responsable de crear la configuración de la red, mientras que el plano de diseminación se encarga de recolectar información sobre el estado de la red para el plano de decisión, y distribuir la salida del plano de decisión. Mientras tanto el plano de descubrimiento permite a dispositivos descubrir vecinos directamente conectados en la red, y finalmente el plano de datos se encarga de redirigir el tráfico de red.\\
 
 \section{Software Defined Networking}
+\label{section2.2}
 
 Definir el concepto de Software Defined Networking no es una tarea simple, puesto que no se encuentra por completo estandarizado a pesar de que existen varias organizaciones trabajando en la temática. En particular se pueden destacar al grupo de trabajo Software-Defined Networking Research Group(SDNRG) dentro del IRTF, quien se encuentra trabajando en la redacción de las definiciones y estándares para este concepto, y por otro lado a la Open Networking Foundation organización que concentra gran cantidad de material y documentación sobre SDN, y se encuentra trabajando en el desarrollo del protocolo OpenFlow el cual se explica mas adelante en este trabajo.\\
 
@@ -116,9 +117,12 @@ En dicha capa se pueden implementar desde protocolos de ruteo como OSPF y RIP, b
 De esta forma Software Defined Networking, centraliza el control de la red en una aplicación de software (Controlador); y transforma algoritmos, procesos de control, políticas de seguridad y toda la inteligencia antiguamente acoplados a los dispositivos de red, en aplicaciones de controlador.\\
 
 \section{Arquitecturas basadas en SDN}
+\label{section2.3}
+
 Existen varias arquitecturas o implementaciones que de una forma u otra puede encontrarse argumentos para afirmar que siguen el enfoque de SDN. Este trabajo se basa en la utilización de la arquitectura OpenFlow pero existen otras arquitecturas basadas en este enfoque como ForCES. [de repente podemos mencionar algunas de las de cisco/hp].
 
 \subsection{OpenFlow}
+
 Orientado por el enfoque en tres capas de SDN y bajo la misma premisa de desacoplar completamente los planos de datos y control, OpenFlow\cite{mckeown2008openflow} brinda una implementaci\'on estándar para el mecanismo de comunicación entre las capas de control e infraestructura; interfaz sur. En otras palabras, provee de un protocolo de comunicación estándar para manipular los distintos dispositivos de la red y así el plano de datos.\\ 
 
 OpenFlow se basa en tres componentes(ver figura ~\ref{fig:OpenFlowArch}): (1) Controlador OpenFlow compatible, (2) Protocolo OpenFlow y (3) Switch OpenFlow compatible.
@@ -375,6 +379,8 @@ Inicialmente esta migración fue orientada a usuarios en particular (wireless), 
 \end{enumerate}
 
 \section{Red Privada Virtual}
+\label{section2.7}
+
 
 Private Virtual Network(VPN) o en español Red Privada Virtual, es como se le denomina a la extension de una red privada sobre una plataforma de red p\'ublica, como lo es Internet.
 
@@ -387,7 +393,7 @@ Cada una de ellas presenta tanto ventajas como desventajas, que deben sopesarse 
 [Poner algo del RFC magico]
 
 \section{Multiprotocol Label Switching}
-
+\label{section2.8}
 
 Multiprotocol Label Switching(MPLS) o Multiprotocolo de intercambio de etiquetas, es un mecanismo de transporte de datos desarrollado y estandarizado por el IETF, en particular por los RFC 3031\cite{rosen2001multiprotocol}, 3032\citep{rosen2001mpls} y 3814\citep{nadeau2004multiprotocol}.\\
 
@@ -419,6 +425,7 @@ Alguno de los principales términos en la literatura MPLS son los siguientes:
 \end{itemize}
 
 \section{NetFPGA}
+\label{section2.9}
 
 NetFPGA\cite{NetFPGA1} es una plataforma de hardware reconfigurable y software opensource, flexible y potente, diseñada para un uso principalmente académico en tareas de investigación y enseñanza.\\
 
