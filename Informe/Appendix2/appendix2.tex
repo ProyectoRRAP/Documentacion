@@ -26,25 +26,25 @@ Como conclusi\'on general, para el hardware utilizado se debe utilizar patchcord
 
 Para la programación del hardware NetFPGA, se utiliza inicialmente el procedimiento indicado en el manual de ejecuci\'on del Test de Producci\'on ~\citep{ProdTestManual}. Tras experimentarse un tiempo con este procedimiento y el hardware se constata que esta técnica de programación no es persistente. Esto significa que tras apagar y encender el equipo(ciclo completo de encendido) el mismo pierde la programación. 
 
-Utilizando la herramienta Impact, observando el comportamiento de LEDs en la placa y corroborando con el el manual de la misma, se constata que el contenido del chip CPLD no es borrado, pero el del chip FPGA si.\\
+Utilizando la herramienta Impact, observando el comportamiento de LEDs en la placa y corroborando con el el manual de la misma, se constata que el contenido del chip CPLD no es borrado, no así el contenido del chip FPGA que si es borrado.\\
 
-Con esta información se consulta la documentación de la plataforma, y se buscan experiencias similares por partes de otros usuarios de la misma. No se encuentran problemas o experiencias similares, pero se encuentra dentro de los proyectos de la plataforma un desarrollo de nombre Reference Flash, cuya funcionalidad es habilitar la programación persistente del hardware.\\
+Con esta información se consulta la documentación de la plataforma y se buscan experiencias similares  de otros usuarios. No se encuentran problemas o experiencias similares pero se encuentra dentro de los proyectos de la plataforma un desarrollo de nombre Reference Flash, cuya funcionalidad es habilitar la programación persistente del hardware.
 
-Este proyecto utiliza las dos unidades de memoria flash del equipo. Mientras que en la Flash A se almacena un bitstream de configuración para el equipo (bootstrap bitstream), la  Flash B queda disponible para almacenar un bitstream a elección del programador. 
+Este proyecto utiliza las dos unidades de memoria flash disponibles, para almacenar la programaci\'on del equipo. Mientras que en la Flash A se almacena un bitstream de configuración para el equipo (bootstrap bitstream), la  Flash B queda disponible para almacenar un bitstream a elección del programador. 
 
 La configuración del equipo es siempre manejada por el chip CPLD, el cual en el tiempo de encendido programa al equipo con el contenido de la Flash A. Luego el equipo puede ser reprogramado desde la Flash B a través de la interfaz PCIe.
 
-Basándose en este proyecto, se prueba como solución al problema de la desprogramacion del equipo esta alternativa, utilizando como bitstream para la Flash B, el proyecto ReferenceNIC.\\
+Basándose en este proyecto, se prueba como solución al problema de la desprogramaci\'on del equipo dicha alternativa, utilizando como bitstream para la Flash B, el proyecto ReferenceNIC.\\
 
-Esta estrategia funciona en relación a la desprogramacion del hardware, puesto que tal como su documentación lo indica se programa a partir del contenido de la Flash A; y luego utilizando la interfaz PCIe es existosamente reprogramada desde la Flash B. No obstante el comportamiento final del hardware no es el correcto. En particular tras reprogramar el equipo desde la Flash B no se puede insertar el driver para el ReferenceNIC en el kernel del sistema operativo(Linux).\\
+Esta estrategia funciona  exitosamente en relación a la desprogramaci\'on del hardware, puesto que tal como su documentación lo indica se programa a partir del contenido de la Flash A; y luego utilizando la interfaz PCIe es existosamente reprogramada desde la Flash B. No obstante el comportamiento final del hardware no es el correspondiente al esperado por el proyecto ReerenceNIC. En particular tras reprogramar el equipo desde la Flash B no se puede insertar el driver para el ReferenceNIC en el kernel del sistema operativo(Linux).\\
 
-Finalmente se utiliza una lista de correos en la que participan usuarios y desarrolladores de la plataforma. Aquí se explica el problema de la desprogrmacion del hardware, y las alternativas exploradas (ver anexo [link al anexo con el email]). 
+Tras utilizar el foro oficial de la plataforma, sin obtener respuestas se accede finalmente a una lista de correos en la que tambi\'en participan usuarios y desarrolladores de la plataforma. Aquí se explica el problema de la desprogrmaci\'on del hardware, y las alternativas exploradas. 
 
-Afortunadamente, por parte del equipo de desarrolladores de NetFPGA se nos contesta que este comportamiento se debe a una incorrecta programacion del hardware. Si bien se entiende correctamente la funcionalidad del proyecto ReferenceFlash, el proyecto ReferenceNIC precisa de módulos adicionales en el diseño de la CPLD que el ReferenceFlash no tiene. 
+Afortunadamente se obtiene respuesta del equipo de desarrolladores de NetFPGA, el cual nos indica que este comportamiento se debe a una incorrecta programaci\'on del hardware. Si bien se entiende correctamente la funcionalidad del proyecto ReferenceFlash, el proyecto ReferenceNIC precisa de módulos adicionales en el diseño de la CPLD que el ReferenceFlash no tiene. 
 
-Sin embargo, el proyecto ReferenceNIC ya tiene incorporado el modulo de persistencia que se presenta en ReferenceFlash. Para lograr una programacion persistente, ademas de programar el equipo con el ReferenceNIC, se debe utilizar la herramienta \textbf{pcieprog}(dentro del mismo proyecto), para cargar en la memoria Flash A, un archivo bitstream con el contenido del mismo proyecto. De esta forma al producirse el encendido del equipo, este se programa con el contenido de la memoria Flash A.\\ 
+Sin embargo, el proyecto ReferenceNIC ya tiene incorporado el modulo de persistencia que se presenta en ReferenceFlash. Por lo tanto, para lograr una programaci\'on persistente ademas de programar el equipo con el ReferenceNIC, se debe utilizar la herramienta \textbf{pcieprog}(dentro del mismo proyecto) para cargar en la memoria Flash A, un archivo bitstream con el contenido del mismo proyecto. De esta forma al producirse el encendido del equipo, este se programa con el contenido de la memoria Flash A.\\ 
 
-Esta es la solución al problema de la desprogramacion del hardware, y es lo que se da a conocer en este trabajo como la estrategia de programación persistente.
+Esta es estrategia funciona correctamente, y es lo que en este trabajo se di\'o a conocer como programación persistente.
 
 \section{Falta de licencias para suite de Xilinx ISE SDK}
 \label{apendiceB3}
