@@ -384,13 +384,39 @@ Inicialmente esta migración fue orientada a usuarios en particular (wireless), 
 
 Private Virtual Network(VPN) o en español Red Privada Virtual, es como se le denomina a la extension de una red privada sobre una plataforma de red p\'ublica, como lo es Internet.
 
-Las redes privadas virtuales, habilitan a una computadora a enviar y recibir informacion a traves de una infraestructura de red publica o compartida como si estuviese deirectamente conectada a la red privada; manteniendo las políticas de seguridad y funcionalidades de dicha red privada.
+Las redes privadas virtuales habilitan a un equipo a enviar y recibir información a través de una infraestructura de red publica o compartida como si estuviese directamente conectada a la red privada; manteniendo las políticas de seguridad y funcionalidades de dicha red.
 
-Básicamente existen tres arquitecturas de redes VPNs: (1) VPN de acceso remoto, (2) VPN punto a punto y (3) VPN sobre LAN.
+Conceptualmente se han propuesto tres arquitecturas b\'asicas de redes VPN: (1) VPN de acceso remoto, (2) VPN punto a punto y (3) VPN sobre LAN.\\
 
-Cada una de ellas presenta tanto ventajas como desventajas, que deben sopesarse dependiendo de los requerimientos de una organización en particular. En el contexto de este proyecto, tienen un interés mayor las VPN punto a punto, puesto que es uno de los requerimientos esenciales sobre los que se basa el prototipo para la RAU2 desarrollado en este trabajo.
+De un servicio se espera de un servicio de VPN que proveea de (1) Autenticaci\'on de sus usuarios, (2) Confidencialidad de los datos transmitidos e (3) Integridad de los datos.\\
 
-[Poner algo del RFC magico]
+A lo largo de los años han propuesto diferentes implementaciones de VPN basadas en estos modelos y en variaciones de los mismos, implementando servicios de capa 2 en el stack OSI, y tambien de capa 3 en el mismo modelo. Algunos ejemplos son:
+
+\begin{itemize}
+\item VPN tradicionales
+	\begin{itemize}
+	\item Frame Relay (Capa 2)	
+	\item ATM (Capa 2)
+	\end{itemize}
+	
+\item VPNs basadas en CPE
+	\begin{itemize}
+	\item L2TP (Capa 2)
+	\item IPSec (Capa 2)
+	\end{itemize}
+	
+\item VPNs implementadas por proveedores de servicios
+	\begin{itemize}
+	\item VPN de capa dos con MPLS (Capa 2)
+	\item BGP/MPLS VPNs de capa tres(Capa 3)
+	\end{itemize}
+\end{itemize}
+
+En el contexto de este proyecto interesa implementar el tipo de VPN provista por proveedores de servicios, asumiendo la RAU el rol de proveedor. Interesa evaluar la implementaci\'on de servicios de VPNs tanto de capa dos como de capa tres.
+
+Comúnmente este tipo de VPN estan basadas en MPLS y BGP como se menciono anteriormente, por lo que en este proyecto se toma como referencia este modelo de implementaci\'on. Por mayores detalles en relaci\'on a la implementaci\'on del modelo BGP/MPLS para implentar VPNs recomendamos leer el RFC2547\citep{rosen1999bgp} y RFC4364\citep{rosen2006bgp}. 
+
+%Cada una de ellas presenta sus ventajas y desventajas, que deben sopesarse dependiendo de los requerimientos de cada organización en particular. En el contexto de este proyecto, tienen un interés particular las VPN punto a punto, puesto que es uno de los requerimientos esenciales sobre los que se basa el prototipo para la RAU2 desarrollado en este trabajo.
 
 \section{Multiprotocol Label Switching}
 \label{section2.8}
