@@ -383,7 +383,7 @@ Inicialmente esta migración fue orientada a usuarios en particular (wireless), 
 
 En pocas palabras, Red Privada Virtual o VPN por su sigla en ingles, es la extension de una red privada sobre una infraestructura de red p\'ublica como lo es por ejemplo Internet.
 
-Este concepto habilita a un equipo de una determinada red privada a enviar y recibir información a otro equipo en otra red privada separadas f\'isicamente, utilizando una infraestructura de red publica o compartida para la comunicaci\'on entre ambas redes, y de la misma forma que si estuviese directamente conectada a la red privada. Adem\'as permiten mantener las políticas de seguridad y funcionalidades de la red privada.[revisar si son dos redes privadas o dos subredes de la misma red privada creo q esto ultimo]\\
+Este concepto habilita a un equipo en una determinada subred privada a enviar y recibir información a otro equipo en otra subred privada separadas f\'isicamente, utilizando una infraestructura de red publica o compartida para la comunicaci\'on entre ambas redes, y de la misma forma que si estuviese directamente conectada a la red privada. Adem\'as permiten mantener las políticas de seguridad y funcionalidades de la red privada.\\
 
 %Conceptualmente se han propuesto tres arquitecturas b\'asicas de redes VPN: (1) VPN de acceso remoto, (2) VPN punto a punto y (3) VPN sobre LAN.\\
 
@@ -419,25 +419,33 @@ Otra de las características por la cual es interesante diferenciar a dichas imp
 
 \subsubsection{Redes Privadas Punto a Punto}
 
-Las redes privadas punto a punto, son un tipo de implementaci\'on orientada a conectar solamente dos extremos de la red de una organizaci\'on utilizando la infraestructura de un proveedor de servicios o la Internet, utilizando lo que se denominan túneles. T\'ipicamente se utilizan para conectar un cliente con un servidor en una organizacai\'on, o dos cedes de una organizaci\'on; aunque para conectar m\'as de dos cedes de una organizaci\'on, dependiendo del caso no suelen ser la mejor implementaci\'on. 
+Las redes privadas punto a punto, son un tipo de implementaci\'on orientada a conectar solamente dos extremos de la red de una organizaci\'on, utilizando lo que se denominan t\'uneles sobre la infraestructura de un proveedor de servicios o Internet. T\'ipicamente se utilizan para conectar un cliente con un servidor de una organizacai\'on, o dos edificios de una misma organizaci\'on de una forma simple. 
 
 \begin{figure}[htbp!] 
 \centering    
 \includegraphics[width=0.7\textwidth]{VPNPuntoaPunto}
 \caption[Esquema de una VPN Punto a Punto]{Esquema de una VPN Punto a Punto}
-\label{fig:OF10MatchingFields}
+\label{fig:VPNPuntoAPunto}
 \end{figure}
 
+En este enfoque el tr\'afico de la subred A al llegar al nodo de borde, es encapsulado y enviado a trav\'es de un túnel sobre la red publica. Al llegar al otro extremo del túnel el tr\'afico es des encapsulado y entregado al nodo de borde en la subred B; tomando luego el camino correspondiente dentro de esta subred en forma normal. Esto genera la percepci\'on desde ambas subredes que se tiene un “cable” entre ambos nodos de borde, conectando ambas subredes como si fuesen una sola red privada.
+ 
 \subsubsection{Redes Privadas Multipunto}
 
-Las redes privadas multipunto, son otro tipo de implementaci\'on orientado a conectar varios extremos de la red de una organizaci\'on, utilizando t\'ipicamente redes IP/MPLS. Tambi\'en se conocen como Virtual Private LAN Service(VPLS), puesto que permite construir un servicio de red LAN a trav\'es de m\'ultiples subredes en lugares f\'isicos diferentes, utilizando la infraestructura del proveedor de servicios.
+Las redes privadas multipunto, extienden el enfoque punto a punto con el objetivo de brindar conectividad a una organizaci\'on dispersa geogr\'aficamente en m\'ultiples lugares.
+
+Permiten establecer dominios de difusi\'on compartidos, creando de forma transparente la ilusi\'on de que se tiene una gran LAN compuesta por varias subredes. Sin embargo al ser m\'as completas en funcionalidades y casos de uso, tambi\'en son m\'as complejas de implementar.\\ 
+
+Virtual Private LAN Service(VPLS), es una implementaci\'on de red privada multipunti, bastante difundida y presenta dos enfoques definidos por los  RFC4761\citep{kompella2007virtual} y RFC4762\cite{lasserre2007virtual}. Esta implementaci\'on crea dominios de difusión Ethernet utilizando diferentes tecnologías como IP/MPLS, L2TPv3 y túneles GRE.
 
 \begin{figure}[htbp!] 
 \centering    
 \includegraphics[width=0.7\textwidth]{VPNMultipunto}
 \caption[Esquema de una VPN Multipunto]{Esquema de una VPN Multipunto}
-\label{fig:OF10MatchingFields}
+\label{fig:VPNMulipunto}
 \end{figure}
+ 
+En una red privada multipunto VPLS como la de la figura \ref{fig:OF10MatchingFields}, compuesta por las subredes A, B y C; cuando se origina un paquete en un equipo de la subred A con destino a otro equipo de la subred B sucede lo siguiente: (1) primero el paquete es encaminado al nodo de borde de la subred A (Router VPN), (2) luego se resuelve dinamicamente a que punto de la VPN debe ser enviado el paquete(subred B \'o subred C), para lo cual se utiliza un protocolo de ruteo de borde como BGP, despu\'es (3) el paquete es encapsulado dentro de MPLS y encaminado mediante conmutaci\'on de etiquetas hasta el nodo de borde de la subred B, finalmente (3) el paquete es desencapsulado y entregado a la subred B para su encaminamiento normal hacia el equipo destino.
 
 \subsection{Redes Privadas en Uruguay y proyecciones para la RAU}
 En Uruguay ANTEL (el principal proveedor de servicios de telecomunicaciones del país) ofrece servicios de redes privadas basados en tres tecnolog\'ias principalmente: Lan to Lan con conexiones Ethernet punto a punto, VLAN Hub tmbi\'en con conexiones Ethernet y VPN IP/MPLS multipunto con QoS opcionalmente.\\
