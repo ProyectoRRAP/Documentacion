@@ -383,11 +383,11 @@ Inicialmente esta migración fue orientada a usuarios en particular (wireless), 
 
 En pocas palabras, Red Privada Virtual o VPN por su sigla en ingles, es la extension de una red privada sobre una infraestructura de red p\'ublica como lo es por ejemplo Internet.
 
-Este concepto habilita a un equipo en una determinada subred privada a enviar y recibir información a otro equipo en otra subred privada separadas f\'isicamente, utilizando una infraestructura de red publica o compartida para la comunicaci\'on entre ambas redes, y de la misma forma que si estuviese directamente conectada a la red privada. Adem\'as permiten mantener las políticas de seguridad y funcionalidades de la red privada.\\
+Este concepto habilita a un equipo en una determinada subred privada a enviar y recibir información a otro equipo en otra subred separadas f\'isicamente, utilizando una infraestructura de red publica o compartida para la comunicaci\'on entre ambas subredes, y de la misma forma que si estuviese directamente conectada a la red privada. Adem\'as permiten mantener las políticas de seguridad y funcionalidades de la red privada.\\
 
 %Conceptualmente se han propuesto tres arquitecturas b\'asicas de redes VPN: (1) VPN de acceso remoto, (2) VPN punto a punto y (3) VPN sobre LAN.\\
 
-Las implementaciones de redes privadas se caracterizan entre otras cosas por las funcionalidades que son capaces de proveer. En relaci\'on a aspectos de seguridad se buscan funcionalidades de autenticaci\'on de usuarios, confidencialidad e integridad de los datos enviados principalmente. Por otro lado en relaci\'on al procesamiento del tr\'afico dentro de la red p\'ublica, algunas implementaciones de VPN ofrecen funcionalidades de clasificaci\'on de tr\'afico y calidad de servicios (QoS), permitiendo por ejemplo garantizar un ancho de banda m\'inimo para el tr\'afico de una organizaci\'on cuando es transportado a trav\'es de la red p\'ublica de una red privada a otra. 
+Las implementaciones de redes privadas se caracterizan entre otras cosas por las funcionalidades que son capaces de proveer. En relaci\'on a aspectos de seguridad se buscan principalmente funcionalidades de autenticaci\'on de usuarios, confidencialidad e integridad de los datos. Por otro lado en relaci\'on al procesamiento del tr\'afico dentro de la red p\'ublica, algunas implementaciones de VPN ofrecen funcionalidades de clasificaci\'on de tr\'afico y calidad de servicios (QoS), permitiendo por ejemplo garantizar un ancho de banda m\'inimo para el tr\'afico de una organizaci\'on cuando es transportado a trav\'es de la red p\'ublica de una red privada a otra. 
 
 Algunas implementaciones proveen adem\'as la capacidad de priorizar tipos de tr\'afico como por ejemplo el asociado a una aplicaci\'on en particular, o distribu\'ir la carga en diferentes caminos, lo que se conoce como balanceo de carga.\\
 
@@ -450,9 +450,9 @@ En una red privada multipunto VPLS como la de la figura \ref{fig:OF10MatchingFie
 \subsection{Redes Privadas en Uruguay y proyecciones para la RAU}
 En Uruguay ANTEL (el principal proveedor de servicios de telecomunicaciones del país) ofrece servicios de redes privadas basados en tres tecnolog\'ias principalmente: Lan to Lan con conexiones Ethernet punto a punto, VLAN Hub tmbi\'en con conexiones Ethernet y VPN IP/MPLS multipunto con QoS opcionalmente.\\
 
-Dentro de las proyecciones existentes para la RAU2, se encuentran funcionalidades como calidad de servicios, clasificaci\'on de tr\'afico y priorizaci\'on del mismo de a cuerdo a pol\'iticas definidas. A su vez se busca conectar m\'ultiples oficinas y organizaciones dispersas geogr\'aficamente en todo el país, manteniendo las pol\'iticas de seguridad de la red privada de cada organizaci\'on. 
+Dentro de las proyecciones existentes para la RAU2, se encuentran funcionalidades como calidad de servicios, clasificaci\'on de tr\'afico y priorizaci\'on del mismo de acuerdo a pol\'iticas definidas. A su vez se busca conectar m\'ultiples oficinas y organizaciones dispersas geogr\'aficamente en todo el país, manteniendo las pol\'iticas de seguridad de la red privada de cada organizaci\'on. 
 
-De a cuerdo a las implementaciones mencionadas anteriormente, la soluci\'on que m\'as se adapta a los requerimientos de la RAU2 es una VPN IP/MPLS multipunto con funcionalidades de QoS, en donde el rol de proveedor de servicios lo asume la propia red académica o la organizaci\'on encargada de su mantenimiento(SeCIU).\\ 
+De acuerdo a las implementaciones mencionadas anteriormente, la soluci\'on que m\'as se adapta a los requerimientos de la RAU2 es una VPN IP/MPLS multipunto con funcionalidades de QoS, en donde el rol de proveedor de servicios lo asume la propia red académica o la organizaci\'on encargada de su mantenimiento(SeCIU).\\ 
 
 Para complementar la lectura en relaci\'on a la arquitectura de una implementaci\'on de VPN IP/MPLS Multipunto recomendamos continuar con RFC2547\citep{rosen1999bgp} y RFC4364\citep{rosen2006bgp}.
 
