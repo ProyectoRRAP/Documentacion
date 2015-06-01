@@ -7,17 +7,64 @@
     \graphicspath{{Chapter4/Figs/Vector/}{Chapter4/Figs/}}
 \fi
 
-Este cap\'itulo esta destinado a la comprensi\'on de los aspectos principales que hacen al dise\~no e implementaci\'on del prototipo para la nueva red aca\'emica. Cabe destacar que en el mismo se toman como punto de partida las decisiones asumidas en el cap\'itulo anterior.
+Este cap\'itulo esta destinado a la comprensi\'on de los aspectos principales que hacen al dise\~no e implementaci\'on del prototipo para la RAU2. Cabe destacar que en el mismo se toman como punto de partida las decisiones asumidas en el cap\'itulo anterior.
 
 Por otro lado algunos aspectos muy t\'ecnicos, o problemas encontrados en cada componente de la arquitectura son tratados en profundidad en su respectivo ap\'endice, citándose aquí la referencia en caso que corresponda para complementar su lectura.\\
 
-\section{Aspectos generales}
+\section[Lineamientos generales]{Lineamientos generales}
 
-Como se menciona en el capitulo 2, en la arquitectura OpenFlow/SDN se tiene dos entidades fundamentales: el Controlador y el switch OpenFlow compatible. La arquitectura del prototipo parte de esta idea y se le incorporan conceptos adicionales.\\
+Como se menciona en el capitulo destinado al estado del arte, la arquitectura del prototipo a construir esta orientada a la implementaci\'on de servicios de VPN IP/MPLS Multipunto.
 
-Como puede apreciarse en la imagen ~\ref{fig:OpenSourceRArch0} en el prototipo se tienen por un lado una red h\'ibrida IP/MPLS, donde cada nodo es un switch MPLS/Openflow híbrido, cuya arquitectura se definir\'a m\'as adelante; y por otro se tiene la entidad de control o Controlador sobre la cual se ejecuta la aplicaci\'on encargada de programar el comportamiento de cada uno de estos nodos. Finalmente, mediante el protocolo OpenFlow en su versi\'on 1.3, dicha aplicaci\'on instala la configuraci\'on necesaria en cada nodo, para por ejemplo la implementaci\'on de un servicio de VPN particular.\\
+Sin embargo varios aspectos de la arquitectura a\'un deben ser definidos. Es necesario definir la estrategia para calcular las rutas o caminos en la red del prototipo(algoritmo de ruteo), la forma en que se asignan y distribuyen etiquetas mpls para implementar el plano de reenvío(algoritmo de distribución de etiquetas), como se implementa la clasificaci\'on de tr\'afico, y de que forma se implementan múltiples caminos para un mismo destino, ya sea para priorizar tr\'afico por tipo de aplicaci\'on o simplemente para hacer balanceo de carga. 
 
-\newpage
+A continuaci\'on se explica de que forma el prototipo implementa cada uno de los aspectos anteriores.
+
+\subsection{Algoritmo de Ruteo}
+
+Una alternativa para el calculo de rutas en el prototipo es utilizar protocolos de ruteo en base a IP, sacando provecho as\'i de algoritmos existentes, robustos y ampliamente probados tanto en la academia como en la industria.\\
+
+Hist\'oricamente se han utilizado algoritmos distribuidos para el computo de rutas, siendo algunos de los m\'as renombrados en la literatura OSPF, RIP y AS-AS. Pero por otro lado también puede sacarse provecho de la visi\'on global del plano de control de SDN, y as\'i implementar un algoritmo de ruteo centralizado sencillo y transparente.
+
+En este trabajo se combinan ambos enfoques, utilizando el protocolo de ruteo OSPF en conjunto con un algoritmo centralizado en el controlador.\\
+
+Se decide utilizar OSPF por la sencilla razón de que es una opción robusta y confiable, adem\'as de que existen buenas implementaciones en software libre (por ejemplo Quagga y BIRD).
+
+OSPF basa su algoritmo para el calculo de rutas en el algoritmo Dijkstra (ampliamente conocido para el calculo de mejores caminos en un grafo), y utiliza como m\'etrica el costo asociado a cada enlace. Este costo es ingresado manualmente por el administrador de la red y es un numero \'unico, as\'i que es necesario definir una relaci\'on matem\'atica entre las diferentes caracter\'isticas de un enlace a considerar (ancho de banda disponible, tecnolog\'ia, latencia, etc) y el valor en cuestión.
+
+Sin embargo, para la definición de políticas de ingeniería de trafico que permitan hacer balanceo de carga y construcción de caminos alternativos es necesario incorporar m\'as informaci\'on en el algoritmo de ruteo, como la saturaci\'on de enlaces por ejemplo, y otro tipo de restricciones.
+
+Esto es equivalente, a extender OSPF para implementar un algoritmo de ruteo con restricciones, lo que en algunas implementaciones se denomina CSPF(Constrained Shortest Path First), y que estas restricciones puedan definirse dinamicamente en función de la alta y baja de servicios en el prototipo.\\
+
+En el prototipo se ejecuta el protocolo OSPF en cada nodo y el propio controlador, para construir y mantener una base de datos topologica de la red. Luego esta informacion es utilizada por el algoritmo CSPF en el controlador para el computo de las mejores rutas, asociadas al tr\'afico de cada servicio de vpn.\\
+
+La clasificaci\'on de tr\'afico, creacion de m\'ultiples caminos y balance de carga son implementados en el controlador a traves de una aplicaci\'on SDN, por lo que ser\'an explicados m\'as adelante en el capitulo 5.
+
+\subsection{Algoritmo de distribución de etiquetas}
+
+Para la implementacion de un algoritmo de distribucion de etiquetas, también se pueden tomar dos enfoques posibles: enfoque centralizado y enfoque distribuido.\\
+
+Siguiendo un enfoque distribuido una de las propuestas existentes es el protocolo LDP(Label distribution Protocol), del cual adem\'as se cuenta con la implementaci\'on ofrecida por Quagga-LDP. 
+
+Esta herramienta es una extension de Quagga, para brindar adem\'as soporte al protocolo LDP. Al igual que Quagga, el cual funciona interactuando con el kernel de Linux para la construcci\'on de la tabla de ruteo, Quagga-LDP interactua con el kernel de Linux para la construcci\'on de dos tablas. Estas dos tablas implementan los conceptos de FTN (Fec To NHLFE), ILM (Incoming Lanel Mapping) y NHLFE (Next Hop Label Forwarding Entry) en la definición de MPLS, los cuales determinan la forma en que un paquete es procesado y reenviado en un nodo.
+
+Quagga-LDP toma como entrada el resultado de la ejecuci\'on del protocolo OSPF, para luego ejecutar el protocolo LDP y así poblar las tablas mencionadas.
+
+Como Linux no ofrece nativamente soporte al protocolo MPLS, Quagga-LDP funciona en conjunto con MPLS-Linux; un kernel de Linux modificado para ofrecer una implementaci\'on de MPLS a nivel de kernel.\\
+
+Utilizar Quagga-LDP y MPLS-Linux tiene dos ventajas principalmente: en primer lugar no debe implementarse un algoritmo propio con lo cual se ahorra tiempo de implementacion y se tiene un algoritmo probado y confiable, y en segundo lugar se disminuye la carga de computo en el controlador puesto que se ejecuta el algoritmo en cada nodo.
+
+Por ello en este trabajo se decidió probar con esta alternativa, y experimentar con el algoritmo de distribución de etiquetas implementado por Quagga-LDP.\\
+
+Se dedico un tiempo considerable a la instalaci\'on de las herramientas Quagga-LDP y MPLS-Linux, para lo cual fue necesario recompilar diferentes versiones de kernel de Linux intentando encontrar una version apropiada para la configuración de herramientas con la que se venia trabajando en la arquitectura del prototipo. Ademas existen dos versiones bien diferentes de la implementacion MPLS-Linux: una version original del año 2005 de la cual existe poca documentación, y una version mas nueva basada en la primera que data del año 2011, de la cual se cuenta con aun menos documentación. 
+
+Por un lado se probo con ambas versiones, teniendo problemas para que el ambiente funcione correctamente (ver apendice \ref{falta} por mayores detalles). Mientras que por otro lado se evidencio dificultades para la integración entre la salida del protocolo LDP, y el algoritmo de ruteo semidinamico definido en la sección anterior.
+
+Por ello se decidi\'o implementar desde cero un algoritmo de distribución de etiquetas centralizado, en el controlador. Los detalles de implementacion del mismo ser\'an explicados m\'as adelante en la seccion [poner link a la seccion de rauflow].
+
+\section{Arquitectura del Prototipo}
+
+Como se menciona en el capitulo 2, en la arquitectura OpenFlow/SDN se tiene dos entidades fundamentales: el Controlador y el switch compatible con OpenFlow. En la arquitectura del prototipo se  parte de esta idea y se le incorporan algunos conceptos adicionales como Quagga en cada nodo entre otros.\\
+
 \begin{figure}[htbp!] 
 \centering    
 \includegraphics[width=0.4\textwidth]{Arch_Figure0}
@@ -25,18 +72,21 @@ Como puede apreciarse en la imagen ~\ref{fig:OpenSourceRArch0} en el prototipo s
 \label{fig:OpenSourceRArch0}
 \end{figure}
 
-Básicamente se agregan a la arquitectura esencial deOpenFlow/SDN compatibilidad con MPLS en cada switch, y se define el plano de reenvió de la red como IP/MPLS híbrido.\\ 
- 
-Se tienen entonces dos claras lineas de trabajo; el desarrollo del switch, que de aquí en mas llamaremos RAU-Switch y el desarrollo de la entidad Controlador. 
+Tal como puede apreciarse en la imagen ~\ref{fig:OpenSourceRArch0} el prototipo representa una red h\'ibrida IP/MPLS, donde cada nodo es un switch compatible con MPLS y Openflow. La arquitectura del mismo se definir\'a m\'as adelante. 
+
+Por otro lado se tiene la entidad de control sobre la cual se ejecuta la aplicaci\'on encargada de programar el comportamiento de cada uno de los nodos mediante el protocolo OpenFlow en su versi\'on 1.3.\\
+
+En pocas palabras el fuerte de este trabajo esta relacionado al diseño del Controlador y los programas que se ejecutan en \'el, y el diseño de cada nodo, el cual de aqui en m'as a de llamarse RAU-Switch.
+
+A continuaci\'on se explica en mayor detalle estas componentes.
 
 \section{RAU-Switch}
-Cada nodo del prototipo es implementado por lo que en este trabajo se denomin\'o RAU-Switch; un switch MPLS/OpenFlow híbrido. Por un lado es un switch OpenFlow puesto que esta dise\~nado en base a dicha arquitectura. Por otro lado es un router MPLS dado que conceptualmente el el plano de reenvío se calcula en función de la conmutación de etiquetas en un paquete.
+Cada nodo del prototipo es implementado por lo que en este trabajo se denomin\'o RAU-Switch; un switch MPLS/OpenFlow híbrido. Por un lado es un switch OpenFlow puesto que esta dise\~nado en base a dicha arquitectura, por otro lado es un router MPLS dado que conceptualmente el el plano de reenvío se calcula en función de la conmutación de etiquetas en un paquete.
 
 Puesto que en la literatura OpenFlow es común la denominación de switch OpenFlow a cualquier dispositivo, no importando si en la practica implementa las funcionalidades de un switch de capa dos, o un router de capa tres, se decidió denominar a esta componente RAU-Switch.\\
 
 La estructura de este dispositivo esta caracterizada por las componentes que se muestran en la figura~\ref{fig:OpenSourceRArch}.
 
-\newpage
 \begin{figure}[htbp!] 
 \centering    
 \includegraphics[width=0.7\textwidth]{Arch_Figure1}
@@ -109,9 +159,9 @@ En cada nodo se ejecuta una instancia del software de enrutamiento Quagga, confi
 
 El demonio ospf implementa el protocolo de igual nombre y se utiliza para obtener información de cada nodo y sus adyacencias en la topolog\'ia, guardando dicha información en una base de datos local(Link-State-Database, LSDB). Entre los datos que se incluyen en esta base de datos topol\'ogica se destaca por ejemplo el costo asociado a cada adyacencia.\\ 
 
-El protocolo OSPF también implementa mecanismos para mantener actualizada dicha base de datos, asi como para calcular el mejor camino entre cualquier par de nodos en la topolog\'ia a través del algoritmo Dijkstra. Si bien en un inicio se pensó en trabajar con la salida de dicho algoritmo, finalmente se decidió trabajar con un algoritmo de ruteo centralizado implementado en el Controlador, que a su vez permita incorporar restricciones(CSPF)[poner referencia a sec imp de alg rut en RauFLow]. Por ello en la version final del prototipo no se utiliza la salida de este algoritmo, aunque la arquitectura permite utilizar dicha información para alimentar la entrada de los procesos que se ejecutan en el Controlador.\\
+Como se menciona anteriormente, el algoritmo OSPF es utilizado solamente para la construcci\'on de la base de datos topol\'ogica. Si bien en un inicio se pensó en trabajar con la salida de dicho algoritmo, finalmente se decidió trabajar con el algoritmo CSPF implementado en el controlador. Por ello en la version final del prototipo no se utiliza la salida de este algoritmo, aunque la arquitectura permite utilizar dicha información para alimentar la entrada de los procesos que se ejecutan en el controlador.\\
 
-Entonces cada switch del prototipo así como el propio Controlador ejecuta una instancia de Quagga con el demonio ospf configurado como se muestra en el apéndice[poner referencia al apendice]. Cabe destacar de dicha configuración, que la adyacencia entre un switch y el Controlador(enlace utilizado para el canal de comunicación OpenFlow) tiene asociado costo infinito para evitar que sea utilizado por el algoritmo de ruteo de OSPF en la construcción de algún camino. En la implementaci\'on de Quagga el costo infinito es representado por el numero 65535(16 bits).
+De esta forma cada switch del prototipo así como el propio controlador ejecuta una instancia de Quagga con el demonio ospf configurado como se muestra en el apéndice[poner referencia al apendice]. Cabe destacar de dicha configuración, que la adyacencia entre un switch y el Controlador(enlace utilizado para el canal de comunicación OpenFlow) tiene asociado costo infinito para evitar que sea utilizado por el algoritmo de ruteo de OSPF en la construcción de algún camino. En la implementaci\'on de Quagga el costo infinito es representado por el numero 65535(16 bits).
 
 \subsection{Agente SNMP}
 El protocolo de comunicación OpenFlow, dentro de las estructuras de datos utilizadas para el intercambio de información entre un switch y el Controlador, no provee una forma de comunicar el direccionamiento IP propio del equipo(direcciones IP de cada interfaz física). En particular la estructura \textit{ofp\_port} utilizada por el mensaje \textit{OFPMP\_PORT\_DESCRIPTION} no provee de dicho campo\citep{ofv133spec}. Por esta razón es necesaria una forma de comunicar al controlador información adicional sobre características de cada nodo, como la dirección IP de una interfaz, que no puede ser enviada a través del protocolo OpenFlow. Para evitar modificar el protocolo, extendiéndolo para comunicar dicha informaci\'on, se utiliza el agente SNMP.\\
@@ -135,7 +185,6 @@ No es el objetivo de este trabajo entrar en detalle sobre el protocolo SNMP, por
 \section{Entidad Controlador}
 Como se muestra en \ref{fig:OpenSourceRArch0}, cada nodo del prototipo responde a una entidad denominada Controlador. Esta entidad en la pr\'actica es una PC convencional con determinadas componentes de software(ver figura \ref{fig:OpenSourceRArch3}).
 
-\newpage
 \begin{figure}[htbp!] 
 \centering    
 \includegraphics[width=0.6\textwidth]{Arch_Figure3}
@@ -163,11 +212,12 @@ El administrador SNMP es utilizado para consultar al agente snmp de un nodo en p
 
 \end{subsection}
 
-En resumen, el prototipo se compone de nodos construidos en base al hardware NetFPGA y una PC convencional m\'as agregados de software, implementando un switch MPLS/OpenFlow, y una PC controlador Controlador Ryu mas alg\'unas otras componentes de software que implementan el plano de control. Como se muestra en la figura\ref{fig:OpenSourceRArch4}, luego la comunicación entre cada par de nodos es IP/MPLS, mientras que cada nodo es manipulado por el protocolo OpenFlow. Adicionalmente se tiene un canal IP entre cada nodo y el plano de control por donde se comunican cada agente snmp con el administrador.\\
-
 \begin{figure}[htbp!] 
 \centering    
 \includegraphics[width=0.9\textwidth]{Arch_Figure4}
 \caption[Vista l\'ogica ampliada del prototipo]{Vista l\'ogica ampliada del prototipo}
 \label{fig:OpenSourceRArch4}
 \end{figure}
+
+En resumen, el prototipo se compone de nodos construidos en base al hardware NetFPGA y una PC convencional m\'as agregados de software, implementando un switch MPLS/OpenFlow, y una PC controlador Controlador Ryu mas alg\'unas otras componentes de software que implementan el plano de control. Como se muestra en la figura\ref{fig:OpenSourceRArch4}, luego la comunicación entre cada par de nodos es IP/MPLS, mientras que cada nodo es manipulado por el protocolo OpenFlow. Adicionalmente se tiene un canal IP entre cada nodo y el plano de control por donde se comunican cada agente snmp con el administrador.\\
+

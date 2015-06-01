@@ -101,41 +101,7 @@ Por otro lado utilizar hardware reconfigurable tiene la ventaja de poder prototi
 
 Finalmente la utilizaci\'on de hardware abierto, en conjunci\'on con software libre y de código abierto posibilitan la construcci\'on de lo que se podría llamar “router open source”; un nodo para la nueva red académica basado en tecnologías abiertas. Esto otorgaría una mayor flexibilidad y capacidades de reutilizaci\'on del hardware disponible en la red académica avanzada.
 
-\section[Implementaci\'on de VPN IP/MPLS]{Implementaci\'on de VPN IP/MPLS}
 
-Como se menciona en el capitulo destinado al estado del arte, la arquitectura del prototipo a construir esta orientada a la implementaci\'on de servicios de VPN IP/MPLS Multipunto, puesto que es la soluci\'on actualmente ofrecida en Uruguay por empresas especializadas en la venta de servicios de telecomunicaciones. 
-
-Sin embargo varios aspectos de la arquitectura deben ser definidos para contar con una implementaci\'on de este tipo. Debe definirse la estrategia para calcular las rutas o caminos en la red del prototipo(algoritmo de ruteo), la forma en que se asignan y distribuyen etiquetas MPLS para implementar el plano de reenvío(algoritmo de distribución de etiquetas), como se implementa la clasificaci\'on de tr\'afico, y de que forma se implementan múltiples caminos para un mismo destino, ya sea para priorizar tr\'afico por tipo de aplicaci\'on o simplemente para hacer balanceo de carga. 
-
-A continuaci\'on se explican las decisiones tomadas para cada uno de los aspectos anteriores.
-
-\subsection{Algoritmo de Ruteo}
-
-Una alternativa para el calculo de rutas en el prototipo es utilizar protocolos de ruteo IP, sacando provecho as\'i de algoritmos existentes, robustos y ampliamente probados tanto en la academia como en la industria.\\
-
-%El calculo de rutas puede realizarse en base al protocolo IP, sacando provecho de los diferentes algoritmos y protocolos de ruteo existentes en base a IP, mucho de los cuales ya tienen varios años de existencia, y probaron ampliamente su correctitud y robustez.\\
-
-En los esquemas tradicionales de redes de computadoras, los diferentes algoritmos de ruteo en base a IP que se han desarrollado se basan en un enfoque distribuido. Algunos de estos algoritmos son ospf, rip y IS-IS.
-
-Por otro lado, aprovechando la visión global que tiene el plano de control de SDN, se puede definir un algoritmo de ruteo en base a IP tomando un enfoque centralizado; en particular definiendo algoritmos nuevos o redefinidendo algoritmos distribuidos existentes con un enfoque centralizado.
-
-En este trabajo, se combinan ambos enfoques procurando distribuir el computo de rutas entre el plano de control de SDN y los nodos de la red.\\
-
-Dentro de los algoritmos de ruteo distribuidos mencionados, se elige OSPF puesto que se presenta como una alternativa robusta, confiable y ampliamente utilizada, ademas de que existen buenas implementaciones en software libre (por ejemplo Quagga y BIRD). Sin embargo uno de los requerimientos impuestos sobre el prototipo, es la facilidad para hacer balanceo de carga y construcci\'on de caminos alternativos para un mismo par de nodos origen y destino, en funci\'on de políticas de Ingeniería de Tr\'afico por ejemplo. 
-
-OSPF realiza el calculo de rutas, utilizando como m\'etrica el costo asociado a cada enlace (dicho costo es unico y es ingresado por el administrador de la red, dejar en claro que no significa nada, ni ancho de banda ni costo monetario etc). Sin embargo esto no es suficiente para la construcci\'on de rutas basadas en políticas de ingeniería de tr\'afico; es necesario utilizar adem\'as del costo de cada enlace otro tipo de m\'etricas como el ancho de banda de un enlace, y en especial la capacidad para definir restricciones. Por ello en el contexto del prototipo se busca la implementaci\'on de un CSPF(Constrained Shortest Path First), en donde adem\'as las restricciones pueden definirse en forma din\'amica acorde a la alta, baja, modificaci\'on de servicios y definici\'on de pol\'iticas.\\
-
-%%%%
-Si bien exOSPF puede ser extendido como protocolo, para contemplar restricciones, y de hecho existe y se llama CSPF(Constrained Shortest Path First), no todas las funcionalidades asociadas al computo de rutas en el prototipo, pueden ser traducidas a restricciones en este algor\'itmo. Por otro lado si parece razonable contemplarlas en un algoritmo de ruteo centralizado, a ejecutarse sobre el controlador SDN, el cual por practicidad adem\'as puede estar inspirado en CSPF pero con un enfoque centralizado.\\
-
-Dado que ambas opciones tienen sus ventajas, en este trabajo se decide implementar una combinaci\'on de ambas alternativas, tomando lo que en el contexto del prototipo son las mejores caracter\'isticas de cada enfoque. 
-En detalle, se utiliza OSPF para la construcci\'on de una base de datos local al controlador SDN con la informaci\'on topol\'ogica de la red. Luego una aplicaci\'on en el controlador implementa un algoritmo de ruteo con restricciones basado en CSPF, para calcular los caminos asociados a cada servicio y tipo de tr\'afico en el sistema, así como caminos alternativos. 
-
-
-\subsection{Algoritmo de distribución de etiquetas}
-
-
- 
 \section[Que arquitectura basada en SDN utilizar]{Que arquitectura basada en SDN utilizar}
 
 %En el cap\'itulo dedicado al estado del arte de las redes definidas por software, se explica en profundidad la arquitectura de SDN, y a partir del mismo queda completamente sanjada la diferencia entre los conceptos de SDN y OpenFlow por ejemplo.\\
@@ -250,11 +216,3 @@ Extender proyecto OpenFlow NetFPGA & ReferenceNIC + Open vSwitch\\
 Teniendo presente el alcance del proyecto y el tiempo disponible para su ejecuci\'on, se opt\'o por la  estrat\'egia de programar el hardware con el proyecto ReferenceNIC e implementar en software funcionalidades de OpenFlow. 
 
 Con esta estrategia estrategia se logra obtener en forma rápida un prototipo de switch OpenFlow con el cual trabajar en la implementaci\'on del plano de control, desarrollando estrategias para constru\'ir servicios en una red h\'ibrida IP/MPLS, as\'i como dise\~nar algunos casos de uso y un laboratorio de pruebas para validar tecnol\'ogicamente la soluci\'on propuesta.\\ 
-
-
-\section[Alternativas de dise\~nio]{Plano de Control centralizado vs distribu\'ido}
-
-%\section[Dise\~no general del prototipo]{Dise\~no general del prototipo}
-
-
-
