@@ -51,16 +51,38 @@ Teniendo en cuenta la descripci\'on del problema y los requerimientos anteriores
 
 \section[Modelado de la realidad]{Modelado de la realidad}
 
-En la figura ~\ref{fig:ModeloDeDominio} se presenta el modelo de dominio realizado a partir de la realidad planteada. En el mismo se destacan en color amarillo aquellas entidades que se entiende se corresponden al modelado de los elementos de la topolog\'ia como lo son Nodos e Interfaces. Por otro lado en rosado se destacan aquellas entidades relacionadas al concepto MPLS que se consideran importantes, como lo son las tablas FTN, ILM y NHLFE. Finalmente vale la pena destacar el concepto de Servicio, con el cual se decidi\'o representar los servicios de VPN. Vale la pena destacar que en el modelo planteado para modelar diferentes clasificaciones de trafico para una misma VPN, se consideran varias instancias de Servicio, una para cada clasificación de tr\'afico. 
+A continuaci\'on (ver figura ~\ref{fig:ModeloDeDatos}), se expone el modelo de datos utilizado para representar a la realidad.\\
 
-%Interesa destacar adem\'as del concepto de Servicio, que es una redefinici\'on desde una visi\'on centralizada del concepto FEC en la teor\'ia de MPLS, concepto que en la literatura de MPLS tradicional esta vinculado a un solo nodo en una red, y no a muchos como se propone en este trabajo.  
+En el mismo se destacan en color amarillo las clases utilizadas para representar la topolog\'ia de la red y sus elementos(Nodos, Interfaces y Enlaces). Cabe destacar sobre estas tres clases que en la representaci\'on asumida, se busca modelar la topolog\'ia como un multigrafo dirigido. Esto se debe a que:
+
+\begin{enumerate}
+\item Tradicionalmente se utilizan grafos para el modelado de una topolog\'ia de red, siendo una representaci\'on sencilla y clara.
+
+\item En MPLS un camino o mejor llamado LSP tiene sentido, permitiendo por ejemplo asegurar un valor de ancho de banda en un enlace para un sentido y un valor diferente para el otro sentido. Adem\'as permite establecer caminos diferentes para el tr\'afico en un sentido y en otro, priorizando por ejemplo el tr\'afico  en uno de los sentidos al utilizar el mejor camino. Utilizando grafos dirigidos puede modelarse este comportamiento.
+
+\item En la pr\'actica nada impide que dos equipos o nodos est\'en conectados por m\'as de un enlace. De hecho este escenario es bastante beneficioso para asegurar conectividad ante la falla de enlaces. Utilizando multigrafos este escenario es modelado de forma clara.
+  
+\end{enumerate}
 
 \begin{figure}[ht!] 
 \centering    
-\includegraphics[width=0.7\textwidth]{Disenio_Figure1}
-\caption[ModeloDeDominio]{Modelo de Dominio}
-\label{fig:ModeloDeDominio}
+\includegraphics[width=1\textwidth]{DiagramaClases}
+\caption[Modelo de datos]{Modelo de datos}
+\label{fig:ModeloDeDatos}
 \end{figure}
+
+En un mulrigrafo dirigido se tienen nodos y aristas con sentido; siendo representados los nodos de una red por los nodos del grafo y los enlaces entre estos por las aristas.
+
+En el modelo planteado(el cual a su vez esta orientado a objetos), se incorpora un tercer concepto;  las interfaces de un nodo. Desde entonces dos nodos presentan una arista si cada uno esta asociado a una instancia de la clase Interfaz y existe una instancia de la clase Link asociada a ambas interfaces, mediante las relaciones “Desde” y “Hacia”; indicando adem\'as estas el sentido del link.
+
+Cabe destacar adem\'as, que en el modelo planteado no se asume que un Nodo sea f\'isicamente un dispositivo RAU-Switch; solamente se asume por simplicidad del modelo que sea un dispositivo de capa tres. Con esto se intenta contemplar la posibilidad de incorporar en un futuro adem\'as de nodos construidos en base al diseño de RAU-Switch, nodos implementados por ejemplo en base a hardware comercial.\\
+  
+[No se si explicar la cardinalidad 1 - * de las Interfaces - Link, la cual esta dada asi por la situacion switch dentro del core]\\
+
+En la figura ~\ref{fig:ModeloDeDatos} se presenta el modelo de dominio realizado a partir de la realidad planteada. En el mismo se destacan en color amarillo aquellas entidades que se entiende se corresponden al modelado de los elementos de la topolog\'ia como lo son Nodos e Interfaces. Por otro lado en rosado se destacan aquellas entidades relacionadas al concepto MPLS que se consideran importantes, como lo son las tablas FTN, ILM y NHLFE. Finalmente vale la pena destacar el concepto de Servicio, con el cual se decidi\'o representar los servicios de VPN. Vale la pena destacar que en el modelo planteado para modelar diferentes clasificaciones de trafico para una misma VPN, se consideran varias instancias de Servicio, una para cada clasificación de tr\'afico. 
+
+%Interesa destacar adem\'as del concepto de Servicio, que es una redefinici\'on desde una visi\'on centralizada del concepto FEC en la teor\'ia de MPLS, concepto que en la literatura de MPLS tradicional esta vinculado a un solo nodo en una red, y no a muchos como se propone en este trabajo.  
+
 
 Sobre este modelo de dominio se trabaj\'o hasta llegar finalmente al diagrama de clase de dise\~no que se presenta a continuaci\'on en la figura [ref].\\
 

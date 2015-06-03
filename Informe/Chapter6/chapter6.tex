@@ -7,12 +7,19 @@
     \graphicspath{{Chapter6/Figs/Vector/}{Chapter6/Figs/}}
 \fi
 
-Para validar funcionalmente el prototipo implementado, es preciso la construcción de un laboratorio de experimentación basado en el prototipo, sobre el cual ejecutar un conjunto exhaustivo de pruebas. Estas pruebas están orientadas a verificar aspectos importantes del prototipo como la clasificación de trafico, el algoritmo de ruteo dinámico, algoritmo de distribución de etiquetas, entre otros.\\
+Para validar funcionalmente el prototipo es preciso la construcción de un laboratorio de pruebas, sobre el cual ejecutar un conjunto exhaustivo de pruebas e implementar algunos casos de uso representativos. Dentro de las pruebas funcionales se busca verificar aspectos importantes de la implementaci\'on como la clasificación de tr\'afico, el algoritmo de ruteo dinámico y el algoritmo de distribución de etiquetas.\\
 
-El siguiente capitulo esta destinado a la presentación del laboratorio de pruebas construido, y a la definición y ejecución de las diferentes pruebas realizadas.
+El siguiente capitulo esta destinado a la presentación del laboratorio de pruebas construido y a la descripción de las diferentes pruebas realizadas.
 
 % **************************** Construccion del TestBed ************************** 
 \section{Definición del Laboratorio}
+
+Como se menciona anteriormente uno de los objetivos de este laboratorio de pruebas es verificar el correcto funcionamiento de la implementaci\'on realizada, en particular en los aspectos críticos de la misma como la capacidad para clasificar trafico, y los diferentes algoritmos de ruteo, distribución de etiquetas, actualización topologica, etc. 
+
+Para esto es necesario construir un prototipo con los suficientes nodos y adyacencias como para tener varios Servicios, caminos alternativos entre un par de nodos origen y destino, poder experimentar derribando enlaces y nodos, entre otras pruebas.
+
+Teniendo esto en cuenta, una topolog\'ia de red formada por cuatro nodos como la de la figura [reerencia a la figura ], en donde todos los nodos se encuentran conectados entre si(Full Mesh), parece suficiente para realizar las pruebas mencionadas. 
+  
 
 \section{Pruebas}
 
