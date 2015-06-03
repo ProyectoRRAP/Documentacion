@@ -79,12 +79,11 @@ Cabe destacar adem\'as, que en el modelo planteado no se asume que un Nodo sea f
   
 [No se si explicar la cardinalidad 1 - * de las Interfaces - Link, la cual esta dada asi por la situacion switch dentro del core]\\
 
-En la figura ~\ref{fig:ModeloDeDatos} se presenta el modelo de dominio realizado a partir de la realidad planteada. En el mismo se destacan en color amarillo aquellas entidades que se entiende se corresponden al modelado de los elementos de la topolog\'ia como lo son Nodos e Interfaces. Por otro lado en rosado se destacan aquellas entidades relacionadas al concepto MPLS que se consideran importantes, como lo son las tablas FTN, ILM y NHLFE. Finalmente vale la pena destacar el concepto de Servicio, con el cual se decidi\'o representar los servicios de VPN. Vale la pena destacar que en el modelo planteado para modelar diferentes clasificaciones de trafico para una misma VPN, se consideran varias instancias de Servicio, una para cada clasificación de tr\'afico. 
+Por otro lado en rosado se destacan las clases utilizadas para representar los conceptos de la realidad relacionados a MPLS como las tablas FTN, ILM y NHLFE, y el concepto de LSP. Si bien esta \'ultima clase no tiene atributos asociados en esta versi\'on del modelo de datos, eventualmente tiene sentido en un futuro que se puedan asociar atributos del camino como el m\'aximo ancho de banda disponible y algunas otras propiedades de QoS por ejemplo.\\
 
-%Interesa destacar adem\'as del concepto de Servicio, que es una redefinici\'on desde una visi\'on centralizada del concepto FEC en la teor\'ia de MPLS, concepto que en la literatura de MPLS tradicional esta vinculado a un solo nodo en una red, y no a muchos como se propone en este trabajo.  
+Finalmente en azul se destaca el concepto Servicio, utilizado en este modelo para representar un servicio de operador para una VPN. M\'as adelante en este capitulo se habla m\'as en detalle sobre este concepto.
 
-
-Sobre este modelo de dominio se trabaj\'o hasta llegar finalmente al diagrama de clase de dise\~no que se presenta a continuaci\'on en la figura [ref].\\
+Cabe destacar que por simplicidad no se representa el concepto VPN en el modelo puesto que el foco de la aplicación esta puesto en el desarrollo de los algoritmos y funcionalidades, y no en un modelado exhaustivo de la realidad. Sin embargo este concepto como muchos otros pueden ser incorporados fácilmente en un futuro.\\
 
 Teniendo en cuenta los requerimientos mencionados, y el modelado de la realidad presentado, se procede con el relevamiento de los casos de uso. Los resultados obtenidos se presentan en la siguiente secci\'on.
 
@@ -118,7 +117,6 @@ Para completar esta visi\'on general de RauFlow, se incluye en su arquitectura u
 
 En res\'umen, el dise\~no de RauFlow se caracteriza por una arquitectura en cuatro capas: (1) capa de presentación, (2) capa de aplicaciones Ryu, (3) capa de negocios, y (4) capa de dispositivos.\\
 
-\newpage
 \begin{figure}[ht!] 
 \centering    
 \includegraphics[width=1.0\textwidth]{Disenio_Figure3}
@@ -261,6 +259,31 @@ class Service(object):
 \end{python}
 
 En cuanto a como se implementan las nociones de calidad de servicio, se detallan m\'as adelante en~\ref{5.5.4} 
+
+\subsection{Ciclo de vida de un Nodo}
+
+En el prototipo se obtiene informaci\'on de varias fuentes de datos para la construcci\'on de la topolog\'ia. Algunas de ellas son la base de datos topol\'ogica de Quagga(LSDB), el datapath OpenFlow y a través del ingreso manual de informaci\'on mediante la interfaz gr\'afica de RAUFlow.
+
+Estas fuentes aportan datos en forma independiente, lo cual incide directamente en la construcci\'on de la topolog\'ia y en decisiones que se toman dentro del prototipo como por ejemplo en el algoritmo de ruteo entre otros. Por ello a contnuaci\'on se ejemplifica el proceso de construcci\'on de la topolog\'ia a partir de las fuentes de datos, tomando como ejemplo el ciclo de vida de un nodo en particular. Luego el ciclo de vida de interfaces y enlaces puede deducirse de forma análoga.\\
+
+\begin{figure}[ht!] 
+\centering    
+\includegraphics[width=1\textwidth]{CicloVidaNodo2}
+\caption[Ciclo de vida de un Nodo]{Ciclo de vida de un Nodo}
+\label{fig:CicloVidaNodo}
+\end{figure}
+  
+Como se muestra en la figura\ref{fig:CicloVidaNodo}, despreciando el estado inicial un Nodo presenta cinco estados diferentes en el sistema: \textit{Descubrimiento OpenFlow}, \textit{Sin Conexión OpenFlow}, \textit{Operativo}, \textit{LSDB Eliminado OpenFlow Inactivo} y \textit{LSDB Eliminado OpenFlow Activo}.\\
+
+A continuación se explica cada uno de los estados, así como las posibles transiciones:
+
+\begin{itemize}
+\item \textit{Descubrimiento OpenFlow:} Cuando un switch se reporta mediante el protocolo OpenFlow por primera vez con el Controlador y en este caso con RAUFlow, se guarda diferente informaci\'on del mismo y en particular la instancia de la clase Datapath asociada a la implementaci\'on de Ryu(esta instancia es utilizada posteriormente para interactuar con el dispositivo). Si el switch OpenFlow no esta instanciado como Nodo en el sistema, entonces se almacena en una lista temporal de Nodos. Por una decisión de diseño no se crea una instancia del Nodo como tal, logrando de esta forma que el mismo no sea considerado por el prototipo en ninguna de las funcionalidades y algoritmos implementados (no se muestra a través de la GUI, no es considerado en el algoritmo de ruteo, etc). 
+
+Este estado representa esta situación. De el pueden suceder dos cosas, que el switch deje de reportarse con el controlador en cuyo caso es eliminado de la lista temporal de Nodos o que la componente LSDBSync envíe una actualizaci\'on de la topolog\'ia, en donde se incluye el nodo en cuestión. En este caso se instancia un objeto Nodo con toda la informaci\'on provista por la LSDB(Link State Database de Quagga), datapath de OpenFlow y la inormaci\'on adicional obtenida con el agente SNMP, y el Nodo cambia al estado \textit{Operativo}.
+
+Vale la pena destacar que en caso de no poder obtener la informaci\'on adicional con el agente SNMP, el Nodo no es instanciado y se mantiene en el estado actual.
+\end{itemize}
 
 \subsection{Algoritmo de distribución de etiquetas}
 Tradicionalmente, en mpls se utilizan etiquetas para: (a) asociar trafico a una VPN en particular y (b) encaminar trafico en la red(reenvío en base a etiquetas). De esta forma se tienen dos niveles de etiquetas: un primer nivel(inner label) utilizado para asociar el trafico con la VPN y asi por ejemplo aplicar localmente políticas de QoS, y el segundo nivel (outer label) utilizado para construir el LSP(label switched path).\\
