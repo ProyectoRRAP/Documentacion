@@ -167,14 +167,17 @@ Dentro de la capa de presentaci\'on se destacan: (1) una interfaz gr\'afica iden
 
 \section[Implementaci\'on]{Implementaci\'on}
 
-En esta secci\'on se presentan los aspectos m\'as importantes en relaci\'on a la implementaci\'on de RauFlow. Entre ellos se destacan la presentaci\'on del algoritmo de ruteo din\'amico implementado, el algoritmo de distribusi\'on de etiquetas, las convenciones utilizadas para identificar y crear clases de servicios, entre otros.\\
+En esta secci\'on se presentan los aspectos m\'as importantes en relaci\'on a la implementaci\'on de RauFlow. Entre ellos se destacan la implementaci\'on de la clase Servicio con la cual se implementa  clasificaci\'on de tr\'afico, el algoritmo de ruteo y el algoritmo de distribusi\'on de etiquetas.\\
 
 \subsection{Implementación de Servicio}
 
-En la realidad modelada se tienen dos conceptos fundamentales asociados a una red privada virtual (VPN): (1) el concepto de servicio y (2) el concepto de calidad de servicio.
+En la realidad modelada se tienen dos conceptos fundamentales asociados a un servicio red privada virtual (VPN): (1) el concepto de clasificación de tr\'afico y (2) el concepto de calidad de servicio.
 
 \begin{enumerate}
-\item El concepto de servicio establece un trato diferencial para el tr\'afico asociado a una VPN, bajo ciertas condiciones bien definidas(tipicamente temporales). 
+\item Clasificación de tr\'afico es la capacidad para poder distinguir entre diferentes tipos de tr\'afico en base a caracter\'isticas y patrones del mismo. En los requerimientos del prototipo no se especifica en base a que criterios o características se desea clasificar el tr\'afico, aunque de los requerimientos para la RAU2 se deduce que ser\'ia deseable poder clasificar tr\'afico por la red privada a la que pertenece, y eventualmente dentro del tr\'afico de cada VPN por aplicaci\'on. 
+
+En la implementaci\'on de RAUFlow la clase Servicio representa tanto un servicio de VPN como una clasificaci\'on de tr\'afico particular, basando los criterios de clasificaci\'on en los campos del cabezal OpenFlow versi\'on 1.3 (matching fields).
+
 \item El concepto de calidad de servicio (QoS), establece características sobre el procesamiento del trafico en la red(tipicamente reserva de ancho de banda) que repercuten luego en el calculo del camino a seguir por dicho trafico.
 \end{enumerate}
 
@@ -412,6 +415,63 @@ En la literatura de MPLS, tradicionalmente se utiliza el concepto de FEC(fordwar
 
 En RauFlow se redefine este concepto, desde la visi\'on global del plano de control.
 
+\newpage
+\subsection{Actualizaci\'on de la topologia}
+
+\newpage
+\begin{algorithm}[Ht!]
+ \SetKwFunction{UpdateServicesLSPs}{UpdateServicesLSPs} 
+ \SetKwProg{myalg}{Function}{}{}
+ \myalg{\UpdateServicesLSPs(){}}{
+    Declare  mpls\_tables\_ftn $\gets \{\}$\\
+    Declare  mpls\_tables\_ilm $\gets \{\}$\\
+ 	\ForEach{n in topology}{
+ 		 mpls\_tables\_ilm[n.router\_id] $\gets$ n.ilm\\
+         n.ilm $\gets []$\\
+         
+         mpls\_tables\_ftn[n.router\_id] $\gets$ n.ftn\\
+         n.ftn $\gets []$\\
+         
+         n.nhlfe $ \gets []$\\		
+ 	}
+ 	\ForEach{s in services}{
+ 		lsps\_nuevos $\gets$ []\\
+ 		
+ 		\ForEach{lsp in s.lsps}{
+ 			lsp\_nuevo $\gets$ update\_lsp(s, lsp)\\
+            lsps\_nuevos $\gets$ lsps\_nuevos $\cup$ lsp\_nuevo\\
+ 		}
+ 		
+ 		s.lsps $\gets$ lsps\_nuevos	
+ 	}
+ 	\ForEach{n in topology}{
+ 	ftn\_adds $\gets \lbrace$ n.ftn $\rbrace$ - $\lbrace$ mpls\_tables\_ftn[n.router\_id]$\rbrace$\\
+    ftn\_removes $\gets \lbrace$ mpls\_tables\_ftn[n.router\_id]$\rbrace$ - $\lbrace$ n.ftn $\rbrace$\\
+    ilm\_adds $\gets \lbrace$ n.ilm $\rbrace$ - $\lbrace$ mpls\_tables\_ilm[n.router\_id] $\rbrace$\\
+	ilm\_removes $\gets \lbrace$ mpls\_tables\_ilm[n.router\_id]$\rbrace$ - $\lbrace$ n.ilm $\rbrace$\\		
+	\ForEach{ftn in ftn\_removes}{
+		service $\gets$ ftn.service
+		remove\_egress\_node\_service\_flows(service, n, ftn)\\
+	}
+	\ForEach{ilm in ilm\_removes}{
+		\ForEach{nhlfe in ilm.nhlfes}{
+			remove\_node\_service\_flow(None, n, ilm, nhlfe)\\
+		}
+	}
+	\ForEach{ftn in ftn\_adds}{
+		service $\gets$ ftn.service
+		remove\_egress\_node\_service\_flows(service, n, ftn)\\
+	}
+	\ForEach{ilm in ilm\_adds}{
+		\ForEach{nhlfe in ilm.nhlfes}{
+			remove\_node\_service\_flow(None, n, ilm, nhlfe)\\
+		}
+	}	
+ 	}  	
+ }  
+ \caption{Algoritmo de actualización de la topolog\'ia}
+\end{algorithm}
+
 \subsection{Implementaci\'on de QoS}
 \label{5.5.4}
 
@@ -419,6 +479,9 @@ En RauFlow se redefine este concepto, desde la visi\'on global del plano de cont
 
 \subsubsection{SPF}
 
+\begin{python}
+
+\end{python}
 \subsubsection{CSPF}
 Dijkstra para multi grafos dirigidos.
 
