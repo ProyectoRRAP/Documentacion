@@ -65,7 +65,7 @@ A continuación se explica la arquitectura del prototipo.
 
 \section{Arquitectura del Prototipo}
 
-Como se menciona en el capitulo 2, en la arquitectura OpenFlow/SDN se tiene dos entidades fundamentales: el Controlador y el switch compatible con OpenFlow. En la arquitectura del prototipo se  parte de esta idea y se le incorporan algunos conceptos adicionales como la herramienta Quagga en cada nodo, entre otros.\\
+Como se menciona en el capitulo 2, en la arquitectura OpenFlow/SDN se tiene dos entidades fundamentales: el Controlador y el switch compatible con OpenFlow. En la arquitectura del prototipo se  parte de esta idea y se le incorporan algunos conceptos adicionales como por ejemplo la herramienta Quagga.\\
 
 \begin{figure}[htbp!] 
 \centering    
@@ -74,13 +74,13 @@ Como se menciona en el capitulo 2, en la arquitectura OpenFlow/SDN se tiene dos 
 \label{fig:OpenSourceRArch0}
 \end{figure}
 
-Tal como puede apreciarse en la imagen ~\ref{fig:OpenSourceRArch0} el prototipo representa una red h\'ibrida IP/MPLS, donde cada nodo es un switch compatible con MPLS y Openflow. La arquitectura del mismo se definir\'a m\'as adelante. 
+Tal como se aprecia en la imagen ~\ref{fig:OpenSourceRArch0} el prototipo esta compuesto por nodos compatibles con el protocolo OpenFlow para la comunicaci\'on con el plano de control, y capaces de procesar tr\'afico mediante los protocolos IP y MPLS.
 
-Por otro lado se tiene la entidad de control sobre la cual se ejecuta la aplicaci\'on encargada de programar el comportamiento de cada uno de los nodos mediante el protocolo OpenFlow en su versi\'on 1.3.\\
+Cada nodo del prototipo esta implementado con lo que en este trabajo se denomina RAU-Switch, un switch compatible con OpenFlow capaz de construir una red de datos IP/MPLS, utilizando la tabla de flujos de OpenFlow para el procesamiento y reenv\'io de paquetes. En particular en la siguiente secci\'on se explica en detalle la arquitectura de este dispositivo.\\
 
-En pocas palabras el fuerte de este trabajo esta relacionado al diseño del Controlador y los programas que se ejecutan en \'el y el diseño de cada nodo, el cual de aqui en m\'as a de llamarse RAU-Switch.
+Por otro lado se tiene la entidad de control sobre la cual se ejecuta la aplicaci\'on de SDN RAUFlow. Esta aplicaci\'on implementa los servicios de redes privadas virtuales, los algoritmos de ruteo y distribución de etiquetas e implementa una interfaz gr\'afica para la gesti\'on de la red, entre otras funcionalidades.\\ 
 
-A continuaci\'on se explica en mayor detalle estas componentes.
+A continuaci\'on se explica en detalle cada componente.
 
 \section{RAU-Switch}
 Cada nodo del prototipo es implementado por lo que en este trabajo se denomin\'o RAU-Switch: un switch MPLS/OpenFlow híbrido. Por un lado es un switch OpenFlow puesto que esta dise\~nado en base a dicha arquitectura y por otro lado es un router MPLS dado que conceptualmente el el plano de reenvío se calcula en función de la conmutación de etiquetas.
@@ -146,13 +146,17 @@ Otro detalle a destacar de esta estrategia es la utilizaci\'on de herramientas d
 Si bien en el IIE no se trabaja con esta plataforma se nos brindó asesoramiento sumamente \'util para la resoluci\'on de este obstáculo. Por otro lado a través del programa de apoyo a universidades de Xilinx se obtuvo una interesante donaci\'on de licencias, posibilitando a una real explotaci\'on del hardware y de la plataforma. Por mayores detalles acerca de este problema puede consultarse el apéndice ~\ref{apendiceB3}.
 
 \subsection{Open vSwitch}
-En la arquitectura del dispositivo, Open vSwitch es el encargado de implementar el plano de datos de OpenFlow. Por lo tanto la compatibilidad con dicho protocolo, esta acotada por la implementaci\'on de Open vSwitch. Es decir, el dispositivo es compatible con aquellas funcionalidades de OpenFlow para las que Open vSwitch ofrece soporte.\\
+En la arquitectura del dispositivo, Open vSwitch es el encargado de implementar el plano de datos de OpenFlow. En otras palabras es la componente que convierte mediante una implementaci\'on en software a la PC construida, en un switch OpenFlow.\\
 
-Inicialmente se utiliza la versi\'on oficial m\'as reciente de esta herramienta (versi\'on 2.3.1), en la cual acorde a las notas de liberaci\'on y a la secci\'on de preguntas frecuentes se garantiza soporte para un subconjunto de funcionalidades de la versi\'on 1.3 del protocolo OpenFlow.Entre estas funcionalidades se destacan la capacidad para match, push y pop de una \'unica etiqueta MPLS, así como su posterior procesamiento en el pipe de OpenFlow. No obstante como se explica en el apéndice ~\ref{apendiceB5} junto a otras características a destacar de Open vSwitch, este comportamiento no es el que realmente manifestaba la versi\'on de la herramienta. En particular la operación Pop de MPLS no funciona correctamente, así como el posterior procesamiento del paquete tras manipular etiquetas acorde al pipe de OpenFlow.\\ 
+Siguiendo la especificaci\'on de OpenFlow, Open vSwitch implementa el concepto de tabla de flujos. Estas tablas(OpenFlow implementa 256 tablas) son utilizadas por la aplicaci\'on RAUFlow para construir caminos en la topolog\'ia, instalando en forma de flujos OpenFlow las reglas de reenvío que sean necesarias en cada nodo del camino.
+
+Para implementar el plano de reenvío en base a la conmutaci\'on de etiquetas MPLS, se utilizan primitivas del protocolo OpenFlow, que permiten colocar y extraer etiquetas MPLS de un paquete(PUSH y POP), así como clasificar un paquete acorde al valor de etiqueta MPLS contenida en \'el. 
+
+En relaci\'on a este \'ultimo punto, vale la pena destacar que la compatibilidad de estas funcionalidades existentes en el protocolo OpenFlow, estan acotadas naturalmente  por la implementaci\'on de Open vSwitch. En este trabajo inicialmente se utiliza la versi\'on oficial m\'as reciente de dicha herramienta (versi\'on 2.3.1), en la cual acorde a las notas de liberaci\'on y a la secci\'on de preguntas frecuentes se garantiza soporte para solo un subconjunto de funcionalidades de la versi\'on 1.3 del protocolo OpenFlow. Entre estas funcionalidades se destacan la capacidad para match, push y pop de una \'unica etiqueta MPLS, así como su posterior procesamiento en el pipe de OpenFlow. No obstante como se explica en el apéndice ~\ref{apendiceB5} junto a otras características a destacar de Open vSwitch, este comportamiento no es el que realmente manifestaba la versi\'on de la herramienta. En particular la operación Pop de MPLS no funciona correctamente, así como el posterior procesamiento del paquete tras manipular etiquetas acorde al pipe de OpenFlow.\\ 
 
 Afortunadamente esta falla se encontraba reportada como error y fue resuelta en la versi\'on de desarrollo~\citep{OVSSourceCode}, la cual a su vez tras instalarse se comprobó que soporta match, push y pop de hasta tres etiquetas MPLS, y el posterior procesamiento del paquete. De esta forma la versi\'on de Open vSwitch utilizada es la de desarrollo.\\
 
-Por otro lado, resulta interesante ate ner en consideraci\'on que las operaciones de match, push y pop de MPLS son implementadas en modo usuario.
+Por otro lado, resulta interesante a tener en consideraci\'on que las operaciones de match, push y pop de MPLS son implementadas en modo usuario.
 
 %Por otro lado en relaci\'on a las componentes de software, el router se compone de un sistema operativo escritorio basado en linux, con las instalaciones de Open vSwitch, Quagga y el agente de gesti\'on SNMP. Nuevamente por mayores detalles acerca de las versiones de software utilizadas, sistema operativo entre otros detalles refierase al anexo [link al anexo].\\
 

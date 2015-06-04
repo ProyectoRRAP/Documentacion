@@ -51,9 +51,9 @@ Teniendo en cuenta la descripci\'on del problema y los requerimientos anteriores
 
 \section[Modelado de la realidad]{Modelado de la realidad}
 
-A continuaci\'on (ver figura ~\ref{fig:ModeloDeDatos}), se expone el modelo de datos utilizado para representar a la realidad.\\
+Para la representaci\'on de la realidad se utiliza el paradigma de orientaci\'on a objetos. De esta forma el modelo de datos queda representado a través del siguiente diagrama de clases de diseño(ver ver figura ~\ref{fig:ModeloDeDatos}).
 
-En el mismo se destacan en color amarillo las clases utilizadas para representar la topolog\'ia de la red y sus elementos(Nodos, Interfaces y Enlaces). Cabe destacar sobre estas tres clases que en la representaci\'on asumida, se busca modelar la topolog\'ia como un multigrafo dirigido. Esto se debe a que:
+En el mismo se destacan en color amarillo las clases utilizadas para representar la topolog\'ia de red y sus elementos(Nodos, Interfaces y Enlaces). Cabe destacar sobre estas tres clases que en la representaci\'on asumida se busca modelar la topolog\'ia como un multigrafo dirigido. Esto se debe a que:
 
 \begin{enumerate}
 \item Tradicionalmente se utilizan grafos para el modelado de una topolog\'ia de red, siendo una representaci\'on sencilla y clara.
@@ -73,7 +73,7 @@ En el mismo se destacan en color amarillo las clases utilizadas para representar
 
 En un mulrigrafo dirigido se tienen nodos y aristas con sentido; siendo representados los nodos de una red por los nodos del grafo y los enlaces entre estos por las aristas.
 
-En el modelo planteado(el cual a su vez esta orientado a objetos), se incorpora un tercer concepto;  las interfaces de un nodo. Desde entonces dos nodos presentan una arista si cada uno esta asociado a una instancia de la clase Interfaz y existe una instancia de la clase Link asociada a ambas interfaces, mediante las relaciones “Desde” y “Hacia”; indicando adem\'as estas el sentido del link.
+En el modelo se incorpora adem\'as el concepto de Interfaz de un dispositivo. Desde entonces dos nodos presentan una arista si cada uno esta asociado a una instancia de la clase Interfaz y existe una instancia de la clase Link asociada a ambas interfaces, mediante las relaciones “Desde” y “Hacia”; indicando adem\'as estas el sentido del dicho Link.
 
 Cabe destacar adem\'as, que en el modelo planteado no se asume que un Nodo sea f\'isicamente un dispositivo RAU-Switch; solamente se asume por simplicidad del modelo que sea un dispositivo de capa tres. Con esto se intenta contemplar la posibilidad de incorporar en un futuro adem\'as de nodos construidos en base al diseño de RAU-Switch, nodos implementados por ejemplo en base a hardware comercial.\\
   
@@ -81,7 +81,7 @@ Cabe destacar adem\'as, que en el modelo planteado no se asume que un Nodo sea f
 
 Por otro lado en rosado se destacan las clases utilizadas para representar los conceptos de la realidad relacionados a MPLS como las tablas FTN, ILM y NHLFE, y el concepto de LSP. Si bien esta \'ultima clase no tiene atributos asociados en esta versi\'on del modelo de datos, eventualmente tiene sentido en un futuro que se puedan asociar atributos del camino como el m\'aximo ancho de banda disponible y algunas otras propiedades de QoS por ejemplo.\\
 
-Finalmente en azul se destaca el concepto Servicio, utilizado en este modelo para representar un servicio de operador para una VPN. M\'as adelante en este capitulo se habla m\'as en detalle sobre este concepto.
+Finalmente en azul se destaca el concepto Servicio, utilizado para representar un servicio de VPN provisto por un operador de red. M\'as adelante en este cap\'itulo se habla en profundidad sobre la implementaci\'on de esta clase.
 
 Cabe destacar que por simplicidad no se representa el concepto VPN en el modelo puesto que el foco de la aplicación esta puesto en el desarrollo de los algoritmos y funcionalidades, y no en un modelado exhaustivo de la realidad. Sin embargo este concepto como muchos otros pueden ser incorporados fácilmente en un futuro.\\
 
@@ -169,14 +169,29 @@ Dentro de la capa de presentaci\'on se destacan: (1) una interfaz gr\'afica iden
 
 En esta secci\'on se presentan los aspectos m\'as importantes en relaci\'on a la implementaci\'on de RauFlow. Entre ellos se destacan la implementaci\'on de la clase Servicio con la cual se implementa  clasificaci\'on de tr\'afico, el algoritmo de ruteo y el algoritmo de distribusi\'on de etiquetas.\\
 
+\subsection{Clasificación de trafico}
+En la literatura de MPLS, tradicionalmente se utiliza el concepto de FEC(fordwarding equivalence class) para definir un conjunto de paquetes a ser tratados en forma similar(por ejemplo para aplicar QoS). Vale la pena destacar que este concepto se define localmente para un dispositivo; es decir que la FEC determina solamente la forma en que un conjunto de paquetes son tratados por el dispositivo en cuesti\'on.
+
+En el prototipo la clasificaci\'on de tr\'afico puede realizarse localmente en cada nodo utilizando la tabla de flujos de Open vSwitch y los campos en el cabezal del protocolo OpenFlow (matching fields). Con estos campos se define las reglas de un flujo(recordar figura \ref{OpenFlowArch2}) distinguiendo de este modo entre diferentes clases de tr\'afico para un procesamiento diferencial(acci\'on del flujo).\\
+
+No todos los campos del cabezal OpenFlow están habilitados para utilizarse en la definici\'on de la regla de un flujo, así como tampoco lo están para la definici\'on de la acci\'on de un flujo. Adem\'as est\'an implícitas ciertas relaciones entre algunos de estos campos que deben ser tomadas en cuenta a la hora de utilizarse para la definici\'on de un flujo. En el ap\'endice se muestra tanto la lista entera de atributos del cabezal OpenFlow para la versi\'on 1.3, como la lista de atributos que pueden ser utilizados para la definici\'on de reglas y los que pueden ser utilizados para la definici\'on de acciones.\\
+
+Por otro lado cabe destacar que en RAUFlow, solo se realiza clasificaci\'on de tr\'afico en el nodo de ingreso al prototipo.
+
+[arreglar\\
+Esto es asi debido porque se redefine el concepto de fec de una forma global. Entonces al momento de definir un servicio se calcula con una vision global cual es el mejor camino que se ajusta al servicio que se quiere instanciar. Luego se calcula la distribusion de etiqutetas que se utilizara para conmutar el paquete desde un nodo de ingreso al nodo de egreso. Finalmente se le asigna una etiqueta que identifica al servicio. De esta forma el paquete puede ser enrutado y identificado con el servicio en cada nodo de la red en base a dos etiquetas MPLS. De esta forma solos e clasifica el trafico en funcion del cabezal oopenflow en el nodo de ingreso.   
+
+
 \subsection{Implementación de Servicio}
 
 En la realidad modelada se tienen dos conceptos fundamentales asociados a un servicio red privada virtual (VPN): (1) el concepto de clasificación de tr\'afico y (2) el concepto de calidad de servicio.
 
 \begin{enumerate}
-\item Clasificación de tr\'afico es la capacidad para poder distinguir entre diferentes tipos de tr\'afico en base a caracter\'isticas y patrones del mismo. En los requerimientos del prototipo no se especifica en base a que criterios o características se desea clasificar el tr\'afico, aunque de los requerimientos para la RAU2 se deduce que ser\'ia deseable poder clasificar tr\'afico por la red privada a la que pertenece, y eventualmente dentro del tr\'afico de cada VPN por aplicaci\'on. 
+\item Clasificación de tr\'afico es la capacidad para poder distinguir entre diferentes tipos de tr\'afico en base a caracter\'isticas y patrones del mismo. En los requerimientos del prototipo no se especifica en base a que criterios o características se desea clasificar el tr\'afico, aunque de los requerimientos para la RAU2 se deduce que ser\'ia deseable poder clasificar tr\'afico discriminando la red privada a la que pertenece y eventualmente dentro del tr\'afico de cada VPN discriminando por aplicaci\'on. 
 
-En la implementaci\'on de RAUFlow la clase Servicio representa tanto un servicio de VPN como una clasificaci\'on de tr\'afico particular, basando los criterios de clasificaci\'on en los campos del cabezal OpenFlow versi\'on 1.3 (matching fields).
+En la implementaci\'on de RAUFlow la clasificaci\'on de tr\'afico es realizada utilizando los cabezales del protocolo OpenFlow(versi\'on 1.3). Esto se deba a la sencilla raz\'on 
+
+En la implementaci\'on de RAUFlow la clase Servicio representa tanto un servicio de VPN; es decir,  como una clasificaci\'on de tr\'afico particular, basando los criterios de clasificaci\'on en los campos del cabezal OpenFlow versi\'on 1.3 (matching fields).
 
 \item El concepto de calidad de servicio (QoS), establece características sobre el procesamiento del trafico en la red(tipicamente reserva de ancho de banda) que repercuten luego en el calculo del camino a seguir por dicho trafico.
 \end{enumerate}
@@ -370,50 +385,46 @@ def get_path_mpls_labels(self, path):
     return mpls_path
 \end{python}
 
-\begin{algorithm}[H]
+%\begin{algorithm}[H]
+%
+% \SetKwFunction{obtenerEtiquetasLSP}{obtenerEtiquetasLSP} 
+% \SetKwFunction{obtenerEtiquetaParaInterfaz}{obtenerEtiquetaParaInterfaz}
+% \SetKwProg{myalg}{Function}{}{}
+% \myalg{\obtenerEtiquetasLSP(path){}}{
+%    Declare MPLS\_LABEL\_SPACE\_MIN $\gets 10$\\
+% 	Declare mplsPath[]\\
+% 	Declare labelBase\\
+% 
+%	\uIf{len(path) = 1}{
+%    	$mplsPath \gets mplsPath \cup \{None\}$ \Comment{If path have only one hop, them the lsp is empty becouse first node is penultimate  hop}
+% 	}
+% 	\Else{
+%    	labelBase = MPLS\_LABEL\_SPACE\_MIN \Comment{We asign labels for mpls path secuencialy starting on the lowest label value}
+%    
+%   		\ForEach{l in path}{
+%			label $\gets$ \obtenerEtiquetaParaInterfaz(l, labelBase) \Comment{Gets avaiable label}\\
+%			
+%			$mplsPath \gets mplsPath \cup \{label\}$\Comment{Add label to lsp}\\
+%			
+%			$labelBase \gets labelBase + 1$\Comment{Increments mpls label base}\\
+%			
+%			$mplsPath \gets mplsPath \cup \{None\}$\Comment{The penultimate hop remove all mpls labels, then last link has not asociated label}\\
+%				
+% 		}
+% 	}        
+% 
+% 	\Return{mplsPath[]}\;
+% 
+% }
+% 
+% \SetKwProg{myalg}{Function}{}{}
+% \myalg{\obtenerEtiquetaParaInterfaz(enlace, etiqueta){}}{
+%	Completar.. 
+% }
+% 
+% \caption{How to write algorithms}
+%\end{algorithm}
 
- \SetKwFunction{obtenerEtiquetasLSP}{obtenerEtiquetasLSP} 
- \SetKwFunction{obtenerEtiquetaParaInterfaz}{obtenerEtiquetaParaInterfaz}
- \SetKwProg{myalg}{Function}{}{}
- \myalg{\obtenerEtiquetasLSP(path){}}{
-    Declare MPLS\_LABEL\_SPACE\_MIN $\gets 10$\\
- 	Declare mplsPath[]\\
- 	Declare labelBase\\
- 
-	\uIf{len(path) = 1}{
-    	$mplsPath \gets mplsPath \cup \{None\}$ \Comment{If path have only one hop, them the lsp is empty becouse first node is penultimate  hop}
- 	}
- 	\Else{
-    	labelBase = MPLS\_LABEL\_SPACE\_MIN \Comment{We asign labels for mpls path secuencialy starting on the lowest label value}
-    
-   		\ForEach{l in path}{
-			label $\gets$ \obtenerEtiquetaParaInterfaz(l, labelBase) \Comment{Gets avaiable label}\\
-			
-			$mplsPath \gets mplsPath \cup \{label\}$\Comment{Add label to lsp}\\
-			
-			$labelBase \gets labelBase + 1$\Comment{Increments mpls label base}\\
-			
-			$mplsPath \gets mplsPath \cup \{None\}$\Comment{The penultimate hop remove all mpls labels, then last link has not asociated label}\\
-				
- 		}
- 	}        
- 
- 	\Return{mplsPath[]}\;
- 
- }
- 
- \SetKwProg{myalg}{Function}{}{}
- \myalg{\obtenerEtiquetaParaInterfaz(enlace, etiqueta){}}{
-	Completar.. 
- }
- 
- \caption{How to write algorithms}
-\end{algorithm}
-
-\subsection{Clasificación de trafico}
-En la literatura de MPLS, tradicionalmente se utiliza el concepto de FEC(fordwarding equivalence class) para definir un conjunto de paquetes a ser tratados en forma similar(por ejemplo para aplicar QoS). Sin embargo este concepto es desde una visi\'on local a un único nodo.\\
-
-En RauFlow se redefine este concepto, desde la visi\'on global del plano de control.
 
 \newpage
 \subsection{Actualizaci\'on de la topologia}
@@ -450,21 +461,29 @@ En RauFlow se redefine este concepto, desde la visi\'on global del plano de cont
     ilm\_adds $\gets \lbrace$ n.ilm $\rbrace$ - $\lbrace$ mpls\_tables\_ilm[n.router\_id] $\rbrace$\\
 	ilm\_removes $\gets \lbrace$ mpls\_tables\_ilm[n.router\_id]$\rbrace$ - $\lbrace$ n.ilm $\rbrace$\\		
 	\ForEach{ftn in ftn\_removes}{
-		service $\gets$ ftn.service
+		service $\gets$ ftn.service\\
 		remove\_egress\_node\_service\_flows(service, n, ftn)\\
 	}
 	\ForEach{ilm in ilm\_removes}{
 		\ForEach{nhlfe in ilm.nhlfes}{
-			remove\_node\_service\_flow(None, n, ilm, nhlfe)\\
+			remove\_node\_service\_flow(n, ilm, nhlfe)\\
 		}
 	}
 	\ForEach{ftn in ftn\_adds}{
 		service $\gets$ ftn.service
-		remove\_egress\_node\_service\_flows(service, n, ftn)\\
+		install\_ingress\_node\_service\_flows(service, n, ftn)\\
 	}
 	\ForEach{ilm in ilm\_adds}{
 		\ForEach{nhlfe in ilm.nhlfes}{
-			remove\_node\_service\_flow(None, n, ilm, nhlfe)\\
+	
+			\uIf{next\_hop.i\_type == 1}{\Comment{Si el tipo de interaz es 1 entonces es un nodo de borde y el flujo es diferente}\\
+    			install\_egress\_node\_flow\_for\_service(service, n, ilm, nhlfe)\\	
+ 			}
+
+ 			\Else{
+ 				\Comment{Es un nodo interno entonces el flujo es normal}\\
+ 				install\_node\_flow\_for\_service(n, ilm, nhlfe)
+ 			}
 		}
 	}	
  	}  	
