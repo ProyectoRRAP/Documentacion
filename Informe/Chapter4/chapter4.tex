@@ -65,7 +65,9 @@ A continuación se explica la arquitectura del prototipo.
 
 \section{Arquitectura del Prototipo}
 
-Como se menciona en el capitulo 2, en la arquitectura OpenFlow/SDN se tiene dos entidades fundamentales: el Controlador y el switch compatible con OpenFlow. En la arquitectura del prototipo se  parte de esta idea y se le incorporan algunos conceptos adicionales como por ejemplo la herramienta Quagga.\\
+La arquitectura del prototipo (ver figura ~\ref{fig:OpenSourceRArch0}), sigue la arquitectura del enfoque OpenFlow/SDN como se mencion\'o anteriormente. En concordancia con esta arquitectura en el prototipo se tienen dos componentes importantes: el controlador SDN y el switch compatible con OpenFlow.\\
+
+En el controlador SDN se ejecuta RAUFlow, la aplicaci\'on encargada de proveer una implementaci\'on para servicios de redes privadas virtuales. A su vez esta aplicaci\'on implementa un algoritmo de ruteo CSPF centralizado, el algoritmo de distribusion de etiquetas e implementa a su vez una interfaz gr\'afica de gesti\'on para la red del prototipo.\\
 
 \begin{figure}[htbp!] 
 \centering    
@@ -74,16 +76,16 @@ Como se menciona en el capitulo 2, en la arquitectura OpenFlow/SDN se tiene dos 
 \label{fig:OpenSourceRArch0}
 \end{figure}
 
-Tal como se aprecia en la imagen ~\ref{fig:OpenSourceRArch0} el prototipo esta compuesto por nodos compatibles con el protocolo OpenFlow para la comunicaci\'on con el plano de control, y capaces de procesar tr\'afico mediante los protocolos IP y MPLS.
+Por otro lado se tiene el switch compatible con el protocolo OpenFlow. Este dispositivo, denominado de aqu\'i en m\'as RAU-Switch, es implementado mediante una PC de escritorio con el hardware NetFPGA instalado y el software Open vSwitch entre otras componentes.\\ 
 
-Cada nodo del prototipo esta implementado con lo que en este trabajo se denomina RAU-Switch, un switch compatible con OpenFlow capaz de construir una red de datos IP/MPLS, utilizando la tabla de flujos de OpenFlow para el procesamiento y reenv\'io de paquetes. En particular en la siguiente secci\'on se explica en detalle la arquitectura de este dispositivo.\\
+Para la implementaci\'on del plano de reenvío(encaminar un paquete de un nodo origen a otro destino) en cada nodo del prototipo se utilizan las tablas de flujos de OpenFlow. Mediante el esquema de flujos de OpenFlow, se definen reglas de reenv\'io en base a la conmutaci\'on de etiquetas MPLS, y pol\'iticas de clasificaci\'on de tr\'afico.\\
 
-Por otro lado se tiene la entidad de control sobre la cual se ejecuta la aplicaci\'on de SDN RAUFlow. Esta aplicaci\'on implementa los servicios de redes privadas virtuales, los algoritmos de ruteo y distribución de etiquetas e implementa una interfaz gr\'afica para la gesti\'on de la red, entre otras funcionalidades.\\ 
+De esta forma el prototipo para la RAU2 se compone entonces de unos pocos nodos constru\'idos en base a RAU-Switch y un controlador SDN compatible con OpenFlow, en donde se ejecuta la aplicaci\'on RAUFlow.\\
 
-A continuaci\'on se explica en detalle cada componente.
+A continuaci\'on se explica en detalle cada una de estas componentes y su interacci\'on.
 
 \section{RAU-Switch}
-Cada nodo del prototipo es implementado por lo que en este trabajo se denomin\'o RAU-Switch: un switch MPLS/OpenFlow híbrido. Por un lado es un switch OpenFlow puesto que esta dise\~nado en base a dicha arquitectura y por otro lado es un router MPLS dado que conceptualmente el el plano de reenvío se calcula en función de la conmutación de etiquetas.
+Cada nodo del prototipo es implementado por lo que en este trabajo se denomin\'o RAU-Switch: un switch MPLS/OpenFlow híbrido. Por un lado es un switch OpenFlow puesto que esta dise\~nado en base a dicha arquitectura y por otro lado es un router MPLS dado que conceptualmente el el plano de reenvío es implementado a trav\'es de la conmutación de etiquetas.\\
 
 Puesto que en la literatura OpenFlow es común la denominación de switch OpenFlow a cualquier dispositivo, no importando si en la practica implementa las funcionalidades de un switch de capa dos \'o un router de capa tres, se decidió denominar a esta componente RAU-Switch.\\
 
@@ -146,11 +148,11 @@ Otro detalle a destacar de esta estrategia es la utilizaci\'on de herramientas d
 Si bien en el IIE no se trabaja con esta plataforma se nos brindó asesoramiento sumamente \'util para la resoluci\'on de este obstáculo. Por otro lado a través del programa de apoyo a universidades de Xilinx se obtuvo una interesante donaci\'on de licencias, posibilitando a una real explotaci\'on del hardware y de la plataforma. Por mayores detalles acerca de este problema puede consultarse el apéndice ~\ref{apendiceB3}.
 
 \subsection{Open vSwitch}
-En la arquitectura del dispositivo, Open vSwitch es el encargado de implementar el plano de datos de OpenFlow. En otras palabras es la componente que convierte mediante una implementaci\'on en software a la PC construida, en un switch OpenFlow.\\
+En la arquitectura del dispositivo, Open vSwitch es el encargado de implementar el plano de datos de OpenFlow. En otras palabras es la componente que convierte mediante una implementaci\'on en software a la PC construida en un switch OpenFlow.\\
 
-Siguiendo la especificaci\'on de OpenFlow, Open vSwitch implementa el concepto de tabla de flujos. Estas tablas(OpenFlow implementa 256 tablas) son utilizadas por la aplicaci\'on RAUFlow para construir caminos en la topolog\'ia, instalando en forma de flujos OpenFlow las reglas de reenvío que sean necesarias en cada nodo del camino.
+Siguiendo la especificaci\'on de OpenFlow, Open vSwitch implementa el concepto de tabla de flujos. Estas tablas(Open v Switch implementa 256 tablas) son utilizadas por la aplicaci\'on RAUFlow para construir caminos en la topolog\'ia, instalando en forma de flujos OpenFlow las reglas de reenvío que sean necesarias en cada nodo involucrado en un camino.
 
-Para implementar el plano de reenvío en base a la conmutaci\'on de etiquetas MPLS, se utilizan primitivas del protocolo OpenFlow, que permiten colocar y extraer etiquetas MPLS de un paquete(PUSH y POP), así como clasificar un paquete acorde al valor de etiqueta MPLS contenida en \'el. 
+Para implementar el plano de reenvío en base a la conmutaci\'on de etiquetas MPLS, se utilizan primitivas del protocolo OpenFlow, que permiten colocar y extraer etiquetas MPLS de un paquete(PUSH y POP), así como clasificar un paquete acorde al valor de la etiqueta MPLS contenida en \'el.\\
 
 En relaci\'on a este \'ultimo punto, vale la pena destacar que la compatibilidad de estas funcionalidades existentes en el protocolo OpenFlow, estan acotadas naturalmente  por la implementaci\'on de Open vSwitch. En este trabajo inicialmente se utiliza la versi\'on oficial m\'as reciente de dicha herramienta (versi\'on 2.3.1), en la cual acorde a las notas de liberaci\'on y a la secci\'on de preguntas frecuentes se garantiza soporte para solo un subconjunto de funcionalidades de la versi\'on 1.3 del protocolo OpenFlow. Entre estas funcionalidades se destacan la capacidad para match, push y pop de una \'unica etiqueta MPLS, así como su posterior procesamiento en el pipe de OpenFlow. No obstante como se explica en el apéndice ~\ref{apendiceB5} junto a otras características a destacar de Open vSwitch, este comportamiento no es el que realmente manifestaba la versi\'on de la herramienta. En particular la operación Pop de MPLS no funciona correctamente, así como el posterior procesamiento del paquete tras manipular etiquetas acorde al pipe de OpenFlow.\\ 
 
@@ -189,8 +191,9 @@ En el prototipo, un agente SNMP es instalado en cada switch(dispositivo administ
 No es el objetivo de este trabajo entrar en detalle sobre el protocolo SNMP por lo que si el lector desea profundizar en estos conceptos se recomienda seguir las referencia mencionadas anteriormente.
 
 \section{Entidad Controlador}
-Como se muestra en \ref{fig:OpenSourceRArch0} cada nodo del prototipo responde a una entidad denominada Controlador. Esta entidad en la pr\'actica es una PC convencional con determinadas componentes de software(ver figura \ref{fig:OpenSourceRArch3}).
+Como se muestra en \ref{fig:OpenSourceRArch0} cada nodo del prototipo responde a una entidad denominada Controlador. Esta entidad en la pr\'actica es una PC convencional con determinadas componentes de software(ver figura \ref{fig:OpenSourceRArch3}) entre las cuales se destaca el controlador SDN Ryu utilizado para implementar y ejecutar la aplicaci\'on RAUFlow. A continuación se explica en detalle cada una de estas componentes y su funcionalidad.
 
+\newpage
 \begin{figure}[htbp!] 
 \centering    
 \includegraphics[width=0.6\textwidth]{Arch_Figure3}
@@ -198,12 +201,11 @@ Como se muestra en \ref{fig:OpenSourceRArch0} cada nodo del prototipo responde a
 \label{fig:OpenSourceRArch3}
 \end{figure}
 
-A continuación se explica cada una de ellas.
 
 \subsection{Software de Control Ryu}
-Ryu es la implementaci\'on de controlador utilizada en el prototipo, sobre la cual se ejecuta una aplicación ryu encargada de implementar el plano de control. Esto es el modelado de la realidad como los conceptos de VPN y clasificación de trafico, las reglas de negocio como las políticas de QoS y asignación de etiquetas, algoritmos de ruteo entre otos. 
+Ryu es el software elegido para la implementaci\'on del controlador SDN compatible con el protocolo OpenFlow. Utilizando este controlador como ambiente de desarrollo y ejecuci\'on, se implementa la aplicaci\'on RAUFlow utilizada para construir el plano de control del prototipo. Esto quiere decir implementar un modelado de la realidad, proveer de funcionalidades para la creaci\'on de servicios de VPN, implementar estrategias para la clasificaci\'on de tr\'afico y brindar calidad de servicios(QoS), implementar un algoritmo de ruteo, entre otras responsabilidades.\\ 
 
-Por su complejidad, m\'as adelante se destina un cap\'itulo entero a la comprensi\'on de las diferentes características en la implementaci\'on de dicha aplicaci\'on. 
+Dada la complejidad de esta componente, se destina íntegramente el próximo cap\'itulo a la explicaci\'on de las diferentes características e implementaci\'on de esta aplicaci\'on. 
 
 \subsection{Quagga}
 Como se menciona anteriormente, el controlador ejecuta una instancia de Quagga, obteniendo de esta forma acceso local a la información de la base de datos topol\'ogica construida por OSPF, una vez que el algoritmo converge.

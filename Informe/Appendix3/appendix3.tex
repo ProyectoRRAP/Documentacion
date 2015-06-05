@@ -1,77 +1,161 @@
-% ******************************* Thesis Appendix B ********************************
+% ******************************* Thesis Appendix C ********************************
 
-\chapter{Especificaci\'ones t\'ecnicas del prototipo}
+\chapter{Clasificaci\'on de tr\'afico utilizando cabezales OpenFlow}
+\label{appendix3}
 
-En este ap\'endice se detallan las componentes de hardware y software utilizadas como plataforma para la construcci\'on del prototipo (router opensource, controlador y testbed). Por m\'as detalles acerca del proceso de construcci\'on del prototipo se suguiere el manual de construcci\'on del router opensource(ver anexo [link al anexo]). 
+En este ap\'endice se detallan de los atributos presentes en el cabezal OpenFlow versi\'on 1.3, cuales pueden ser utilizados para la definici\'on de reglas y cuales pueden ser utilizados en la definici\'on de acciones en un flujo. Esta informaci\'on es de carácter experimental y esta acotada a la compatibilidad de Open vSwitch; es decir, aquellos atributos que esta herramienta no soporta o simplemente no se consiguió documentaci\'on para entender su utilizaci\'on, no son considerados.
 
-\section{RAU-Switch}
-\label{C.1}
+\section{Cabezal OpenFlow versi\'on 1.3} 
 
-\subsection{Hardware}
+\begin{python}
+of_v13_match_fields:
+      
+	in_port			# Switch input port.
+	in_phy_port 	# Switch physical input port. 
+	metadata 		# Metadata passed between tables. 
+	eth_dst 		# Ethernet destination address.
+	eth_src 		# Ethernet source address. 
+	eth_type 		# Ethernet frame type. 
+	vlan_vID 		# VLAN id. 
+	vlan_PCP		# VLAN priority. 
+	IP_dscp 		# IP DSCP (6 bits in ToS field). 
+	IP_ecn  		# IP ECN (2 bits in ToS field). 
+	IP_proto		# IP protocol. 
+	IPv4_src 		# IPv4 source address. 
+	IPv4_dst 		# IPv4 destination address. 
+	TCP_src 		# TCP source port. 
+	TCP_dst 		# TCP destination port. 
+	UDP_src 		# UDP source port. 
+	UDP_dst 		# UDP destination port. 
+	SCTP_src 		# SCTP source port. 
+	SCTP_dst 		# SCTP destination port. 
+	ICMPv4_type 	# ICMP type. 
+	ICMPv4_code 	# ICMP code. 
+	ARP_op			# ARP opcode. 
+	ARP_spa 		# ARP source IPv4 address. 
+	ARP_tpa 		# ARP target IPv4 address. 
+	ARP_sha 		# ARP source hardware address. 
+	ARP_tha 		# ARP target hardware address. 
+	IPv6_src 		# IPv6 source address. 
+	IPv6_dst 		# IPv6 destination address. 
+	IPv6_flabel 	# IPv6 Flow Label 
+	ICMPv6_type 	# ICMPv6 type. 
+	ICMPv6_code 	# ICMPv6 code. 
+	IPv6_nd_target 	# Target address for ND. 
+	IPv6_nd_ssl 	# Source link-layer for ND. 
+	IPv6_nd_tll  	# Target link-layer for ND. 
+	MPLS_label 		# MPLS label. 
+	MPLS_tc 		# MPLS TC. 
+	MPLS_bos		# MPLS BoS bit. 
+	PBB_is_id 		# PBB I-SID. */
+	tunnel_id 		# Logical Port Metadata. 
+	IPv6_txhdr 		# IPv6 Extension Header pseudo-field 
+		
+\end{python}
 
-\clearpage
-\begin{table}[Htl]\centering
-\begin{tabularx}{\textwidth}{|>{\setlength\hsize{1.0\hsize}\setlength\linewidth{\hsize}}X|}
-\hline
-\multicolumn{1}{|c|}{PC}\\
-\hline
+Estos atributos fueron estudiados uno por uno y se llega a las dos listas presentadas en las siguientes secciones.
+
+\section{OpenFlow v1.3 atributos soportados para definir reglas}
+
+A continuaci\'on se detallan los atributos soportados para la definici\'on de reglas en un flujo lo cual en otras palabras permite la construcci\'on de una FEC y así clasificar tr\'afico.
+
 \begin{itemize}
-\item Intel Core i7 4th
-\item Motherboard Asus ROG Maximus VI Formula
-\item Fuente Thermaltake TR2 600W ATX 12V 2.3
-\item Memoria RAM Kingstom 8GB DIMM DDR3 1333 MHz (x2)
-\item Disco duro Seagate 1TB
-\end{itemize}\\
 
-\begin{itemize}
-\item NetFPGA-10G: 10-Gigabit SFP+ (x4), x8 gen1 PCIe, Xilinx’s Virtex-5 TX240TFPGA
-\item Transiever Finisar FTLX8571D3BCL 850nm 13-50
+\item \textbf{in\_port}: Es utilizado para discriminar por el puerto de entrada en un switch
 
-	  Class 1 21CFR1040.10 LN\#50 7\/01
-\end{itemize}\\
-\hline
-\multicolumn{1}{|c|}{Extras}\\
-\hline
-\begin{itemize}
-\item TP-Link Gigabit PCI Express TG-3468
-\item Patchcord multimodo OM3 50/125 duplex lc lc 10 metros pvc 2mm
-	  il $\leq$ 0.25dB RL $\geq$ 28dB
-\end{itemize}\\
-\hline
-\end{tabularx}
-\end{table}
+\item \textbf{metadata}: Es utilizado entre otras cosas para compartir informaci\'on entre varios flujos en diferentes tablas OpenFlow
 
-\subsection{Software}
+\item \textbf{eth\_dst}: Indica la direcci\'on destino de capa 2 en un paquete, direcci\'on MAC
 
-\begin{itemize}
-\item Ubuntu 12.04 3.11.0-26-generic x86\_ 64 GNU/Linux
-\item NetFPGA c\'odigo fuente versi\'on 5.0.5
-\item Open vSwitch 2.3.90
-\item Quagga 0.99.22 (Router)
+\item \textbf{eth\_src}: Indica la direcci\'on origen de capa 2 en un paquete, direcci\'on MAC
+
+\item \textbf{dl\_type}: Indica el ethertype de un paquete. Se utiliza el c\'odigo hexadecimal de cada protocolo
+
+\item \textbf{vlan\_vID}: Utilizado para filtrar por ID de una VLAN, se utiliza el campo dl\_vlan de Open vSwitch para filtrar por este valor
+
+\item \textbf{vlan\_PCP}: Utilizado para filtrar paquetes con el valor de prioridad de VLAN indicado, se utiliza el campo dl\_vlan\_pcp de Open vSwitch para filtrar por este valor
+
+\item \textbf{IP\_dscp}: Aparea tr\'afico utilizando los bits TOS en un paquete IP, se utliza el campo nw\_tos en Open vSwitch y es necesario adem\'as indicar antes en la regla ethertype de IPv4 o IPv6, esto es dl\_type 0x0800 \'o 0x86DD
+
+\item \textbf{IP\_ecn}: Aparea tr\'afico utilizando los bits ECN en un paquete IP, se utiliza el campo nw\_ecn de Open vSwitch y es necesario adem\'as indicar antes en la regla ethertype de IPv4(0x0800) \'o IPv6(0x86DD)
+
+\item \textbf{IP\_proto}: Se utiliza campo nw\_proto en Open vSwitch, indica protocolo IP utilizado. Es necesario indicar ethertype de IPv4 o IPv6
+
+\item \textbf{IPv4\_src}: Se utiliza campo nw\_src en Open vSwitch, indica direcci\'on origen de protocolo IP. Es necesario indicar antes en la regla ethertype de IPv4(0x0800)
+
+\item \textbf{IPv4\_dst}: Se utiliza campo nw\_src en Open vSwitch, indica direcci\'on destino de protocolo IP. Es necesario indicar antes en la regla ethertype de IPv4(0x0800)
+
+\item \textbf{TCP\_src}: Indica numero de puerto de aplicaci\'on TCP origen, se utiliza campo tp\_src en Open vSwitch y es necesario indicar antes en la regla ethertype 0x0800 y nw\_proto 6
+
+\item \textbf{TCP\_dst}: Indica numero de puerto de aplicaci\'on TCP destino, se utiliza campo tp\_src en Open vSwitch y es necesario indicar antes en la regla ethertype 0x0800 y nw\_proto 6
+
+\item \textbf{UDP\_src}: Indica numero de puerto de aplicaci\'on UDP origen, se utiliza campo tp\_src en Open vSwitch y es necesario indicar antes en la regla ethertype 0x0800 y nw\_proto 17
+
+\item \textbf{UDP\_dst}: Indica numero de puerto de aplicaci\'on UDP destino, se utiliza campo tp\_src en Open vSwitch y es necesario indicar antes en la regla ethertype 0x0800 y nw\_proto 17
+
+\item \textbf{SCTP\_src}: Indica numero de puerto de aplicaci\'on SCTP origen, se utiliza campo tp\_src en Open vSwitch y es necesario indicar antes en la regla ethertype 0x0800 y nw\_proto 132
+
+\item \textbf{SCTP\_dst}: Indica numero de puerto de aplicaci\'on SCTP destino, se utiliza campo tp\_src en Open vSwitch y es necesario indicar antes en la regla ethertype 0x0800 y nw\_proto 132
+
+\item \textbf{ICMPv4\_type}: Indica campo tipo en protocolo ICMP, se utiliza campo icmp\_type en Open vSwitch y es necesario indicar antes en la regla ethertype 0x0800 y nw\_proto 1
+
+\item \textbf{ICMPv4\_code}: Indica campo código en protocolo ICMP, se utiliza campo icmp\_code en Open vSwitch y es necesario indicar antes en la regla ethertype 0x0800 y nw\_proto 1
+
+\item \textbf{IPv6\_src}: Se utiliza campo ipv6\_src en Open vSwitch, indica direcci\'on origen de protocolo IPv6. Es necesario indicar antes en la regla ethertype de IPv6(0x86DD)
+
+\item \textbf{IPv6\_dst}: Se utiliza campo ipv6\_dst en Open vSwitch, indica direcci\'on destino de protocolo IPv6. Es necesario indicar antes en la regla ethertype de IPv6(0x86DD)
+
+\item \textbf{ICMPv6\_type}: Indica campo tipo en protocolo ICMPv6, se utiliza campo icmp\_type en Open vSwitch y es necesario indicar antes en la regla ethertype 0x086DD y nw\_proto 58
+
+\item \textbf{ICMPv6\_code}: Indica campo código en protocolo ICMPv6, se utiliza campo icmp\_code en Open vSwitch y es necesario indicar antes en la regla ethertype 0x086DD y nw\_proto 58
+
+\item \textbf{MPLS\_label}: Indica etiqueta mpls en un paquete, es necesario indicar antes en la regla el ethertype de MPLS(0x8847) 
+
+\item \textbf{MPLS\_tc}: Indica bits experimentales tc en el cabezal mpls, es necesario indicar antes en la regla el ethertype de MPLS(0x8847)
+
 \end{itemize}
 
-Adicionales:
+\section{OpenFlow v1.3 atributos soportados para definir acciones}
+A continuaci\'on se detallan los atributos soportados para la definici\'on de acciones en un flujo lo cual en otras palabras permite la manipulaci\'on de tr\'afico.
+
 \begin{itemize}
-\item Xilinx ISE (poner version)
-\end{itemize}
 
-\section{Controlador}
+\item \textbf{eth\_src}: Modifica direcci\'on origen de capa 2, mod\_dl\_src:<mac>
 
-\subsection{Hardware}
-\begin{itemize}
-\item AMD no se que
-\item ASRock algo
-\item Fuente no se
-\item Memoria RAM ni idea
-\item Disco duro no se
-\end{itemize}
+\item \textbf{eth\_dst}: Modifica direcci\'on destino de capa 2, mod\_dl\_dst:<mac>
 
+\item \textbf{vlan\_vID}: Modifica identificador de VLAN, push\_vlan:<ethertype>,set\_field:<value> \'o
+                         mod\_vlan\_vid:<vlan\_vid>
 
-\subsection{Software}
-\begin{itemize}
-\item Ubuntu 12.04 3.11.0-26-generic x86\_ 64 GNU/Linux
-\item Quagga 0.99.22 (Router)
-\item Ryu Controller v(completar)
-\item Agente SNMP (completar)
-\item Software de quagga de terceros (completar)
+\item \textbf{vlan\_PCP}: Modifica valor de prioridad de VLAN, mod\_vlan\_pcp:<vlan\_pcp>
+
+\item \textbf{IP\_dscp}: Modifica bits TOS de paquete IP, mod\_nw\_tos:<tos>
+
+\item \textbf{IPv4\_src}: Modifica direcci\'on origen IP, mod\_nw\_src:<ip>
+
+\item \textbf{IPv4\_dst}: Modifica direcci\'on destino IP, mod\_nw\_dst:<ip>
+
+\item \textbf{TCP\_src}: Modifica puerto TCP origen de aplicaci\'on, mod\_tp\_src:<port> dl
+                         \_type=0x0800 + nw\_proto=6
+
+\item \textbf{TCP\_dst}: Modifica puerto TCP destino de aplicaci\'on , mod\_tp\_dst:<port> dl 
+                         \_type=0x0800 + nw\_proto=6
+
+\item \textbf{UDP\_src}: Modifica puerto UDP origen de aplicaci\'on, mod\_tp\_src:<port> dl	                    
+                         \_type=0x0800 + nw\_proto=17
+                         
+\item \textbf{UDP\_src}: Modifica puerto UDP destino de aplicaci\'on, mod\_tp\_dst:<port> dl	                    
+                         \_type=0x0800 + nw\_proto=17
+
+\item \textbf{SCTP\_src}: Modifica puerto SCTP origen de aplicaci\'on, mod\_tp\_src:<port> dl	                    
+                         \_type=0x0800 + nw\_proto=132
+                         
+\item \textbf{SCTP\_src}: Modifica puerto SCTP destino de aplicaci\'on, mod\_tp\_dst:<port> dl	                    
+                         \_type=0x0800 + nw\_proto=132
+                         
+\item \textbf{MPLS\_label}: Modifica etiqueta mpls en paquete, set\_field:mpls\_labe + dl\_type=0x8847 
+							en conjunto con push\_mpls, pop\_mpls 
+
+\item \textbf{MPLS\_tc}: Modifica el valor de bits experimentales mpls, dl\_type=0x8847 + set\_mpls\_tc:<value>
+
 \end{itemize}
