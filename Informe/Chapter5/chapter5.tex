@@ -385,46 +385,73 @@ def get_path_mpls_labels(self, path):
     return mpls_path
 \end{python}
 
-%\begin{algorithm}[H]
-%
-% \SetKwFunction{obtenerEtiquetasLSP}{obtenerEtiquetasLSP} 
-% \SetKwFunction{obtenerEtiquetaParaInterfaz}{obtenerEtiquetaParaInterfaz}
-% \SetKwProg{myalg}{Function}{}{}
-% \myalg{\obtenerEtiquetasLSP(path){}}{
-%    Declare MPLS\_LABEL\_SPACE\_MIN $\gets 10$\\
-% 	Declare mplsPath[]\\
-% 	Declare labelBase\\
-% 
-%	\uIf{len(path) = 1}{
-%    	$mplsPath \gets mplsPath \cup \{None\}$ \Comment{If path have only one hop, them the lsp is empty becouse first node is penultimate  hop}
-% 	}
-% 	\Else{
-%    	labelBase = MPLS\_LABEL\_SPACE\_MIN \Comment{We asign labels for mpls path secuencialy starting on the lowest label value}
-%    
-%   		\ForEach{l in path}{
-%			label $\gets$ \obtenerEtiquetaParaInterfaz(l, labelBase) \Comment{Gets avaiable label}\\
-%			
-%			$mplsPath \gets mplsPath \cup \{label\}$\Comment{Add label to lsp}\\
-%			
-%			$labelBase \gets labelBase + 1$\Comment{Increments mpls label base}\\
-%			
-%			$mplsPath \gets mplsPath \cup \{None\}$\Comment{The penultimate hop remove all mpls labels, then last link has not asociated label}\\
-%				
-% 		}
-% 	}        
-% 
-% 	\Return{mplsPath[]}\;
-% 
-% }
-% 
-% \SetKwProg{myalg}{Function}{}{}
-% \myalg{\obtenerEtiquetaParaInterfaz(enlace, etiqueta){}}{
-%	Completar.. 
-% }
-% 
-% \caption{How to write algorithms}
-%\end{algorithm}
+\begin{algorithm}[H]
 
+ \SetKwFunction{obtenerEtiquetasLSP}{obtenerEtiquetasLSP} 
+ \SetKwFunction{obtenerEtiquetaParaInterfaz}{obtenerEtiquetaParaInterfaz}
+ \SetKwProg{myalg}{Function}{}{}
+ \myalg{\obtenerEtiquetasLSP(path){}}{ \Comment{Recibe una camino en la topolog\'ia representado como 	
+ 												una lista ordenada de links y devuelve una lista 	
+ 												ordenada de etiquetas donde cada etiqueta se
+ 												corresponde a un link}\\
+ 												
+    Declare MPLS\_LABEL\_SPACE\_MIN $\gets 10$\\
+ 	Declare mplsPath[] $\gets$ []\\
+ 	Declare labelBase\\
+ 
+	\uIf{len(path) = 1}{
+    	$mplsPath \gets mplsPath \cup \{None\}$ \Comment{Si el camino es de largo 1, no tiene 
+    													etiquetas porque primer nodo hace PHP}
+ 	}
+ 	\Else{
+    	labelBase $\gets$ MPLS\_LABEL\_SPACE\_MIN \Comment{Se asignan etiquetas secuencialmente de un
+    														 espacio de etiquetas }
+    
+   		\ForEach{l in path}{
+			label $\gets$ \obtenerEtiquetaParaInterfaz(l, labelBase) \Comment{Obtiene una etiqueta 
+												libre de un espacio de etiquetas de la interfaz}\\
+			
+			$mplsPath \gets mplsPath \cup \{label\}$\\
+			
+			$labelBase \gets labelBase + 1$\\
+			
+			$mplsPath \gets mplsPath \cup \{None\}$\Comment{Como \'ultimo nodo implementa PHP el 
+													\'ultimo link no tiene etiqueta asociada}\\
+				
+ 		}
+ 	}        
+ 
+ 	\Return{mplsPath[]}\;
+ }
+\end{algorithm}
+
+\begin{algorithm}[H]
+\SetKwFunction{obtenerEtiquetaParaInterfaz}{obtenerEtiquetaParaInterfaz}
+\SetKwProg{myalg}{Function}{}{}
+ \myalg{\obtenerEtiquetaParaInterfaz(link, label){}}{\Comment{Obtiene una etiqueta disponible en el espacio de etiquetas de la interfaz destino en el link. Si no existe etiqueta disponible devuelve Null}\\
+	\vspace{0.5cm}
+	 labels\_in\_use $\gets$ link.to\_node\_int.mpls\_labels\\
+	 next\_label $\gets$ label\_base\\
+	 label $\gets$ Null\\
+	 
+	 \While{label is Null AND next\_label $<$ MPLS\_LABEL\_SPACE\_MAX}{
+		\uIf{next\_label in labels\_in\_use)}{
+    		next\_label $\gets$ next\_label + 1\\
+    	}
+ 		\Else{
+ 			label $\gets$ next\_label\\
+ 		}
+	 }
+	 
+	\If{label $<>$ Null)}{
+     	link.to\_node\_int.mpls\_labels $\gets$ link.to\_node\_int.mpls\_labels $\cup$ label\\
+	}
+	
+	\Return{label}
+ }
+ 
+  \caption{How to write algorithms}
+\end{algorithm}
 
 \newpage
 \subsection{Actualizaci\'on de la topologia}
