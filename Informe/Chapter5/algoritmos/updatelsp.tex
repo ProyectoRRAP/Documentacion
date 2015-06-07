@@ -1,0 +1,39 @@
+\begin{algorithm}[H]
+
+ \SetKwFunction{UpdateServicesLSPs}{UpdateServicesLSPs} 
+ \SetKwFunction{obtenerEtiquetaParaInterfaz}{obtenerEtiquetaParaInterfaz}
+ \SetKwProg{myalg}{Function}{}{}
+ \myalg{\UpdateServicesLSPs(path){}}{
+    Declare MPLS\_LABEL\_SPACE\_MIN $\gets 10$\\
+ 	Declare mplsPath[]\\
+ 	Declare labelBase\\
+ 
+	\uIf{len(path) = 1}{
+    	$mplsPath \gets mplsPath \cup \{None\}$ \Comment{If path have only one hop, them the lsp is empty becouse first node is penultimate  hop}
+ 	}
+ 	\Else{
+    	labelBase = MPLS\_LABEL\_SPACE\_MIN \Comment{We asign labels for mpls path secuencialy starting on the lowest label value}
+    
+   		\ForEach{l in path}{
+			label $\gets$ \obtenerEtiquetaParaInterfaz(l, labelBase) \Comment{Gets avaiable label}\\
+			
+			$mplsPath \gets mplsPath \cup \{label\}$\Comment{Add label to lsp}\\
+			
+			$labelBase \gets labelBase + 1$\Comment{Increments mpls label base}\\
+			
+			$mplsPath \gets mplsPath \cup \{None\}$\Comment{The penultimate hop remove all mpls labels, then last link has not asociated label}\\
+				
+ 		}
+ 	}        
+ 
+ 	\Return{mplsPath[]}\;
+ 
+ }
+ 
+ \SetKwProg{myalg}{Function}{}{}
+ \myalg{\obtenerEtiquetaParaInterfaz(enlace, etiqueta){}}{
+	Completar.. 
+ }
+ 
+ \caption{How to write algorithms}
+\end{algorithm}
