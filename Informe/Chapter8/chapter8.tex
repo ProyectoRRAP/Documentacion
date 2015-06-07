@@ -1,4 +1,4 @@
-\chapter{Trabajo a futuro}
+\chapter{Conclusiones}
 
 % **************************** Define Graphics Path **************************
 \ifpdf
@@ -6,4 +6,27 @@
 \else
     \graphicspath{{Chapter8/Figs/Vector/}{Chapter8/Figs/}}
 \fi
+
+En este capitulo se resumen los principales resultados, l\'ogros y conclusiones de este trabajo. Luego se enumeran las principales lineas de trabajo a futuro identificadas, entre las cuales se incluyen mejoras y extensiones al prototipo, como tendencias en el área de SDN.
+
+
+\section{Conclusiones}
+
+\section{Trabajo a futuro}
+En este trabajo no se compara el rendimiento del prototipo con productos comerciales similares en funcionalidades. Esto se debe a que la implementaci\'on del plano de datos OpenFlow se realiza por software. Interesa fuertemente extender el proyecto OpenFlow de la plataforma NetFPGA para que implemente el protocolo en la versi\'on 1.3 y as\'i poder realizar una evaluaci\'on experimental que permita validar desde el punto de vista del rendimiento la aplicaci\'on de las tecnolog\'ias utilizadas en la construcci\'on de la RAU2.
+
+El algoritmo de ruteo implementado basa su m\'etrica solamente en el costo asociado a un link. Extender  la definici\'on de esta m\'etrica, contemplando otros atributos de un enlace como el ancho de banda disponible o tecnolog\'ia (fibra \'optica, enlace de cobre, etc), y la vez contemplar restricciones como garantizar un ancho de banda m\'inimo, cantidad de enlaces atravesados, incluir \'o excluir nodos por los que pasar\'a el tr\'afico y demoras de extremo a extremo(en otras palabras implementar un CSPF) reditúa en la capacidad para incorporar funcionalidades de calidad de servicios.
+
+De la mano de la extensi\'on del algoritmo de ruteo a un algoritmo CSPF, se puede trabajar en el desarrollo de funcionalidades avanzadas que permitan implementar t\'ecnicas de Ingenier\'ia de Tr\'afico, desarrollando as\'i un prototipo m\'as flexible en la asignaci\'on de los recursos disponibles y con mejor calidad en los servicios brindados.
+
+Un servicio queda definido en el sistema por los nodos e interfaces de entrada y salida a la red y las caracter\'isticas del tr\'afico asociado. La incorporaci\'on de nuevas dimensiones a la definici\'on de un servicio, como dimensiones de calidad de servicios(QoS) o simplemente la dimension tiempo representar\'ia una gran mejora funcional y un salto de calidad en el aprovechamiento de las capacidades de la infraestructura del prototipo. Por ejemplo incorporando la dimensi\'on tiempo se podr\'ian definir servicios para rangos horarios, mejorando la precisi\'on con la que se distribuye el ancho de banda disponible.
+
+En el prototipo se almacena en memoria informaci\'on que es ingresada por un usuario de la aplicaci\'on RAUFlow. En particular se almacenan datos extra de cada nodo e interfaz y se almacena la definici\'on de los servicios. Esta informaci\'on se pierde en caso de que la aplicaci\'on sea interrumpida puesto que no esta persistida de forma no volátil. Resulta interesante entonces incorporar a la arquitectura de RAUFlow una capa de persistencia que permita guardar de forma no vol\'atil esta informaci\'on, adem\'as de la definici\'on de estrategias para la reconstrucci\'on de servicios cuando se carga esta informaci\'on eventualmente en una topolog'\'ia de red diferente a la inicial.
+
+Almacenar en memoria y de forma centralizada la informaci\'on topol\'ogica de red, informaci\'on asociada a servicios y eventualmente funcionalidades de QoS e Ingenier\'ia de tr\'afico, as\'i como ejecutar algoritmos que utilicen intensivamente estos datos como un CSPF centralizado puede acarrear serias barreras de escalabilidad en el prototipo. Una linea de investigaci\'on interesante ser\'ia el desarrollo de una jeraqru\'ia de Controladores, cada uno responsable del plano de control de una porci\'on de la topolog\'ia global. De esta forma se generar\'ian islas SDN en donde el tr\'afico interno es resuelto por el controlador local y se consulta al Controlador global para resolver la forma en que se enruta tr\'afico entre diferentes islas. A su vez se puede crecer en la cantidad de niveles dentro de la jerarq\'ia tanto como se quiera.
+
+Finalmente y no menos importante se puede trabajar en el desarrollo de nuevas funcionalidades en RAUFlow, así como en la mejora de las ya existentes. Algunas de las funcionalidades que se pueden incorporar son la capacidad para definir manualmente caminos, indicando los nodos por los que se quiere  
+pasar, soportar m\'ultiples caminos para un mismo par de nodos origen y destino y as\'i poder implementar balanceo de carga, creaci\'on de una VPN multipunto autom\'aticamente a partir de una lista de nodos e interfaces involucradas. 
+
+
 

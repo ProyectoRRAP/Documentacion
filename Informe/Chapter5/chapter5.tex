@@ -8,12 +8,13 @@
     \graphicspath{{Chapter5/Figs/Vector/}{Chapter5/Figs/}}
 \fi
 
-En cap\'itulos anteriores se ha detallado las caracter\'isticas m\'as importantes del prototipo y sus componentes. 
-Resta detallar el dise\~no de la aplicaci\'on RAUFlow, encargada de implementar el plano de control del prototipo. Por ello en el presente cap\'itulo se propone un an\'alisis de dicha componente, siguiendo un proceso de dise\~no tradicional de Ingenier\'ia de Software, dividido en 4 etapas. Una primera etapa de an\'alisis de requerimientos, una segunda etapa de relevamiento de casos de uso, una tercera etapa de dise\~no del modelo de datos, y finalmente una cuarta etapa para el dise\~no general de la arquitectura de la aplicaci\'on. Ademas se presentan los aspectos m\'as importantes relacionados a la implementaci\'on de RAUFlow como por ejemplo las implementaciones del algoritmo de ruteo din\'amico y del algoritmo de distribución de etiquetas, como se implementa QoS entre otros detalles. 
+En cap\'itulos anteriores se han detallado las caracter\'isticas m\'as importantes del prototipo y sus componentes. Resta detallar el dise\~no e implementaci\'on de RAUFlow, la aplicaci\'on encargada de implementar el plano de control en el prototipo. 
+
+En el presente cap\'itulo se propone un an\'alisis de RAUFlow, siguiendo un proceso de dise\~no tradicional de Ingenier\'ia de Software dividido en 4 etapas. Una primera etapa de an\'alisis de requerimientos, una segunda etapa de relevamiento de casos de uso, una tercera etapa de dise\~no del modelo de datos y finalmente una cuarta etapa destinada al dise\~no general de la arquitectura. Ademas se presentan los aspectos m\'as importantes relacionados a la implementaci\'on de RAUFlow como por ejemplo las implementaciones del algoritmo de ruteo y del algoritmo de distribución de etiquetas, como se implementa clasificaci\'on de tr\'afico y como se puede implementar QoS entre otros detalles. 
 
 \section[An\'alisi de requerimientos]{An\'alisis de requerimientos}
 
-Anteriormente en la sección ~\ref{3.1} se definieron algunos de los requerimientos relevados para el prototipo de la RAU2. De ellos y de un trabajo de an\'alisis sobre la realidad modelada se desprende la siguiente tabla de requerimientos para RauFlow:
+Anteriormente en la sección ~\ref{3.1} se definieron los requerimientos relevados para el prototipo de la RAU2. De ellos y de un trabajo de an\'alisis sobre la realidad modelada se desprende la siguiente tabla de requerimientos para RauFlow:
 
 \clearpage
 \begin{table}[Htl]\centering
@@ -45,7 +46,7 @@ Requerimientos no Funcionales\\ \hline
 \end{tabularx}
 \end{table}
 
-Teniendo en cuenta la descripci\'on del problema y los requerimientos anteriores, se procedio con el modelado de la realidad. Los resultados obtenidos se presentan en la siguiente secci\'on.
+Teniendo en cuenta la descripci\'on del problema y los requerimientos anteriores, se procede con el modelado de la realidad. Los resultados obtenidos se presentan en la siguiente secci\'on.
 
 %Teniendo en cuenta los requerimientos anteriores, se procede con el relevamiento de los casos de uso. Los resultados obtenidos se presentan en la siguiente secci\'on.
 
@@ -58,7 +59,7 @@ En el mismo se destacan en color amarillo las clases utilizadas para representar
 \begin{enumerate}
 \item Tradicionalmente se utilizan grafos para el modelado de una topolog\'ia de red, siendo una representaci\'on sencilla y clara.
 
-\item En MPLS un camino o mejor llamado LSP tiene sentido, permitiendo por ejemplo asegurar un valor de ancho de banda en un enlace para un sentido y un valor diferente para el otro sentido. Adem\'as permite establecer caminos diferentes para el tr\'afico en un sentido y en otro, priorizando por ejemplo el tr\'afico  en uno de los sentidos al utilizar el mejor camino. Utilizando grafos dirigidos puede modelarse este comportamiento.
+\item En MPLS un camino o mejor llamado LSP tiene sentido, permitiendo por ejemplo asegurar un valor de ancho de banda en un enlace para un sentido y un valor diferente para el otro. Adem\'as permite establecer caminos diferentes para el tr\'afico en un sentido y en otro, priorizando por ejemplo el tr\'afico  en uno de los sentidos al utilizar el mejor camino. Utilizando grafos dirigidos puede modelarse este comportamiento.
 
 \item En la pr\'actica nada impide que dos equipos o nodos est\'en conectados por m\'as de un enlace. De hecho este escenario es bastante beneficioso para asegurar conectividad ante la falla de enlaces. Utilizando multigrafos este escenario es modelado de forma clara.
   
@@ -71,40 +72,70 @@ En el mismo se destacan en color amarillo las clases utilizadas para representar
 \label{fig:ModeloDeDatos}
 \end{figure}
 
-En un mulrigrafo dirigido se tienen nodos y aristas con sentido; siendo representados los nodos de una red por los nodos del grafo y los enlaces entre estos por las aristas.
+En un mulrigrafo dirigido se tienen nodos y aristas con sentido. Cada nodo de la red puede ser representado por un nodo del grafo, y cada enlace entre un par de nodos con dos aristas(una arista para cada sentido del enlace).
 
-En el modelo se incorpora adem\'as el concepto de Interfaz de un dispositivo. Desde entonces dos nodos presentan una arista si cada uno esta asociado a una instancia de la clase Interfaz y existe una instancia de la clase Link asociada a ambas interfaces, mediante las relaciones “Desde” y “Hacia”; indicando adem\'as estas el sentido del dicho Link.
+En el modelo se tiene adem\'as el concepto de Interfaz de un dispositivo. Este concepto redefine la noción de adyacencia entre dos nodos del gradfo de la siguiente forma: existe una arista para un par de nodos si cada uno de ellos esta asociado a una instancia de la clase Interfaz y existe una instancia de la clase Link asociada a ambas interfaces mediante las relaciones “Desde” y “Hacia”; indicando adem\'as estas el sentido del dicho Link.
 
-Cabe destacar adem\'as, que en el modelo planteado no se asume que un Nodo sea f\'isicamente un dispositivo RAU-Switch; solamente se asume por simplicidad del modelo que sea un dispositivo de capa tres. Con esto se intenta contemplar la posibilidad de incorporar en un futuro adem\'as de nodos construidos en base al diseño de RAU-Switch, nodos implementados por ejemplo en base a hardware comercial.\\
+Cabe destacar adem\'as, que en el modelo planteado no esta condicionado a que el dispositivo utilizado para implementar un nodo sea RAU-Switch, solamente se exige por simplicidad que dicho dispositivo sea  de capa tres. Esto permite contemplar la posibilidad de incorporar en un futuro adem\'as de nodos construidos en base al diseño de RAU-Switch nodos implementados por ejemplo en base a hardware comercial.\\
   
 [No se si explicar la cardinalidad 1 - * de las Interfaces - Link, la cual esta dada asi por la situacion switch dentro del core]\\
 
-Por otro lado en rosado se destacan las clases utilizadas para representar los conceptos de la realidad relacionados a MPLS como las tablas FTN, ILM y NHLFE, y el concepto de LSP. Si bien esta \'ultima clase no tiene atributos asociados en esta versi\'on del modelo de datos, eventualmente tiene sentido en un futuro que se puedan asociar atributos del camino como el m\'aximo ancho de banda disponible y algunas otras propiedades de QoS por ejemplo.\\
+Por otro lado en rosado se destacan las clases utilizadas para representar los principales conceptos de MPLS como las tablas FTN, ILM, NHLFE y el concepto de LSP. Si bien esta \'ultima clase no tiene atributos asociados en esta versi\'on del modelo de datos, eventualmente tiene sentido en un futuro que se puedan asociar atributos del camino como el m\'aximo ancho de banda disponible y algunas otras propiedades orientadas a funcionalidades de QoS por ejemplo.\\
 
-Finalmente en azul se destaca el concepto Servicio, utilizado para representar un servicio de VPN provisto por un operador de red. M\'as adelante en este cap\'itulo se habla en profundidad sobre la implementaci\'on de esta clase.
+Finalmente en azul se destaca el concepto Servicio orientado a representar un servicio de red privada virtual. En particular cada servicio representa una red privada punto a punto entre dos nodos de la red del prototipo; por ello la clase servicio tiene los atributos nodo de ingreso y nodo de egreso. Adem\'as el servicio de red privada esta dado por las interfaces de entrada y salida en cada nodo respectivamente.
+
+Luego una red privada multipunto puede construirse por ejemplo definiendo servicios punto a punto para cada nodo involucrado.
+
+M\'as adelante en este cap\'itulo se habla en profundidad sobre la implementaci\'on de esta clase.
 
 Cabe destacar que por simplicidad no se representa el concepto VPN en el modelo puesto que el foco de la aplicación esta puesto en el desarrollo de los algoritmos y funcionalidades, y no en un modelado exhaustivo de la realidad. Sin embargo este concepto como muchos otros pueden ser incorporados fácilmente en un futuro.\\
 
 Teniendo en cuenta los requerimientos mencionados, y el modelado de la realidad presentado, se procede con el relevamiento de los casos de uso. Los resultados obtenidos se presentan en la siguiente secci\'on.
 
 \section[Relevamiento de casos de uso]{Relevamiento de casos de uso}
-
-La lista de casos de uso presentada a continuaci\'on se corresponde con un conjunto de funcionalidades b\'asicas, que permiten la exploraci\'on de la potencialidad del enfoque SDN aplicado al problema planteado. 
+La lista de casos de uso presentada a continuaci\'on se corresponde con un conjunto de funcionalidades b\'asicas, que permiten explorar el potencial del enfoque SDN aplicado a la implementaci\'on de un prototipo para la RAU2.\\ 
 
 \begin{itemize}
-\item Listar Servicios
-\item Agregar Servicio
-\item Modificar Servicio
-\item Eliminar Servicio
-\item Ver Topolog\'ia
-\item Ver informaci\'on b\'asica Nodo
-\item Ver tabla de Flujos Nodo
-\item Filtrar Lsps
-\item Editar Informaci\'on extra Nodo
-\item Editar Informaci\'on extra Interfaz
+\item \textbf{CU1. Listar Servicios}: Devuelve un listado con los servicios existentes en el sistema, mostrando para cada uno la informaci\'on b\'asica asociada.
+
+\item \textbf{CU2. Seleccionar Servicio}: Permite seleccionar un Servicio de una lista de servicios.
+
+\item \textbf{CU3. Ver Servicio}: Devuelve la informaci\'on asociada al Servicio.
+
+\item \textbf{CU4. Modificar Servicio}: Muestra los datos asociados a la instancia de Servicio y permite modificar ciertos atributos permitidos.
+ 								
+\item \textbf{CU5. Eliminar Servicio}: Permite eliminar un Servicio existente en el sistema.
+
+\item \textbf{CU6. Agregar Servicio}: Permite crear un servicio nuevo en el sistema, seleccionando nodo e interfaz de ingreso para un extremo del servicio y nodo e interfaz de egreso para el otro extremo. 
+
+\item \textbf{CU7. Ver Topolog\'ia}: Muestra la topolog\'ia de red mediante la representaci\'on como una estructura de grafo.
+
+\item \textbf{CU.8 Filtrar Lsps}: Permite superponer en la representaci\'o topol\'ogica en forma de grafo un múltiples LSPs.
+
+\item \textbf{CU9. Seleccionar Nodo}: Permite seleccionar un nodo de una lista de Nodos.
+
+\item \textbf{CU10. Ver informaci\'on b\'asica Nodo}: Despliega la informaci\'on asociada a un Nodo de la topolog\'ia.
+
+\item \textbf{CU11. Ver tabla de Flujos Nodo}: Muestra la inormaci\'on de la tabla de flujos OpenFlow para un nodo determinado.
+
+\item \textbf{CU12. Ver tablas MPLS}: Muestra la informaci\'on asociada a las tablas FTN, ILM y NHLFE para un nodo determinado.
+
+\item \textbf{CU13. Editar Informaci\'on extra Nodo}: Permite ingresar informaci\'on adicional sobre un Nodo como Nombre, si es nodo de interno o de borde por ejemplo.
+
+\item \textbf{CU14. Editar Informaci\'on extra Interfaz}: Permite ingresar informaci\'on adicional sobre una Interfaz como si es interna o externa por ejemplo.
 \end{itemize}
 
+En la figura \ref{fig:CasosDeUso} se muestran los casos de uso mencionados anteriormente y las dependencias entre ellos.
+
+\begin{figure}[ht!] 
+\centering    
+\includegraphics[width=0.8\textwidth]{CasosDeUso}
+\caption[Casos de Uso de RAUFlow]{Casos de Uso de RAUFlow}
+\label{fig:CasosDeUso}
+\end{figure}
+
 %De esta forma quedan presentados los requerimientos relevados sobre RauFlow, el modelado de la realidad, y los casos de uso relevados. Resta entonces presentar un esbozo de la arquitectura de la aplicaci\'on RauFlow, para que el lector finalmente este en condiciones de comprender el dise\~'no del prototipo en su totoalidad.
+\newpage
 \section[Arquitectura de RauFlow]{Arquitectura de RauFlow}
 
 En esta secci\'on se presenta la arquitectura de la aplicación RauFlow(ver figura ~\ref{fig:VistaComponentes2}), profundizándose en el funcionamiento de sus principales componentes.\\
@@ -411,6 +442,7 @@ Notese en relación a la segunda alternativa de implementaci\'on que debido a la
 
 En RauFlow se implementa la segunda alternativa mencionada. En \ref{fig:AlgoritmoDE} se muestra el pseudoc\'odigo de una posible implementaci\'on de dicho algor\'itmo:\\
 
+\newpage
 \begin{algorithm}[H]
 
  \SetKwFunction{obtenerEtiquetasLSP}{obtenerEtiquetasLSP} 
