@@ -170,71 +170,77 @@ Dentro de la capa de presentaci\'on se destacan: (1) una interfaz gr\'afica iden
 En esta secci\'on se presentan los aspectos m\'as importantes en relaci\'on a la implementaci\'on de RauFlow. Entre ellos se destacan la implementaci\'on de la clase Servicio con la cual se implementa  clasificaci\'on de tr\'afico, el algoritmo de ruteo y el algoritmo de distribusi\'on de etiquetas.\\
 
 \subsection{Clasificación de tr\'afico}
-En la literatura de MPLS, tradicionalmente se utiliza el concepto de FEC(fordwarding equivalence class) para distinguir un conjunto de paquetes a ser tratados en forma similar(por ejemplo para aplicar t\'ecnicas de QoS). Vale la pena destacar que este concepto se define con un alcance local a un dispositivo o nodo; es decir, la FEC determina solamente la forma en que un conjunto de paquetes son tratados en un dispositivo. Esto difiere bastante del enfoque asumido en este trabajo.
+En la literatura de MPLS, tradicionalmente se utiliza el concepto de FEC(fordwarding equivalence class) para distinguir a un conjunto de paquetes a ser tratados en forma similar(por ejemplo para aplicar t\'ecnicas de QoS). Este concepto se define localmente a un dispositivo, determinando la forma en que un conjunto de paquetes son tratados solamente en el mismo.
 
-En RAUFlow se realiza clasificaci\'on de tr\'afico solamente para el nodos de ingreso al prototipo, en un camino LSP dado. Esto quiere decir que el tr\'afico asociado a un servicio de VPN en particular, es clasificado solamente en el nodo de ingreso al prototipo y luego al atravesar la red del prototipo no se realiza clasificaci\'on de tr\'afico en ningún nodo intermedio e incluso tampoco en el nodo de salida.
+En RAUFlow se aprovecha la visi\'on global del plano de control SDN para definir una noci\'on de FEC global a una topolog\'ia de red. En esta redefinici\'on se clasifica tr\'afico solamente en el nodo de ingreso a la red del prototipo, determinándose all\'i el camino a seguir por un paquete hasta el nodo de egreso. 
 
-Cuando un nuevo servicio de VPN es instanciado en RAUFlow, se ejecutan el algoritmo de ruteo para obtener el mejor camino dentro de la red, y el algoritmo de distribución de etiquetas para hallar el mapeo a etiquetas MPLS a conmutar por cada nodo del camino(LSP). Por como esta definido el algoritmo de distribución de etiquetas, este LSP es \'unico y permite identificar al servicio en cada salto por la etiqueta que se esta conmutando. De esta forma no es necesario clasificar estrictamente hablando el tr\'afico en cada nodo intermedio de la red, puesto que su camino esta dado una vez que ingresa a la red y es clasificado.
+Este camino es calculado por el algoritmo de ruteo con restricciones(CSPF), contemplando en el políticas de ingenieria de tr\'afico y calidad de servicios. 
 
-De esta forma, RAUFlow redefine el concepto de clasificaci\'on de tr\'afico, pasando de la definici\'on basada en el concepto FEC local a un nodo, a una noci\'on de FEC global mantenida por el Controlador SDN.\\
+Por otro lado se define un mapeo entre servicio de VPN y etiquetas \textbf{mpls}, permitiendo identificar el tr\'afico asociado a un servicio en cualquier nodo intermedio de la red. Luego a partir del valor de esta etiqueta se puede realizar un procesamiento diferencial en nodos intermedios.\\
 
-En el prototipo la clasificaci\'on de tr\'afico se realiza utilizando la tabla de flujos de Open vSwitch y los campos en el cabezal del protocolo OpenFlow (matching fields). Con estos campos se define las reglas de un flujo(recordar figura \ref{fig:OpenFlowArch2}) distinguiendo de este modo entre diferentes clases de tr\'afico para un procesamiento diferencial(acci\'on del flujo).\\
+%Cuando un nuevo servicio de VPN es instanciado en RAUFlow, se ejecutan el algoritmo de ruteo para obtener el mejor camino dentro de la red, y el algoritmo de distribución de etiquetas para hallar el mapeo a etiquetas MPLS a conmutar por cada nodo del camino(LSP). Por como esta definido el algoritmo de distribución de etiquetas, este LSP es \'unico y permite identificar al servicio en cada salto por la etiqueta que se esta conmutando. De esta forma no es necesario clasificar estrictamente hablando el tr\'afico en cada nodo intermedio de la red, puesto que su camino esta dado una vez que ingresa a la red y es clasificado.
 
-No todos los campos del cabezal OpenFlow están habilitados para utilizarse en la definici\'on de la regla de un flujo, así como tampoco lo están para la definici\'on de la acci\'on de un flujo. Adem\'as est\'an implícitas ciertas relaciones entre algunos de estos campos que deben ser tomadas en cuenta a la hora de utilizarse para la definici\'on de un flujo. En el ap\'endice \ref{appendix3} se muestra tanto la lista entera de atributos del cabezal OpenFlow para la versi\'on 1.3, como la lista de atributos que pueden ser utilizados para la definici\'on de reglas y los que pueden ser utilizados para la definici\'on de acciones. Ambas listas fueron constru\'idas en base a experimentaci\'on con las herramientas Open vSwitch y Ryu.\\
+En relaci\'on a como se implementa clasificaci\'on de tr\'afico en el prototipo, se utilizan las tablas de flujos de Open vSwitch(Open vSwitch implementa 256 tablas) y los campos del cabezal OpenFlow (matching fields). Con estos campos se define las reglas de un flujo(recordar figura \ref{fig:OpenFlowArch2}) distinguiendo de este modo entre diferentes clases de tr\'afico para un procesamiento diferencial.
 
+Dentro del cabezal OpenFlow existen campos que son para definir las reglas de un flujo y campos para definir la acci\'on de un flujo, aunque algunos de estos campos pueden utilizarse para definir ambas componentes.  
+
+Esta lista de campos varia con la versi\'on del protocolo OpenFlow y en el contexto del prototipo esta acotada a su vez por la implementaci\'on de Open vSwitch. En el ap\'endice \ref{appendix3} se muestra  la lista entera de atributos que contiene el cabezal OpenFlow para la versi\'on 1.3 y de estos la lista de atributos que son soportados por Open vSwitch y que pueden ser utilizados para la definici\'on de reglas y acciones. Ambas listas fueron constru\'idas en base a experimentaci\'on con las herramientas Open vSwitch y Ryu.\\
+
+En el prototipo, el concepto de clasificaci\'on de tr\'afico esta estrictamente ligado al concepto de servicio de red privada. En la siguiente secci\'on se explica la implementaci\'on es este concepto.
+ 
 \subsection{Implementación de Servicio}
 
-En la realidad modelada se tienen dos conceptos fundamentales asociados a un servicio red privada virtual (VPN): (1) el concepto de clasificación de tr\'afico y (2) el concepto de calidad de servicio.
+La clase Servicio, implementa en el prototipo el concepto de servicios de red privada virtual. Por tanto tiene por un lado los atributos utilizados para definir la clase de tr\'afico del servicio(campos del cabezal OpenFlow) y por otro tiene otros atributos que definen al servicio.
 
-\begin{enumerate}
-\item Clasificación de tr\'afico es la capacidad para poder distinguir entre diferentes tipos de tr\'afico en base a caracter\'isticas y patrones del mismo. En los requerimientos del prototipo no se especifica en base a que criterios o características se desea clasificar el tr\'afico, aunque de los requerimientos para la RAU2 se deduce que ser\'ia deseable poder clasificar tr\'afico discriminando la red privada a la que pertenece y eventualmente dentro del tr\'afico de cada VPN discriminando por aplicaci\'on. 
+En el prototipo se asume que por cada nodo de borde, se tiene una \'unica red privada directamente conectada a cada interfaz externa. Esto permite definir un servicio a partir de la clase de tr\'afico definida y los pares nodo-interfaz origen, nodo-interfaz destino.
 
-En la implementaci\'on de RAUFlow la clasificaci\'on de tr\'afico es realizada utilizando los cabezales del protocolo OpenFlow(versi\'on 1.3). Esto se deba a la sencilla raz\'on 
+Por otro lado se puede refinar la definici\'on de servicio agregando dimensiones; una dimensi\'on bastante \'util puede ser por ejemplo el tiempo. Utilizando esta dimensi\'on, se podr\'ia por ejemplo definir un servicio de red privada par cierto horario del d\'ia o para ciertos d\'ias de la semana.
 
-En la implementaci\'on de RAUFlow la clase Servicio representa tanto un servicio de VPN; es decir,  como una clasificaci\'on de tr\'afico particular, basando los criterios de clasificaci\'on en los campos del cabezal OpenFlow versi\'on 1.3 (matching fields).
+De igual forma se pueden incorporarse m\'as dimensiones orientado a brindar una mayor flexibilidad en la definici\'on de servicios, de cara a lo que podr\'ian ser diferentes requerimientos de la RAU2. 
 
-\item El concepto de calidad de servicio (QoS), establece características sobre el procesamiento del trafico en la red(tipicamente reserva de ancho de banda) que repercuten luego en el calculo del camino a seguir por dicho trafico.
-\end{enumerate}
+De todos modos, teniendo en cuenta el alcance del proyecto se decidi\'o dejar las dimensiones extras como el tiempo entre otras, como una posible linea de trabajo a futuro.\\ 
 
-En relación al concepto de servicio, en la perspectiva que se adopta en RauFlow presenta las siguientes  características:
+%En la realidad modelada se tienen dos conceptos fundamentales asociados a un servicio de red privada virtual (VPN): (1) el concepto de clasificación de tr\'afico y (2) el concepto de calidad de servicio.\\
 
-\begin{itemize}
-\item Es un concepto global que involucra a toda la topolog\'ia
-\item Queda determinado parcialmente por la cuádrupla 
-\begin{center}
-(nodo\_ingreso, interfaz\_ingreso, nodo\_egreso, interfaz\_egreso)
-\end{center}
-\item Interesa distinguir servicios utilizando las capacidades provistas por los matching fields de OpenFlow 
-\item Esta definido temporalmente (para un rango horario espec\'ifico)[esto no se si lo ponemos]
-\end{itemize}
+%En el prototipo, cuando se define un servicio se define adem\'as una clase de equivalencia de tr\'afico, en otras palabras una FEC global.
 
-De esta forma el concepto de servicio se define mediante la clase Servicio como se muestra a continuación.
+
+
+%\begin{itemize}
+%\item Es un concepto global que involucra a toda la topolog\'ia
+%\item Queda determinado parcialmente por la cuádrupla 
+%\begin{center}
+%(nodo\_ingreso, interfaz\_ingreso, nodo\_egreso, interfaz\_egreso)
+%\end{center}
+%\item Interesa distinguir servicios utilizando las capacidades provistas por los matching fields de OpenFlow 
+%\item Esta definido temporalmente (para un rango horario espec\'ifico)[esto no se si lo ponemos]
+%\end{itemize}
+
+De esta forma se llega a la siguiente implementaci\'on de la clase servicio:\\
 
 \begin{python}
 class Service(object):
 
-		#General attributes
-		ID 				    #str(uuid.uuid4()) Unique ID 
-		name 				#Service name for clear 
-							#identification by RauFlow users
+		# Atributos generales
+		ID 				    # str(uuid.uuid4()) ID \'unico  
+		name 				# Nombre del servicio para 
+							# identificaci\'on de usuarios 
+							# en RAUFlow
 							
-		lsps				#List of services lsps
+		lsps				# Lista de LSPs para el servicio
 		
-		ingress_node		#Ingress node of service traffic 
-							#in the core
+		ingress_node		# Nodo de ingreso del servicio
 							
-		egress_node 		#Egress node of service traffic 
-							#in the core
+		egress_node 		# Nodo de egreso del servicio
 							
-		ingress_interface 	#Ingress interface of the service 
-							#traffic in the ingress node
+		ingress_interface 	# Interfaz de ingreso en el nodo 
+							# de ingreso
 							
-		egress_interface 	#Egress interface of the service 
-							#traffic in the egress node
+		egress_interface 	# Interfaz de egreso en el nodo 
+							# de ingreso 
         
-		#Attributes from OFv1.3 matching fields
-		in_port			# Switch input port.
-		in_phy_port 	# Switch physical input port. 
+		# Campos del cabezal OFv1.3 
+		in_port			# Switch input port. 
 		metadata 		# Metadata passed between tables. 
 		eth_dst 		# Ethernet destination address.
 		eth_src 		# Ethernet source address. 
@@ -254,29 +260,260 @@ class Service(object):
 		SCTP_dst 		# SCTP destination port. 
 		ICMPv4_type 	# ICMP type. 
 		ICMPv4_code 	# ICMP code. 
-		ARP_op			# ARP opcode. 
-		ARP_spa 		# ARP source IPv4 address. 
-		ARP_tpa 		# ARP target IPv4 address. 
-		ARP_sha 		# ARP source hardware address. 
-		ARP_tha 		# ARP target hardware address. 
 		IPv6_src 		# IPv6 source address. 
 		IPv6_dst 		# IPv6 destination address. 
-		IPv6_flabel 	# IPv6 Flow Label 
 		ICMPv6_type 	# ICMPv6 type. 
 		ICMPv6_code 	# ICMPv6 code. 
-		IPv6_nd_target 	# Target address for ND. 
-		IPv6_nd_ssl 	# Source link-layer for ND. 
-		IPv6_nd_tll  	# Target link-layer for ND. 
 		MPLS_label 		# MPLS label. 
 		MPLS_tc 		# MPLS TC. 
-		MPLS_bos		# MPLS BoS bit. 
-		PBB_is_id 		# PBB I-SID. */
-		tunnel_id 		# Logical Port Metadata. 
-		IPv6_txhdr 		# IPv6 Extension Header pseudo-field 
 		
 \end{python}
 
-En cuanto a como se implementan las nociones de calidad de servicio, se detallan m\'as adelante en~\ref{5.5.4} 
+En RAUFlow, cuando un nuevo servicio es creado se ejecutan los algoritmos de ruteo y distribución de etiquetas par construir un LSP. Luego este LSP es traducido a flujos OpenFlow que luego son instalados en cada uno de los nodos que forman parte. 
+
+En la siguiente secci\'on se detalla el algoritmo de ruteo implementado en RAUFlow.
+
+\subsection{Algoritmo de ruteo}
+El algoritmo de ruteo implementado en RAUFlow parte de un algoritmo Shortest Path First(SPF) para el calculo del mejor camino entre un par de nodos en la topolog\'ia. Luego agregando restricciones al mismo es posible llegar a un Constrained Shortest Path First(CSPF) con el cual se pueda implementar funcionalidades de QoS y balanceo de carga.
+
+En el desarrollo de este proyecto, por razones de tiempo solo fu\'e posible la implementaci\'on del algor\'iitmo SPF. De esta forma la implementaci\'on de un algoritmo de ruteo CSP partiendo del algoritmo alcanzado, se deja como una posible linea de trabajo a futuro.\\
+
+A continuaci\'on se explica la implementaci\'on del algoritmo SPF. 
+
+\subsubsection{Shortest Path First}
+Para la construcci\'on del SPF centralizado se toma como punto de partida el algoritmo Dijkstra. Este algoritmo permite calcular en forma eficiente el mejor camino entre un par de nodos en un grafo ponderado sin costos negativos.\\
+
+Puesto que en este trabajo se representa a una topolog\'ia de red mediante un multigrafo dirigido, es necesario o bien extender el algoritmo Dijkstra a esta representaci\'on o bien cambiar a una representación en grafos dirigidos. 
+
+Como d representaci\'on en multigrafos dirigidos es m\'as directa e intuitivo se opta por la primera alternativa.\\
+
+En \ref{fig:algoSPF1} se muestra el pseudo-codigo del algoritmo SPF centralizado para multigrafos dirigidos partiendo del algoritmo Dijkstra.
+
+En el una topolog\'ia de red es representada mediante el multigrafo dirigido \textbf{G}. Las operaciones \textit{obtener\_nodos\_menor\_costo\_link} y \textit{obtener\_nodo\_adyacente\_menor\_costo} se utilizan como funciones auxiliares y se explican a continuaci\'on:
+
+\begin{itemize}
+\item obtener\_nodos\_menor\_costo\_link(w, v): Esta funci\'on permite obtener el link <w, v> de menor costo asociado en la topolog\'ia, entre los nodos w y v. Se utiliza esta operaci\'on puesto que para un par de nodos w y v pueden existir m\'ultiples links que los conecten y con diferentes costos. 
+
+\item obtener\_nodo\_adyacente\_menor\_costo($G\setminus S$, D): Devuelve el nodo en $G\setminus S$ para el cual el costo en D de ir desde el nodo inicio a este es m\'inimo.
+\end{itemize}
+
+\begin{figure}[ht!] 
+\begin{algorithm}[H]
+ \SetKwFunction{CaminoMasCortoMultigrafo}{CaminoMasCortoMultigrafo} 
+ \SetKwProg{myalg}{Function}{}{}
+ \myalg{\CaminoMasCortoMultigrafo(G, inicio, fin){}}{\Comment{Obtiene el mejor camino en G entre los  					nodos inicio y fin, utilizando como m\'etrica el costos asociado a cada adyacencia}\\
+  \textbf{Pre-condiciones:} inicio $\in$ G y fin $\in$ G\\
+  \vspace{0.3cm}
+  
+  camino[] $\gets \lbrace\rbrace$\\														
+ 
+  D,P $\gets$ MultiDijkstra(G, inicio, fin) \Comment{Utiliza algoritmo Dijkstra para obtener el mejor 
+  													camino }\\
+  i $\gets$ fin \Comment{Arma el camino en función de la lista de predecesores}\\
+  \While{i $<>$ inicio}{
+  	l $\gets$ P[i]\\
+  	camino $\gets$ camino  $\cup$ l\\
+  	i $\gets$ l.origen\\
+  } 
+  
+  camino.Reverse()\Comment{Hay que invertir el orden del camino}\\
+  
+ \Return{camino}  
+ }
+\end{algorithm}
+\caption[Algoritmo de ruteo Centralizado sin restricciones (SPF)]{Algoritmo de ruteo Centralizado sin restricciones (SPF)}
+\label{fig:algoSPF1}
+\end{figure}
+
+\newpage
+\begin{figure}[ht!] 
+\begin{algorithm}[H]
+ \SetKwFunction{MultiDijkstra}{MultiDijkstra} 
+ \SetKwProg{myalg}{Function}{}{}
+ \myalg{\MultiDijkstra(G, inicio, fin){}}{\Comment{Extensión de algoritmo Dijkstra para calculo de
+  		mejores caminos en grafo ponderado, en un multigrafo dirigido}\\
+
+	\vspace{0.5cm}
+	
+ 	D $\gets \lbrace\rbrace$   \Comment{Distancias finales}\\
+    P $\gets \lbrace\rbrace$  \Comment{Lista de links predecesores <nodo\_origen, nodo\_destino>}\\
+    S $\gets \lbrace\rbrace$ \Comment{Lista de nodos procesados}\\
+    G\_menos\_S $\gets$ G \Comment{Inicializa G $\setminus$ S como G}\\
+    
+    \vspace{0.2cm}
+        
+    S $\gets$ S $\cup$ inicio\\
+    G\_menos\_S $\gets$ G\_menos\_S $- \lbrace inicio \rbrace$\\
+    
+    \ForEach{i in G}{
+    	\If{i in G[inicio]}{\Comment{Si los nodos son adyacentes actualiza el costo en D y el link 	
+    								predecesor}
+    		link $\gets$ obtener\_nodos\_menor\_costo\_link(inicio, i)\Comment{Obtiene el link de 
+    																	menor costo entre los nodos}\\
+    		D[i] $\gets$ link.costo\\
+    		P[i] $\gets$ link\\	
+ 		}
+    }
+    
+    \vspace{0.2cm}
+
+    \For{i in (1 \dots $\vert G \vert$)}{
+    	w = obtener\_nodo\_adyacente\_menor\_costo(G\_minu\_S, D)\Comment{Obtiene el nodo adyacente de 	
+    																		menor costo}\\
+    	S $\gets$ S $\cup$ w\\
+    	G\_menos\_S $\gets$ G\_menos\_S $- \lbrace w \rbrace$\\
+    	\Comment{Actualiza la lista de costos y predecesores para todos los nodos en $G\setminus S$}\\
+    	\ForEach{v in G\_menos\_S}{
+			l $\gets$ obtener\_nodos\_menor\_costo\_link(w, v)\\
+			\If{ D[w] + l.costo < D[v]}{
+				D[v] $\gets$ D[w] + l.costo\\
+                P[v] $\gets$ l\\
+			}    	
+    	}
+    }
+  	  
+ \Return{(D, P)} 
+ \vspace{1cm} 
+ }
+ 
+\end{algorithm}
+\caption{SPF Centralizado continuaci\'on}
+\end{figure}
+
+\subsubsection{Constrained Shortest Path First}
+ 
+[Aca hay que hablar de que habria que hacer para modificar el SPF y llevarlo a esto]
+
+\subsection{Algoritmo de distribución de etiquetas}
+Tradicionalmente se utilizan en \textbf{mpls} etiquetas para: (a) distinguir el tr\'afico de una VPN particular y (b) encaminar tr\'afico en la red(reenvío en base a etiquetas). De esta forma se tienen dos niveles de etiquetas usualmente denominadas inner label(para marcar el tr\'afico) y outer label(para encaminar tr\'afico - LSP).\\
+
+Para la distribución de etiquetas(inner y outer label) existen diferentes protocolos entre los cuales puede destacarse el protocolo LDP(Label Distribution Protocol)~\citep{LDPRFC}. Este protocolo es un buen modelo de algo\'ritmo a seguir pero esta definido en base a la visión local a un nodo de la topolog\'ia red, mientras que en RAUFlow es necesario definir un algor\'itmo basado en una visi\'on global de la misma.\\
+
+A continuaci\'on se explican los algoritmos de distribusion de etiquetas utilizados en RAUFlow para ambos niveles de etiquetas.
+
+\subsubsection{Etiquetas internas(Inner Label)}
+Mapear etiquetas mpls a servicios de VPN para posteriormente poder identificar el tr\'afico asociado dentro del prototipo es una tarea bastante simple. Una soluci\'on posible es asignar secuencialmente etiquetas dentro de un espacio de etiquetas disponible.
+
+Esta estrategia es simple y permite crear en el sistema tantos servicios como etiquetas en el espacio disponible. Una etiqueta mpls se representa mediante 20bits $= 2^{20}$ posibles valores, lo cual si no se tienen en cuenta los valores reservados por el protocolo se pueden crear suficientes servicios con esta estrategia.\\
+
+Si bien esta estrategia es suficiente para la asignación de la etiqueta interna, m\'as adelante en [poner link a subseccion tercer nivel de etiqueta en donde se exolica la pisadita utilizada] se ver\'a que esta estrategia es ligeramente modificada para poder soportar ciertos escenarios en el prototipo.
+
+\subsubsection{Etiquetas externas (Outer Label)}
+Asignar etiquetas a un camino \textbf{mpls} es un problema mas complejo. Aprovechando la visión global de la red puede redefinirse el algoritmo de distribución de etiquetas LDP de varias formas. Algunas de ellas pueden ser:
+
+\begin{enumerate}
+\item Asignar secuencialmente etiquetas a cada salto en un camino utilizando un espacio de etiquetas global para el LSP. De esta forma no existen dos LSPs en el sistema con etiquetas en com\'un. Esta solución tiene como ventajas su simplicidad y bajo costo en el computo del algoritmo. Por otro lado tiene como desventaja que consume el espacio de etiquetas disponibles m\'as r\'apido(hay que considerar la escala del prototipo).
+
+\item Asignar secuencialmente etiquetas a cada salto en un camino utilizando un espacio de etiquetas global y descartando para cada interfaz etiquetas ya utilizadas por otros LSPs. Esta estrategia tiene como ventaja que es m\'as austera en el consumo de etiquetas y no existen dos LSPs con iguales etiquetas para una misma interfaz de entrada en un mismo nodo.
+\end{enumerate}
+
+Notese en relación a la segunda alternativa de implementaci\'on que debido a la forma en que se distribuyen etiquetas puede determinarse en un nodo a que servicio corresponde un paquete bas\'andse solamente en la etiqueta externa que trae y la interfaz por la que entra. Esto permite prescindir de la etiqueta interna para determinar lo que en los esquemas tradicionales se denomina FEC y aplicar eventualmente diferentes pol\'iticas de ingenier\'ia de tr\'afico, lo cual a su vez repercute en un aumento del MTU del paquete.\\ 
+
+En RauFlow se implementa la segunda alternativa mencionada. En \ref{fig:AlgoritmoDE} se muestra el pseudoc\'odigo de una posible implementaci\'on de dicho algor\'itmo:\\
+
+\begin{algorithm}[H]
+
+ \SetKwFunction{obtenerEtiquetasLSP}{obtenerEtiquetasLSP} 
+ \SetKwFunction{obtenerEtiquetaParaInterfaz}{obtenerEtiquetaParaInterfaz}
+ \SetKwProg{myalg}{Function}{}{}
+ \myalg{\obtenerEtiquetasLSP(path){}}{ \Comment{Recibe una camino en la topolog\'ia representado como 	
+ 												una lista ordenada de links y devuelve una lista 	
+ 												ordenada de etiquetas donde cada etiqueta se
+ 												corresponde a un link}\\
+ 												
+    MPLS\_LABEL\_SPACE\_MIN $\gets 10$\\
+ 	mplsPath[] $\gets \lbrace\rbrace$\\
+ 	labelBase $\gets$ Null\\
+ 
+	\uIf{len(path) = 1}{
+    	$mplsPath \gets mplsPath \cup \{None\}$ \Comment{Si el camino es de largo 1, no tiene 
+    													etiquetas porque primer nodo hace PHP}
+ 	}
+ 	\Else{
+    	labelBase $\gets$ MPLS\_LABEL\_SPACE\_MIN \Comment{Se asignan etiquetas secuencialmente en el
+    														 espacio de etiquetas}
+    
+   		\ForEach{l in path}{
+			label $\gets$ \obtenerEtiquetaParaInterfaz(l, labelBase) \Comment{Obtiene una etiqueta 
+												libre del espacio de etiquetas local a la interfaz}\\
+			
+			$mplsPath \gets mplsPath \cup \{label\}$\\
+			
+			$labelBase \gets labelBase + 1$\\
+			
+			$mplsPath \gets mplsPath \cup \{None\}$\Comment{Como \'ultimo nodo implementa PHP el 
+													\'ultimo link no tiene etiqueta asociada}\\
+				
+ 		}
+ 	}        
+ 
+ 	\Return{mplsPath[]}\;
+ }
+\label{fig:AlgoritmoDE}
+\end{algorithm}
+
+\newpage
+\begin{algorithm}[H]
+\SetKwFunction{obtenerEtiquetaParaInterfaz}{obtenerEtiquetaParaInterfaz}
+\SetKwProg{myalg}{Function}{}{}
+ \myalg{\obtenerEtiquetaParaInterfaz(link, label){}}{\Comment{Devuelve una etiqueta dentro del espacio de etiquetas global que no este en uso por la interfaz destino en el link. Si no existe etiqueta disponible devuelve Null}\\
+ 
+	\vspace{0.5cm}
+	 
+	 etiquetas\_usadas $\gets$ link.destino.etiquetas\_usadas\\
+	 next\_label $\gets$ label\_base\\
+	 label $\gets$ Null\\
+	 
+	 \While{label is Null AND next\_label $<$ MPLS\_LABEL\_SPACE\_MAX}{
+		\uIf{next\_label in etiquetas\_usadas)}{
+    		next\_label $\gets$ next\_label + 1\\
+    	}
+ 		\Else{
+ 			label $\gets$ next\_label\\
+ 		}
+	 }
+	 
+	\If{label $<>$ Null)}{
+     	link.destino.etiquetas\_usadas $\gets$ link.destino.etiquetas\_usadas $\cup$ label\\
+	}
+	
+	\Return{label}
+ }
+ 
+  \caption{How to write algorithms}
+\end{algorithm}
+
+\subsubsection{Stack de etiquetas MPLS}
+Se le denomina stack de etiquetas mpls a la pila de etiquetas que resulta de superponer una etiqueta sobre otra en un paquete. Al inicio de esta secci\'on se menciona la utilizaci\'on de dos niveles de etiquetas, una etiqueta interna para identificar el servicio y una etiqueta externa para marcar el camino dentro de la red del prototipo. Luego cuando se describe la implementaci\'on del algoritmo de distribución de etiquetas de segundo nivel(etiquetas externas), se muestra que es posible prescindir del primer nivel de etiquetas(etiquetas internas).\\
+
+Por un lado puede implementarse el prototipo trabajando solamente con un nivel de etiquetas, garantizando reenvío en base a etiquetas y clasificaci\'on de tr\'afico. Sin embargo para poder identificar el servicio asociado a un paquete en el nodo de egreso en un LSP, es necesario que el paquete presente la etiqueta correspondiente; permitiendo de esta forma reenviarlo por la correcta interfaz de salida del prototipo. 
+
+Esto no es posible si se implementa Penultimate Hop Popping(PHP) dado que la etiqueta es removida en el pen\'ultimo hop, llegando al nodo de egreso sin etiquetas.
+
+Pensando en permitir en un futuro la conexi\'on al prototipo de nodos diferentes a RAU-Switch, eventualmente de hardware comercial, es necesario mantener la implementaci\'on estándar de \textbf{mpls}, debiendo implementar PHP obligatoriamente.
+
+Teniendo en cuenta las ventajas y desventajas de ambas alternativas, se decide implementar PHP y trabajar con dos niveles de etiquetas como se plantea inicialmente.\\
+
+Anteriormente en esta secci\'on se mencion\'o la necesidad de modificar el algoritmo de distribución de etiquetas de primer nivel por un problema particular. A continuaci\'on se explica el escenario que origina este problema y su soluci\'on.\\
+
+En una red MPLS cada vez que un paquete es manipulado para colocar un cabezal mpls, el ethertype del paquete original es sustituido por el del protocolo. Por otro lado cuando la etiqueta de primer nivel es removida en el nodo de egreso se debe colocar el ethertype original del paquete. 
+
+Mientras que en un servicio de VPN de capa 3 este problema puede resolverse definiendo servicios específicos por ethertype, en una VPN de capa 2 es necesario recurrir a otro tipo de soluciones.
+
+Es necesario entonces guardar en alg\'un lado el valor original de ethertype para cada paquete que ingresa al prototipo y colocarlo en el \'ultimo nodo del camino, si se quiere soportar la implementacion de VPNs de capa 2 en el prototipo. Esto puede realizarse al menos de las siguientes dos formas:
+
+\begin{enumerate}
+\item Cada paquete que ingresa a la red del prototipo es enviado al Controlador en donde se extrae y guarda el valor original de ethertype. Luego se continua con el procesamiento del paquete acorde a las reglas ya definidas. Luego cuando el paquete arriba al ultimo nodo, tras procesarse acorde a las reglas ya definidas(extraer etiqueta de primer nivel por ejemplo) el paquete es enviado al Controlador donde se le coloca el valor original de ethertype. Finalmente se reenv\'ia el paquete por la interfaz de salida de la red del prototipo.
+
+Este soluci\'on se corresponde con un enfoque reactivo de red SDN (recordar estado del arte en las redes definidas por software).
+
+\item Se utilizan etiquetas para indicar el ethertype de un paquete. Se puede definir un tercer nivel de etiquetas para esto, definiendo un mapeo entre ethertype y etiqueta. Luego el nodo de egreso utilzando esta informaci\'on sabe localmente que ethertype colocar en el paquete antes de reenviarlo por la interfaz de salida. 
+
+Por otro lado no es bueno utilizar un tercer nivel de etiquetas a menos que sea extrictamente necesario ya que esto agrega complejidad al procesamiento del paquete y reduce el MTU. 
+
+Una alternativa mejor es utilizar el primer nivel de etiquetas para identificar el ethertype, definiendo para cada servicio de VPN en vez de una etiqueta un rango de etiquetas(una etiqueta para cada tipo de ethertype soportado). De esta forma se pueden definir flujos para cada servicio y cada ethertype en el nodo de egreso, para colocar nuevamente el ethertype original dependiendo del valor en la etiqueta de primer nivel. 
+
+\end{enumerate} 
 
 \subsection{Ciclo de vida de un Nodo}
 
@@ -329,135 +566,11 @@ Una primera alternativa es que el switch en cuesti\'on se reporte con la aplicac
 
 El ciclo de vida de una Interfaz \'o un Link puede ser explicado de forma an\'aloga con una m\'aquina de estados similar, teniendo presente las relaciones existentes entre las tres clases, Nodos, Interfaces y Links.
 
-\subsection{Algoritmo de distribución de etiquetas}
-Tradicionalmente, en mpls se utilizan etiquetas para: (a) asociar trafico a una VPN en particular y (b) encaminar trafico en la red(reenvío en base a etiquetas). De esta forma se tienen dos niveles de etiquetas: un primer nivel(inner label) utilizado para asociar el trafico con la VPN y asi por ejemplo aplicar localmente políticas de QoS, y el segundo nivel (outer label) utilizado para construir el LSP(label switched path).\\
-
-Para la distribución de etiquetas(inner y outer label) existen protocolos entre los cuales se puede destacar LDP(Label Distribution Protocol)~\citep{LDPRFC}. No obstante estos se encuentran definidos en base a una visión local de un nodo. Por tanto en RauFlow se redefine e implementa un algoritmo para la distribución de etiquetas con una visión global de la red.\\
-
-Asignar etiquetas a VPNs es un problema bastante simple. Una  solución posible es utilizar una variable para iterar sobre un espacio de etiquetas disponibles, y utilizarla secuencialmente.  
-
-Por otro lado asignar etiquetas a un camino mpls, es un problema mas complejo. Aprovechando la visión global de la red, puede redefinirse este algoritmo de distribución de etiquetas de varias formas. En este trabajo se sugieren las siguientes:
-
-\begin{enumerate}
-\item Utilizar una variable para iterar sobre un espacio de etiquetas disponibles, y utilizarla secuencialmente. De esta forma no existen dos LSPs en el sistema con etiquetas en com\'un. Esta solución tiene como ventajas su simplicidad y bajo costo en el computo del algoritmo. Por otro lado tiene como desventaja que consume el espacio de etiquetas disponibles(hay que considerar la escala del prototipo).
-
-\item Utilizar una variable para iterar sobre un espacio de etiquetas disponibles para cada puerto asociado a un nodo de la red y por el cual pasa el LSP; cuidando a su vez que no se repitan etiquetas en el camino. De esta forma se permiten caminos con etiquetas repetidas pero dado un link(pares <nodo, puerto> origen y destino), no existen dos LSP con la misma etiqueta asignada a un mismo link. Esta estrategia es bastante mas elaborada que la anterior, pero presenta como principal ventaja que es austera en el consumo de etiquetas. Por otro lado es similar a la estrategia utilizada por el protocolo LDP[revisar si es LDP o QuaggaLDP capaz q es muy fuerte decir solo LDP].
-\end{enumerate}
-
-Notese, en relación a la segunda alternativa de implementaci\'on, que debido a la forma en que se distribuyen las etiquetas cada LSP es único; debido a que queda determinado de forma única por la sucesión de links y etiquetas. 
-
-Esto permite, creando un LSP por cada Servicio, prescindir del primer nivel de etiquetas(inner label), puesto que basándose solamente en la etiqueta que trae el paquete y por el puerto de que nodo ingreso, se puede determinar lo que tradicionalmente se conoce como FEC. Esta estrategia presenta como ventajas menos costo de procesamiento de etiquetas en cada nodo, y un aumento del MTU del paquete.\\
-
-RauFlow implementa la segunda alternativa como protocolo para la distribución de etiquetas. El pseudocodigo de este algoritmo se presenta a continuación.\\
-
-\begin{python}
-def get_path_mpls_labels(self, path):
-
-    mpls_path = []
-
-    if len(path) == 0:
-        #There is not path betwen nodes
-        print 'NO path found'
-
-    elif len(path) == 1:
-        #If path have only one hop, them the lsp is empty becouse first node is penultimate hop
-        mpls_path.append(None)
-        
-    else:
-        #We asign labels for mpls path secuencialy starting on the lowest label value
-        label_base = self.MPLS_LABEL_SPACE_MIN
-        
-        #We separates ultimate hop
-        for l in path[:-1]:
-        	       
-           	#Gets avaiable label
-           	label = self.get_avaiable_mpls_label_for_interface(l, label_base)
-
-          	#Add label to lsp
-           	mpls_path.append(label)
-
-           	#Increments mpls label_base
-            label_base = increment_hex_value(label_base)
-
-            #The penultimate hop remove all mpls labels, then the last link has not asociated label
-            mpls_path.append(None)
-
-    return mpls_path
-\end{python}
-
-\begin{algorithm}[H]
-
- \SetKwFunction{obtenerEtiquetasLSP}{obtenerEtiquetasLSP} 
- \SetKwFunction{obtenerEtiquetaParaInterfaz}{obtenerEtiquetaParaInterfaz}
- \SetKwProg{myalg}{Function}{}{}
- \myalg{\obtenerEtiquetasLSP(path){}}{ \Comment{Recibe una camino en la topolog\'ia representado como 	
- 												una lista ordenada de links y devuelve una lista 	
- 												ordenada de etiquetas donde cada etiqueta se
- 												corresponde a un link}\\
- 												
-    Declare MPLS\_LABEL\_SPACE\_MIN $\gets 10$\\
- 	Declare mplsPath[] $\gets$ []\\
- 	Declare labelBase\\
- 
-	\uIf{len(path) = 1}{
-    	$mplsPath \gets mplsPath \cup \{None\}$ \Comment{Si el camino es de largo 1, no tiene 
-    													etiquetas porque primer nodo hace PHP}
- 	}
- 	\Else{
-    	labelBase $\gets$ MPLS\_LABEL\_SPACE\_MIN \Comment{Se asignan etiquetas secuencialmente de un
-    														 espacio de etiquetas }
-    
-   		\ForEach{l in path}{
-			label $\gets$ \obtenerEtiquetaParaInterfaz(l, labelBase) \Comment{Obtiene una etiqueta 
-												libre de un espacio de etiquetas de la interfaz}\\
-			
-			$mplsPath \gets mplsPath \cup \{label\}$\\
-			
-			$labelBase \gets labelBase + 1$\\
-			
-			$mplsPath \gets mplsPath \cup \{None\}$\Comment{Como \'ultimo nodo implementa PHP el 
-													\'ultimo link no tiene etiqueta asociada}\\
-				
- 		}
- 	}        
- 
- 	\Return{mplsPath[]}\;
- }
-\end{algorithm}
-
-\begin{algorithm}[H]
-\SetKwFunction{obtenerEtiquetaParaInterfaz}{obtenerEtiquetaParaInterfaz}
-\SetKwProg{myalg}{Function}{}{}
- \myalg{\obtenerEtiquetaParaInterfaz(link, label){}}{\Comment{Obtiene una etiqueta disponible en el espacio de etiquetas de la interfaz destino en el link. Si no existe etiqueta disponible devuelve Null}\\
-	\vspace{0.5cm}
-	 labels\_in\_use $\gets$ link.to\_node\_int.mpls\_labels\\
-	 next\_label $\gets$ label\_base\\
-	 label $\gets$ Null\\
-	 
-	 \While{label is Null AND next\_label $<$ MPLS\_LABEL\_SPACE\_MAX}{
-		\uIf{next\_label in labels\_in\_use)}{
-    		next\_label $\gets$ next\_label + 1\\
-    	}
- 		\Else{
- 			label $\gets$ next\_label\\
- 		}
-	 }
-	 
-	\If{label $<>$ Null)}{
-     	link.to\_node\_int.mpls\_labels $\gets$ link.to\_node\_int.mpls\_labels $\cup$ label\\
-	}
-	
-	\Return{label}
- }
- 
-  \caption{How to write algorithms}
-\end{algorithm}
-
 \newpage
 \subsection{Actualizaci\'on de la topologia}
 
 \newpage
-\begin{algorithm}[Ht!]
+\begin{algorithm}[H]
  \SetKwFunction{UpdateServicesLSPs}{UpdateServicesLSPs} 
  \SetKwProg{myalg}{Function}{}{}
  \myalg{\UpdateServicesLSPs(){}}{
@@ -518,99 +631,21 @@ def get_path_mpls_labels(self, path):
  \caption{Algoritmo de actualización de la topolog\'ia}
 \end{algorithm}
 
+\newpage
 \subsection{Implementaci\'on de QoS}
 \label{5.5.4}
 
-\subsection{Algoritmos de rueto}
 
+
+\newpage
 \subsubsection{SPF}
+asdasd
 
-\begin{python}
-
-\end{python}
+\newpage
 \subsubsection{CSPF}
 Dijkstra para multi grafos dirigidos.
 
 [AYUDA MEMORIA: Cosas de las que hay que hablar]
-
-\begin{python}
-
-def MultiDijkstra(G, start, end):
-    '''
-    docs
-    '''
-
-    D = {}  # dictionary of final distances
-    P = {}  # dictionary of predecessors
-    S = {}  # Dictionary with processed nodes
-    g_minu_s = {}
-
-    #Inicializa G/S como G
-    for g in G:
-        g_minu_s[g.router_id] = g
-
-    #Stars processing start node
-    S[start.router_id] = start
-    g_minu_s.pop(start.router_id) 
-    for i in G:
-        if(G[start].has_key(i)):
-            #They are adjacents so we get the minimum weight link between them
-            print 'start: ' + start.router_id + ', end: ' + i.router_id
-            link = get_nodes_min_cost_link(start, i)
-            D[i] = link.weight
-            #P[i.router_id] = {'node': start, 'interface': link.from_node_int}
-            P[i] = link 
-
-    #Process nodes untill S has all nodes in G
-    for i in range(1, len(G)):
-       
-        w = select_min_cost_adj_node(g_minu_s, D)
-        print w.router_id
-        S[w.router_id] = w
-        g_minu_s.pop(w.router_id)
-
-        for v in g_minu_s.itervalues():
-            l = get_nodes_min_cost_link(w,v)
-            print 'Info: start=' + start.router_id + ' end=' + end.router_id 
-            print 'v='+ v.router_id + ', D[w]=' + str(D[w]) + ', l.weight='+ str(l.weight) + ', D[v]' + str(D[v])
-
-            if D[w] + l.weight < D[v]:
-                D[v] = D[w] + l.weight
-                #P[v.router_id] = {'node': w, 'interface': link.from_node_int}
-                P[v] = l
-
-    return (D,P)
-}
-
-
-def shortestPathMultiGraph(G, start, end):
-    """
-    Find a single shortest path from the given start vertex
-    to the given end vertex.
-    The input has the same conventions as Dijkstra().
-    The output is a list of the vertices in order along
-    the shortest path.
-    """
-
-    Path = []
-    
-    #Sanity check
-    if G.has_key(start) and G.has_key(end):
-
-        D,P = MultiDijkstra(G,start,end)
-
-        i = end
-        while i != start:
-            l = P[i]
-            Path.append(l)
-            i = l.from_node_int.node
-            
-        Path.reverse()
-
-    return Path
-\end{python}
-
-
 
 \begin{itemize}
 \item SPF y CSPF: Mostrar el pseudo codigo del algoritmo de ruteo implementado, mencionar que esta construido sobre dijkstra para multigrafos. En particular mencionar que cosas de QoS interesaria meter en este algoritmo para garrantizar QoS despues en RauFlow
