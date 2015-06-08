@@ -408,9 +408,10 @@ Las operaciones \textit{ObtenerNodosMenorCostoLink} y \textit{ObtenerNodoAdyacen
  }
  
 \end{algorithm}
-\caption{SPF Centralizado continuaci\'on}
+\caption[]{SPF Centralizado continuaci\'on}
 \end{figure}
 
+\newpage
 \subsection{Algoritmo de distribución de etiquetas}
 Tradicionalmente se utilizan en \textbf{mpls} etiquetas para: (a) distinguir el tr\'afico de una VPN particular y (b) encaminar tr\'afico en la red(reenvío en base a etiquetas). De esta forma se tienen dos niveles de etiquetas usualmente denominadas inner label(para marcar el tr\'afico) y outer label(para encaminar tr\'afico - LSP).\\
 
@@ -436,9 +437,10 @@ Asignar etiquetas a un camino \textbf{mpls} es un problema mas complejo. Aprovec
 
 Notese en relación a la segunda alternativa, que debido a la forma en que se distribuyen etiquetas puede determinarse en un nodo a que servicio corresponde un paquete bas\'andse solamente en la etiqueta externa y la interfaz por la que entra. Esto permite prescindir de la etiqueta interna para determinar lo que en un esquema tradicional de mpls se denomina FEC y aplicar diferentes pol\'iticas de ingenier\'ia de tr\'afico. Esto a su vez repercute en un aumento del MTU del paquete.\\ 
 
-En RauFlow se implementa la segunda alternativa mencionada. En \ref{fig:AlgoritmoDE} se muestra el pseudoc\'odigo de una posible implementaci\'on de dicho algor\'itmo:\\
+En RauFlow se implementa la segunda alternativa mencionada. En \ref{fig:AlgoritmoDE1} se muestra el pseudoc\'odigo de una posible implementaci\'on de dicho algor\'itmo:\\
 
 \newpage
+\clearpage
 \begin{figure}[ht!]
 \begin{algorithm}[H]
 
@@ -478,11 +480,11 @@ En RauFlow se implementa la segunda alternativa mencionada. En \ref{fig:Algoritm
  		}
  	}        
  
- 	\Return{mplsPath[]}\;
+ 	\Return{mplsPath[]}
  }
 \end{algorithm}
-\label{fig:AlgoritmoDE}
 \caption[Algoritmo de distribución de etiquetas]{Algoritmo de distribución de etiquetas}
+\label{fig:AlgoritmoDE1}
 \end{figure}
 
 \newpage
@@ -514,8 +516,7 @@ En RauFlow se implementa la segunda alternativa mencionada. En \ref{fig:Algoritm
 	\Return{label}
  }
 \end{algorithm}
-\caption{Algoritmo de distribución de etiquetas - continuación}
-\label{fig:AlgoritmoDE2}
+\caption[]{Algoritmo de distribución de etiquetas - continuación}
 \end{figure}
 
 \subsubsection{Stack de etiquetas MPLS}
@@ -572,6 +573,7 @@ Una vez que el m\'odulo LSDB Sync envía a la aplicaci\'on la informaci\'on topo
 A continuaci\'on se muestra el pseudo-c\'odigo asociado al algoritmo \textbf{ActualizarServiciosLSPs}. 
 
 \newpage
+\clearpage
 \begin{figure}[ht!]
 \begin{algorithm}[H]
  Declare topologia \Comment{Representacion de la topologia}\\
@@ -632,6 +634,7 @@ A continuaci\'on se muestra el pseudo-c\'odigo asociado al algoritmo \textbf{Act
 \end{figure}
 
 \newpage
+\clearpage
 \begin{figure}[ht!]
 \begin{algorithm}[H]
  \SetKwFunction{ActualizarLSP}{ActualizarLSP} 
@@ -714,11 +717,11 @@ A continuaci\'on se muestra el pseudo-c\'odigo asociado al algoritmo \textbf{Act
  }
  
 \end{algorithm}
-\caption{Algoritmo de actualización de la topolog\'ia - continuaci\'on}
-\label{fig:AlgoritmoDA2}
+\caption[]{Algoritmo de actualización de la topolog\'ia - continuaci\'on}
 \end{figure}
 
 \newpage
+\clearpage
 \begin{figure}[ht!]
 \begin{algorithm}[H]
  \SetKwFunction{ActualizarDatapath}{ActualizarDatapath} 
@@ -757,59 +760,58 @@ A continuaci\'on se muestra el pseudo-c\'odigo asociado al algoritmo \textbf{Act
  }
  
 \end{algorithm}
-\caption{Algoritmo de actualización de la topolog\'ia - continuaci\'on}
-\label{fig:AlgoritmoDA3}
+\caption[]{Algoritmo de actualización de la topolog\'ia - continuaci\'on}
 \end{figure}
 
 \subsection{Ciclo de vida de un Nodo}
 En el prototipo se obtiene informaci\'on de varias fuentes de datos para la construcci\'on de la topolog\'ia. Algunas de ellas son la base de datos topol\'ogica de Quagga(LSDB), el datapath OpenFlow y a través del ingreso manual de informaci\'on mediante la interfaz gr\'afica de RAUFlow.
 
 Estas fuentes aportan datos en forma independiente, lo cual incide directamente en la construcci\'on de la topolog\'ia y en decisiones que se toman dentro del prototipo como por ejemplo en el algoritmo de ruteo entre otros. Por ello a contnuaci\'on se ejemplifica el proceso de construcci\'on de la topolog\'ia a partir de las fuentes de datos, tomando como ejemplo el ciclo de vida de un nodo en particular. Luego el ciclo de vida de interfaces y enlaces puede deducirse de forma análoga.\\
-%
-%\begin{figure}[H!] 
-%\centering    
-%\includegraphics[width=1\textwidth]{CicloVidaNodo2}
-%\caption[Ciclo de vida de un Nodo]{Ciclo de vida de un Nodo}
-%\label{fig:CicloVidaNodo}
-%\end{figure}
-%  
-%Como se muestra en la figura\ref{fig:CicloVidaNodo}, despreciando el estado inicial un Nodo presenta cinco estados diferentes en el sistema: \textit{Descubrimiento OpenFlow}, \textit{Sin Conexión OpenFlow}, \textit{Operativo}, \textit{LSDB Eliminado OpenFlow Inactivo} y \textit{LSDB Eliminado OpenFlow Activo}.\\
-%
-%A continuación se explica cada uno de los estados, así como las posibles transiciones:
-%
-%\begin{itemize}
-%\item \textit{Descubrimiento OpenFlow:} Cuando un switch se reporta mediante el protocolo OpenFlow por primera vez con el Controlador y en este caso con RAUFlow, se guarda diferente informaci\'on del mismo y en particular la instancia de la clase Datapath asociada a la implementaci\'on de Ryu(esta instancia es utilizada posteriormente para interactuar con el dispositivo). Si el switch OpenFlow no esta instanciado como Nodo en el sistema, entonces se almacena en una lista temporal de Nodos. Por una decisión de diseño no se crea una instancia del Nodo como tal, logrando de esta forma que el mismo no sea considerado por el prototipo en ninguna de las funcionalidades y algoritmos implementados (no se muestra a través de la GUI, no es considerado en el algoritmo de ruteo, etc). 
-%
-%Este estado representa esta situación. De el pueden suceder dos cosas, que el switch deje de reportarse con el controlador en cuyo caso es eliminado de la lista temporal de Nodos o que la componente LSDBSync envíe una actualizaci\'on de la topolog\'ia, en donde se incluye el nodo en cuestión. En este caso se instancia un objeto Nodo con toda la informaci\'on provista por la LSDB(Link State Database de Quagga), datapath de OpenFlow y la inormaci\'on adicional obtenida con el agente SNMP, y el Nodo cambia al estado \textit{Operativo}.
-%
-%Vale la pena destacar que en caso de no poder obtener la informaci\'on adicional con el agente SNMP, el Nodo no es instanciado y se mantiene en el estado actual.
-%
-%\item \textit{Operacional:}
-%
-%Este estado es utilizado para representar a aquellos nodos que se encuentran en la LSDB y fueron rectificados o instanciados en la \'ultima actualizaci\'on de la topolog\'ia, y a su vez se encuentran report\'andose mediante el protocolo OpenFlow.
-%
-%En este estado el nodo es mostrado por la interfaz gr\'afica de RAUFlow, y se tiene acceso a todas las características del mismo, tanto del modelo de datos presentado como las que son accesibles a trav\'es del datapath. Adem\'as es considerado para el calculo de las mejores rutas, y puede ser utilizado como nodo de ingreso \'o egreso en la definici\'on de servicios.
-%
-%En pocas palabras es un nodo completamente funcional a los efectos de la implementaci\'on de RAUFlow.
-%
-%Desde este estado se tienen tres transiciones posibles. Una primera posibilidad es que se produzca una actualización de la LSDB(evento LSDBSyncActualizarTopologia) y que en la topolog\'ia recibida se encuentre el Nodo en cuesti\'on. En este caso solamente se actualiza la informaci\'on asociada al nodo(acción ActualizarNodo), entre la cual se incluye la actualización de las Interfaces y Links, quedando en el estado actual. Una segunda posibilidad es que el switch deje de reportarse por el canal OpenFlow(evento OpenFlowConexiónPerdida) en cuyo caso se modifica el atributo of\_ready del Nodo asignando el valor False, y se cambia al estado \textit{Sin Conexión OpenFlow}. Por \'ultimo una tercera posibilidad es que se produzca una actualizaci\'on de la LSDB(evento LSDBSyncActualizarTopologia) y que el Nodo no este en la topolog\'ia recibida. En este caso se cambia el valor del atributo estado en el Nodo(NodoDOWN), asignandose el valor 0 que se corresponde con el estado DOWN, y se cambia al estado \textit{LSDB Eliminado OpenFlow Activo}.
-%
-%\item \textit{LSDB Eliminado OpenFlow Activo:} Este estado contempla a un Nodo que no se encontraba en la LSDB recibida en la ultima actualizaci\'on topol\'ogica pero que a\'un se reportan por el canal de comunicaci\'on OpenFlow.
-%
-%Desde este estado se tienen solamente dos transiciones posibles. Una primera posibilidad es que se produzca nuevamente una actualización de la topolog\'ia 
-%(LSDBSyncActualizarTopologia) y que el nodo se encuentre dentro de la información recibida. En este caso se actualiza el estado del nodo(NodoUP) y se cambia al estado \textit{Operativo}. Una segunda posibilidad es que el nodo deje de reportarse por el canal OpenFlow(OpenFlowConexiónPerdida) en cuyo caso se actualiza el valor del atributo of\_ready al valor False y se cambia al estado \textit{LSDB Eliminado OpenFlow Inactivo}.
-%
-%\item \textit{Sin Conexión OpenFlow:} Este estado contempla a un Nodo que fue creado o rectificado en la \'ultima actualización de la LSDB pero que no se ha reportado por el canal OpenFlow; ya sea porque nunca lo hizo o porque dejo de hacerlo. En este estado el Nodo es mostrado a trav\'es de la interfaz gr\'afica de RAUFlow pero no es considerado ni para el el calculo de mejores caminos ni para la creaci\'on de nuevos servicios tanto como nodo de ingreso \'o egreso. Adem\'as la informaci\'on asociada al datapath de OpenFlow como las tabla de flujos y estad\'isticas tampoco son accesibles.
-%
-%De este estado existen tres transiciones posibles. Por un lado el nodo puede estar presente en la LSDB al producirse una actualizaci\'on de la topolog\'ia(LSDBSyncActualizarTopologia), actualizandose la informaci\'on del nodo(ActualizarNodo) y manteniéndose en el mismo estado. Por otro lado tambi\'en al producirse una actualizaci\'on de la topolog\'ia, el nodo puede no estar en la LSDB, en cuyo caso se actualiza el estado del nodo(NodoDOWN) y se cambia al estado \textit{LSDB Eliminado OpenFlow Inactivo}. Finalmente el switch puede empezar a reportarse por el canal OpenFlow(OpenFlowReport) en cuyo caso se actualiza el valor del atributo of\_ready a True, y se cambia al estado \textit{Operativo}.  
-%
-%\item \textit{LSDB Eliminado OpenFlow Inactivo:} Este estado modela a un Nodo que nunca se reporto \'o dej\'o de reportarse por el canal OpenFlow, y que a su vez no se encuentra dentro de la LSDB en la \'ultima actualizaci\'on topol\'ogica realizada. De este estado existen tres transiciones posibles.
-%
-%Una primera alternativa es que el switch en cuesti\'on se reporte con la aplicaci\'on(OpenFlowReporte), en cuyo caso se actualiza el valor del atributo of\_ready a True y se cambia el estado a \textit{LSDB Eliminado OpenFlow Activo}. Una segunda alternativa es que se produzca una actualizaci\'on de la topolog\'ia y el Nodo se encuentre dentro de la LSDB, en cuyo caso se cambia el estado del nodo(NodoUP) y se cambia al estado \textit{Sin conexión OpenFlow}. Finalmente una tercera alternativa es que el nodo  sea eliminado del sistema. Si bien esta funcionalidad no se encuentra actualmente implementada, la idea es que un Nodo para el cual no se ha recibido reportes por el canal OpenFlow luego de un tiempo determinado, y que tampoco aparece en la LSDB tras una actualicaci\'on, pueda ser eliminado del sistema, eventualmente tras la intervenci\'on de un usuario administrador mediante la interfaz gr\'afica.
-%  
-%\end{itemize}
-%
-%El ciclo de vida de una Interfaz \'o un Link puede ser explicado de forma an\'aloga con una m\'aquina de estados similar, teniendo presente las relaciones existentes entre las tres clases, Nodos, Interfaces y Links.
+
+\begin{figure}[ht!] 
+\centering    
+\includegraphics[width=1\textwidth]{CicloVidaNodo2}
+\caption[Ciclo de vida de un Nodo]{Ciclo de vida de un Nodo}
+\label{fig:CicloVidaNodo}
+\end{figure}
+  
+Como se muestra en la figura\ref{fig:CicloVidaNodo}, despreciando el estado inicial un Nodo presenta cinco estados diferentes en el sistema: \textit{Descubrimiento OpenFlow}, \textit{Sin Conexión OpenFlow}, \textit{Operativo}, \textit{LSDB Eliminado OpenFlow Inactivo} y \textit{LSDB Eliminado OpenFlow Activo}.\\
+
+A continuación se explica cada uno de los estados, así como las posibles transiciones:
+
+\begin{itemize}
+\item \textit{Descubrimiento OpenFlow:} Cuando un switch se reporta mediante el protocolo OpenFlow por primera vez con el Controlador y en este caso con RAUFlow, se guarda diferente informaci\'on del mismo y en particular la instancia de la clase Datapath asociada a la implementaci\'on de Ryu(esta instancia es utilizada posteriormente para interactuar con el dispositivo). Si el switch OpenFlow no esta instanciado como Nodo en el sistema, entonces se almacena en una lista temporal de Nodos. Por una decisión de diseño no se crea una instancia del Nodo como tal, logrando de esta forma que el mismo no sea considerado por el prototipo en ninguna de las funcionalidades y algoritmos implementados (no se muestra a través de la GUI, no es considerado en el algoritmo de ruteo, etc). 
+
+Este estado representa esta situación. De el pueden suceder dos cosas, que el switch deje de reportarse con el controlador en cuyo caso es eliminado de la lista temporal de Nodos o que la componente LSDBSync envíe una actualizaci\'on de la topolog\'ia, en donde se incluye el nodo en cuestión. En este caso se instancia un objeto Nodo con toda la informaci\'on provista por la LSDB(Link State Database de Quagga), datapath de OpenFlow y la inormaci\'on adicional obtenida con el agente SNMP, y el Nodo cambia al estado \textit{Operativo}.
+
+Vale la pena destacar que en caso de no poder obtener la informaci\'on adicional con el agente SNMP, el Nodo no es instanciado y se mantiene en el estado actual.
+
+\item \textit{Operacional:}
+
+Este estado es utilizado para representar a aquellos nodos que se encuentran en la LSDB y fueron rectificados o instanciados en la \'ultima actualizaci\'on de la topolog\'ia, y a su vez se encuentran report\'andose mediante el protocolo OpenFlow.
+
+En este estado el nodo es mostrado por la interfaz gr\'afica de RAUFlow, y se tiene acceso a todas las características del mismo, tanto del modelo de datos presentado como las que son accesibles a trav\'es del datapath. Adem\'as es considerado para el calculo de las mejores rutas, y puede ser utilizado como nodo de ingreso \'o egreso en la definici\'on de servicios.
+
+En pocas palabras es un nodo completamente funcional a los efectos de la implementaci\'on de RAUFlow.
+
+Desde este estado se tienen tres transiciones posibles. Una primera posibilidad es que se produzca una actualización de la LSDB(evento LSDBSyncActualizarTopologia) y que en la topolog\'ia recibida se encuentre el Nodo en cuesti\'on. En este caso solamente se actualiza la informaci\'on asociada al nodo(acción ActualizarNodo), entre la cual se incluye la actualización de las Interfaces y Links, quedando en el estado actual. Una segunda posibilidad es que el switch deje de reportarse por el canal OpenFlow(evento OpenFlowConexiónPerdida) en cuyo caso se modifica el atributo of\_ready del Nodo asignando el valor False, y se cambia al estado \textit{Sin Conexión OpenFlow}. Por \'ultimo una tercera posibilidad es que se produzca una actualizaci\'on de la LSDB(evento LSDBSyncActualizarTopologia) y que el Nodo no este en la topolog\'ia recibida. En este caso se cambia el valor del atributo estado en el Nodo(NodoDOWN), asignandose el valor 0 que se corresponde con el estado DOWN, y se cambia al estado \textit{LSDB Eliminado OpenFlow Activo}.
+
+\item \textit{LSDB Eliminado OpenFlow Activo:} Este estado contempla a un Nodo que no se encontraba en la LSDB recibida en la ultima actualizaci\'on topol\'ogica pero que a\'un se reportan por el canal de comunicaci\'on OpenFlow.
+
+Desde este estado se tienen solamente dos transiciones posibles. Una primera posibilidad es que se produzca nuevamente una actualización de la topolog\'ia 
+(LSDBSyncActualizarTopologia) y que el nodo se encuentre dentro de la información recibida. En este caso se actualiza el estado del nodo(NodoUP) y se cambia al estado \textit{Operativo}. Una segunda posibilidad es que el nodo deje de reportarse por el canal OpenFlow(OpenFlowConexiónPerdida) en cuyo caso se actualiza el valor del atributo of\_ready al valor False y se cambia al estado \textit{LSDB Eliminado OpenFlow Inactivo}.
+
+\item \textit{Sin Conexión OpenFlow:} Este estado contempla a un Nodo que fue creado o rectificado en la \'ultima actualización de la LSDB pero que no se ha reportado por el canal OpenFlow; ya sea porque nunca lo hizo o porque dejo de hacerlo. En este estado el Nodo es mostrado a trav\'es de la interfaz gr\'afica de RAUFlow pero no es considerado ni para el el calculo de mejores caminos ni para la creaci\'on de nuevos servicios tanto como nodo de ingreso \'o egreso. Adem\'as la informaci\'on asociada al datapath de OpenFlow como las tabla de flujos y estad\'isticas tampoco son accesibles.
+
+De este estado existen tres transiciones posibles. Por un lado el nodo puede estar presente en la LSDB al producirse una actualizaci\'on de la topolog\'ia(LSDBSyncActualizarTopologia), actualizandose la informaci\'on del nodo(ActualizarNodo) y manteniéndose en el mismo estado. Por otro lado tambi\'en al producirse una actualizaci\'on de la topolog\'ia, el nodo puede no estar en la LSDB, en cuyo caso se actualiza el estado del nodo(NodoDOWN) y se cambia al estado \textit{LSDB Eliminado OpenFlow Inactivo}. Finalmente el switch puede empezar a reportarse por el canal OpenFlow(OpenFlowReport) en cuyo caso se actualiza el valor del atributo of\_ready a True, y se cambia al estado \textit{Operativo}.  
+
+\item \textit{LSDB Eliminado OpenFlow Inactivo:} Este estado modela a un Nodo que nunca se reporto \'o dej\'o de reportarse por el canal OpenFlow, y que a su vez no se encuentra dentro de la LSDB en la \'ultima actualizaci\'on topol\'ogica realizada. De este estado existen tres transiciones posibles.
+
+Una primera alternativa es que el switch en cuesti\'on se reporte con la aplicaci\'on(OpenFlowReporte), en cuyo caso se actualiza el valor del atributo of\_ready a True y se cambia el estado a \textit{LSDB Eliminado OpenFlow Activo}. Una segunda alternativa es que se produzca una actualizaci\'on de la topolog\'ia y el Nodo se encuentre dentro de la LSDB, en cuyo caso se cambia el estado del nodo(NodoUP) y se cambia al estado \textit{Sin conexión OpenFlow}. Finalmente una tercera alternativa es que el nodo  sea eliminado del sistema. Si bien esta funcionalidad no se encuentra actualmente implementada, la idea es que un Nodo para el cual no se ha recibido reportes por el canal OpenFlow luego de un tiempo determinado, y que tampoco aparece en la LSDB tras una actualicaci\'on, pueda ser eliminado del sistema, eventualmente tras la intervenci\'on de un usuario administrador mediante la interfaz gr\'afica.
+  
+\end{itemize}
+
+El ciclo de vida de una Interfaz \'o un Link puede ser explicado de forma an\'aloga con una m\'aquina de estados similar, teniendo presente las relaciones existentes entre las tres clases, Nodos, Interfaces y Links.
 
 
 
