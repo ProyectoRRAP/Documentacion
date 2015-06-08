@@ -600,8 +600,25 @@ El ciclo de vida de una Interfaz \'o un Link puede ser explicado de forma an\'al
 
 \newpage
 \subsection{Actualizaci\'on de la topologia}
-Hola
+Una vez que el m\'odulo LSDB Sync envía a la aplicaci\'on la informaci\'on topol\'ogica actualizada se desencadena una secuencia de algoritmos para la actualizaci\'on de la informaci\'on topol\'ogica almacenada en memoria y los LSPs asociados a cada servicio. Este proceso puede resumirse mediante los siguientes pasos:
 
+\begin{enumerate}
+\item Se ejecuta el algoritmo \textbf{ActualizarTopologia} el cual mezcla la informaci\'on de la topolog\'ia mantenida en memoria(desactualizada) con la informaci\'on recibida. Se actualiza cada Nodo, Interfaz y Link considerando los casos en que se deben instanciar objetos nuevos, actualizar existentes y eventualmente eliminar. Cabe destacar que la operaci\'on eliminar tanto para Nodos, Interfaces como Links no efectúa un borrado f\'isico de estos objetos, simplemente los marca como no operativos(atributo estado).  
+
+\item Se ejecuta el algoritmo \textbf{ActualizarServiciosLSPs} el cual recalcula para cada servicio en el sistema los LSPs asociados. El proceso de actualizacion de un LSP implica:
+
+\begin{enumerate}
+\item Recalcular el mejor camino
+\item Mapear etiquetas al nuevo “mejor camino” considerando las etiquetas del camino viejo para los links que se mantienen en el camino nuevo
+\item Actualizar tablas MPLS en la topolog\'ia
+\item Actualizar tablas de flujos en la topolog\'ia  
+\end{enumerate}
+
+\end{enumerate}    
+
+A continuaci\'on se muestra el pseudo-c\'odigo asociado al algoritmo \textbf{ActualizarServiciosLSPs}. 
+
+\newpage
 \begin{figure}[ht!]
 \begin{algorithm}[H]
  \SetKwFunction{UpdateServicesLSPs}{UpdateServicesLSPs} 
