@@ -600,15 +600,24 @@ El ciclo de vida de una Interfaz \'o un Link puede ser explicado de forma an\'al
 
 \newpage
 \subsection{Actualizaci\'on de la topologia}
+Hola
 
-\newpage
+\begin{figure}[ht!]
 \begin{algorithm}[H]
  \SetKwFunction{UpdateServicesLSPs}{UpdateServicesLSPs} 
  \SetKwProg{myalg}{Function}{}{}
- \myalg{\UpdateServicesLSPs(){}}{
-    Declare  mpls\_tables\_ftn $\gets \{\}$\\
-    Declare  mpls\_tables\_ilm $\gets \{\}$\\
+ \myalg{\UpdateServicesLSPs(){}}{\Comment{Actualiza para cada servicio en el sistema la lista de LSPs asociados. Luego se actualizan todas las tablas de flujos en la topolog\'ia, eliminando entradas y viejas y agregando nuevas}
+ 
+ 	\vspace{0.2cm}
+ 	
+    mpls\_tables\_ftn $\gets \{\}$\\
+    mpls\_tables\_ilm $\gets \{\}$\\
+    
+    \vspace{0.2cm}
+    
+    \Comment{Copia el contenido de las tablas mpls de cada nodo y luego limpia cada una de estas tablas}\\
  	\ForEach{n in topology}{
+ 									
  		 mpls\_tables\_ilm[n.router\_id] $\gets$ n.ilm\\
          n.ilm $\gets []$\\
          
@@ -617,21 +626,134 @@ El ciclo de vida de una Interfaz \'o un Link puede ser explicado de forma an\'al
          
          n.nhlfe $ \gets []$\\		
  	}
+ 	
+ 	\vspace{0.2cm}
+ 	\Comment{Para cada servicio en el sistema recalcula los LSPs}\\
  	\ForEach{s in services}{
  		lsps\_nuevos $\gets$ []\\
  		
  		\ForEach{lsp in s.lsps}{
- 			lsp\_nuevo $\gets$ update\_lsp(s, lsp)\\
+ 			lsp\_nuevo $\gets$ ActualizarLSP(s, lsp)\\
             lsps\_nuevos $\gets$ lsps\_nuevos $\cup$ lsp\_nuevo\\
  		}
  		
  		s.lsps $\gets$ lsps\_nuevos	
  	}
+ 	
+ 	\vspace{0.2cm}
+ 	\Comment{Actualiza las tablas de flujos de cada Nodo en la topologia, a partir de las entradas FTN e ILM que deben ser eliminadas y agregadas}\\
  	\ForEach{n in topology}{
+ 							
  	ftn\_adds $\gets \lbrace$ n.ftn $\rbrace$ - $\lbrace$ mpls\_tables\_ftn[n.router\_id]$\rbrace$\\
     ftn\_removes $\gets \lbrace$ mpls\_tables\_ftn[n.router\_id]$\rbrace$ - $\lbrace$ n.ftn $\rbrace$\\
     ilm\_adds $\gets \lbrace$ n.ilm $\rbrace$ - $\lbrace$ mpls\_tables\_ilm[n.router\_id] $\rbrace$\\
 	ilm\_removes $\gets \lbrace$ mpls\_tables\_ilm[n.router\_id]$\rbrace$ - $\lbrace$ n.ilm $\rbrace$\\		
+	\vspace{0.2cm}
+	
+	ActualizarDatapath(n, ftn\_adds, ftn\_removes, ilm\_adds, ilm\_removes)\\
+	
+ 	}  	
+ }  
+\end{algorithm}
+\caption{Algoritmo de actualización de la topolog\'ia}
+\label{fig:AlgoritmoDA1}
+\end{figure}
+
+\newpage
+\begin{figure}[Ht!]
+\begin{algorithm}[H]
+ \SetKwFunction{ActualizarLSP}{ActualizarLSP} 
+ \SetKwProg{myalg}{Function}{}{}
+ \myalg{\ActualizarLSP(servicio, lsp){}}{\Comment{Precondicion  largo camino mayor a 0}
+		
+	\vspace{0.2cm}
+	
+	etiqueta\_base $\gets$ MPLS\_LABEL\_SPACE\_MIN\\
+	etiquetas[] $\gets \lbrace\rbrace$\\ 
+    nuevo\_lsp\_camino[] $\gets \lbrace\rbrace$\\
+    viejo\_lsp\_camino[] $\gets$ lsp.path\\
+    
+    \vspace{0.2cm}
+    
+    camino $\gets$ ObtenerMejorCamino(servicio.NodoIng, servicio.NodoEgr)\\
+    
+    
+%    \uIf{len(path) = 1}{
+%    	l $\gets$ path[0]\\
+%    	pe $\gets$ ObtenerPeParaLink(old\_lsp\_path, link)\Comment{Obtiene la entrada de LSP en el 
+%    			camino viejo asociada al link en el camino nuevo. Si existe el pe se mantiene y si no 
+%    			se crea una entrada nueva}\\
+%    	
+%    	\uIf{pe = Null}{
+%			etiqueta $\gets$ Null\\
+%			pe $\gets$ <etiqueta, l>\\
+%			new\_lsp\_path $\gets$ new\_lsp\_path $\cup$ pe\\	
+%    		etiquetas $\gets$ etiquetas $\cup$ etiqueta\\
+%    	}
+%    	\Else{
+% 			new\_lsp\_path $\gets$ new\_lsp\_path $\cup$ pe\\
+%            old\_lsp\_path $\gets$ old\_lsp\_path - $\lbrace pe \rbrace$.remove(pe)\\
+%            etiquetas $\gets$ etiquetas $\cup$ pe.etiqueta\\
+% 		}
+%    }
+% 	\Else{
+ 		ultimo $\gets$ path.SacarUltimo()\Comment{El ultimo elemento de la lista se procesa aparte}\\
+ 		\ForEach{l in camino}{
+ 			pe $\gets$ ObtenerPeDeLink(viejo\_lsp\_camino, l)\\
+ 			\uIf{pe == Null}{
+				etiqueta $\gets$ ObtenerEtiquetaParaInterfaz(l, etiqueta\_base)\\
+				pe $\gets$ <etiqueta, l>\\
+				nuevo\_lsp\_camino $\gets$ nuevo\_lsp\_camino $\cup$ pe\\	
+    			etiquetas $\gets$ etiquetas $\cup$ etiqueta\\
+    		}
+    		\Else{
+ 				nuevo\_lsp\_camino $\gets$ nuevo\_lsp\_camino $\cup$ pe\\
+            	viejo\_lsp\_camino $\gets$ viejo\_lsp\_camino - $\lbrace pe \rbrace$\\
+            	etiquetas $\gets$ etiquetas $\cup$ pe.etiqueta\\
+ 			}
+ 		}	
+ 			
+ 		pe $\gets$ ObtenerPeDeLink(viejo\_lsp\_camino, ultimo)\\
+        \uIf{pe == Null}{
+			pe $\gets$ <Null, ultimo>\\
+			nuevo\_lsp\_camino $\gets$ nuevo\_lsp\_camino $\cup$ pe\\	
+    		etiquetas $\gets$ etiquetas $\cup$ Null\\
+    	}
+    	\Else{
+ 			nuevo\_lsp\_camino $\gets$ nuevo\_lsp\_camino $\cup$ pe\\
+            viejo\_lsp\_camino $\gets$ viejo\_lsp\_camino - $\lbrace pe \rbrace$\\
+            etiquetas $\gets$ etiquetas $\cup$ pe.etiqueta\\
+ 		}
+ 		
+ 		\vspace{0.2cm}
+ 		
+        ActualizarTablasMPLS(servicio, camino, etiquetas)\Comment{Actualiza tablas MPLS para cada nodo en el camino}\\
+
+		\vspace{0.2cm}
+		\Comment{Libera etiquetas que ya no se usen}\\
+      	\ForEach{pe in viejo\_lsp\_camino}{
+      		\If{pe.etiqueta <> Null}{
+				pe.IntefazDestino.Link.PopEtiquetasEnUso(pe.etiqueta)\\	      		
+      		}
+      	}
+ 			        
+ %	}
+ }
+ 
+\end{algorithm}
+\caption{Algoritmo de actualización de la topolog\'ia - continuaci\'on}
+\label{fig:AlgoritmoDA1}
+\end{figure}
+
+\newpage
+\begin{figure}[Ht!]
+\begin{algorithm}[H]
+ \SetKwFunction{ActualizarDatapath}{ActualizarDatapath} 
+ \SetKwProg{myalg}{Function}{}{}
+ \myalg{\ActualizarDatapath(n, ftn\_adds, ftn\_removes, ilm\_adds, ilm\_remmoves){}}{\Comment{Agrega flujos para cada entrada nueva de la tabla FTN e ILM y elimina los flujos asociados a las entradas viejas de estas tablas}
+		
+	\vspace{0.2cm}
+	
 	\ForEach{ftn in ftn\_removes}{
 		service $\gets$ ftn.service\\
 		remove\_egress\_node\_service\_flows(service, n, ftn)\\
@@ -648,7 +770,7 @@ El ciclo de vida de una Interfaz \'o un Link puede ser explicado de forma an\'al
 	\ForEach{ilm in ilm\_adds}{
 		\ForEach{nhlfe in ilm.nhlfes}{
 	
-			\uIf{next\_hop.i\_type == 1}{\Comment{Si el tipo de interaz es 1 entonces es un nodo de borde y el flujo es diferente}\\
+			\uIf{next\_hop.i\_type == 1}{\Comment{Si el tipo de interaz es 1 entonces es un nodo de borde y el flujo OpenFlow es diferente}\\
     			install\_egress\_node\_flow\_for\_service(service, n, ilm, nhlfe)\\	
  			}
 
@@ -657,32 +779,19 @@ El ciclo de vida de una Interfaz \'o un Link puede ser explicado de forma an\'al
  				install\_node\_flow\_for\_service(n, ilm, nhlfe)
  			}
 		}
-	}	
- 	}  	
- }  
- \caption{Algoritmo de actualización de la topolog\'ia}
+	}	 
+ 
+ }
+ 
 \end{algorithm}
-
+\caption{Algoritmo de actualización de la topolog\'ia - continuaci\'on}
+\label{fig:AlgoritmoDA1}
+\end{figure}
+ 
 \newpage
 \subsection{Implementaci\'on de QoS}
 \label{5.5.4}
 
 
 
-\newpage
-\subsubsection{SPF}
-asdasd
 
-\newpage
-\subsubsection{CSPF}
-Dijkstra para multi grafos dirigidos.
-
-[AYUDA MEMORIA: Cosas de las que hay que hablar]
-
-\begin{itemize}
-\item SPF y CSPF: Mostrar el pseudo codigo del algoritmo de ruteo implementado, mencionar que esta construido sobre dijkstra para multigrafos. En particular mencionar que cosas de QoS interesaria meter en este algoritmo para garrantizar QoS despues en RauFlow
-
-\item Mencionar como se implementaria QoS en RauFlow
-
-\item Capaz algo sobre la interfaz 
-\end{itemize}
