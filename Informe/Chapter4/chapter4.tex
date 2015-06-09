@@ -27,7 +27,7 @@ Hist\'oricamente se han utilizado algoritmos distribuidos para el computo de rut
 
 En este trabajo se combinan ambos enfoques, utilizando el protocolo de ruteo OSPF en conjunto con un algoritmo centralizado en el controlador.\\
 
-Se decide utilizar OSPF por la sencilla razón de que es una opción robusta y confiable, adem\'as de que existen buenas implementaciones en software libre (por ejemplo Quagga y BIRD).
+Se decide utilizar OSPF por la sencilla razón de que es una opción robusta y confiable, adem\'as de que existen buenas implementaciones en software libre (por ejemplo Quagga\cite{Quagga} y BIRD\cite{BIRD}).
 
 OSPF basa su algoritmo para el calculo de rutas en el algoritmo Dijkstra(ampliamente conocido para el calculo de mejores caminos en un grafo) y utiliza como m\'etrica el costo asociado a cada enlace. Este costo es ingresado manualmente por el administrador de la red y es un n\'umero \'unico, as\'i que es necesario definir una relaci\'on matem\'atica entre las diferentes caracter\'isticas de un enlace a considerar (ancho de banda disponible, tecnolog\'ia, latencia, etc.) y el valor en cuestión.
 
@@ -57,9 +57,9 @@ Por ello en este trabajo se decidió probar con esta alternativa y experimentar 
 
 Se dedico un tiempo considerable a la instalaci\'on de las herramientas Quagga-LDP y MPLS-Linux para lo cual fue necesario recompilar diferentes versiones de kernel de Linux intentando encontrar una versi\'on apropiada para la configuración de herramientas con la que se venia trabajando en la arquitectura del prototipo. Ademas existen dos versiones bien diferentes de la implementaci\'on MPLS-Linux: una version original del año 2005 de la cual existe poca documentación, y una version m\'as nueva basada en la primera que data del año 2011, de la cual se cuenta con a\'un menos documentación. 
 
-Por un lado se prob\'o con ambas versiones, teniendo problemas para que el ambiente funcione correctamente (ver apéndice \ref{falta} por mayores detalles). Mientras que por otro lado se evidenci\'o dificultades para la integración entre la salida del protocolo LDP y el algoritmo de ruteo semidinamico definido en la sección anterior.
+Por un lado se prob\'o con ambas versiones, teniendo problemas para que el ambiente funcione correctamente (ver apéndice \ref{apendiceB6} por mayores detalles). Mientras que por otro lado se evidenci\'o dificultades para la integración entre la salida del protocolo LDP y el algoritmo de ruteo semidinamico definido en la sección anterior.
 
-Por ello se decidi\'o implementar desde cero un algoritmo de distribución de etiquetas centralizado en el controlador. Los detalles de implementacion del mismo ser\'an explicados m\'as adelante en la sección [poner link a la seccion de rauflow].\\
+Por ello se decidi\'o implementar desde cero un algoritmo de distribución de etiquetas centralizado en el controlador. Los detalles de implementacion del mismo ser\'an explicados m\'as adelante en la sección \ref{section5.5.4}.\\
 
 A continuación se explica la arquitectura del prototipo. 
 
