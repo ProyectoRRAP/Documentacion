@@ -105,7 +105,7 @@ Nombre & Ingreso & Egreso & Clasificación & Descripción \\ \hline
 
 Para cada uno de estos servicios adem\'as se indica el etherype 0x0800 correspondiente al tipo de tr\'afico IPv4.\\
 
-\subsubsection{Verificando Algoritmo de ruteo}
+\subsubsection{Verificaci\'on de Algoritmo de ruteo}
 Para verificar el correcto funcionamiento del algoritmo de ruteo, se comparan los caminos calculados para cada servicio con los respectivos mejores caminos te\'oricos. 
 
 Para cada camino se verifican dos cosas: (1) que el camino calculado se corresponde con el camino te\'orico y (2) que el camino es correctamente instalado como reglas de reenvío (en base a conmutaci\'on de etiquetas) en la tabla de flujos OpenFlow de cada nodo del camino.\\
@@ -116,23 +116,95 @@ Los caminos te\'oricos son calculados manualmente observando los costos de la to
 \begin{figure}[ht!] 
 \centering    
 \includegraphics[width=1.0\textwidth]{CU1P1Caminos}
-\caption[VPN de capa 3 - Escenario 1]{VPN de capa 3 - Escenario 1}
+\caption[Escenario 1 - Caminos para servicios]{Escenario 1 - Caminos para servicios}
 \label{fig:CUP1Caminos}
 \end{figure}
 
-En la figura tacate se muestra el contenido de las tablas de flujos OpenFlow asociadas a cada nodo del laboratorio de pruebas.
+Para comprobar que los caminos calculados por el algoritmo sean los correctos se analizan las tablas de flujos de Open vSwitch en cada nodo de la red del laboratorio. A partir del contenido de estas tablas fácilmente puede reconocerse el camino calculado.\\
 
-Analicemos por ejemplo el procesamiento del tr\'afico asociado al servicio S1. 
+En la figura \ref{fig:CU1P1DumpFlows1} se muestran las tablas de flujo para cada nodo. Para conseguir esta informaci\'on se utiliza el comando dump-flows de la herrmaienta Open vSwitch. No obstante puede obtenerse tambi\'en esta informaci\'on de la propia interfaz gr\'afica de RAUFlow.\\
 
-Para denotar un camino en la topolog\'ia utilizamos una lista de pares <n, i>, en donde n identifica un nodo en la topolog\'ia e i la interfaz de red por la cual debe reenviarse un paquete.
-   
-De acuerdo con la figura\ref{fig:CUP1Caminos}, el mejor camino para todo tr\'afico con origen en Galois y destino Oz es a trav\'es de enlace que conecta directamente ambos nodos. Esto es <Galois, nf0>.
+Tomando como ejemplo el caso del servicio S5, acorde al camino te\'orico todo tr\'afico con origen en la Subred B y destino Subred C es encaminado por el enlace que conecta directamente a ambos nodos por las respectivas interfaces \textit{nf1}. 
 
-Si observamos con detenimiento la tabla de flujos de Galois, veremos que se definen flujos para matchear todo trafico con numeracion ip origen en Subred A y destino Subred B. Luego no se como seguir blabla...\\ 
+Asumiendose de aqu\'i en m\'as la notaci\'on $(n, i)$ para referirse a un enlace, donde \textit{n} indica nodo origen e \textit{i} interfaz de reenvío en \textit{n} para el próximo salto, $<(n_1, i_1), \dots, (n_k, i_k)>$ para representar un camino, entonces el camino te\'orico para S5 es el siguiente:
 
-Por otro lado el mejor camino para el tr\'afico asociado al servicio S4 esta dado por la sucecion <(Galois, nf0), (Oz,nf1)>. Obesrevando las tablas de flujos de Galois se ven los flujos... que hacen esto posible. Luego en Oz se pueden ver los flujos que reenvian el trafico hacia poisson.
+ 
+$$<(Poisson, nf_1)>$$
 
-De esta forma queda probado el correcto funcionamiento del algoritmo de ruteo.
+\begin{figure}[ht!] 
+\centering    
+\includegraphics[width=1.0\textwidth]{CU1P1DumpFlows1}
+\caption[Cambiar por imagen correcta]{Cambiar por imagen correcta}
+\label{fig:CU1P1DumpFlows1}
+\end{figure}
+
+[Aca describo los flujos en la tablas de Poisson que hacen que el trafico sea encapsulado y enviado por nf1, y luego los lujos en Oz que desencapsulan el trafico y lo reenvian por eth1 a la subred C implementando de esta forma el camino <Poisson, nf1>]\\
+
+Por otro lado si se toma como ejemplo el servicio S6, seg\'un los costos de la topolog\'ia el camino deber\'ia de ser:
+
+$$<(Oz, nf_0), (Poisson, nf_2)>$$ 
+
+Analizando las tablas de flujos de los nodos \textit{Oz}, \textit{Galois} y \textit{Poisson} fácilmente se puede comprobar que el camino calculado se corresponde con el camino te\'orico.\\
+
+[Explicar en base a los flujos como se hace el renvio de un lado para el otro]\\
+
+\subsubsection{Verificaci\'on de Algoritmo de distribución de etiquetas}
+
+[De repente comentar en funcion al escenario anterior porque anda bien]
+
+\subsubsection{Clasificaci\'on de tr\'afico}
+Se implementa clasificaci\'on de tr\'afico en el nodo de borde identificado como ingreso para el tr\'afico de un servicio en concreto. En particular para el escenario con el que se viene trabajando, se implementa clasificaci\'on de tr\'afico en los nodos de ingreso basándose en la numeraci\'on IP origen y destino de un paquete. De esta forma por ejemplo el nodo Galois determina que camino debe tomar un paquete con origen en la Subred A y destino la Subred B. 
+
+Sin embargo RAUFlow admite realizar clasificaci\'on de tr\'afico por un conjunto bastante m\'as amplio de atributos. A continuaci\'on se definen una nueva lista de servicios orientados a demostrar la correcta implementaci\'on de esta funcionalidad.
+
+Cabe destacar que para esta prueba los servicios anteriormente creados son eliminados.
+
+\begin{table}[h]
+\begin{tabular}{| l | l | l | p{4cm} | p{4cm} |}
+\hline
+Nombre & Ingreso & Egreso & Clasificación & Descripción \\ \hline
+
+\crule[Aquamarine]{0.3cm}{0.3cm} S1 & Galois - eth1 & Oz - eth1 & ip\_src=20.20.20.128/26 ip\_dst=20.20.20.0/26 & Tr\'afico de Subred A a Subred C \\ \hline
+
+\crule[Red]{0.3cm}{0.3cm} S2 & Oz - eth1 & Galois - eth1 & ip\_src=20.20.20.0/26 ip\_dst=20.20.20.128/26 & Tr\'afico de Subred C a Subred A \\ \hline
+
+\crule[ForestGreen]{0.3cm}{0.3cm} S3 & Galois - eth1 & Poisson - eth1 & ip\_src=20.20.20.128/26 ip\_dst=20.20.20.64/26 & Tr\'afico de Subred A a Subred B \\ \hline
+
+\crule[LimeGreen]{0.3cm}{0.3cm} S4 & Poisson - eth1 & Galois - eth1 & ip\_src=20.20.20.64/26 ip\_dst=20.20.20.128/26 & Tr\'afico de Subred B a Subred A \\ \hline
+
+\crule[RoyalPurple]{0.3cm}{0.3cm} S5 & Poisson - eth1 & Oz - eth1 & ip\_src=20.20.20.64/26 ip\_dst=20.20.20.0/26 & Tr\'afico de Subred B a Subred C \\ \hline
+
+\crule[YellowOrange]{0.3cm}{0.3cm} S6 & Oz - eth1 & Poisson - eth1 & ip\_src=20.20.20.0/26 ip\_dst=20.20.20.64/26 & Tr\'afico de Subred C a Subred B \\ \hline
+\end{tabular}
+\vspace{0.3cm}
+\caption[CU1 - Escenario 1, servicios extra]{CU1 - Escenario 1, servicios extra}
+\label{table:TablaFlujos2}
+\end{table}
+
+\subsubsection{Actualizaci\'on de rutas}
+Para probar la actualizaci\'on de rutas cuando cambia la topolog\'ia se trabaja nuevamente con los servicios definidos en \ref{table:TablaFlujos}. 
+
+Una vez configurado el laboratorio de esta forma, se procede a derribar manualmente los enlaces $<(Galois, nf_2), (Poisson, nf_2)>$ y $<(Poisson, nf_2), (Poisson, nf_2)>$. De esta forma se produce una actualizaci\'on de la topolog\'ia tras la cual se ejecutan los algoritmos de ruteo y distribución de etiquetas para actualizar cada LSP.\\
+
+Acorde a los costos de la topolog\'ia, en esta nueva topolog\'ia los caminos asociados a cada servicio quedar\'ian de la siguiente forma:
+
+\begin{figure}[ht!] 
+\centering    
+\includegraphics[width=1.0\textwidth]{CU1P1CaminosRecalculo}
+\caption[Escenario 1 - Caminos para servicios recalculados]{Escenario 1 - Caminos para servicios recalculados}
+\label{fig:CUP1Caminos2}
+\end{figure}
+ 
+Notese que los \'unicos caminos que cambian son los asociados a los servicios S3 y S6. Cabe destacar adem\'as que en la nueva opolog\'ia existe m\'as de un camino de m\'inimo costo para S3. Los caminos $<(Galois, nf0), (Oz, nf1)>$ y $<(Galois, nf0), (Oz, nf2), (Alice, nf0)>$ presentan ambos el costo 4.
+Por tanto se tienen dos resultados v\'alidos posibles para la salida del algoritmo de ruteo para este servicio.\\
+
+\begin{figure}[ht!] 
+\centering    
+\includegraphics[width=1.0\textwidth]{CU1P1DumpFlows2}
+\caption[Cambiar por imagen correcta]{Cambiar por imagen correcta}
+\label{fig:CU1P1DumpFlows2}
+\end{figure}
+
 \newpage
 \subsection{Escenario 2}
 
