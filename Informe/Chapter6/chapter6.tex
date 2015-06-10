@@ -62,8 +62,6 @@ En este trabajo se implementan dos escenarios diferentes para este tipo de red p
 
 Este escenario representa una red privada multipunto de capa 3. Esta compuesto por una \'unica organizaci\'on o red privada dividida en 3 sucursales o subredes.
 
-Se quiere instanciar entonces servicios en RAUFlow con el obetivo de brindar conectividad entre las 3 sucursales de la organizaci\'on.
-
 \begin{figure}[ht!] 
 \centering    
 \includegraphics[width=1.0\textwidth]{CU1P1}
@@ -71,19 +69,19 @@ Se quiere instanciar entonces servicios en RAUFlow con el obetivo de brindar con
 \label{fig:CUP1}
 \end{figure}
 
-Sobre este escenario se van a ejecutar una serie de pruebas orientadas a verificar los siguientes aspectos en el prototipo:
+Sobre este escenario se ejecutan una serie de pruebas orientadas a verificar los siguientes aspectos relacionados al prototipo:
 
 \begin{enumerate}
-\item Clasificaci\'on de tr\'afico
 \item Algoritmo de ruteo
 \item Algoritmo de distribución de etiquetas
+\item Clasificaci\'on de tr\'afico
 \item Actualizaci\'on de rutas cuando cambia la topolog\'ia
 \item Capacidad para crear VPN multipunto
 \end{enumerate}
 
-Con el objetivo de comprobar estos aspectos se crean los siguientes servicios:
+Para construir la red privada multipunto uniendo las tres subredes mencionadas y adem\'as verificar los puntos anteriores, se instancian los siguientes servicios(ver tabla \ref{table:TablaFlujos}). Por cada par de subredes se crean dos servicios (un servicio para cada sentido del tr\'afico).\\
 
-\begin{center}
+\begin{table}[h]
 \begin{tabular}{| l | l | l | p{4cm} | p{4cm} |}
 \hline
 Nombre & Ingreso & Egreso & Clasificación & Descripción \\ \hline
@@ -99,11 +97,21 @@ Nombre & Ingreso & Egreso & Clasificación & Descripción \\ \hline
 \crule[RoyalPurple]{0.3cm}{0.3cm} S5 & Poisson - eth1 & Oz - eth1 & ip\_src=20.20.20.64/26 ip\_dst=20.20.20.0/26 & Tr\'afico de Subred B a Subred C \\ \hline
 
 \crule[YellowOrange]{0.3cm}{0.3cm} S6 & Oz - eth1 & Poisson - eth1 & ip\_src=20.20.20.0/26 ip\_dst=20.20.20.64/26 & Tr\'afico de Subred C a Subred B \\ \hline
-
 \end{tabular}
-\end{center}
+\vspace{0.3cm}
+\caption[CU1 - Escenario 1, servicios creados]{CU1 - Escenario 1, servicios creados}
+\label{table:TablaFlujos}
+\end{table}
 
-Para cada uno de estos servicios adem\'as se indica el etherype 0x0800 correspondiente al tipo de tr\'afico IPv4.
+Para cada uno de estos servicios adem\'as se indica el etherype 0x0800 correspondiente al tipo de tr\'afico IPv4.\\
+
+\subsubsection{Verificando Algoritmo de ruteo}
+Para verificar el correcto funcionamiento del algoritmo de ruteo, se comparan los caminos calculados para cada servicio con los respectivos mejores caminos te\'oricos. 
+
+Para cada camino se verifican dos cosas: (1) que el camino calculado se corresponde con el camino te\'orico y (2) que el camino es correctamente instalado como reglas de reenvío (en base a conmutaci\'on de etiquetas) en la tabla de flujos OpenFlow de cada nodo del camino.\\
+
+Los caminos te\'oricos son calculados manualmente observando los costos de la topolog\'ia (figura \ref{fig:LaboratorioDePruebasCostos}). Los resultados de este procedimiento se muestran en la figura
+ \ref{fig:CUP1Caminos}.\\
 
 \begin{figure}[ht!] 
 \centering    
@@ -112,6 +120,19 @@ Para cada uno de estos servicios adem\'as se indica el etherype 0x0800 correspon
 \label{fig:CUP1Caminos}
 \end{figure}
 
+En la figura tacate se muestra el contenido de las tablas de flujos OpenFlow asociadas a cada nodo del laboratorio de pruebas.
+
+Analicemos por ejemplo el procesamiento del tr\'afico asociado al servicio S1. 
+
+Para denotar un camino en la topolog\'ia utilizamos una lista de pares <n, i>, en donde n identifica un nodo en la topolog\'ia e i la interfaz de red por la cual debe reenviarse un paquete.
+   
+De acuerdo con la figura\ref{fig:CUP1Caminos}, el mejor camino para todo tr\'afico con origen en Galois y destino Oz es a trav\'es de enlace que conecta directamente ambos nodos. Esto es <Galois, nf0>.
+
+Si observamos con detenimiento la tabla de flujos de Galois, veremos que se definen flujos para matchear todo trafico con numeracion ip origen en Subred A y destino Subred B. Luego no se como seguir blabla...\\ 
+
+Por otro lado el mejor camino para el tr\'afico asociado al servicio S4 esta dado por la sucecion <(Galois, nf0), (Oz,nf1)>. Obesrevando las tablas de flujos de Galois se ven los flujos... que hacen esto posible. Luego en Oz se pueden ver los flujos que reenvian el trafico hacia poisson.
+
+De esta forma queda probado el correcto funcionamiento del algoritmo de ruteo.
 \newpage
 \subsection{Escenario 2}
 
