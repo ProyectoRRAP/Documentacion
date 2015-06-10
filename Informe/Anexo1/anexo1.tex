@@ -30,20 +30,53 @@ A continuación se especifican las herramientas de software utilizadas en la con
  
 Se sugiere respetar en la medida que sea posible los mismos conforme a evitar comportamientos inesperados o no contenidos en el alcance de esta guía.\\
 
-Configuración de Software:
+\begin{table}[Htl]\centering
+\begin{tabularx}{\textwidth}{|>{\setlength\hsize{1.0\hsize}\setlength\linewidth{\hsize}}X|}
+\hline
+\multicolumn{1}{|c|}{Hardware}\\
+\hline
+\begin{itemize}
+\item Procesador: Intel Core i7 4770K 3.50GHz
+\item Motherboard Asus ROG Maximus VI Formula
+\item Fuente Thermaltake TR2 600W ATX 12V 2.3
+\item Memoria RAM Kingstom 8GB DIMM DDR3 1333 MHz (x2)
+\item Disco duro Seagate 1TB
+\end{itemize}\\
+
+\begin{itemize}
+\item NetFPGA-10G: 10-Gigabit SFP+ (x4), x8 gen1 PCIe, Xilinx’s Virtex-5 TX240TFPGA
+\item Transiever Finisar FTLX8571D3BCL 850nm 13-50
+	  Class 1 21CFR1040.10 LN\#50 7\/01
+\item Patchcord multimodo OM3 50/125 duplex lc lc 10 metros pvc 2mm
+	  il $\leq$ 0.25dB RL $\geq$ 28dB
+\item TP-Link Gigabit PCI Express TG-3468
+\end{itemize}\\
+\hline
+\end{tabularx}
+\caption{RAU-Switch, especificaciones de hardware}
+\label{table:RAUHSpecs}
+\end{table}
+
+
+\begin{table}[Htl]\centering
+\begin{tabularx}{\textwidth}{|>{\setlength\hsize{1.0\hsize}\setlength\linewidth{\hsize}}X|}
+\hline
+\multicolumn{1}{|c|}{Software}\\
+\hline
 \begin{itemize}
 \item Sistema Operativo: Ubuntu 12.04 LTS release 12.04 precise 3.11.0-15 generic x86\_64
 \item Open vSwitch v2.3.9
 \item Repositorio NetFPGA v5.0.5
 \item Xilinx ISE\_DS\_LIn 13.04\_087xd.3.0
-\end{itemize}
+\end{itemize}\\
+\hline
+\end{tabularx}
+\caption{RAU-Switch, especificaciones de software}
+\label{table:RAUSSpecs}
+\end{table}
 
-Configuración de hardware:
-\begin{itemize}
-\item Procesador: Intel Core i7 4770K 3.50GHz
-\item Memoria: Kingston DDR3 8GB
-\end{itemize}
 
+\newpage
 \section{Instalación y configuración}
 En esta sección se explica el proceso de instalación y configuración del software necesario para la construcción de RAUSwitch.\\
 
