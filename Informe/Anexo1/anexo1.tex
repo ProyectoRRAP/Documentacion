@@ -14,23 +14,23 @@
 
 \section{Resumen}
 
-En este documento se ofrece una guía paso a paso para construir a partir de una PC de escritorio, una tarjeta NetFPGA-10G y diferentes herramientas de software un switch OpenFlow 1.3 IP/MPLS hibrido; lo que denominamos RAUSwitch.\\
+En este documento se ofrece una guía paso a paso para construir partiendo de una PC de escritorio, una tarjeta NetFPGA-10G y diferentes herramientas de software un switch OpenFlow 1.3 IP/MPLS híbrido; lo que denominamos RAUSwitch.\\
 
 En la misma no se asume ningún conocimiento previo acerca de la plataforma NetFPGA, Xilinx ISE y sobre el protocolo OpenFlow.\\
 
 Cabe destacar que existen diferentes tutoriales y guías para algunas de las diferentes etapas de la construcción del switch. No obstante se pensó este documento como un resumen práctico de todos ellos, de forma de agilizar el proceso de construcción de tal dispositivo para una persona que recien se encuentra familiarizándose con los conceptos aquí tratados.\\
 
-En caso de querer profundizar en alguna de las etapas, recurriendo al correspondiente material tomado como referencia se incluye la referencia a dicho material en caso de existir.
+En caso de querer profundizar en alguna de las etapas, se puede recurrir al material (en caso de existir) utilizado para la construcci\'on de esta gu\'ia, siguiendo las referencias indicadas a lo largo de este documento.
 
 % ************************** Antes de empezar ******************************
 
 \section{Plataforma utilizada}
 
-A continuación se especifican las herramientas de software utilizadas en la construcción del switch, con sus correspondientes versiones de producto, así como las características del hardware utilizado.
+A continuación se especifican las caracter\'isticas del hardware utilizado en la construcci\'on de RAU-Switch, as\'i como la especificaci\'on de las herramientas de software con sus correspondientes versiones de producto.
  
 Se sugiere respetar en la medida que sea posible los mismos conforme a evitar comportamientos inesperados o no contenidos en el alcance de esta guía.\\
 
-\begin{table}[Htl]\centering
+\begin{table}[h]\centering
 \begin{tabularx}{\textwidth}{|>{\setlength\hsize{1.0\hsize}\setlength\linewidth{\hsize}}X|}
 \hline
 \multicolumn{1}{|c|}{Hardware}\\
@@ -83,16 +83,29 @@ En esta sección se explica el proceso de instalación y configuración del soft
 En cuanto al orden de procedencia esta guía está organizada de la siguiente forma:
 
 \begin{enumerate}
-\item Instalación de un sistema operativo
+\item Instalación del sistema operativo
 \item Instalación de librerías y dependencias
 \item Instalación de suite de desarrollo Xilinx ISE SDK
 \item Configuración del entorno de desarrollo NetFPGA
 \item Pruebas de aceptación del hardware NetFPGA
 \item Programación del hardware
 \item Instalación de Open vSwitch
+\item Instalaci\'on de Quagga
+\item Instalaci\'on de agente SNMP
 \end{enumerate}
 
 \subsection{Instalación de un sistema operativo}
+Para la instalaci\'on del sistema operativo, utilizamos un dvd de instalaci\'on de Ubuntu 12.04 LTS descargado desde la pagina oficial. Para descargar una imagen con el instalador de este sistema se puede recurrir a:
+
+\begin{center}
+http://releases.ubuntu.com/12.04/
+\end{center}  
+
+En caso de no estar familiarizado con el proceso de instalacion de un sistema operativo recomendamos el siguiente tutorial:
+
+\begin{center}
+http://www.ubuntu.com/download/desktop/install-ubuntu-desktop
+\end{center}
 
 \subsection{Instalación de librerías y dependencias}
 Las siguientes librerías son necesarias por las diferentes herramientas de software utilizadas en el switch: gitk, git-gui, libusb, build-essential, libc6-dev, fxload, autotools-dev, autoconf, uml-utilities, libtool.\\
@@ -114,7 +127,7 @@ En caso de tener en algún momento errores con el comando gmake(por ejemplo “g
 
 \subsection{Instalación de suite de desarrollo Xilinx ISE SDK}
 
-La instalación de la suite Xilinx ISE SDK la realizaremos desde el código fuente por lo que debemos primero que nada descargar dichos archivos desde la página oficial de Xilinx. En este trabajo se descargo el siguiente archivo:
+La instalación de la suite Xilinx ISE SDK la realizaremos desde el código fuente por lo que primero que nada debemos descargar dichos archivos desde la página oficial de Xilinx. En este trabajo se descargo el siguiente archivo:
 
 \begin{center}
 Xilinx\_ISE\_DS\_Lin\_13.4\_087xd.3.0.tar
@@ -150,7 +163,7 @@ Abrimos una consola y ejecutamos los siguiente:\footnote{Para la arquitectura de
 Finalmente reiniciamos la PC.
 
 \subsubsection{Configuración de variables de entorno}
-Para utilizar la suite de Xilinx es necesario agregar ciertas variables de entorno al sistema. Para ello una alternativa es editar el archivo .bashrc en la consola del usuario root, agregando las siguientes líneas:\\
+Para utilizar la suite de Xilinx es necesario agregar ciertas variables de entorno al sistema. Para ello una alternativa es editar el archivo \textbf{.bashrc} en la consola del usuario root, agregando las siguientes líneas:\\
 
 \begin{bash}
 # sudo su
@@ -184,7 +197,7 @@ Para la ejecución de cualquier herramienta de la suite Xilinx es necesario ejec
 # /opt/Xilinx/13.4/ISE_DS/settings64.sh
 \end{bash}
 
-En caso de que el archivo setting64.sh no cuente con permisos de ejecución asignárselos.\\ 
+En caso de que el archivo \textbf{setting64.sh} no cuente con permisos de ejecución asignárselos.\\ 
 
 Luego se puede ejecutar cualquier herramienta de la suite Xilinx, como por ejemplo la herramienta Impact para programar normalmente las tarjetas de la siguiente forma:\\
 
@@ -193,7 +206,7 @@ Luego se puede ejecutar cualquier herramienta de la suite Xilinx, como por ejemp
 \end{bash}
 
 \subsubsection{Instalación de licencias de usuario}
-Para trabajar con las herramientas de Xilinx es necesario contar con licencias correspondientes para cada una de ellas y en particular dependiendo del tipo de hardware con el que se trabaje dependerá el tipo de licencia necesaria. En nuestro caso en particular se necesita una licencia completa(full license), y vale la pena destacar que con una licencia trial no se cuentan con las licencias apropiadas para compilar los proyectos de NetFPGA con los que se trabajara.\\
+Para trabajar con las herramientas de Xilinx es necesario contar con licencias correspondientes para cada una de ellas y en particular dependiendo del tipo de hardware con el que se trabaje dependerá el tipo de licencia necesaria. En nuestro caso se necesita una licencia completa(full license), y vale la pena destacar que con una licencia de prueba no se cuentan con las licencias apropiadas para compilar los proyectos de NetFPGA con los que se trabajar\'a.\\
 
 Para obtener una licencia full se debe ir al sitio de Xilinx de gestión de licencias, registrarse y comprar una licencia full.\\
 
@@ -203,15 +216,15 @@ Asumiendo que ya se tiene descargada una licencia full, para cargar la misma abr
 # /opt/Xilinx/13.4/ISE_DS/common/bin/lin64/xlcm
 \end{bash}
 
-Una vez que se ejecuta el comando anterior, se abrirá el programa  Xilinx Lincense Configuration Manager, que es el asistente de licencias de la suite de Xilinx. Una vez abierto el mismo ir a la pestaña de Manejo de Licencias (Manage Xilinx Licenses) e importar los archivos de licencias .lic obtenidos(botón copy license).
+Una vez que se ejecuta el comando anterior, se abrirá el programa  Xilinx Lincense Configuration Manager, que es el asistente de licencias de la suite de Xilinx. Una vez abierto el mismo ir a la pestaña de Manejo de Licencias (Manage Xilinx Licenses) e importar los archivos de licencias \emph{.lic} obtenidos(botón copy license).
 
-Una vez importada la licencia se podrán ver abajo las diferentes características que proveen las licencias cargadas. En caso de que no se actualice la pestañea apretar el botón Refresh.
+Una vez importada la licencia se podrán ver abajo las diferentes características que proveen las licencias cargadas. En caso de que no se actualice la pestañea apretar el botón \textbf{Refresh}.
 
 
 \subsection{Configuración del entorno de desarrollo NetFPGA}
 A continuación se explica como acceder al código fuente de NetFPGA y como empezar a programar el hardware con el mismo.\\
 
-Naturalmente, primero es necesario obtener el código fuente con las implementaciones de proyectos y herramientas, para lo cual es necesario crearse un usuario github y luego registrarse como desarrollador NetFPGA en el sitio oficial. Este último proceso puede llevar algunas horas dado que el proceso de aceptación se realiza manualmente.\\
+Naturalmente lo primero que debemos hacer es obtener el código fuente con las implementaciones de proyectos y herramientas, para lo cual es necesario crearse un usuario github y luego registrarse como desarrollador NetFPGA en el sitio oficial. Este último proceso puede llevar algunas horas dado que el proceso de aceptación se realiza manualmente.\\
 
 Para registrarse como desarrollador NetFPGA completar el siguiente formulario:
 
@@ -230,7 +243,7 @@ https://github.com/NetFPGA/NetFPGA-10G-live/tags
 En particular trabajaremos con la release 5.0.5 la cual se encuentra accesible mediante el siguiente enlace:
  
 \begin{center}
-https://github.com/NetFPGA/NetFPGA-10G-live/releases/tag/release\_5.0.5
+https://github.com/NetFPGA/NetFPGA-10G-live/releases/tag/release_5.0.5
 \end{center}
 
 Una vez descargado el código fuente descomprimimos el archivo .zip en un directorio a elección(en nuestro caso utilizaremos el directorio /home/mina). Luego abrimos una consola en el directorio y ejecutamos lo siguiente:
@@ -243,21 +256,21 @@ Una vez descargado el código fuente descomprimimos el archivo .zip en un direct
 Este proceso puede llevar de 5 a 10 minutos dependiendo de las prestaciones del hardware. Una vez finalizado el proceso anterior estamos en condiciones de programar las tarjetas NetFPGA con el proyecto que creamos conveniente.
 
 \subsection{Pruebas de aceptación del hardware NetFPGA}
-Antes de empezar a trabajar con el hardware NetFPGA, y en especial a programarlo con cualquier proyecto, es sumamente importante ejecutar un conjunto de pruebas desarrolladas específicamente para la tarjeta NetFPGA-10G, con el objetivo de chequear el correcto funcionamiento de sus componentes. En particular existen dos pruebas:
+Antes de empezar a trabajar con el hardware NetFPGA y en especial a programarlo con cualquier proyecto, es sumamente importante ejecutar un conjunto de pruebas desarrolladas específicamente para la tarjeta NetFPGA-10G, con el objetivo de chequear el correcto funcionamiento de sus componentes. En particular existen dos pruebas:
 
 \begin{itemize}
 \item RLDRAM Test\citep{NetFPGA5}
 \item Production Test\citep{NetFPGA7}
 \end{itemize}
 
-Estos tests son proyectos de referencia; es decir fueron desarrollados por NetFPGA y la universidad de Stanford. Con los mismos se programan las tarjetas, de igual forma que se programaría cualquier otro proyecto, y luego se ejecutan una serie de scripts que realizan pruebas y verificaciones em el hardware. En pocas palabras, además de verificar el correcto funcionamiento de las tarjetas, al ejecutar los test se tiene una primera experiencia programando el hardware.\\
+Estos tests son proyectos de referencia; es decir fueron desarrollados por NetFPGA y la universidad de Stanford. Con los mismos se programan las tarjetas, de igual forma que se programaría cualquier otro proyecto, y luego se ejecutan una serie de scripts que realizan pruebas y verificaciones en el hardware. En pocas palabras, además de verificar el correcto funcionamiento de las tarjetas, al ejecutar los test se tiene una primera experiencia programando el hardware.\\
 
-Es importante tener en cuenta que las tarjetas NetFPGA pueden funcionar tanto conectadas a una PC (escenario elegido) denominado server mode, o conectadas solamente a una fuente de poder denominado standalone mode.\\
+Es importante tener en cuenta que las tarjetas NetFPGA pueden funcionar tanto conectadas a una PC (escenario elegido) denominado server mode como conectadas solamente a una fuente de poder denominado standalone mode.\\
 
-En particular, ambos proyectos de pruebas pueden programarse para ejecutarse en ambas modalidades de funcionamiento(server y standalone). Sin embargo en esta guía se explica como programar y ejecutar dichos proyectos bajo el modo de funcionamiento servidor. En caso de requerirse de una ejecuci\'on de pruebas en modo standalone puede encontrarse en\citep{NetFPGA6}\citep{NetFPGA8} una guía detallada.
+En particular, ambos proyectos de pruebas pueden programarse para ejecutarse en ambas modalidades de funcionamiento. En esta guía se explica como programar y ejecutar dichos proyectos bajo el modo de funcionamiento servidor. En caso de requerirse de una ejecuci\'on de pruebas en modo standalone puede encontrarse en\citep{NetFPGA6}\citep{NetFPGA8} una guía detallada.
 
 \subsubsection{Programación y ejecución del Production Test}
-A continuación se detalla el procedimiento para programar el hardware con el test de producción, y luego ejecutar el conjunto de pruebas asociadas. Esta guía esta basada a su vez en una guía mas completa accesible en\citep{NetFPGA6}\\
+A continuación se detalla el procedimiento para programar el hardware con el test de producción y luego ejecutar el conjunto de pruebas asociadas. Esta guía esta basada a su vez en una guía mas completa accesible en\citep{NetFPGA6}\\
 
 EL primer paso para programar el test de producción es configurar la tarjeta NetFPGA-10G correctamente, así como instalarla en una PC. Es sumamente IMPORTANTE seguir cuidadosamente cada una de las indicaciones que aquí se mencionan para lograr los resultados correctos y no dañar el hardware en el proceso de manipulación.\\ 
 
@@ -269,7 +282,7 @@ La tarjeta necesita un suministro de corriente mediante el conector ATX para pod
 \begin{figure}[htbp!] 
 \centering    
 \includegraphics[width=0.50\textwidth]{Img1}
-\caption[Jumper J16]{Jumper J16}
+\caption[Jumper J16]{Jumper J16, Imagen extra\'ida de \citep{NetFPGA6}}
 \label{fig:Img1}
 \end{figure}
 
@@ -278,7 +291,7 @@ La tarjeta necesita un suministro de corriente mediante el conector ATX para pod
 \begin{figure}[htbp!] 
 \centering    
 \includegraphics[width=0.50\textwidth]{Img2}
-\caption[SW9 en posicion PCIe]{SW9 en posicion PCIe}
+\caption[SW9 en posicion PCIe]{SW9 en posicion PCIe, Imagen extra\'ida de \citep{NetFPGA6}}
 \label{fig:Img2}
 \end{figure}
 
@@ -292,7 +305,7 @@ La tarjeta necesita un suministro de corriente mediante el conector ATX para pod
 \begin{figure}[htbp!] 
 \centering    
 \includegraphics[width=0.50\textwidth]{Img3}
-\caption[Posiciones DIP SW1 SW2 SW6 SW10]{Posiciones DIP SW1 SW2 SW6 SW10}
+\caption[Posiciones DIP SW1 SW2 SW6 SW10]{Posiciones DIP SW1 SW2 SW6 SW10, Imagen extra\'ida de \citep{NetFPGA6}}
 \label{fig:Img3}
 \end{figure}
 
@@ -303,21 +316,21 @@ La tarjeta necesita un suministro de corriente mediante el conector ATX para pod
 \begin{figure}[htbp!] 
 \centering    
 \includegraphics[width=0.50\textwidth]{Img4}
-\caption[Conector ATX]{Conector ATX}
+\caption[Conector ATX]{Conector ATX, , Imagen extra\'ida de \citep{NetFPGA6}}
 \label{fig:Img4}
 \end{figure}
 
-\item Conectar el cable samtec twinax a la interfaz de expansión de la tarjeta formando un “loop”( figura ~\ref{fig:Img5})
+\item Conectar el cable Samtec Twinax a la interfaz de expansión de la tarjeta formando un “loop”( figura ~\ref{fig:Img5})
 
 \newpage
 \begin{figure}[htbp!] 
 \centering    
 \includegraphics[width=0.40\textwidth]{Img5}
-\caption[Cable samtec twinax]{Cable samtec twinax}
+\caption[Cable samtec twinax]{Cable samtec twinax, , Imagen extra\'ida de \citep{NetFPGA6}}
 \label{fig:Img5}
 \end{figure}
 
-\item Conectar un par de cables 10GE SFP+ a las interfaces de la tarjeta. Cada cable conecta dos puertos adyacentes formando dos “loops”(ver figura ~\ref{fig:Img6}):
+\item Conectar un par de cables 10GE SFP+ a las interfaces de la tarjeta. Cada cable conecta dos puertos adyacentes formando dos “bucles”(ver figura ~\ref{fig:Img6}):
 
 \begin{figure}[htbp!] 
 \centering    
@@ -331,7 +344,7 @@ La tarjeta necesita un suministro de corriente mediante el conector ATX para pod
 \begin{figure}[htbp!] 
 \centering    
 \includegraphics[width=0.50\textwidth]{Img7}
-\caption[Cable serial puerto COM]{Cable seria puerto COM}
+\caption[Cable serial puerto COM]{Cable seria puerto COM, Imagen extra\'ida de \citep{NetFPGA6}}
 \label{fig:Img7}
 \end{figure}
 
@@ -341,7 +354,7 @@ La tarjeta necesita un suministro de corriente mediante el conector ATX para pod
 \begin{figure}[htbp!] 
 \centering    
 \includegraphics[width=0.55\textwidth]{Img8}
-\caption[Cable JTAG]{Cable JTAG}
+\caption[Cable JTAG]{Cable JTAG, Imagen extra\'ida de \citep{NetFPGA6}}
 \label{fig:Img8}
 \end{figure}
 
@@ -352,7 +365,7 @@ Al finalizar, la tarjeta NetFPGA debería estar instalada como se muestra en la 
 \begin{figure}[htbp!] 
 \centering    
 \includegraphics[width=0.80\textwidth]{Img9}
-\caption[Tarjeta NetFPGA esquema de instalación]{Tarjeta NetFPGA esquema de instalación}
+\caption[Tarjeta NetFPGA esquema de instalación]{Tarjeta NetFPGA esquema de instalación, Imagen extra\'ida de \citep{NetFPGA6}}
 \label{fig:Img9}
 \end{figure}
 
@@ -360,7 +373,7 @@ Al finalizar, la tarjeta NetFPGA debería estar instalada como se muestra en la 
 \begin{figure}[htbp!] 
 \centering    
 \includegraphics[width=0.85\textwidth]{Img10}
-\caption[Img10]{tarjeta NetFPGA instalada en una PC}
+\caption[Tarjeta NetFPGA instalada en una PC]{Tarjeta NetFPGA instalada en una PC}
 \label{fig:Img10}
 \end{figure}
 
@@ -444,7 +457,7 @@ IMPACT posiblemente nos pregunte si queremos asociar un dispositivo PROM, selecc
 \begin{itemize}
 \item Situarse en la carpeta del Test de Producción
 \begin{bash}
-# cd projects/production\_test/sw/
+# cd projects/production_test/sw/
 \end{bash}
 
 \item Compilar el test
@@ -459,7 +472,7 @@ IMPACT posiblemente nos pregunte si queremos asociar un dispositivo PROM, selecc
 
 \item Ejecutar el Test de Producción
 \begin{bash}
-# sudo \./production\_test.py
+# sudo ./production_test.py
 \end{bash}
 
 La salida debería ser como la que se muestra a continuación(ver figura ~\ref{fig:Img14}):
@@ -479,7 +492,7 @@ Para ejecutar el RLDRAM Test recomendamos utilizar la guía \citep{NetFPGA8}.
 
 \subsection{Programación de la tarjeta}
 
-A continuación se describen los pasos necesarios para programar las tarjetas NetFPGA en particular con el proyecto ReferenceNIC. En lo que prosigue se utiliza NetFPGA\_ROOT para referirse al directorio donde se encuentra descargado el código fuente de NetFPGA.
+A continuación se describen los pasos necesarios para programar las tarjetas NetFPGA en particular con el proyecto ReferenceNIC. En lo que prosigue se utiliza NF\_ROOT para referirse al directorio donde se encuentra descargado el código fuente de NetFPGA.
 
 \subsubsection{Configuración de la tarjeta}
 Antes de comenzar, es necesario realizar algunas modificaciones en el hardware NetFPGA para habilitar la programación pcie del mismo, utilizada en la programación persistente.\\ 
@@ -497,26 +510,28 @@ La siguiente figura muestra la posición del Dip SW3 en la configuración PCIe(v
 
 Recordar que los cambios a la configuración de la tarjeta se deben realizar con la PC apagada y sin conexión a la corriente eléctrica para evitar daños en el hardware.\\
 
-Una vez configurada la tarjeta, conectar la PC a la corriente eléctrica y encender la misma.
+Una vez configurada la tarjeta conectar la PC a la corriente eléctrica y encender la misma.
 
 \subsubsection{Programación de la tarjeta}
 Antes que nada es necesario realizar algunos cambios en archivos del código fuente asociados a los proyectos NetFPGA utilizados, arreglando algunos errores reportados para la version de código fuente utilizada en este manual. Entonces en caso de trabajar con la versión 5.0.5 (recomendada) se deben realizar las siguientes modificaciones:
 
 \begin{enumerate}
 
-\item En el directorio NetFPGA\_ROOT/projects/reference\_nic/hw/ cambiar en el archivo \textit{system.mhs} lo siguiente:
+\item En el directorio NF\_ROOT/projects/reference_nic/hw/ cambiar en el archivo \textit{system.mhs} lo siguiente:
 
 \begin{bash}
-PORT axi_emc_0_Mem_DQ_pin = axi_emc_0_Mem_DQ, DIR = IO, VEC = [*7*:0]
+PORT axi_emc_0_Mem_DQ_pin = axi_emc_0_Mem_DQ, DIR = IO, 
+VEC = [*7*:0]
 \end{bash}
 
 cambiar por
 
 \begin{bash}
-PORT axi_emc_0_Mem_DQ_pin = axi_emc_0_Mem_DQ, DIR = IO, VEC = [*31*:0]
+PORT axi_emc_0_Mem_DQ_pin = axi_emc_0_Mem_DQ, DIR = IO, 
+VEC = [*31*:0]
 \end{bash}
 
-\item En el directorio NetFPGA\_ROOT/projects/reference\_nic/hw/nf10 cambiar en el archivo \textit{xflow.opt} lo siguiente: 
+\item En el directorio NF\_ROOT/projects/reference\_nic/hw/nf10 cambiar en el archivo \textit{xflow.opt} lo siguiente: 
 
 \begin{bash}
 -t *1*
@@ -532,7 +547,7 @@ cambiar por
 
 \item Modificar el driver utilizado por el proyecto ReferenceNIC:
 \begin{enumerate}
-\item Posicionarse en el directorio NetFPGA\_ROOT/projects/reference\_nic/sw/host/driver
+\item Posicionarse en el directorio NF\_ROOT/projects/reference\_nic/sw/host/driver
 \item Abrir el archivo nf10\_phy\_conf.c y comentar las líneas 217,219 y 240
 \end{enumerate}
 
@@ -556,7 +571,8 @@ Luego en una consola se ejecuta lo siguiente:
 \begin{bash}
 # cd NetFPGA_ROOT
 # cd tools/scripts
-# ./impact_run ../../projects/reference_nic/bit/reference_nic.bit 
+# ./impact_run 
+  ../../projects/reference_nic/bit/reference_nic.bit 
   ../../projects/reference_nic/cpld/cpld.jed 
 \end{bash}
 
@@ -594,12 +610,12 @@ Luego ejecutamos lo siguiente:
 
 \begin{bash}
 # cd ../sw/host/pcieprog
-# ./nf10\_configure -b ../../../bitfiles/reference_nic.bin -f a
+# ./nf10_configure -b ../../../bitfiles/reference_nic.bin -f a
 \end{bash}
 
 Apagamos la PC y la volvemos a prender. Ahora el chip FPGA de la tarjeta se encuentra programado a partir del contenido de la memoria flash A, con el proyecto que allí grabamos.\\
 
-Para no cargar el driver del reference\_nic cada vez que se reinicie la máquina podemos modificar el archivo /etc/rc.local agregando la siguiente línea:
+Para no cargar el driver del ReferenceNIC cada vez que se reinicie la máquina podemos modificar el archivo /etc/rc.local agregando la siguiente línea:
 
 \begin{bash}
 insmod NF_ROOT/preojects/reference_nic/sw/host/driver/nf10.ko
@@ -647,7 +663,8 @@ Luego creamos el siguiente directorio necesario para la configuración del ovs:
 Finalmente creamos la base de datos de configuración de ovs:
 
 \begin{bash}
-# ovsdb-tool create /usr/local/etc/openvswitch/conf.db vswitchd/vswitch.ovsschema
+# ovsdb-tool create /usr/local/etc/openvswitch/conf.db 
+vswitchd/vswitch.ovsschema
 \end{bash}
 
 Ya se esta en condiciones de levantar cualquiera de los demonios de ovs. En particular para iniciar ovs debemos indicar una serie de parámetros como la base de datos donde se encuentra la configuración, en caso de utilizar una conexión segura con el controlador los certificados SSL correspondiente entre otras cosas. Para ello es conveniente crear un script como el siguiente:
@@ -658,7 +675,8 @@ ovsdb-server /usr/local/etc/openvswitch/conf.db \
 --remote=db:Open_vSwitch,Open_vSwitch,manager_options \
 --private-key=db:Open_vSwitch,SSL,private_key \
 --certificate=db:Open_vSwitch,SSL,certificate \
---bootstrap-ca-cert=db:Open_vSwitch,SSL,ca_cert --pidfile --detach --log-file
+--bootstrap-ca-cert=db:Open_vSwitch,SSL,ca_cert 
+--pidfile --detach --log-file
 
 ovs-vsctl --no-wait init
 ovs-vswitchd --pidfile --detach
@@ -672,11 +690,11 @@ Finalmente para automatizar la carga de los drivers de Open vSwitch al encender 
 como se muestra a continuación.
 
 \begin{bash}
-# mkdir /lib/modules/\$(uname -r)/kernel/drivers/ovs
-# cd /lib/modules/\$(uname -r)/kernel/drivers/ovs    
+# mkdir /lib/modules/$(uname -r)/kernel/drivers/ovs
+# cd /lib/modules/$(uname -r)/kernel/drivers/ovs    
 \end{bash}
 
-Posteriormente copiar los archivos de extensión .o y .ko del directorio OVS\_SOURCE\_PATH/datapath/linux al directorio anteriormente creado.\\
+Posteriormente copiar los archivos de extensión .o y .ko dentro de la carpeta de instalaci\'on de ovs(llamemos le OVS\_ROOT) en el siguiente directorio \\ OVS\_ROOT/datapath/linux al directorio anteriormente creado.\\
 
 Finalmente ejecutamos el siguiente comando para actualizar las listas de dependencias para cada módulo agregado.
 
@@ -685,7 +703,7 @@ Finalmente ejecutamos el siguiente comando para actualizar las listas de depende
 \end{bash}
 
 \subsection{Instalación de software de ruteo Quagga}
-El software de ruteo Quagga puede instalarse un gestpt de aplicaciones(apt-get) o desde su codigo fuente; en este tutorial utilizamos esta ultima opción. 
+El software de ruteo Quagga puede instalarse con un gestor de aplicaciones(apt-get) o desde su codigo fuente; en este tutorial utilizamos esta ultima opción. 
 
 El código fuente podemos obtenerlo desde el sitio oficial de quagga:
 
@@ -699,7 +717,7 @@ o desde el siguiente link:
 http://www.nongnu.org/quagga/docs/docs-info.html\#OSPFv2
 \end{center}
 
-Una vez descargado el código fuente, descomprimimos el archivo quagga.public-master.zip en el directorio deseado. En este caso utilizaremos el directorio /home/mina como venimos haciendo para el resto del software instalado. Luego abrimos una consola y ejecutamos los siguientes comandos para compilar el código fuente:
+Una vez descargado el código fuente descomprimimos el archivo quagga.public-master.zip en el directorio deseado. En este caso utilizaremos el directorio /home/mina como venimos haciendo para el resto del software instalado. Luego abrimos una consola y ejecutamos los siguientes comandos para compilar el código fuente:
 
 \begin{bash}
 # ./configure

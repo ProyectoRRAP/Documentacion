@@ -102,11 +102,14 @@ La ONF presenta a SDN como una arquitectura emergente, dinámica, escalable, ren
 
 El enfoque de SDN propone tres capas lógicas(ver imagen ~\ref{fig:SDNArchitecture}): (1) capa de aplicaciones (Application Layer), (2) capa de control (Control Layer) y (3) capa de infraestructura (Infraestructure Layer).\\
 
-La capa de infraestructura se compone por los dispositivos de red tradicionales como switches y routers, en particular compatibles con la arquitectura SDN. La inteligencia de dichos dispositivos a diferencia de switches y routers convencionales es desacoplada de los mismos, y es trasladada a la capa de control.\\
+La capa de infraestructura se compone por los dispositivos de red tradicionales como switches y routers, en particular compatibles con la arquitectura SDN. La inteligencia de dichos dispositivos a diferencia de switches y routers convencionales es desacoplada de los mismos, y es trasladada a la capa de control.
+
+Cada dispositivo implementa una api de operaciones bien definida mediante la cual es manipulado por la capa de control. Esta api de operaciones implementa lo que se denomina Interaz Sur.
+\\
 
 En la capa de control se encuentra el software encargado de implementar el plano de control en dicho modelo, usualmente denominado Controlador.
 
-El Controlador implementa una API de operaciones a ser expuestas a las aplicaciones de la capa de Aplicación para la manipulación de dispositivos en la capa de infraestructura.\\
+El Controlador implementa una API de operaciones a ser expuestas a las aplicaciones de la capa de Aplicación para la manipulación de dispositivos en la capa de infraestructura. Esta API de operaciones implementa lo que se conoce en el modelo como Interfaz Norte.\\
 
 Por otro lado la capa de aplicaciones contiene implementados en software en forma de aplicaciones toda la inteligencia que originalmente se agregaba en un dispositivo de la capa de infraestructura, por ejemplo la implementaci\'on de protocolos de red.
 
@@ -246,8 +249,8 @@ En \cite{yu2011scalable} se analiza el impacto de utilizar un enfoque de políti
 
 \end{enumerate} 
 
-\subsubsection{Escalabilidad}
-[No se si aplique hablar de esto capaz es mucho]
+%\subsubsection{Escalabilidad}
+%[No se si aplique hablar de esto capaz es mucho]
 
 \section{Herramientas SDN/OpenFlow disponibles}
 
