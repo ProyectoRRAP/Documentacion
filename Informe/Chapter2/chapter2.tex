@@ -335,10 +335,10 @@ Utilizando OpenFlow se pueden implementar redes taps programables y replicar el 
 Además desde que el control de los dispositivos intermediarios puede realizarse desde un controlador, se facilita enormemente a gestión de los mismos, permitiendo una configuración dinámica en caso de fallas o averías técnicas.
 
 \item \textbf{Balanceo de carga y QoS:}
-Contar con una visión global de los dispositivos del plano de datos, habilita al Controlador a implementar diferentes políticas de balanceo de carga en función del estado de la red, y permitiendo un uso óptimo de todos los recursos disponibles. A su vez se pueden priorizar diferentes tipos de tráfico, encaminar tráfico dependiendo de un tipo de servicio o contenido y otras técnicas de QoS.
+Contar con una visión global de los dispositivos del plano de datos, habilita al Controlador a implementar diferentes políticas de balanceo de carga en función del estado de la red y permite un uso óptimo de todos los recursos disponibles. A su vez se pueden priorizar diferentes tipos de tráfico, encaminar tráfico dependiendo de un tipo de servicio o contenido y otras técnicas de QoS.
 
 \item \textbf{Herramientas para mitigación de ataques DoS:}
-Herramientas para la mitigación de ataques de negación de servicios (Dos) pueden beneficiarse de las estadísticas provistas por un switch OpenFlow por ejemplo para detectar anomalías. Además utilizando la acción de redirección de un flujo al Controlador, se puede analizar y detectar tráfico sospechoso de ataques DoS, permitiendo a posteriori insertar un flujo en el switch de ingreso específico para bloquear el tipo de ataque o tráfico malicioso detectado.
+Herramientas para la mitigación de ataques de negación de servicios (DoS) pueden beneficiarse de las estadísticas provistas por un switch OpenFlow por ejemplo para detectar anomalías. Además utilizando la acción de redirección de un flujo al Controlador, se puede analizar y detectar tráfico sospechoso de ataques DoS, permitiendo a posteriori insertar un flujo en el switch de ingreso específico para bloquear el tipo de ataque o tráfico malicioso detectado.
 
 \item \textbf{Inserción de Servicios:}
 Con una arquitectura basada en SDN como openFlow, resulta sumamente sencillo la incorporación de servicios al plano de datos de una infraestructura de red dada. Independientemente de la marca del hardware utilizado, sus características y funcionalidades, siempre que sean compatibles con OpenFlow puede incorporarse nuevos servicios como autenticación, cortafuegos, almacenamiento secundario, etc., simplemente programando una nueva aplicación en el Controlador que implemente dichos servicios.
@@ -359,21 +359,21 @@ Por estas razones soluciones basadas en el enfoque SDN con OpenFlow por ejemplo,
 \section{Casos de éxito de SDN}
 OpenFlow en particular se ha hecho con un cierto protagonismo recientemente. Tal es el hecho que se pueden nombrar casos de éxito en la migración de servicios sobre esquemas tradicionales de redes a SDN/OpenFlow.\\
 
-La Open Networking Foundation en particular elaboro un articulo\cite{ONFSuccessCase} en donde se recomiendan métodos y se proveen guías para la migración de servicios desde un esquema tradicional a SDN, nombrando en particular tres casos de éxito en este tipo de migraciones, en escenarios reales: (1) Google InterDatacenter
+La Open Networking Foundation en particular elabor\'o un articulo\cite{ONFSuccessCase} en donde se recomiendan métodos y se proveen guías para la migración de servicios desde un esquema tradicional a SDN, nombrando en particular tres casos de éxito en este tipo de migraciones, en escenarios reales: (1) Google InterDatacenter
 WAN, (2) NTT Provider Edge y (3) Stanford Campus Network.
 
 \begin{enumerate}
 \item Google InterDatacenter:
 
-Los servicios de Google orientados a usuarios de Internet como su motor de búsquedas, Google+, GMail, Youtube, Google Maps, entre otros, requieren de que una gran cantidad de datos sean movidas desde una región a otra todo el tiempo, haciendo a estas aplicaciones y servicios consumidores intensivos de la WAN. Debido a esto Google concluyo que la oferta de dichos servicios no sería escalable con las tecnologías disponibles actualmente, debido a la complejidad en la configuración y manejo de dichas tecnologías las cuales no son lineales con el crecimiento en la demanda de dichos servicios. Como resultado, Google decidió apostar por el enfoque de SDN para el manejo de su WAN. Si el lector esta interesado en esta experiencia puede encontrar una descripción completa en \cite{jain2013b4}.
+Los servicios de Google orientados a usuarios de Internet como su motor de búsquedas, Google+, GMail, Youtube, Google Maps, entre otros, requieren que una gran cantidad de datos sean movidas desde una región a otra todo el tiempo, haciendo a estas aplicaciones y servicios consumidores intensivos de la WAN. Debido a esto Google concluy\'o que la oferta de dichos servicios no sería escalable con las tecnologías disponibles actualmente, debido a la complejidad en la configuración y manejo de dichas tecnologías las cuales no son lineales con el crecimiento en la demanda de dichos servicios. Como resultado, Google decidió apostar por el enfoque de SDN para el manejo de su WAN. Si el lector est\'a interesado en esta experiencia, puede encontrar una descripción completa en \cite{jain2013b4}.
 
 \item NTT Provider Edge:
 
 En el modelo de despliegue tradicional de BGP, los routers  proveedores de servicios de borde(Provider Edge Roputer), mantienen numerosas adyacencias BGP; tantas como routers/caminos BGP para diferentes familias de direcciones, como IPv4, IPv6, VPNv4, VPNv6, etc.\\
  
-Mantener la máquina de estados de BGP, procesar las actualizaciones BGP y configuraciones de políticas, calcular los mejores caminos para cada familia de direcciones, provocan constituyen una gran carga de procesamiento en el hardware del router. Adicionalmente los servicios por definición están sujetos a modificaciones en el tiempo, ya sea para proveer de servicios a nuevos clientes como para actualizar sus políticas. Por otro lado los recursos disponibles como CPU y memoria son limitados, y la naturaleza de los sistemas operativos y hardware de cada equipo es propietaria de la implementación de cada vendedor. Esto limita la aceleración de servicios y la innovación a las políticas de cada vendedor de hardware.\\
+Mantener la máquina de estados de BGP, procesar las actualizaciones BGP y configuraciones de políticas, calcular los mejores caminos para cada familia de direcciones, constituyen una gran carga de procesamiento en el hardware del router. Adicionalmente los servicios por definición están sujetos a modificaciones en el tiempo, ya sea para proveer de servicios a nuevos clientes como para actualizar sus políticas. Por otro lado los recursos disponibles como CPU y memoria son limitados, y la naturaleza de los sistemas operativos y hardware de cada equipo es propietaria de la implementación de cada fabricante. Esto limita la aceleración de servicios y la innovación a las políticas de cada vendedor de hardware.\\
 
-Por ello BGP free edge, define un nuevo paradigma que simplifica el encaminamiento eBGP en los routers PE. En este modelo de despliegue, el ruter PE se convierte en un nodo de reenvio para manejar el plano de datos, mientras que el plano de control BGP se desacopla a una entidad externa. El plano de control de SDN/Openflow encaja perfectamente en el rol de dicha entidad.\\
+Por ello BGP free edge, define un nuevo paradigma que simplifica el encaminamiento eBGP en los routers PE. En este modelo de despliegue, el router PE se convierte en un nodo de reenvío para manejar el plano de datos, mientras que el plano de control BGP se desacopla a una entidad externa. El plano de control de SDN/Openflow encaja perfectamente en el rol de dicha entidad.\\
 
 Algunas de las razones por las cuales apostar por BGP free edge:
 \begin{itemize}
@@ -396,17 +396,17 @@ Inicialmente esta migración fue orientada a usuarios en particular (wireless), 
 
 En pocas palabras una Red Privada Virtual \'o VPN por su sigla en ingl\'es, es la extension de una red privada sobre una infraestructura de red p\'ublica como lo es por ejemplo Internet.
 
-Este concepto habilita a un equipo en una determinada subred privada a enviar y recibir información a otro equipo en otra subred separadas f\'isicamente, utilizando una infraestructura de red publica o compartida para la comunicaci\'on entre ambas subredes, y de la misma forma que si estuviese directamente conectada a la red privada. Adem\'as permite mantener las políticas de seguridad y funcionalidades de la red privada.\\
+Este concepto habilita a un equipo en una determinada subred privada a enviar y recibir información a otro equipo en otra subred separadas f\'isicamente, utilizando una infraestructura de red p\'ublica o compartida para la comunicaci\'on entre ambas subredes, y de la misma forma que si estuviese directamente conectada a la red privada. Adem\'as permite mantener las políticas de seguridad y funcionalidades de la red privada.\\
 
 %Conceptualmente se han propuesto tres arquitecturas b\'asicas de redes VPN: (1) VPN de acceso remoto, (2) VPN punto a punto y (3) VPN sobre LAN.\\
 
 Las implementaciones de redes privadas se caracterizan entre otras cosas por las funcionalidades que son capaces de proveer. En relaci\'on a aspectos de seguridad se buscan principalmente funcionalidades de autenticaci\'on de usuarios, confidencialidad e integridad de los datos. Por otro lado en relaci\'on al procesamiento del tr\'afico dentro de la red p\'ublica, algunas implementaciones de VPN ofrecen funcionalidades de clasificaci\'on de tr\'afico y calidad de servicios (QoS), permitiendo por ejemplo garantizar un ancho de banda m\'inimo para el tr\'afico de una organizaci\'on cuando es transportado a trav\'es de la red p\'ublica de una red privada a otra. 
 
-Algunas implementaciones proveen adem\'as la capacidad de priorizar tipos de tr\'afico como por ejemplo el asociado a una aplicaci\'on en particular, o distribu\'ir la carga en diferentes caminos, lo que se conoce como balanceo de carga.\\
+Algunas implementaciones proveen adem\'as la capacidad de priorizar tipos de tr\'afico como por ejemplo el asociado a una aplicaci\'on en particular, o distribu\'ir la carga entre diferentes caminos, lo que se conoce como balanceo de carga.\\
 
 %Pensando en el contexto de la RAU, alguna de estas funcionalidades como la clasificaci\'on de tr\'afico, priorizaci\'on de tr\'afico por aplicaciones y balanceo de carga se adaptan muy bien a los requerimientos existentes para la nueva versi\'on de la misma(RAU2).\\  
 
-En relaci\'on a las alternativas de implementaci\'on de redes privadas, a lo largo de los años han surgido diferentes alternativas; diferenciándose por las funcionalidades que implementan y tambi\'en por las capas en el stack OSI de redes en la cual operan. Algunos ejemplos son: 
+En relaci\'on a la implementaci\'on de redes privadas, a lo largo de los años han surgido diferentes alternativas; diferenciándose por las funcionalidades que implementan y tambi\'en por las capas en el stack OSI en la cual operan. Algunos ejemplos son: 
 
 \begin{itemize}
 \item VPN tradicionales
@@ -449,7 +449,7 @@ Las redes privadas multipunto, extienden el enfoque punto a punto con el objetiv
 
 Permiten establecer dominios de difusi\'on compartidos, creando de forma transparente la ilusi\'on de que se tiene una gran LAN compuesta por varias subredes. Sin embargo al ser m\'as completas en funcionalidades y casos de uso soportados, tambi\'en son m\'as complejas de implementar.\\ 
 
-Virtual Private LAN Service(VPLS), es una implementaci\'on de red privada multipunti, bastante difundida y presenta los dos enfoques definidos por los  RFC4761\citep{kompella2007virtual} y RFC4762\cite{lasserre2007virtual}. Esta implementaci\'on crea dominios de difusión Ethernet utilizando diferentes tecnologías como IP/MPLS, L2TPv3 y túneles GRE.
+Virtual Private LAN Service(VPLS), es una implementaci\'on de red privada multipunto, bastante difundida y provista de los dos enfoques definidos en los RFC4761\citep{kompella2007virtual} y RFC4762\cite{lasserre2007virtual}. Esta implementaci\'on crea dominios de difusión Ethernet utilizando diferentes tecnologías como IP/MPLS, L2TPv3 y túneles GRE.
 
 \begin{figure}[htbp!] 
 \centering    
@@ -478,11 +478,11 @@ De acuerdo al modelo OSI de capas, MPLS opera entre las capas de Red y Enlace. F
 
 Actualmente cuenta con una gran adopción por parte de vendedores, y poco a poco se ha convertido en el mecanismo por elección para construir plataformas de red empresariales, sustituyendo poco a poco los servicios de Frame Relay y ATM.\\
  
-MPLS incluye una gran cantidad de característica entre las cuales se distinguen soporte para VPNs, Ingeniería de Tráfico, calidad de servicios (QoS), clases de servicios (CoS), y además es independiente del protocolo de capa de enlace pudiendo operar sobre ATM ó Ethernet por ejemplo.\\
+MPLS incluye una gran cantidad de características entre las cuales se distinguen soporte para VPNs, Ingeniería de Tráfico, calidad de servicios (QoS), clases de servicios (CoS), a la vez que es independiente del protocolo de capa de enlace pudiendo operar sobre ATM ó Ethernet por ejemplo.\\
 
-En una red MPLS, cuando un paquete ingresa se le coloca un cabezal mpls. Este cabezal esta compuesto por cuatro campos: Label, Exp, S, TTL. De ellos se destacan el valor de la etiqueta mpls, utilizado para encaminar paquetes a través de la red MPLS hacia su nodo destino, y eventualmente realziar clasificación tr\'afico.
+En una red MPLS, cuando un paquete ingresa se le coloca un cabezal mpls. Este cabezal esta compuesto por cuatro campos: Label, Exp, S, TTL. De ellos se destacan el valor de la etiqueta mpls, utilizado para encaminar paquetes a través de la red hacia su nodo destino, y eventualmente realizar clasificación de tr\'afico.
 
-En cada nodo de la red, el cabezal mpls es extraído y analizado para determinar el próximo nodo al que se debe enviar dicho paquete. Luego del procesamiento un nuevo cabezal MPLS con otra etiqueta es colocado en el paquete y se reenvía hacia el siguiente nodo en la red.
+En cada nodo de la red, el cabezal mpls es extraído y analizado para determinar el próximo nodo al que se debe enviar dicho paquete. Luego del procesamiento un nuevo cabezal mpls con otra etiqueta es colocado en el paquete y se reenvía hacia el siguiente nodo en la red.
 
 De esta forma el paquete es encaminado dentro de la red mpls mediante un proceso de extracción y colocación de etiquetas, hasta que el paquete arriba a un nodo de salida de la red, en donde el paquete ya no contiene etiquetas.\\
 
@@ -490,7 +490,7 @@ Por otro lado, un paquete mpls puede presentar más de un cabezal MPLS, uno arri
 
 Otro punto a destacar de este protocolo es la configuración del plano de reenvío. El plano de control de las redes mpls se componen de un algoritmo de ruteo y un algoritmo de distribución de etiquetas. Mientras que con el primero se calculan los mejores caminos que un paquete debe tomar para atravesar la red, el segundo se encarga de la asignación y distribución de etiquetas para que cada switch conmute correctamente el paquete hasta su destino.\\
 
-Alguno de los principales términos en la literatura MPLS son los siguientes:
+Alguno de los principales términos en la literatura MPLS son:
 
 \begin{itemize}
 \item LER(Label Edge Router): Elemento de la red MPLS por la cual ingresa o egresa tráfico hacia o desde la misma.
@@ -501,24 +501,26 @@ Alguno de los principales términos en la literatura MPLS son los siguientes:
  
 \end{itemize}
 
+Se ha presentado un resumen del trabajo de estudio en el estado del arte en las redes definidas por software y se han introducido los principales conceptos para el correcto entendimiento de este trabajo. Resta entonces presentar las conclusiones obtenidas en el trabajo de estudio del estado del arte del hardware NetFPGA. La siguiente secci\'on esta destinada a esta empresa.
+
 \section{NetFPGA}
 \label{section2.9}
 
 NetFPGA\cite{NetFPGA1} es una plataforma de hardware reconfigurable y software opensource, flexible y potente, diseñada para un uso principalmente académico en tareas de investigación y enseñanza.\\
 
-El hardware esta basado en un chip FPGA(Field Programmable Gate Array), que puede ser programado  utilizando el lenguaje VHDL. Cuenta con una amplia variedad de proyectos desarrollados tanto por el equipo de NetFPGA(proyectos de referencia), como por instituciones académicas y comerciales involucradas(proyectos comunitarios) que permiten programar el comportamiento del hardware  de diferentes formas. Se pueden encontrar desde proyectos que programan el hardware con una implementación de referencia de una tarjeta de red (Reference NIC), como un Learning CAM Switch, Simple Router, Router OpenFlow, hasta un generador de trafico entre otros(por mayor informaci\'on ver \citep{NetFPGA2}).\\ 
+El hardware esta basado en un chip FPGA(Field Programmable Gate Array), que puede ser programado  utilizando el lenguaje VHDL. Cuenta con una amplia variedad de proyectos desarrollados tanto por el equipo de NetFPGA(proyectos de referencia), como por instituciones académicas y comerciales involucradas(proyectos comunitarios) que permiten programar el comportamiento del hardware  de diferentes formas. Se pueden encontrar desde proyectos que programan el hardware con una implementación de referencia de una tarjeta de red (Reference NIC), como un Learning CAM Switch, Simple Router, Router OpenFlow, hasta un generador de tr\'afico entre otros(por mayor informaci\'on ver \citep{NetFPGA2}).\\ 
 
 Surge en el año 2007 como un proyecto de investigación en la Universidad de Stanford, bajo el nombre de NetFPGA-1G, con la consigna de construir una plataforma de desarrollo e investigación basada en un chip FPGA.
  
-La plataforma alcanz\'o una versi\'on comercial consistente en una placa PCI con un chip Xilinx Virtex-II proFPGA y cuatro interfaces Ethernet de 1Gigabit m\'as un repositorio de código fuente descargable y abierto a la comunidad, conteniendo librerías IP y unos pocos ejemplos de diseño.\\
+La plataforma alcanz\'o una versi\'on comercial consistente en una placa PCI con un chip Xilinx Virtex-II proFPGA y cuatro interfaces Ethernet de 1Gigabit, m\'as un repositorio de código fuente descargable y abierto a la comunidad, conteniendo librerías IP y unos pocos ejemplos de diseño.\\
 
-El proyecto prospero vendiendo mas de 2.600 tarjetas en 150 instituciones educativas en 15 países diferentes del mundo hasta el momento en que se discontinuo dicho producto.\\
+El proyecto prosper\'o vendiendo mas de 2.600 tarjetas en 150 instituciones educativas en 15 países diferentes del mundo hasta el momento en que se discontinuo dicho producto.\\
 
-Tras el éxito de la NetFPGA-1G, en el año 2009 comenzó a trabajarse en la NetFPGA-10G una version mas potente de la  anterior basada en un chip Xilinx Virtex5 y cuatro interfaces 10-Gigabit SFP+, que remplazara a la NetFPGA-1G. Tras iniciarse su comercialización en el año 2011 la misma cosecho un éxito similar a su antecesora llegando a vender mas de 470 unidades al año 2014, y contando con una plataforma de al menos 15 proyectos desarrollados específicamente para esta plataforma.\\
+Tras el éxito de la NetFPGA-1G, en el año 2009 comenzó a trabajarse en la NetFPGA-10G una version m\'as potente que la  anterior basada en un chip Xilinx Virtex5 y cuatro interfaces 10-Gigabit SFP+, que remplazara a la NetFPGA-1G. Tras iniciarse su comercialización en el año 2011 la misma cosech\'o un éxito similar a su antecesora llegando a vender mas de 470 unidades al año 2014, y contando con una plataforma de al menos 15 proyectos desarrollados específicamente para esta plataforma.\\
 
 A la fecha, NetFPGA cuenta con cuatro versiones de plataformas comerciales, la NetFPGA-1G(discontinuada), NetFPGA-10G, NetFPGA CML y NetFPGA-SUME. A su vez la plataforma se ha popularizado entre investigadores y desarrolladores como plataforma ideal para la experimentación e innovación, contando a la fecha con mas de 226 artículos académicos\cite{NetFPGA4} en diversas áreas, utilizando como plataforma de trabajo NetFPGA.\\
 
-En resumen NetFPGA es una plataforma robusta que propicia a investigadores, docentes y estudiantes en el área de redes de computadoras a la construcción de prototipos sobre sistemas de redes de alta velocidad y acelerados por hardware, en poco tiempo y con un costo inferior a otras alternativas de prototipaci\'on.
+En resumen NetFPGA es una plataforma robusta que propicia a investigadores, docentes y estudiantes en el área de redes de computadoras a la construcción de prototipos sobre sistemas de redes de alta velocidad y acelerados por hardware, en poco tiempo y con un costo inferior a otras alternativas de prototipaci\'on.\\
 
-
+En este trabajo, se utiliza la plataforma NetFPGA-10G para la prototipaci\'on de un dispositivo compatible con OpenFlow, a partir del cual a su vez implementar una red prototipo basada en el enfoque OpenFlow/SDN. 
 
