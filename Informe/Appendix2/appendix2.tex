@@ -13,13 +13,17 @@ Durante toda la ejecuci\'on del proyecto, nos enfrentamos a desaf\'ios y en part
 
 \section{Problemas con SFPs y Patchcoords}
 
-Los tranceptores SFP+ o transceivers SFP+, son una componente de hardware utilizados en cada puerto f\'isico de la tarjeta NetFPGA en el protot\'ipo.\\ 
+Los tranceptores SFP+ o transceivers SFP+, son una componente de hardware utilizados en cada puerto f\'isico de la tarjeta NetFPGA instalada en RAU-Switch. Básicamente se encargan de implementar el mecanismo de acceso a la capa f\'isica, en este caso enlace de fibra \'optica.\\ 
  
-Or\'iginalmente se trabajo con dos tranceptores SFP+ y patchords de f\'ibra \'optica monomodo. En este punto el hardware funcionaba correctamente. Luego se incorporaron m\'as unidades de SFP+ con el objetivo de constru\'ir el testbed mencionado en [linik a la secci\'on de pruebas donde se presenta el testbed]. En este caso se detectaron problemas para establecer conexiones exitosas para cualquier par de nodos en que se utilizara al menos uno de los SFP nuevos.\\
+Or\'iginalmente se trabaja con dos tranceptores SFP+ compatibles con fibra monomodo y multimodo, y patchords de f\'ibra \'optica monomodo, con los cuales se aprecia un correcto funcionamiento del hardware. 
 
-Tras varias pruebas que confirmaran el error, se consulto con la documentaci\'on y con el equipo generado con ANTEL. Tras la sugerencia de utilizar fibra multimodo en vez de monomodo se logro establecer conexiones exitosas entre todos los pares de interfaces del hardware.\\
+Posteriormente se incorporaron m\'as unidades de SFP+ con el objetivo de constru\'ir el laboratorio de pruebas descrito en el cap\'itulo \ref{chapter6}. En este caso se detectan problemas para establecer conexiones exitosas para cualquier par de nodos en que se utilizara al menos uno de los SFP nuevos.\\
 
-Como conclusi\'on general, para el hardware utilizado se debe utilizar patchcords de fibra multimodo.
+La primera reacci\'on es de preocupación, ante la posibilidad de que la partida de SFP comprada estuviera fallada. Por ello se menciona el inconveniente en el grupo de trabajo generado GT-SDNUy, donde amablemente los integrantes del Centro de Desarrollo y Capacitacion de ANTEL comprueban el funcionamiento del hardware utilizando sus propios equipos.
+
+Tras comprobar que el hardware no se encuentra dañado, advirtiendo la posibilidad de que los SFP no sean compatibles con patchcoords de fibra monomodo, el equipo de ANTEL nos facilita un par de patchcoords multimodo, con los cuales posteriormente se constata el correcto funcionamiento de los SFP.\\
+
+De esta forma, el laboratorio de pruebas queda implementado con SFPs compatibles solamente con fibra multimodo, y patchcoords de fibra multimodo.
 
 \section{Desprogramaci\'on del hardware NetFPGA}
 \label{apendiceB2}
@@ -65,45 +69,47 @@ Si mal no recuerdo tuvimos algun problema en relacion a esto. Tengo la vaga idea
 \section{Desaf\'ios con Open vSwitch}
 \label{apendiceB5}
 
-Open vSwitch es uno de los pilares fundamentales del router opensource, puesto que es el encargado de implementar el plano de datos de OpenFlow. Durante el tiempo en que se trabaj\'o con esta herramienta se genero experiencia y conocimiento en relaci\'on aspectos importantes sobre esta herramienta, que no son triviales y vale la pena mencionar.\\ 
+Open vSwitch es uno de los pilares fundamentales de RAU-Switch puesto que es el encargado de implementar el plano de datos de OpenFlow. Durante el desarrollo de \'este proyecto, en el tiempo empleado a la experimentaci\'on con esta herramienta, se genera conocimiento en relaci\'on aspectos importantes sobre la herramienta; los cuales no son triviales y vale la pena mencionar en este apartado. A continuaci\'on se enumeran los siguientes:\\ 
 
 \begin{enumerate}
-\item Parte de las funcionalidades de Open vSwitch, est\'an implementadas para funcionar en modo kernel, y parte en modo usuario. Estas \'ultimas presentan un nivel de performance muy pobre en comparaci\'on a la primera; y en particular las funcionalidades de MPLS se encuentran solamente disponibles en modo usuario.
+\item Parte de las funcionalidades de Open vSwitch, est\'an implementadas en modo kernel y otra parte en modo usuario. Estas \'ultimas presentan un nivel de performance muy pobre en comparaci\'on a las primera; y en particular las funcionalidades de MPLS se encuentran solamente disponibles en modo usuario.
 
-\item De acuerdo a las notas de liberaci\'on de la \'ultima versi\'on oficial de Open vSwitch(2.3.1), 
-esta garantizado el soporte a MPLS en las operaciones de match, push y pop, para una \'unica etiqueta, as\'i como el posterior procesamiento del paquete de acuerdo al pipe de OpenFlow, funcionando en modo usuario.
+\item De acuerdo a la p\'agina de preguntas frecuentes, la \'ultima versi\'on de Open vSwitch al momento de realizarse este proyecto, garantiza soporte a las operaciones de Match, Push y Pop de hasta tres etiquetas mpls apiladas, as\'i como su posterior procesamiento acorde al pipe de OpenFlow. Todas estas funcionalidades adem\'as se implementan en modo usuario.\\
 
-\item Originalmente las notas de liberaci\'on de Open v Switch v2.3.1, y la p\'agina de preguntas frecuentes no se correspond\'ian con el comportamiento del software. En particular se garantizaba el soporte para match, push, pop y posterior procesamiento de un paquete MPLS en una \'unica etiqueta.
-Experimentalmente se comprobo que las operaciones de match y push funcionaban correctamente para una \'unica etiqueta. No obstante la operaci\'on de POP no estaba soportada. Este comportamiento fue detectado y reportado por otros usuarios de Open vSwitch, resolviéndose posteriormente en la versi\'on de desarrollo de Open vSwitch~\citep{OVSSourceCode}.
+Por otro lado, de acuerdo  a las notas de libreaci\'on de la versi\'on 2.3.1, solamente se garantiza el soporte a las funciones de Match, Push y Pop de mpls para un \'unico nivel de etiquetas; esto es una sola etiqueta mpls. Luego se garantiza adem\'as el posterior procesamiento acorde al pipe OpenFlow.\\
 
-\item Trabajando con la versi\'on m\'as del HEAD, en el repositorio de desarrollo de Open vSwitch~\citep{OVSSourceCode}, se comprueba experimentalmente el soporte para las operaciones de match, push y pop de hasta 3 etiquetas, y el posterior procesamiento del paquete seg\'un el pipe de procesamiento de OpenFlow.
+Esta informaci\'on no solo es contradictoria, si no que adem\'as no se condice con la realidad. Experimentalmente se prueba que si bien la versi\'on 2.3.1 implementa correctamente las operaciones de Match y Push de una \'unica etiqueta mpls, la operaci\'on Pop no se encuentra implementada para esta versi\'on, rompiendo adem\'as el pipe de procesamiento OpenFlow. 
 
-\item Puertos OpenFlow con direcciones IP
+Afortunadamente \'este comportamiento hab\'ia sido detectado y reportado por otros usuarios de Open vSwitch como un BUG, resolviéndose posteriormente en la versi\'on de desarrollo~\citep{OVSSourceCode}.
+
+\item Trabajando con la versi\'on m\'as del HEAD, en el repositorio de desarrollo de Open vSwitch~\citep{OVSSourceCode}, se comprueba experimentalmente el soporte para las operaciones de Match, Push y Pop de hasta 3 etiquetas, as\'i como el posterior procesamiento del paquete seg\'un el pipe de  OpenFlow.
+
+\item Puertos OpenFlow con direcciones IP:
 %Una condici\'on necesaria en la arquitectura del prototipo es la capacidad de asignar direcciones IP a cada interaz del router opensource.
  
 Para lograr que cada interfaz f\'isica de la tarjeta NetFPGA se comporte tanto como un puerto OpenFlow, como una interfaz IP, es necesario:
 
 \begin{enumerate}
-\item Crear un bridge con Open vSwitch, y agregar cada interaz f\'isica como un puerto OpenFlow al mismo.
+\item Crear un bridge con Open vSwitch y agregar cada interaz f\'isica como un puerto OpenFlow al mismo.
 \item Asignar una dirección IP a la propia intefaz f\'isica (por ejemplo utilizando el comando ifconfig).
 \end{enumerate}
 
 %Debido al comportamiento de un bridge en Linux, esta estrategia que parece natural e inmediata, no se comporta en la pr\'actica como se necesita en este proyecto. El comportamiento deseado de una interfaz h\'ibrida IP/OpenFlow en el prototipo ser\'ia el que se indica en la figura~\ref{fig:OVSInterfaces}.
 
-El comportamiento deseado por una interfaz h\'ibrida IP/OpenFlow en el prototipo ser\'ia el que se muestra en la figura ~\ref{fig:OVSInterfaces} parte izquierda.
+El comportamiento deseado por una interfaz h\'ibrida IP/OpenFlow en el prototipo ser\'ia el que se muestra en la figura ~\ref{fig:OVSInterfaces}(mitad izquierda).
 
-El paquete ingresa al router atrav\'es de la interfaz f\'isica \textbf{nf0} y de ah\'i en m\'as el procesamiento del mismo es delegado al m\'odulo de Open vSwitch en el kernel de Linux. Aqu\'i el paquete es procesado y tratado en consecuencia a lo que indica la tabla de flujos en Open vSwitch. En el prototipo, para este paquete existen dos alternativas: (1) se procesa el contenido del mismo y se reenv\'ia por otra interfaz acorde a la regla correspondiente, (2) es contemplado por una regla con la acci\'on \textit{NORMAL}, y por tanto es procesado como lo har\'ia un switch legado(en este caso como lo procesar\'ia el kernel de linux).\\
+El paquete ingresa al router atrav\'es de la interfaz f\'isica \textbf{nf0} y de ah\'i en m\'as el procesamiento del mismo es delegado al m\'odulo de Open vSwitch en el kernel de Linux. Aqu\'i el paquete es procesado y tratado en consecuencia a lo que indica la tabla de flujos en Open vSwitch. En el prototipo, para este paquete existen dos alternativas: (1) se procesa el contenido del mismo y se reenv\'ia por otra interfaz acorde a la regla correspondiente, (2) es contemplado por una regla con la acci\'on \textit{NORMAL} y por tanto es procesado como lo har\'ia un switch legado(en este caso como lo procesar\'ia el kernel de linux).\\
 
-No obstante, el procesamiento del paquete al ingresar por la interfaz f\'isica \textbf{nf0} difiere(ver parte derecha de imagen). El paquete es procesado por Open vSwitch como se describi\'o anteriormente, pero tambi\'en es enviado para su procesamiento en el kernel de linux.
-
-Esto implica que el router se comporte tanto como un switch OpenFlow como un equipo tradicional. Como este comportamiento es inaceptable dentro del prototipo, se debe buscar una solución a dicho problema.
-
-\begin{figure}[htbp!] 
+\begin{figure}[h!] 
 \centering    
 \includegraphics[width=0.75\textwidth]{ovs_figure3}
 \caption[OVSInterfaces]{Descripci\'on esquematica de interfaces propuesta}
 \label{fig:OVSInterfaces}
 \end{figure}
+
+No obstante, el procesamiento del paquete al ingresar por la interfaz f\'isica \textbf{nf0} difiere del comportamiento deseado (ver mitad derecha de la imagen). El paquete es procesado por Open vSwitch como se describi\'o anteriormente, pero tambi\'en es enviado para su procesamiento en el kernel de Linux.
+
+Esto implica que el switch se comporte como una mezcla de un switch OpenFlow  con una PC Linux normal, ocasionando un tratamiento de paquetes en el prototipo diferente al especificado por las reglas OpenFlow calculadas.\\
 
 Para solucionar este problema se utilizan interfaces virtuales. Ficha por favor como seguimos aca\dots...
 

@@ -2,10 +2,15 @@
 
 \chapter{Archivos de configuración}
 
+En el presente anexo se incluyen los scripts y archivos de configuraci\'on de las principales herramientas utilizadas en la construcción del prototipo.
 
-\subsection{Archivos de configuraci\'on Quagga}
+Los siguientes archivos son tomados del PC identificado en el laboratorio de pruebas como \textbf{Galois}; los archivos de conifiguraci\'on de los restantes tres nodos son similares.
 
-Archivo \textbf{daemon}:
+\section{Archivos de configuraci\'on Quagga}
+Para la configuración de Quagga, se utilizan tres archivos: el archivo \textbf{daemons} en donde se indica la configuraci\'on de demonios (en el caso del proyecto se activa el demonio zebra y ospfd), el archivo \textbf{zebra.conf} y el archivo \textbf{ospfd.conf}.
+
+\vspace{1cm}
+Archivo \textbf{daemons}:
 \begin{bash}
 #
 # Entries are in the format: <daemon>=(yes|no|priority)
@@ -26,7 +31,7 @@ ospf6d=no
 ripd=no
 ripngd=no
 isisd=no
-ldpd=yes
+
 \end{bash}
 
 \newpage
@@ -116,6 +121,116 @@ router ospf
  network 192.168.2.0/24 area 0.0.0.0
 !
 log stdout
-
+!
 \end{bash}
 
+\newpage
+\section{Archivos de configuraci\'on de Open vSwitch}
+
+Script de configuraci\'on inicial de ovs:
+
+\begin{bash}
+###################################################
+# Configuracion de Open vSwitch para nodo Galois  #
+###################################################
+#
+# Declara bridge, interfaces
+ovs-vsctl add-br bral
+ovs-vsctl set bridge bral datapath_type=netdev
+ovs-vsctl set bridge bral protocols=OpenFlow13
+ovs-vsctl set bridge bral other-config:datapath-id=000000000000000B
+ovs-vsctl add-port bral eth1
+ovs-vsctl add-port bral nf0
+ovs-vsctl add-port bral nf1
+ovs-vsctl add-port bral nf2
+#
+# Setea por defecto el modo de falla como seguro
+ovs-vsctl set-fail-mode bral secure
+#
+# Interfaces virtuales
+ovs-vsctl add-port bral veth1 
+-- set interface veth1 type=internal
+ovs-vsctl add-port bral vnf0 
+-- set interface vnf0 type=internal
+ovs-vsctl add-port bral vnf1 
+-- set interface vnf1 type=internal
+ovs-vsctl add-port bral vnf2 
+-- set interface vnf2 type=internal
+#
+# Conexion con el controlador
+ovs-vsctl set-controller bral tcp:192.168.1.10:6633
+#
+\end{bash}
+
+
+\newpage
+Script para iniciar OVS:
+\begin{bash}
+ovsdb-server /usr/local/etc/openvswitch/conf.db \
+--remote=punix:/usr/local/var/run/openvswitch/db.sock \
+--remote=db:Open_vSwitch,Open_vSwitch,manager_options \
+--private-key=db:Open_vSwitch,SSL,private_key \
+--certificate=db:Open_vSwitch,SSL,certificate \
+--bootstrap-ca-cert=db:Open_vSwitch,SSL,ca_cert \
+--pidfile --detach 
+--log-file=/var/log/openvswitch/openvswitch.log
+
+ovs-vsctl --no-wait init
+ovs-vswitchd --pidfile --detach 
+--log-file=/var/log/openvswitch/vswitch.log
+ovs-vsctl show
+
+\end{bash}
+\vspace{1cm}
+Script de instalaci\'on de flujos para bridging entre interfaces f\'isicas y virtuales:
+\begin{bash}
+ovs-ofctl -O openflow13 add-flow bral table=0,priority=0,
+hard_timeout=0,idle_timeout=0, in_port=1,actions=output:5
+ovs-ofctl -O openflow13 add-flow bral table=0,priority=0,
+hard_timeout=0,idle_timeout=0,in_port=5,actions=output:1
+
+ovs-ofctl -O openflow13 add-flow bral table=0,priority=0,
+hard_timeout=0,idle_timeout=0,in_port=2,actions=output:6
+ovs-ofctl -O openflow13 add-flow bral table=0,priority=0,
+hard_timeout=0,idle_timeout=0,in_port=6,actions=output:2
+
+ovs-ofctl -O openflow13 add-flow bral table=0,priority=0,
+hard_timeout=0,idle_timeout=0,in_port=3,actions=output:7
+ovs-ofctl -O openflow13 add-flow bral table=0,priority=0,
+hard_timeout=0,idle_timeout=0,in_port=7,actions=output:3
+
+ovs-ofctl -O openflow13 add-flow bral table=0,priority=0,
+hard_timeout=0,idle_timeout=0,in_port=4,actions=output:8
+ovs-ofctl -O openflow13 add-flow bral table=0,priority=0,
+hard_timeout=0,idle_timeout=0,in_port=8,actions=output:4
+\end{bash}
+
+\newpage
+\section{Otros scripts de configuraci\'on}
+
+Configuraci\'on de interfaces f\'isicas:
+\begin{bash}
+
+#######################################################
+# Configuracion de interfaces de Red para Host Galois #
+#######################################################
+#
+# Interfaz para la LAN de gestion
+ifconfig eth0 192.168.1.11 netmask 255.255.255.0 up
+#
+# las interfaces fisicas no tienen direccion IP
+ifconfig eth1 0.0.0.0 up
+ifconfig nf0 0.0.0.0 up
+ifconfig nf1 0.0.0.0 up
+ifconfig nf2 0.0.0.0 up
+
+\end{bash}
+\vspace{1cm}
+Configuraci\'on de interfaces virtuales:
+\begin{bash}
+# Interfaces virtuales Galois 
+ifconfig veth1 192.168.2.11 netmask 255.255.255.0 up
+ifconfig vnf0 10.10.1.1 netmask 255.255.255.0 up
+ifconfig vnf1 10.10.5.1 netmask 255.255.255.0 up
+ifconfig vnf2 10.10.4.1 netmask 255.255.255.0 up
+\end{bash}
