@@ -49,7 +49,7 @@ Se sugiere respetar en la medida que sea posible los mismos conforme a evitar co
 	  Class 1 21CFR1040.10 LN\#50 7\/01
 \item Patchcord multimodo OM3 50/125 duplex lc lc 10 metros pvc 2mm
 	  il $\leq$ 0.25dB RL $\geq$ 28dB
-\item TP-Link Gigabit PCI Express TG-3468
+\item TP-Link Gigabit PCI Express TG-3468\footnote{En el desarrollo del proyecto, para la construcci\'on del laboratorio de pruebas, una tarjeta de red Ethernet en el diseño RAU-Switchpara. Esto se debe a la necesidad de conectarse al equipo mediante un cable Ethernet RJ45, puesto que no se contaba con otros equipos con tarjetas de red \'opticas para realizar las pruebas. Esto quiere decir entonces que esta componente es opcional.}
 \end{itemize}\\
 \hline
 \end{tabularx}
@@ -68,6 +68,8 @@ Se sugiere respetar en la medida que sea posible los mismos conforme a evitar co
 \item Open vSwitch v2.3.9
 \item Repositorio NetFPGA v5.0.5
 \item Xilinx ISE\_DS\_LIn 13.04\_087xd.3.0
+\item SNMP 5.4.3
+\item Quagga 0.99.22
 \end{itemize}\\
 \hline
 \end{tabularx}
@@ -723,3 +725,15 @@ Una vez descargado el código fuente descomprimimos el archivo quagga.public-mas
 # ./configure
 # make 
 \end{bash}
+
+\subsection{Instalaci\'on de agente SNMP}
+Para la instalaci\'on del agente SNMP se utiliza simplemente el gestor de paquetes de Ubuntu \textbf{apt-get}(en otras plataformas se podr\'ia utilizar por ejemplo opkg o yum).
+
+Por lo tanto para instalar el agente SNMP ejecutamos en una consola lo siguiente:
+
+\begin{bash}
+# apt-get install snmp snmpd
+\end{bash}
+
+\subsection{Extra}
+
