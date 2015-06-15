@@ -125,9 +125,9 @@ Para comprobar que los caminos calculados por el algoritmo sean los correctos se
 
 En las figuras ~\ref{fig:CU1P1DumpFlows1}~-~\ref{fig:CU1P1DumpFlows4} se muestran las tablas de flujos asociadas a cada nodo. Para conseguir esta informaci\'on se utiliza el comando dump-flows de la herrmaienta Open vSwitch. No obstante puede obtenerse tambi\'en esta informaci\'on de la propia interfaz gr\'afica de RAUFlow.\\
 
-Tomando como ejemplo el caso del servicio S5, acorde al camino te\'orico todo tr\'afico con origen en la Subred B y destino Subred C es encaminado por el enlace que conecta directamente a ambos nodos por las respectivas interfaces \textit{nf1}. 
+Tomando como ejemplo el caso del servicio S5, acorde al camino te\'orico todo tr\'afico con origen en la Subred B y destino Subred C debería ser encaminado por el enlace que conecta directamente a ambos nodos por las respectivas interfaces \textit{nf1}. 
 
-Asumiendose de aqu\'i en m\'as la notaci\'on $(n, i)$ para referirse a un enlace, donde \textit{n} indica nodo origen e \textit{i} interfaz de reenvío en \textit{n} para el próximo salto, $<(n_1, i_1), \dots, (n_k, i_k)>$ para representar un camino, entonces el camino te\'orico para S5 es el siguiente:
+Asumiendose como notaci\'on $(n, i)$ para referirse a un enlace, donde \textit{n} indica nodo origen e \textit{i} interfaz de reenvío en \textit{n} para el próximo salto, entonces $<(n_1, i_1), \dots, (n_k, i_k)>$ puede usarse para representar un camino. De esta forma el camino te\'orico para S5 puede expresarse de la siguiente forma:
 
  
 $$<(Poisson, nf_1)>$$
@@ -160,12 +160,6 @@ $$<(Poisson, nf_1)>$$
 \label{fig:CU1P1DumpFlows4}
 \end{figure}
 
-[Aca describo los flujos en la tablas de Poisson que hacen que el trafico sea encapsulado y enviado por nf1, y luego los lujos en Oz que desencapsulan el trafico y lo reenvian por eth1 a la subred C implementando de esta forma el camino <Poisson, nf1>]\\
-
-Por otro lado si se toma como ejemplo el servicio S6, seg\'un los costos de la topolog\'ia el camino deber\'ia de ser:
-
-$$<(Oz, nf_0), (Poisson, nf_2)>$$ 
-
 Analizando las tablas de flujos de los nodos \textit{Oz}, \textit{Galois} y \textit{Poisson}, puede comprobarse fácilmente la correspondencia entre el camino calculado y el camino te\'orico.
 Por un lado, acorde a la defrinci\'on de servicios, Galois debería reenviar todo tr\'afico de tipo \textbf{ip} que ingresa por la interfaz eth1(la cual se corresponde con el n\'umero de puerto openflow 1), con origen en la subred 20.20.20.64/26 y destino 20.20.20.0/64 por la interfaz nf1(la cual se corresponde con el n\'umero de puerto openflow 3).
 
@@ -189,8 +183,14 @@ mpls,in\_port=3,mpls\_label=34 \\
 actions=pop\_mpls:0x0800,output:1 }
 \end{center}
 
-Como indica el lujo anterior, a todo paquete mpls que ingresa por el puerto openflow 3 y con valor de etiqueta mpls 34, se le retira el cabezal mpls y se lo reenvia por la interfaz eth1(puerto openflow 1). 
+Como indica el lujo anterior, a todo paquete mpls que ingresa por el puerto openflow 3 y con valor de etiqueta mpls 34, se le retira el cabezal mpls y se lo reenvia por la interfaz eth1(puerto openflow 1). \\
 
+Análogamente se pueden comparar los resultados para los restantes caminos.\\ 
+
+
+servicio S6, seg\'un los costos de la topolog\'ia el camino deber\'ia de ser:
+
+$$<(Oz, nf_0), (Poisson, nf_2)>$$ 
 \subsubsection{Verificaci\'on de Algoritmo de distribución de etiquetas}
 
 [De repente comentar en funcion al escenario anterior porque anda bien]
