@@ -123,7 +123,7 @@ Los caminos te\'oricos son calculados manualmente observando los costos de la to
 
 Para comprobar que los caminos calculados por el algoritmo sean los correctos se analizan las tablas de flujos de Open vSwitch en cada nodo de la red del laboratorio. A partir del contenido de estas tablas fácilmente puede reconocerse el camino calculado.\\
 
-En la figura \ref{fig:CU1P1DumpFlows1} se muestran las tablas de flujo para cada nodo. Para conseguir esta informaci\'on se utiliza el comando dump-flows de la herrmaienta Open vSwitch. No obstante puede obtenerse tambi\'en esta informaci\'on de la propia interfaz gr\'afica de RAUFlow.\\
+En las figuras ~\ref{fig:CU1P1DumpFlows1}~-~\ref{fig:CU1P1DumpFlows4} se muestran las tablas de flujos asociadas a cada nodo. Para conseguir esta informaci\'on se utiliza el comando dump-flows de la herrmaienta Open vSwitch. No obstante puede obtenerse tambi\'en esta informaci\'on de la propia interfaz gr\'afica de RAUFlow.\\
 
 Tomando como ejemplo el caso del servicio S5, acorde al camino te\'orico todo tr\'afico con origen en la Subred B y destino Subred C es encaminado por el enlace que conecta directamente a ambos nodos por las respectivas interfaces \textit{nf1}. 
 
@@ -134,9 +134,30 @@ $$<(Poisson, nf_1)>$$
 
 \begin{figure}[ht!] 
 \centering    
-\includegraphics[width=1.0\textwidth]{CU1P1DumpFlows1}
-\caption[Cambiar por imagen correcta]{Cambiar por imagen correcta}
+\includegraphics[width=1.0\textwidth]{E1P1Gal}
+\caption[Tabla de flujos ovs - Galois]{Tabla de flujos ovs - Galois}
 \label{fig:CU1P1DumpFlows1}
+\end{figure}
+
+\begin{figure}[ht!] 
+\centering    
+\includegraphics[width=1.0\textwidth]{E1P1Oz}
+\caption[Tabla de flujos ovs - Oz]{Tabla de flujos ovs - Oz}
+\label{fig:CU1P1DumpFlows2}
+\end{figure}
+
+\begin{figure}[ht!] 
+\centering    
+\includegraphics[width=1.0\textwidth]{E1P1Poi}
+\caption[Tabla de flujos ovs - Poisson]{Tabla de flujos ovs - Poisson}
+\label{fig:CU1P1DumpFlows3}
+\end{figure}
+
+\begin{figure}[ht!] 
+\centering    
+\includegraphics[width=1.0\textwidth]{E1P1Al}
+\caption[Tabla de flujos ovs - Alice]{Tabla de flujos ovs - Alice}
+\label{fig:CU1P1DumpFlows4}
 \end{figure}
 
 [Aca describo los flujos en la tablas de Poisson que hacen que el trafico sea encapsulado y enviado por nf1, y luego los lujos en Oz que desencapsulan el trafico y lo reenvian por eth1 a la subred C implementando de esta forma el camino <Poisson, nf1>]\\
@@ -145,9 +166,30 @@ Por otro lado si se toma como ejemplo el servicio S6, seg\'un los costos de la t
 
 $$<(Oz, nf_0), (Poisson, nf_2)>$$ 
 
-Analizando las tablas de flujos de los nodos \textit{Oz}, \textit{Galois} y \textit{Poisson} fácilmente se puede comprobar que el camino calculado se corresponde con el camino te\'orico.\\
+Analizando las tablas de flujos de los nodos \textit{Oz}, \textit{Galois} y \textit{Poisson}, puede comprobarse fácilmente la correspondencia entre el camino calculado y el camino te\'orico.
+Por un lado, acorde a la defrinci\'on de servicios, Galois debería reenviar todo tr\'afico de tipo \textbf{ip} que ingresa por la interfaz eth1(la cual se corresponde con el n\'umero de puerto openflow 1), con origen en la subred 20.20.20.64/26 y destino 20.20.20.0/64 por la interfaz nf1(la cual se corresponde con el n\'umero de puerto openflow 3).
 
-[Explicar en base a los flujos como se hace el renvio de un lado para el otro]\\
+Observando la tabla de flujos del nodo Poisson, puede apreciarse el siguiente flujo, con el cual se implementa dicho comportamiento:
+
+\begin{center}
+\textit{cookie=0.0, duration=1978.558s, table=0, n\_packets=0, n\_bytes=0, priority=5, \\
+ip,in\_port=1, nw\_src=20.20.20.64/26,nw\_dst=20.20.20.0/26 \\
+actions=dec\_ttl,push\_mpls:0x8847,set\_field:34->mpls\_label,set\_mpls\_ttl(128),output:3 }
+\end{center}
+
+Notese adem\'as la acci\'on \textbf{dec\_ttl} en el flujo. Esta acci\'on es utilizada en cada nodo de borde en la definici\'on de un servicio para decrementar el ttl de un paquete ip cada vez que ingresa a la red del prototipo (en este caso a la red del laboratorio). Observese tambi\'en el valor de la etiqueta mpls(34) colocado en el paquete para identificar el servicio(etiqueta interna).
+
+Por otro lado, una vez que los paquetes asociados al servicio S5 llegan a nodo Oz ingresando por la interfaz nf1(puerto openflow 3), debe ser retirada la etiqueta mpls interna y reenviarse a traves de la interfaz eth1(puerto openflow 1).
+
+Este comportamiento es implementado en la tabla de flujos de Oz por el siguiente flujo:
+
+\begin{center}
+\textit{cookie=0.0, duration=1978.558s, table=0, n\_packets=0, n\_bytes=0, priority=5, \\
+mpls,in\_port=3,mpls\_label=34 \\
+actions=pop\_mpls:0x0800,output:1 }
+\end{center}
+
+Como indica el lujo anterior, a todo paquete mpls que ingresa por el puerto openflow 3 y con valor de etiqueta mpls 34, se le retira el cabezal mpls y se lo reenvia por la interfaz eth1(puerto openflow 1). 
 
 \subsubsection{Verificaci\'on de Algoritmo de distribución de etiquetas}
 
