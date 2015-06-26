@@ -240,36 +240,58 @@ En la siguiente secci\'on se analiza la clasificaci\'on de tr\'afico.
 \subsubsection{Clasificaci\'on de tr\'afico}
 Se implementa clasificaci\'on de tr\'afico en el nodo de borde identificado como ingreso para el tr\'afico de un servicio en particular. En particular, en el escenario definido se implementa clasificaci\'on de tr\'afico en basándose en la numeraci\'on IP origen y destino de un paquete. De esta forma por ejemplo el nodo Galois determina que camino debe tomar un paquete con origen en la Subred A y destino la Subred B. Luego en cada nodo intermedio los paquetes son procesados acorde a las reglas de reenvio en base a la conmutación de etiquetas mpls.
 
-Para verificar el correcto funcionamiento de los flujos OpenFlow que implementan la clasificaci\'on de tr\'afico, se generan paquetes asociados a un servicio creado, y se observa la manipulaci\'on de estos paquetes al ingresar a la red del prototipo.
+Para verificar el correcto funcionamiento de cada flujo OpenFlow involucrado en la clasificaci\'on de tr\'afico y en el posterior procesamiento del mismo para los paquetes de un servicio en particular, se elige un servicio y se observa el procesamiento de los paquetes asociados en cada nodo involucrado.\\
 
+En la figura \ref{fig:LabE1P1CapsTraf} se muestra el procesamiento de los paquetes asociados al servicio S1 en cada uno de los nodos que atraviesa el camino construido, cuando se genera tr\'afico desde un host en la sub red A hacia otro host en la subred C.
 
+Como puede observarse en el primer cuarto de la imagen (cuarto superior izquierdo), el cual se corresponde con una captura hecha con el comando \textbf{tcpdump} en la interfaz \textbf{eth1} del nodo \textit{Galois}, paquetes ICMP request con origen 20.20.20.131 y destino 20.20.20.05 son recibidos. Tambi\'en pueden observarse paquetes ICMP reply a los paquetes request.
 
-Sin embargo RAUFlow admite realizar clasificaci\'on de tr\'afico por un conjunto bastante m\'as amplio de atributos. A continuaci\'on se definen una nueva lista de servicios orientados a demostrar la correcta implementaci\'on de esta funcionalidad.
+Luego, como se muestra en el segundo cuarto de la imagen(cuarto superior derecho), el cual se corresponde con una captura del comando \textbf{tcpdump} en la interfaz nf0 del nodo \textit{Galois}, a cada paquete ICMP request se le coloca un cabezal mpls para luego ser reenviado por la interfaz \textbf{nf0}. Luego al arribar al nodo \textit{Oz} por la interfaz \textbf{nf0} de este nodo (cuarto inferior izquierdo de la imagen), el cabezal mpls es retirado de cada paquete para luego reenviarse por la interfaz \textbf{eth1} hacia la subred C (cuarto inferior derecho de la imagen).
 
-Cabe destacar que para esta prueba los servicios anteriormente creados son eliminados.
+\begin{figure}[ht!] 
+\centering    
+\includegraphics[width=1.0\textwidth]{LabE1P1CaputrasTrafico0}
+\caption[Capturas de tr\'afico con tcpdump - servicio S1]{Capturas de tr\'afico con tcpdump - servicio S1}
+\label{fig:LabE1P1CapsTraf}
+\end{figure}
 
-\begin{table}[h]
-\begin{tabular}{| l | l | l | p{4cm} | p{4cm} |}
-\hline
-Nombre & Ingreso & Egreso & Clasificación & Descripción \\ \hline
+Finalmente en la figura \ref{fig:LabE1P1CapHost} puede verse una captura de pantalla del comando ping utilizado para generar tr\'afico ICMP desde el host 20.20.20.131 en la subred A, al host 20.20.20.05 en la subred C.
 
-\crule[Aquamarine]{0.3cm}{0.3cm} S1 & Galois - eth1 & Oz - eth1 & ip\_src=20.20.20.128/26 ip\_dst=20.20.20.0/26 & Tr\'afico de Subred A a Subred C \\ \hline
+\begin{figure}[h!] 
+\centering    
+\includegraphics[width=0.6\textwidth]{E1P1202020131-2020205}
+\caption[Capturas de comando ping H1-Subred A]{Capturas de comando ping H1-Subred A}
+\label{fig:LabE1P1CapHost}
+\end{figure}
 
-\crule[Red]{0.3cm}{0.3cm} S2 & Oz - eth1 & Galois - eth1 & ip\_src=20.20.20.0/26 ip\_dst=20.20.20.128/26 & Tr\'afico de Subred C a Subred A \\ \hline
+%Sin embargo RAUFlow admite realizar clasificaci\'on de tr\'afico por un conjunto bastante m\'as amplio de atributos. A continuaci\'on se definen una nueva lista de servicios orientados a demostrar la correcta implementaci\'on de esta funcionalidad.
 
-\crule[ForestGreen]{0.3cm}{0.3cm} S3 & Galois - eth1 & Poisson - eth1 & ip\_src=20.20.20.128/26 ip\_dst=20.20.20.64/26 & Tr\'afico de Subred A a Subred B \\ \hline
+%Cabe destacar que para esta prueba los servicios anteriormente creados son eliminados.
 
-\crule[LimeGreen]{0.3cm}{0.3cm} S4 & Poisson - eth1 & Galois - eth1 & ip\_src=20.20.20.64/26 ip\_dst=20.20.20.128/26 & Tr\'afico de Subred B a Subred A \\ \hline
+%\begin{table}[h]
+%\begin{tabular}{| l | l | l | p{4cm} | p{4cm} |}
+%\hline
+%Nombre & Ingreso & Egreso & Clasificación & Descripción \\ \hline
+%
+%\crule[Aquamarine]{0.3cm}{0.3cm} S1 & Galois - eth1 & Oz - eth1 & ip\_src=20.20.20.128/26 ip\_dst=20.20.20.0/26 & Tr\'afico de Subred A a Subred C \\ \hline
+%
+%\crule[Red]{0.3cm}{0.3cm} S2 & Oz - eth1 & Galois - eth1 & ip\_src=20.20.20.0/26 ip\_dst=20.20.20.128/26 & Tr\'afico de Subred C a Subred A \\ \hline
+%
+%\crule[ForestGreen]{0.3cm}{0.3cm} S3 & Galois - eth1 & Poisson - eth1 & ip\_src=20.20.20.128/26 ip\_dst=20.20.20.64/26 & Tr\'afico de Subred A a Subred B \\ \hline
+%
+%\crule[LimeGreen]{0.3cm}{0.3cm} S4 & Poisson - eth1 & Galois - eth1 & ip\_src=20.20.20.64/26 ip\_dst=20.20.20.128/26 & Tr\'afico de Subred B a Subred A \\ \hline
+%
+%\crule[RoyalPurple]{0.3cm}{0.3cm} S5 & Poisson - eth1 & Oz - eth1 & ip\_src=20.20.20.64/26 ip\_dst=20.20.20.0/26 & Tr\'afico de Subred B a Subred C \\ \hline
+%
+%\crule[YellowOrange]{0.3cm}{0.3cm} S6 & Oz - eth1 & Poisson - eth1 & ip\_src=20.20.20.0/26 ip\_dst=20.20.20.64/26 & Tr\'afico de Subred C a Subred B \\ \hline
+%\end{tabular}
+%\vspace{0.3cm}
 
-\crule[RoyalPurple]{0.3cm}{0.3cm} S5 & Poisson - eth1 & Oz - eth1 & ip\_src=20.20.20.64/26 ip\_dst=20.20.20.0/26 & Tr\'afico de Subred B a Subred C \\ \hline
+%\caption[CU1 - Escenario 1, servicios extra]{CU1 - Escenario 1, servicios extra}
+%\label{table:TablaFlujos2}
+%\end{table}
 
-\crule[YellowOrange]{0.3cm}{0.3cm} S6 & Oz - eth1 & Poisson - eth1 & ip\_src=20.20.20.0/26 ip\_dst=20.20.20.64/26 & Tr\'afico de Subred C a Subred B \\ \hline
-\end{tabular}
-\vspace{0.3cm}
-\caption[CU1 - Escenario 1, servicios extra]{CU1 - Escenario 1, servicios extra}
-\label{table:TablaFlujos2}
-\end{table}
-
+\newpage
 \subsubsection{Actualizaci\'on de rutas}
 Para probar la actualizaci\'on de rutas cuando cambia la topolog\'ia se trabaja nuevamente con los servicios definidos en \ref{table:TablaFlujos}. 
 
