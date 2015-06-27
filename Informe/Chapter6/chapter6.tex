@@ -84,7 +84,6 @@ Sobre este escenario se ejecutan una serie de pruebas orientadas a verificar los
 
 Para construir la red privada multipunto uniendo las tres subredes mencionadas y adem\'as verificar los puntos anteriores, se instancian los siguientes servicios(ver tabla \ref{table:TablaFlujos}). Por cada par de subredes se crean dos servicios (un servicio para cada sentido del tr\'afico).\\
 
-\newpage
 \begin{table}[h]
 \begin{tabular}{| l | l | l | p{4cm} | p{4cm} |}
 \hline
@@ -100,8 +99,26 @@ Nombre & Ingreso & Egreso & Clasificación & Descripción \\ \hline
 
 \crule[RoyalPurple]{0.3cm}{0.3cm} S5 & Poisson - eth1 & Oz - eth1 & ip\_src=20.20.20.64/26 ip\_dst=20.20.20.0/26 eth\_type=0x0800 IP & Tr\'afico de Subred B a Subred C \\ \hline
 
-\crule[YellowOrange]{0.3cm}{0.3cm} S6 & Oz - eth1 & Poisson - eth1 & ip\_src=20.20.20.0/26 ip\_dst=20.20.20.64/26 eth\_type=0x0800 & Tr\'afico IP de Subred C a Subred B \\ \hline \hline
+\crule[YellowOrange]{0.3cm}{0.3cm} S6 & Oz - eth1 & Poisson - eth1 & ip\_src=20.20.20.0/26 ip\_dst=20.20.20.64/26 eth\_type=0x0800 & Tr\'afico IP de Subred C a Subred B \\ \hline 
 
+\end{tabular}
+\vspace{0.3cm}
+\caption[CU1 - Escenario 1, servicios creados]{CU1 - Escenario 1, servicios creados}
+\label{table:TablaFlujos}
+\end{table}
+
+Para cada uno de estos servicios adem\'as se indica el etherype 0x0800 correspondiente al tipo de tr\'afico IPv4.\\
+
+Este conjunto de servicios establece el procesamiento de paquetes de capa 3 para las diferentes subredes de forma de conectarlas en una red privada de capa 3. Sin embargo no alcanzan para la implementaci\'on de la misma. Es necesario definir un conjunto de servicios adicionales.\\
+
+Para fija ideas, cuando el host H1 en la sub red A envia un paquete con destino al host H3 en la subred B, primero envía el paquete al gateway de la subred A (r1) el cual entiende que el paquete debe ser reenviado al router de borde de la red del prototipo al cual esta conectada la subred, en este caso Galois. No obstante en este paso r1 no conoce la dirección de capa de enlace (direcci\'on MAC) que debe colocarse al paquete para ser reenviado a Galois; por ello utilizando el protocolo ARP (Address Resolution Protocol) inicia una consulta ARP con la direcci\'on del siguiente paso, el router r2 (192.168.2.113).
+
+Para que esta consulta ARP pueda atravesar la red del laboratorio, así como su respuesta y para todas las combinaciones de consultas ARP en el escenario planteado, se instancian los siguientes servicios (ver tabla \ref{table:TablaFlujos2}). 
+
+\begin{table}[h]
+\begin{tabular}{| l | l | l | p{4cm} | p{4cm} |}
+\hline
+ 
 S7 & Galois - eth1 & Oz - eth1 & arp\_tpa=192.168.2.112 eth\_type=0x0806 & Consultas ARP Subred A a Subred C \\ \hline
 
 S8 & Oz - eth1 & Galois - eth1 & arp\_tpa=192.168.2.111 eth\_type=0x0806 & Consultas ARP Subred C a Subred A \\ \hline
@@ -116,20 +133,18 @@ S12 & Oz - eth1 & Poisson - eth1 & arp\_tpa=192.168.2.113 eth\_type=0x0806 & Con
 
 \end{tabular}
 \vspace{0.3cm}
-\caption[CU1 - Escenario 1, servicios creados]{CU1 - Escenario 1, servicios creados}
-\label{table:TablaFlujos}
+\caption[CU1 - Escenario 1, servicios adicionales]{CU1 - Escenario 1, servicios adicionales}
+\label{table:TablaFlujos2}
 \end{table}
 
-Para cada uno de estos servicios adem\'as se indica el etherype 0x0800 correspondiente al tipo de tr\'afico IPv4.\\
-
-De esta forma se implementa una VPN de capa 3 para la organizaci\'on mencionada, uniendo las tres sucursales. A continuaci\'on se detallan las pruebas realizadas para cada uno de los aspectos mencionados anteriormente.
+Ahora si, se tiene definido el conjunto de servicios que implementa la red privada de capa 3 multipunto en dicho escenario, utilizando el prototipo. A continuaci\'on se detallan las pruebas realizadas para cada uno de los aspectos mencionados anteriormente.
 
 \subsubsection{Verificaci\'on de Algoritmo de ruteo}
 En esta secci\'on se eval\'ua el correcto funcionamiento del algoritmo de ruteo. Para ello se comparan los caminos computados por el algoritmo para cada servicio, con los respectivos mejores caminos te\'oricos(previamente calculados de forma manual). 
 
 Para cada camino se verifican dos cosas: (1) que el camino calculado se corresponde con el camino te\'orico y (2) que el camino es correctamente instalado en forma de reglas de reenvío (en base a conmutaci\'on de etiquetas) en las respectivas tablas de flujos OpenFlow de cada nodo en el camino.\\
 
-Como se ha mencionado, los caminos te\'oricos son calculados manualmente observando los costos de la topolog\'ia (figura \ref{fig:LaboratorioDePruebasCostos}). Los resultados de este procedimiento se muestran en la figura \ref{fig:CUP1Caminos}. Cada camino es identificado mediante el código de color de cada servicio.\\
+Como se ha mencionado, los caminos te\'oricos son calculados manualmente observando los costos de la topolog\'ia (figura \ref{fig:LaboratorioDePruebasCostos}). Los resultados de este procedimiento se muestran en la figura \ref{fig:CUP1Caminos}. Cada camino es identificado mediante el código de color de cada servicio, omitiendo los servicios de la tabla \ref{table:TablaFlujos2} con el objetivo de simplificar el diagrama.\\
 
 \begin{figure}[ht!] 
 \centering    
@@ -142,12 +157,7 @@ Para obtener los caminos calculados por el algoritmo de ruteo, se analizan las t
 
 En las figuras ~\ref{fig:CU1P1DumpFlows1}~-~\ref{fig:CU1P1DumpFlows4} se muestran las tablas de flujos asociadas a cada nodo del laboratorio. Para conseguir esta informaci\'on se utiliza el comando \textbf{dump-flows} de la herrmaienta Open vSwitch. Sin embargo puede obtenerse tambi\'en esta informaci\'on desde la propia interfaz gr\'afica de RAUFlow.\\
 
-Asumiendose la notaci\'on $(n, i)$ para referirse a un enlace, donde \textit{n} indica nodo origen e \textit{i} interfaz de reenvío en \textit{n} para el próximo salto, entonces $<(n_1, i_1), \dots, (n_k, i_k)>$ puede usarse para denotar un camino en el laboratorio. De esta forma se pueden comparar f\'acilmente los caminos te\'oricos con los calculados.\\
-
-Tomando como ejemplo el caso del servicio S3, el camino te\'orico puede denotarse de la siguiente forma:
- 
-$$<(Galois, nf_2)>$$
-
+\newpage
 \begin{figure}[ht!] 
 \centering    
 \includegraphics[width=1.0\textwidth]{LabE1P1Gal}
@@ -155,33 +165,39 @@ $$<(Galois, nf_2)>$$
 \label{fig:CU1P1DumpFlows1}
 \end{figure}
 
-\begin{figure}[ht!] 
+\begin{figure}[h!] 
 \centering    
 \includegraphics[width=1.0\textwidth]{LabE1P1Oz}
 \caption[Tabla de flujos ovs - Oz]{Tabla de flujos ovs - Oz}
 \label{fig:CU1P1DumpFlows2}
 \end{figure}
 
-\begin{figure}[ht!] 
-\centering    
-\includegraphics[width=1.0\textwidth]{LabE1P1Poi}
-\caption[Tabla de flujos ovs - Poisson]{Tabla de flujos ovs - Poisson}
-\label{fig:CU1P1DumpFlows3}
-\end{figure}
-
-\begin{figure}[ht!] 
+\begin{figure}[h!] 
 \centering    
 \includegraphics[width=1.0\textwidth]{LabE1P1Al}
 \caption[Tabla de flujos ovs - Alice]{Tabla de flujos ovs - Alice}
+\label{fig:CU1P1DumpFlows3}
+\end{figure}
+
+\begin{figure}[h!] 
+\centering    
+\includegraphics[width=1.0\textwidth]{LabE1P1Poi}
+\caption[Tabla de flujos ovs - Poisson]{Tabla de flujos ovs - Poisson}
 \label{fig:CU1P1DumpFlows4}
 \end{figure}
 
+\newpage
+Asumiendose la notaci\'on $(n, i)$ para referirse a un enlace, donde \textit{n} indica nodo origen e \textit{i} interfaz de reenvío en \textit{n} para el próximo salto, entonces $<(n_1, i_1), \dots, (n_k, i_k)>$ puede usarse para denotar un camino en el laboratorio. De esta forma se pueden comparar f\'acilmente los caminos te\'oricos con los calculados.\\
+
+Tomando como ejemplo el caso del servicio S3, el camino te\'orico puede denotarse de la siguiente forma:
+ 
+$$<(Galois, nf_2)>$$
 
 En otras palabras todo tr\'afico IP con origen en la subred A y destino a la subred B, es encaminado a través de la interfaz $nf_2$ en el nodo de ingreso \textit{Galois}. Luego en el nodo de egreso \textit{Poisson} es reenviado por la correspondiente interfaz del servicio.\\
 
 Analizando las tablas de flujos de los nodos \textit{Galois} y \textit{Poisson}, puede comprobarse fácilmente la correspondencia entre el camino calculado y el camino te\'orico.
 
-Por un lado en la tabla de flujos de \textit{Galois} se tiene el siguiente flujo:
+Por un lado en la tabla de flujos del nodo \textit{Galois} se tiene el siguiente flujo:
 
 %Por un lado, acorde a la definci\'on del servicio, Galois debería reenviar todo tr\'afico de tipo \textbf{ip} que ingresa por la interfaz eth1(la cual se corresponde con el n\'umero de puerto openflow 1), con origen en la subred 20.20.20.64/26 y destino 20.20.20.0/64 por la interfaz nf1(la cual se corresponde con el n\'umero de puerto openflow 3).
 
@@ -192,13 +208,11 @@ actions=dec\_ttl,push\_mpls:0x8847,set\_field:30->mpls\_label,set\_mpls\_ttl(128
 \label{lst:flows1}
 \end{center}
 
-En pocas palabras este flujo toma todo paquete recibido por el puerto openflow identificado con el n\'umero 1(interfaz eth1), numeración IP origen 20.20.20.128/26(subred A) y destino 20.20.20.64/26 (subred B), decrementa el ttl del paquete, coloca un cabezal mpls con la etiqueta 32 y lo reenvía por el puerto openflow identificado con el n\'umero 4(interfaz nf2). Observar el valor de la etiqueta mpls colocado en el mismo para identificar el servicio(etiqueta interna). 
+Este flujo toma todo paquete recibido por el puerto openflow identificado con el n\'umero 1(interfaz eth1), numeración IP origen 20.20.20.128/26(subred A) y destino 20.20.20.64/26 (subred B), decrementa el TTL del paquete, coloca un cabezal mpls con la etiqueta 32 y finalmente lo reenvía por el puerto openflow identificado con el n\'umero 4(interfaz nf2). Observar que el valor de la etiqueta mpls colocado es el utilizado para identificar el servicio(etiqueta interna). 
 
 %Notese adem\'as la acci\'on \textbf{dec\_ttl} en el flujo. Esta acci\'on es utilizada en cada nodo de borde en la definici\'on de un servicio para decrementar el ttl de un paquete ip cada vez que ingresa a la red del prototipo (en este caso a la red del laboratorio). Observese tambi\'en el valor de la etiqueta mpls(34) colocado en el paquete para identificar el servicio(etiqueta interna).
 
-Por otro lado, una vez que los paquetes asociados al servicio S3 llegan a nodo \textit{Poisson} ingresando por la interfaz nf2(puerto openflow n\'umero 4), debe ser retirada la etiqueta mpls interna y reenviarse a través de la interfaz eth1(puerto openflow n\'umero 1).
-
-Este comportamiento es implementado en la tabla de flujos de Poisson mediante el siguiente flujo:
+El procesamiento de los paquetes asociados al servicio S3 en el nodo \textit{Poisson}, esta dado por el siguiente flujo:
 
 \begin{center}
 \textit{cookie=0.0, duration=655.076s, table=0, n\_packets=0, n\_bytes=0, priority=5, \\
@@ -206,15 +220,15 @@ mpls,in\_port=4,mpls\_label=32,mpls\_bos=1 \\
 actions=pop\_mpls:0x0800,output:1 }
 \end{center}
 
-De esta forma todos los paquetes asociados al servicio S3 son reenviados desde el nodo de ingreso Galois al nodo de egreso Poisson mediante un solo enlace utilizando un solo nivel de etiquetas mpls.\\
+Este flujo toma todo paquete recibido por el puerto openflow n\'umero 4(interfaz nf2), retira el cabezal mpls y finalmente lo reenvía por el puerto n\'umero 1(interfaz eth1).\\
 
-Analizando el camino que deben seguir los paquetes que atraviesan la red del laboratorio en el sentido inverso; es decir, desde la subred B hacia la subred A, se analiza el camino calculado para el tr\'afico asociado al servicio S4. 
+De esta forma todos los paquetes asociados al servicio S3 son transportados desde el nodo de ingreso \textit{Galois} al nodo de egreso \textit{Poisson} mediante un solo enlace, utilizando un solo nivel de etiquetas mpls.\\
 
-El camino te\'orico para el tr\'afico asociado a dicho servicio es:
+Analizando el camino que deben seguir los paquetes que atraviesan la red del laboratorio en el sentido inverso; es decir, desde la subred B hacia la subred A(servicio S4), el camino teórico es el siguiente:
 
 $$<(Poisson, nf_1), (Oz, nf_0)>$$ 
 
-Este camino es implementado mediante los siguientes flujos en la tabla del nodo \textit{Poisson} por un lado:
+Analizando primero la tabla de flujos del nodo \textit{Poisson}, el primer salto del camino es implementado por los siguientes flujos:
 
 \begin{center}
 \textit{cookie=0.0, duration=655.065s, table=0, n\_packets=0, n\_bytes=0, priority=5, \\
@@ -225,20 +239,22 @@ mpls,in\_port=1,mpls\_label=33 actions=push\_mpls:0x8847,set\_fied:30->mpls\_lab
 }
 \end{center}
 
-Notar como primera diferencia en comparación con el camino anterior, que en este caso se tienen dos flujos: un primer flujo para colocar la etiqueta asociada al servicio (etiqueta interna) y un segundo flujo para colocar la etiqueta de reenvío (etiqueta externa). El camino anterior carece de etiqueta externa puesto que al ser un camino de un solo salto, el primer nodo coincide con el pen\'ultimo, y al implementar PHP no se coloca etiqueta externa. 
+Notar como primera diferencia en comparación al camino anterior, en este caso se tienen dos flujos: un primer flujo para colocar la etiqueta asociada al servicio (etiqueta interna) y un segundo flujo para colocar la etiqueta de reenvío (etiqueta externa). 
 
-En pocas palabras se le colocan dos cabezales mpls al paquete y se reenvía a trav\'es del puerto n\'umero 3(interfaz nf1).\\
+El camino anterior carece de etiqueta externa puesto que al ser un camino de un solo salto, el primer nodo coincide con el pen\'ultimo, y al implementar PHP no es necesario colocar etiqueta externa. 
 
-Al llegar al nodo \textit{Oz}, el siguiente salto en el camino es implementado por el siguiente flujo en la tabla de dicho nodo:
+Tras colocar el par de etiquetas mpls sobre el paquete al ingreso, el mismo es reenviado a trav\'es del puerto n\'umero 3(interfaz nf1).\\
+
+El siguiente salto en el camino, es implementado por el siguiente flujo en la tabla del nodo \textit{Oz}:
 
 \begin{center}
 \textit{cookie=0.0, duration=610.380s, table=0, n\_packets=243, n\_bytes=25748, priority=5, \\
 mpls,in\_port=3,mpls\_label=30,mpls\_bos=0 actions=pop\_mpls:0x8847,output:2 }
 \end{center}
 
-Se le coloca una nueva etiqueta mpls externa con el valor 30, y se reenvia por el puerto n\'umero 4(interfaz nf2).\\
+Tras ingresar un paquete, se cambia el valor de la etiqueta externa para luego reenviarse por el puerto n\'umero 4(interfaz nf2).\\
 
-Finalmente en el nodo \textit{Galois} el tramo final del camino es implementado por el siguiente flujo en su tabla:
+Luego el tramo final del camino es implementado en el nodo \textit{Galois} mediante el siguiente flujo:
 
 \begin{center}
 \textit{cookie=0.0, duration=531.341s, table=0, n\_packets=234, n\_bytes=23868, priority=5, \\
@@ -401,7 +417,7 @@ Nombre & Ingreso & Egreso & Clasificación & Descripción \\ \hline
 \end{tabular}
 \vspace{0.3cm}
 \caption[CU1 - Escenario 2]{CU1 - Escenario 2}
-\label{table:TablaFlujos2}
+\label{table:TablaFlujos3}
 \end{table}
 
 
