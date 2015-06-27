@@ -208,7 +208,7 @@ actions=dec\_ttl,push\_mpls:0x8847,set\_field:30->mpls\_label,set\_mpls\_ttl(128
 \label{lst:flows1}
 \end{center}
 
-Este flujo toma todo paquete recibido por el puerto openflow identificado con el n\'umero 1(interfaz eth1), numeración IP origen 20.20.20.128/26(subred A) y destino 20.20.20.64/26 (subred B), decrementa el TTL del paquete, coloca un cabezal mpls con la etiqueta 32 y finalmente lo reenvía por el puerto openflow identificado con el n\'umero 4(interfaz nf2). Observar que el valor de la etiqueta mpls colocado es el utilizado para identificar el servicio(etiqueta interna). 
+Este flujo toma todo paquete recibido por el puerto openflow identificado con el n\'umero 1(interfaz eth1), numeración IP origen 20.20.20.128/26(subred A) y destino 20.20.20.64/26 (subred B), decrementa el TTL del paquete, coloca un cabezal mpls con la etiqueta 32 y finalmente lo reenvía por el puerto openflow identificado con el n\'umero 4(interfaz nf2). Observar que el valor de la etiqueta mpls colocado es el utilizado para identificar el servicio(etiqueta interna). \\
 
 %Notese adem\'as la acci\'on \textbf{dec\_ttl} en el flujo. Esta acci\'on es utilizada en cada nodo de borde en la definici\'on de un servicio para decrementar el ttl de un paquete ip cada vez que ingresa a la red del prototipo (en este caso a la red del laboratorio). Observese tambi\'en el valor de la etiqueta mpls(34) colocado en el paquete para identificar el servicio(etiqueta interna).
 
@@ -270,15 +270,15 @@ Análogamente el lector puede completar el análisis de la correspondencia entre
 En la siguiente secci\'on se analiza la clasificaci\'on de tr\'afico.
 
 \subsubsection{Clasificaci\'on de tr\'afico}
-Se implementa clasificaci\'on de tr\'afico en el nodo de borde identificado como ingreso para el tr\'afico de un servicio en particular. En particular, en el escenario definido se implementa clasificaci\'on de tr\'afico en basándose en la numeraci\'on IP origen y destino de un paquete. De esta forma por ejemplo el nodo Galois determina que camino debe tomar un paquete con origen en la Subred A y destino la Subred B. Luego en cada nodo intermedio los paquetes son procesados acorde a las reglas de reenvio en base a la conmutación de etiquetas mpls.
+Se implementa clasificaci\'on de tr\'afico en el nodo ingreso para un servicio en particular. En el escenario definido, se realiza clasificaci\'on de tr\'afico basándose en la numeraci\'on IP origen y destino de un paquete. De esta forma, por ejemplo el nodo Galois determina que camino debe tomar un paquete con origen en la Subred A y destino la Subred B. Luego en cada nodo intermedio los paquetes son procesados acorde a las reglas de reenvío en base a la conmutación de etiquetas mpls.
 
-Para verificar el correcto funcionamiento de cada flujo OpenFlow involucrado en la clasificaci\'on de tr\'afico y en el posterior procesamiento del mismo para los paquetes de un servicio en particular, se elige un servicio y se observa el procesamiento de los paquetes asociados en cada nodo involucrado.\\
+Para verificar el correcto funcionamiento de cada flujo OpenFlow involucrado en la clasificaci\'on de tr\'afico, as\'i como el posterior procesamiento dentro de la red del prototipo, se elige un servicio y se observa el procesamiento de los paquetes asociados en cada nodo involucrado en el camino.\\
 
-En la figura \ref{fig:LabE1P1CapsTraf} se muestra el procesamiento de los paquetes asociados al servicio S1 en cada uno de los nodos que atraviesa el camino construido, cuando se genera tr\'afico desde un host en la sub red A hacia otro host en la subred C.
+En la figura \ref{fig:LabE1P1CapsTraf} se muestra el procesamiento de los paquetes asociados al servicio S1 en cada uno de los nodos que componen al LSP, generando tr\'afico desde un host en la sub red A con destino a otro host en la subred C.
 
-Como puede observarse en el primer cuarto de la imagen (cuarto superior izquierdo), el cual se corresponde con una captura hecha con el comando \textbf{tcpdump} en la interfaz \textbf{eth1} del nodo \textit{Galois}, paquetes ICMP request con origen 20.20.20.131 y destino 20.20.20.05 son recibidos. Tambi\'en pueden observarse paquetes ICMP reply a los paquetes request.
+Como puede observarse en el primer cuarto de la imagen (cuarto superior izquierdo), el cual se corresponde con una captura hecha con el comando \textbf{tcpdump} en la interfaz \textbf{eth1} del nodo \textit{Galois}, se reciben paquetes ICMP request con origen 20.20.20.131 y destino 20.20.20.05. Tambi\'en puede observarse en esta imagen paquetes ICMP reply a los paquetes request enviados.
 
-Luego, como se muestra en el segundo cuarto de la imagen(cuarto superior derecho), el cual se corresponde con una captura del comando \textbf{tcpdump} en la interfaz nf0 del nodo \textit{Galois}, a cada paquete ICMP request se le coloca un cabezal mpls para luego ser reenviado por la interfaz \textbf{nf0}. Luego al arribar al nodo \textit{Oz} por la interfaz \textbf{nf0} de este nodo (cuarto inferior izquierdo de la imagen), el cabezal mpls es retirado de cada paquete para luego reenviarse por la interfaz \textbf{eth1} hacia la subred C (cuarto inferior derecho de la imagen).
+Luego, como se muestra en el segundo cuarto de la imagen(cuarto superior derecho), el cual se corresponde con una captura realizada en la interfaz nf0 de dicho nodo, a cada paquete ICMP request recibido por la interfaz eth1 se le coloca un cabezal mpls con la etiqueta 31 y se reenvía por la interfaz en cuestión. Finalmente al arribar al nodo \textit{Oz} por la interfaz \textbf{nf0} (cuarto inferior izquierdo de la imagen), el cabezal mpls es retirado de cada paquete para luego ser reenviado por la interfaz \textbf{eth1} hacia la subred C (cuarto inferior derecho de la imagen).\\
 
 \begin{figure}[ht!] 
 \centering    
@@ -287,7 +287,7 @@ Luego, como se muestra en el segundo cuarto de la imagen(cuarto superior derecho
 \label{fig:LabE1P1CapsTraf}
 \end{figure}
 
-Finalmente en la figura \ref{fig:LabE1P1CapHost} puede verse una captura de pantalla del comando ping utilizado para generar tr\'afico ICMP desde el host 20.20.20.131 en la subred A, al host 20.20.20.05 en la subred C.
+En la figura \ref{fig:LabE1P1CapHost} se muestra una captura de pantalla del comando ping utilizado para generar tr\'afico ICMP desde el host 20.20.20.131 en la subred A, al host 20.20.20.05 en la subred C.
 
 \begin{figure}[h!] 
 \centering    
