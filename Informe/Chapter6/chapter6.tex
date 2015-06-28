@@ -430,8 +430,12 @@ Finalmente cuando el paquete arriba al nodo \textit{Poisson}, el procesamiento f
 mpls,in\_port=2,mpls\_label=32,mpls\_bos=1 actions=pop\_mpls:0x0800,output:1 }
 \end{center}
 
-Análogamente se puede estudiar la correspondencia entre el camino te\'orico y el camino calculado para el servicio S6.
+Análogamente se puede estudiar la correspondencia entre el camino te\'orico y el camino calculado para el servicio S6.\\
  
+De esta forma se verifica para el laboratorio de pruebas construido, la correctitud del algoritmo de ruteo, el algoritmo de distribución de etiquetas, se prueba el correcto funcionamiento de las tablas de flujos Open vSwitch y los flujos particulares utilizados para implementar clasificacion de tr\'afico, se comprueba el correcto accionar del programa ante cambios en la topolog\'ia (recalculo de LSPs), y finalmente se valida la construcción de un servicio de rede privada multipunto de capa 3.
+
+En la siguiente seccci\'on se discute la verificacion de otros aspectos importantes en el funcionamiento del prototipo, utilizando como escenario de pruebas la construcci\'on de dos servicios de red privada punto a punto de capa 3, utilizando dos organizaciones diferentes.   
+
 \subsection{Escenario 2}
 
 Este escenario representa una red privada punto a punto de capa 3. Esta compuesto por dos organizaciones diferentes, cada una de ellas con dos sucursales f\'isicamente separadas. Adicionalmente  ambas organizaciones utilizan la misma numeraci\'on IP en sus respectivas subredes.\\
