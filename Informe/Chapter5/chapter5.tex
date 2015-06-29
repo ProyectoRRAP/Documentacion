@@ -13,6 +13,7 @@ En cap\'itulos anteriores se han detallado las caracter\'isticas m\'as important
 En el presente cap\'itulo se propone un an\'alisis de RAUFlow siguiendo un proceso de dise\~no tradicional de Ingenier\'ia de Software dividido en cuatro etapas. Una primera etapa de an\'alisis de requerimientos, una segunda etapa de relevamiento de casos de uso, una tercera etapa de dise\~no del modelo de datos y finalmente una cuarta etapa destinada al dise\~no general de la arquitectura. Ademas se presentan los aspectos m\'as importantes relacionados a la implementaci\'on de RAUFlow como por ejemplo las implementaciones del algoritmo de ruteo y del algoritmo de distribución de etiquetas, como se implementa clasificaci\'on de tr\'afico y como se puede implementar QoS entre otros detalles. 
 
 \section[An\'alisi de requerimientos]{An\'alisis de requerimientos}
+\label{section5.1}
 
 Anteriormente en la sección ~\ref{3.1} se definieron los requerimientos relevados para el prototipo de la RAU2. De ellos y de un trabajo de an\'alisis sobre la realidad modelada se desprende la siguiente tabla de requerimientos para RauFlow:
 
@@ -160,13 +161,32 @@ Conceptualmente RAUFlow es una aplicaci\'on de gestión de red, basada en el enf
 \label{fig:VistaComponentes2}
 \end{figure}
 
-Analizando globalmente a la aplicaci\'on, su arquitectura (ver figura \ref{fig:VistaComponentes2}), se caracteriza por un diseño en tres capas l\'ogicas: (1) capa de presentaci\'on, (2) capa de control y (3) capa de dispositivos.\\
+Teniendo en cuenta lo anterior, la arquitectura de la aplicaci\'on (ver figura \ref{fig:VistaComponentes2}), se caracteriza por un diseño en tres capas l\'ogicas: (1) capa de presentaci\'on, (2) capa de control y (3) capa de dispositivos.\\
 
-En las siguientes secciones se explican en detalle cada una de estas capas, comenzando por la capa de control.
+A continuaci\'ion se explica en detalle cada una de estas capas, as\'i como la interacci\'on entre ellas y los principales detalles de los m\'odulos que las componen.
+
+\subsection{Capa de Presentación}
+Esta capa esta destinada a proveer de funcionalidades para el acceso y manipulaci\'on de datos de la aplicaci\'on (estado de la topolog\'ia e informaci\'on asociada a servicios de redes privadas principalmente), as\'i como todas las funcionalidades especificadas como requerimientos en la secci\'on 
+\ref{section5.1}.\\ 
+
+Dentro de la capa de presentaci\'on se destacan: (1) una interfaz gr\'afica identificada en el esquema como RauFlowUI, la cual implementa cada uno de los casos de uso mencionados anteriormente en la secci\'on \ref{section5.3}, (2) ControladorUI, componente que implementa los m\'etodos de acceso entre las funcionalidades de RauFlowUI y la capa de control a trav\'es de una API Rest de Servicios enS la capa de control y (3) un m\'odulo javascript denominado \textbf{ryu.topology}.\\ 
+
+Ryu incluye a modo de documentaci\'on un conjunto de aplicaciones muy sencillas en las que se ejemplifica el uso de las principales funcionalidades del protocolo OpenFlow. Entre estas aplicaciones se encuentra \textbf{gui\_topology}. Esta aplicaci\'on brinda una representaci\'on gr\'afica b\'asica de de las componentes topol\'ogicas en una red OpenFlow (switches, puertos y links).
+
+Esta aplicaci\'on se basa en tres aplicaciones Ryu de la capa de control (m\'as adelante se detalla el funcionamiento de ellas cuando se explique la capa de control), una pagina web desarrollada puramente sobre HTML y un m\'odulo de javascript encargado de la manipulaci\'on de informaci\'on entre las aplicaciones Ryu y esta p\'agina mediante websockets. Este m\'odulo javascript recibe el nombre de \textbf{ryu.topology}.
+
+En RAUFlow se combinan las componentes de la aplicaic\'on \textbf{gui\_topology} como el m\'odulo javascript \textbf{ryu.topology} y las tres aplicaciones Ryu con el resto de las componentes de la aplicaci\'on con el objetivo de mejorar la interfaz gr\'afica RAUFlowUI, brindando una representaci\'on gr\'afica del estado topol\'ogico de la red utilizando reutilizando las herramientas existentes.\\
+ 
+A continuaci\'on se detalla la capa de control.
 
 \subsection{Capa de Control}
 
-La capa de control se compone por un lado por el controlador Ryu y un un conjunto de aplicaciones Ryu, y por otro lado los m\'odulos LSDBSync encargado de sincronizar la informaci\'on de la Link-State-Database en la instancia de Quagga ejecutada en la PC controlador con estas aplicaciones y SNMP Administrador encargado de la comunicaci\'on con los agentes SNMP instalados en cada nodo del prototipo. 
+La capa de control consta de tres componentes principalmente: el software de control Ryu y el conjunto de aplicaciones SDN que se ejecutan sobre este, el m\'odulo LSDBSync y finalmente el modulo Administrador SNMP.\\
+
+ 
+
+
+Por un lado, la capa de control esta integrada por el software de control Ryu y cuatro aplicaciones Ryu mencionadas. por otro lado los m\'odulos LSDBSync encargado de sincronizar la informaci\'on de la Link-State-Database en la instancia de Quagga ejecutada en la PC controlador con estas aplicaciones y SNMP Administrador encargado de la comunicaci\'on con los agentes SNMP instalados en cada nodo del prototipo. 
 
 
 
@@ -217,8 +237,8 @@ Dentro de esta componente, en el diagrama se muestra un modulo denominado \textb
 
 En la figura ~\ref{fig:VistaComponentes2} se muestran el modulo \textbf{SNMP Management}, responsable de  la comunicaci\'on con el Agente SNMP instalado en cada nodo del prototipo, con el fin de obtener la correspondencia entre n\'umeros de puerto OpenFlow y direcciones IP de cada interfaz.\\
 
-\subsection{Capa de Presentación}
-Dentro de la capa de presentaci\'on se destacan: (1) una interfaz gr\'afica identificada en el esquema como RauFlowUI, la cual implementa cada uno de los casos de uso mencionados anteriormente en \ref{section5.3}, (2) ControladorUI, componente que funciona como nexo entre las funcionalidades de RauFlowUI y la API Rest de Servicios y (3) \textbf{ryu.topology}. Esta \'ultima componente forma parte del conjunto de apliaciones Ryu adicionales que se incluyen en el dise\~no de RauFlow y tiene como principal funci\'on la de proveer una representaci\'on gr\'afica en tiempo real de la topolog\'ia existente en el prototipo.\\
+%\subsection{Capa de Presentación}
+%Dentro de la capa de presentaci\'on se destacan: (1) una interfaz gr\'afica identificada en el esquema como RauFlowUI, la cual implementa cada uno de los casos de uso mencionados anteriormente en \ref{section5.3}, (2) ControladorUI, componente que funciona como nexo entre las funcionalidades de RauFlowUI y la API Rest de Servicios y (3) \textbf{ryu.topology}. Esta \'ultima componente forma parte del conjunto de apliaciones Ryu adicionales que se incluyen en el dise\~no de RauFlow y tiene como principal funci\'on la de proveer una representaci\'on gr\'afica en tiempo real de la topolog\'ia existente en el prototipo.\\
 
 \section[Implementaci\'on]{Implementaci\'on}
 
