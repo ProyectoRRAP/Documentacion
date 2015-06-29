@@ -138,13 +138,16 @@ En la figura \ref{fig:CasosDeUso} se representan las dependencias existentes ent
 En la siguiente secci\'on se presenta la arquitectura de la aplicaci\'on RAUFlow, detallándose las componentes m\'as importantes.
 
 %De esta forma quedan presentados los requerimientos relevados sobre RauFlow, el modelado de la realidad, y los casos de uso relevados. Resta entonces presentar un esbozo de la arquitectura de la aplicaci\'on RauFlow, para que el lector finalmente este en condiciones de comprender el dise\~'no del prototipo en su totoalidad.
-\newpage
+
 \section[Arquitectura de RauFlow]{Arquitectura de RauFlow}
-A modo de introducci\'on RAUFlow es una aplicaci\'on de gesti\'on de red, basada en el enfoque SDN e implementada utilizando entre otras tecnolog\'ias el software de control Ryu.
 
-Es m\'as que una aplicaci\'on del plano de control OpenFlow, puesto que en su arquitectura se incluyen componentes que no son implementadas por un controlador OpenFlow.\\ 
+Previo a la presentación de la arquitectura de RAUFlow vale la pena dedicar un pequeño espacio de esta sección al esclarecimiento de algunos aspectos clave para el entendimiento de la arquitectura de la aplicaci\'on. 
 
-La arquitectura de RAUFlow (ver figura \ref{fig:VistaComponentes2}), se caracteriza por un diseño en capas l\'ogicas. En particular esta compuesta de cuatro capas: (1) capa de presentación, (2) capa de aplicaciones Ryu, (3) capa de negocios, y (4) capa de dispositivos.\\
+Conceptualmente RAUFlow es una aplicaci\'on de gestión de red, basada en el enfoque de SDN e implementada utilizando el software de Control Ryu y el protocolo OpenFlow entre otras tecnologías. No obstante, entre las otras tecnologías mencionadas con las cuales interactua la aplicaci\'on se encuentran la suite de ruteo Quagga, de la cual se obtiene información de la base de datos topol\'ogica de dicha herramienta y el protocolo SNMP. 
+
+Esto conlleva al desarrollo de un conjunto de modulos especiales para la interacci\'on entre estas componentes y las aplicaciones Ryu por ejemplo. 
+
+Analizando globalmente a la aplicaci\'on, su arquitectura (ver figura \ref{fig:VistaComponentes2}), se caracteriza por un diseño en tres capas l\'ogicas: (1) capa de presentaci\'on, (2) capa de control y (3) capa de dispositivos.\\
 
 %Con el objetivo de mantener simple y modular el dise\~no de RauFlow, se implementa en RauFlowApp solamente aquellas funcionalidades y responsabilidades asociadas al protocolo OpenFlow y sus respectivos eventos. Luego responsabilidades y funcionalidades asociadas a la realidad modelada y sus reglas de negocios, son delegadas a una capa de negocios. Ademas se tiene un conjunto de aplicaciones Ryu dise\~nadas e implementadas por terceros, las cuales se encuentran dentro del conjunto de aplicaciones que vienen con el software Ryu. M\'as adelante se explicar\'a en detalle cual es el rol que cumplen estas aplicaciones en el dise\~no de RauFlow.
 
@@ -154,14 +157,31 @@ La arquitectura de RAUFlow (ver figura \ref{fig:VistaComponentes2}), se caracter
 
 \begin{figure}[ht!] 
 \centering    
-\includegraphics[width=1.0\textwidth]{Disenio_Figure3}
+\includegraphics[width=1.0\textwidth]{Disenio_Figure4}
 \caption[Vista l\'ogica]{Vista l\'ogica}
 \label{fig:VistaComponentes2}
 \end{figure}
 
-A continuaci\'on se explican en detalle cada una de estas capas.
+En las siguientes secciones se explican en detalle cada una de estas capas, comenzando por la capa de control.
 
-\subsection{Capa de aplicaciones Ryu}
+\subsection{Capa de Control}
+
+La capa de control esta conformada por los diferentes procesos y aplicaciones encargados de implementar, valga la redundancia el plano de control del prototipo; de ahí el nombre capa de control.
+
+Estos procesos son: El Controlador Ryu sobre el cual se ejecuta un conjunto de aplicaciones OpenFlow, un m\'odulo denominado LSDBSync encargado de sincronizar la informaci\'on de la Link-State-Database entre la instancia de Quagga que se ejecuta en el controlador y las aplicaciones de Ryu, y finalmente  otro modulo denominado SNMP Administrador encargado de la comunicaci\'on con los agentes SNMP instalados en cada nodo del prototipo. 
+
+A continuaci\'on se explican en detalle cada una de estas componentes.
+
+\subsection{Aplicaciones Ryu}
+Se utilizan cuatro aplicaciones Ryu en el diseño de RAUFlow.
+
+Por un lado se tienen tres aplicaciones que vienen con el software de control, dise\~nadas para implementar una interfaz gr\'afica, consistente en un p\'agina web implementada sobre html, javascript y web sockets. Con esto Ryu permite visualizar de forma gr\'aica la red en su totalidad; estos es los dispositivos del datapath con sus interfaces y los enlaces existentes.
+
+Con el objetivo de proveer de una representaci\'on gr\'afica del estado de la red (el estado de la topolog\'ia y sus dispositivos), se incluyen en la arquitectura de RAUFlow este conjunto de aplicaciones. bajo el nombre Aplicaciones Ryu (Terceros)
+
+
+Por otro lado la cuarta apliaci\'on es desarrollada en el marco de este trabajo, conteniendo el modelado de la realidad planteado y la implementaci\'on de las funcionalidades mencionadas.\\
+
 En esta capa se encuentran las diferentes aplicaciones Ryu utilizadas para implementar el plano de control OpenFlow. Esta compuesta por una aplicaci\'on desarrollada en este proyecto (RAUFlowApp), y tres aplicaciones desarrolladas por terceros (incluidas en las aplicaciones que vienen con el controlador).\\
 
 Dentro de las aplicaciones Ryu, RauFlowApp es realmente la encargada de implementar el plano de control  del prototipo. Esto quiere decir, guardar informaci\'on de la realidad (servicios de redes privadas), guardar el estado de la topolog\'ia, implementar funcionalidades de QoS, ruteo din\'amico etc. 
@@ -170,10 +190,6 @@ En consecuencia el alcance de esta aplicaci\'on puede ser casi tan grande como e
 
 De esta forma se justifica la mencionada capa de Negocios. 
 
-\subsubsection{Aplicaciones de terceros}
-Ryu incluye tres aplicaciones dise\~nadas para implementar una interfaz gr\'afica, consistente en un p\'agina web implementada sobre html, javascript y web sockets, que permite visualizar de forma gr\'aica la red en su totalidad. Estos son los dispositivos del datapath con sus interfaces y los enlaces existentes.
-
-Por esta razón, orientado a proveer de una representaci\'on gr\'afica del estado de la red en el prototipo (el estado de la topolog\'ia y sus dispositivos), se incluyen en el dise\~no estas aplicaciones.
 
 \subsection{Capa de Negocios}
 La capa de negocios presenta tres componentes bien definidas: una componente de reglas y l\'ogica de negocios de la realidad, una API REST de servicios para el acceso y la manipulaci\'on de datos relacionados a la primera componente y una tercera componente denominada Agentes distribu\'idos.

@@ -430,6 +430,18 @@ Finalmente cuando el paquete arriba al nodo \textit{Poisson}, el procesamiento f
 mpls,in\_port=2,mpls\_label=32,mpls\_bos=1 actions=pop\_mpls:0x0800,output:1 }
 \end{center}
 
+En la figura \ref{fig:CU1P1DumpFlows1} se muestran capturas tcpdump de las interfaces por las cuales el tr\'afico asociado al servicio S3 atraviesa la red del laboratorio en el nuevo camino calculado.
+
+Enumerando las figuras de izquierda a derecha y de arriba hacia abajo, la primer imagen se corresponde con una captura sobre la interfaz eth1 del nodo Galois, la segunda con la interfaz nf0 del mismo nodo, la tercera con la interfaz nf2 del nodo Oz, la cuarta con la interfaz nf0 del nodo Alice y finalmente la quinta con la interfaz eth1 en el nodo Poisson.
+
+\newpage
+\begin{figure}[ht!] 
+\centering    
+\includegraphics[width=1.0\textwidth]{LabE1P2SnapshotTrafico1}
+\caption[Tabla de flujos ovs - Oz]{Capturas de tr\'afico con tcpdump para el servicio S3 tras actualización topol\'ogica}
+\label{fig:LabE1P1CapsTraf3}
+\end{figure}
+
 Análogamente se puede estudiar la correspondencia entre el camino te\'orico y el camino calculado para el servicio S6.\\
  
 De esta forma se verifica para el laboratorio de pruebas construido, la correctitud del algoritmo de ruteo, el algoritmo de distribución de etiquetas, se prueba el correcto funcionamiento de las tablas de flujos Open vSwitch y los flujos particulares utilizados para implementar clasificacion de tr\'afico, se comprueba el correcto accionar del programa ante cambios en la topolog\'ia (recalculo de LSPs), y finalmente se valida la construcción de un servicio de rede privada multipunto de capa 3.
@@ -438,7 +450,11 @@ En la siguiente seccci\'on se discute la verificacion de otros aspectos importan
 
 \subsection{Escenario 2}
 
-Este escenario representa una red privada punto a punto de capa 3. Esta compuesto por dos organizaciones diferentes, cada una de ellas con dos sucursales f\'isicamente separadas. Adicionalmente  ambas organizaciones utilizan la misma numeraci\'on IP en sus respectivas subredes.\\
+Este escenario representa una red privada punto a punto de capa 3. Esta compuesto por dos organizaciones diferentes, cada una de ellas con dos sucursales f\'isicamente separadas. Adem\'as, ambas organizaciones utilizan el mismo espacio de direccionamiento IP para sus repectivas subredes.\\
+
+Vale la pena mencionar que debido a las limitaciones impuestas por el hardware disponible; recordar que cada nodo en el prototipo cuenta con una \'unica interfaz f\'isica disponible para conectarse a la subred de un “cliente”, solo se pueden conectar cuatro subredes al prototipo. De esta forma, el \'unico  escenario para el cual se tienen al menos dos clientes diferentes con al menos dos oficinas físicamente separadas, es el caso m\'as simple en donde cada organización tiene dos subredes. 
+
+Este escenario se traduce en dos servicios de VPN punto a punto. Sin embargo los aspectos de implementaci\'on que en esta secci\'on se pretenden verificar, son independientes de si el servicio de VPN es punto a punto o multipunto.
 
 \begin{figure}[h] 
 \centering    
@@ -446,6 +462,13 @@ Este escenario representa una red privada punto a punto de capa 3. Esta compuest
 \caption[VPN de capa 3 - Escenario 2]{VPN de capa 3 - Escenario 2}
 \label{fig:CUP2}
 \end{figure}
+
+Sobre este escenario se busca validar los siguientes aspectos en relaci\'on a la implementaci\'on:
+
+\begin{enumerate}
+\item El prototipo soporta la construcci\'on de servicios de VPN de capa 3 para multiples organizaciones (recordar que en el escenario anterior se trabaja con una \'unica organización)
+\item La implementaci\'on utilizada en el prototipo para transportar tr\'afico de una organización desde un nodo de ingreso a un nodo de egreso, es independiente de la numeraci\'on de capa 3 de dicho tr\'afico. En otras palabras soporta organizaciones con numeraci\'on IP solapadas.
+\end{enumerate}
 
 Para la construcci\'on de este escenario se instancian los siguientes servicios en el sistema (ver tabla). Por cada red privada se instancian dos servicios (uno para cada sentido del tr\'afico).
 
@@ -468,6 +491,7 @@ Nombre & Ingreso & Egreso & Clasificación & Descripción \\ \hline
 \label{table:TablaFlujos3}
 \end{table}
 
+Para todos estos servicios adem\'as se indica como valor de ethertype 0x0800, correspondiente al tipo de tr\'afico IPv4.
 
 \newpage
 \begin{figure}[ht!] 
