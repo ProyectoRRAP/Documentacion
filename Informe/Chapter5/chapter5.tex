@@ -141,13 +141,11 @@ En la siguiente secci\'on se presenta la arquitectura de la aplicaci\'on RAUFlow
 
 \section[Arquitectura de RauFlow]{Arquitectura de RauFlow}
 
-Previo a la presentación de la arquitectura de RAUFlow vale la pena dedicar un pequeño espacio de esta sección al esclarecimiento de algunos aspectos clave para el entendimiento de la arquitectura de la aplicaci\'on. 
+%Previo a la presentación de la arquitectura de RAUFlow vale la pena dedicar un pequeño espacio de esta sección al esclarecimiento de algunos aspectos clave para el entendimiento de la arquitectura de la aplicaci\'on. 
 
-Conceptualmente RAUFlow es una aplicaci\'on de gestión de red, basada en el enfoque de SDN e implementada utilizando el software de Control Ryu y el protocolo OpenFlow entre otras tecnologías. No obstante, entre las otras tecnologías mencionadas con las cuales interactua la aplicaci\'on se encuentran la suite de ruteo Quagga, de la cual se obtiene información de la base de datos topol\'ogica de dicha herramienta y el protocolo SNMP. 
+Como se menciona en el cap\'itulo anterior, RAUFlow es el nombre dado a la aplicaci\'on encargada de implementar el plano de control en el prototipo. Sin embargo como se menciona tambi\'en en dicho cap\'itulo, la o las aplicaciones que se ejecutan en el controlador Ryu interactuan con diferentes m\'odulos y componentes como el Administrador SNMP \'o la base de datos topol\'ogica de Quagga. Por esta raz\'on tiene sentido pensar en RAUFlow como el conjunto de todas estas componentes las cuales interactuando entre ellas implementan efectivamente el plano de control.\\
 
-Esto conlleva al desarrollo de un conjunto de modulos especiales para la interacci\'on entre estas componentes y las aplicaciones Ryu por ejemplo. 
-
-Analizando globalmente a la aplicaci\'on, su arquitectura (ver figura \ref{fig:VistaComponentes2}), se caracteriza por un diseño en tres capas l\'ogicas: (1) capa de presentaci\'on, (2) capa de control y (3) capa de dispositivos.\\
+Conceptualmente RAUFlow es una aplicaci\'on de gestión de red, basada en el enfoque de SDN e implementada utilizando el software de Control Ryu y el protocolo OpenFlow entre otras tecnologías principalmente. No es puramente una aplicaci\'on OpenFlow puesto que como se ha mencionado reiteradas veces utiliza un conjunto de componentes y m\'odulos independientes del ambiente del controlador Ryu.
 
 %Con el objetivo de mantener simple y modular el dise\~no de RauFlow, se implementa en RauFlowApp solamente aquellas funcionalidades y responsabilidades asociadas al protocolo OpenFlow y sus respectivos eventos. Luego responsabilidades y funcionalidades asociadas a la realidad modelada y sus reglas de negocios, son delegadas a una capa de negocios. Ademas se tiene un conjunto de aplicaciones Ryu dise\~nadas e implementadas por terceros, las cuales se encuentran dentro del conjunto de aplicaciones que vienen con el software Ryu. M\'as adelante se explicar\'a en detalle cual es el rol que cumplen estas aplicaciones en el dise\~no de RauFlow.
 
@@ -155,20 +153,21 @@ Analizando globalmente a la aplicaci\'on, su arquitectura (ver figura \ref{fig:V
 
 %En res\'umen, el dise\~no de RauFlow se caracteriza por una arquitectura en cuatro capas: (1) capa de presentación, (2) capa de aplicaciones Ryu, (3) capa de negocios, y (4) capa de dispositivos.\\
 
-\begin{figure}[ht!] 
+\begin{figure}[h] 
 \centering    
 \includegraphics[width=1.0\textwidth]{Disenio_Figure4}
 \caption[Vista l\'ogica]{Vista l\'ogica}
 \label{fig:VistaComponentes2}
 \end{figure}
 
+Analizando globalmente a la aplicaci\'on, su arquitectura (ver figura \ref{fig:VistaComponentes2}), se caracteriza por un diseño en tres capas l\'ogicas: (1) capa de presentaci\'on, (2) capa de control y (3) capa de dispositivos.\\
+
 En las siguientes secciones se explican en detalle cada una de estas capas, comenzando por la capa de control.
 
 \subsection{Capa de Control}
 
-La capa de control esta conformada por los diferentes procesos y aplicaciones encargados de implementar, valga la redundancia el plano de control del prototipo; de ahí el nombre capa de control.
+La capa de control se compone por un lado por el controlador Ryu y un un conjunto de aplicaciones Ryu, y por otro lado los m\'odulos LSDBSync encargado de sincronizar la informaci\'on de la Link-State-Database en la instancia de Quagga ejecutada en la PC del controlador con las aplicaciones, y finalmente  el m\'odulo SNMP Administrador encargado de la comunicaci\'on con los agentes SNMP instalados en cada nodo del prototipo. 
 
-Estos procesos son: El Controlador Ryu sobre el cual se ejecuta un conjunto de aplicaciones OpenFlow, un m\'odulo denominado LSDBSync encargado de sincronizar la informaci\'on de la Link-State-Database entre la instancia de Quagga que se ejecuta en el controlador y las aplicaciones de Ryu, y finalmente  otro modulo denominado SNMP Administrador encargado de la comunicaci\'on con los agentes SNMP instalados en cada nodo del prototipo. 
 
 A continuaci\'on se explican en detalle cada una de estas componentes.
 
