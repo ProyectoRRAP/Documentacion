@@ -35,7 +35,7 @@ Sin embargo, para la definición de políticas en ingeniería de tr\'afico que p
 
 Esto es equivalente a extender OSPF para implementar un algoritmo de ruteo con restricciones, lo que en algunas implementaciones se denomina CSPF(Constrained Shortest Path First). Adem\'as interesa que estas restricciones puedan definirse dinamicamente en función de la alta y baja de servicios en el prototipo.\\
 
-En el prototipo se ejecuta el protocolo OSPF en cada nodo y el propio controlador para construir y mantener una base de datos topologica de la red. Luego esta información es utilizada por el algoritmo CSPF en el controlador para el computo de las mejores rutas asociadas al tr\'afico de cada servicio de VPN.\\
+En el prototipo se ejecuta el protocolo OSPF en cada nodo y el propio controlador para construir y mantener una base de datos topol\'ogica de la red. Luego esta información es utilizada por el algoritmo de ruteo centralizado en el controlador (eventualmente CSPF) para el computo de las mejores rutas asociadas al tr\'afico de cada servicio de VPN.\\
 
 La clasificaci\'on de tr\'afico, creación de m\'ultiples caminos y balanceo de carga son implementados en el controlador a través de una aplicaci\'on SDN, por lo que ser\'an explicados m\'as adelante en el capitulo 5.
 
@@ -61,13 +61,13 @@ Por un lado se prueba con ambas versiones, teniendo problemas para que el ambien
 
 Por ello se decide implementar desde cero un algoritmo de distribución de etiquetas centralizado en el controlador. Los detalles de implementaci\'on del mismo ser\'an explicados m\'as adelante en la sección \ref{section5.5.4}.\\
 
-A continuación se explica la arquitectura del prototipo. 
+A continuación se explica la arquitectura general del prototipo. 
 
 \section{Arquitectura del Prototipo}
 
 La arquitectura del prototipo (ver figura ~\ref{fig:OpenSourceRArch0}), sigue la arquitectura del enfoque OpenFlow/SDN como se mencion\'o anteriormente. En concordancia con esta arquitectura en el prototipo se tienen dos componentes importantes: el controlador SDN y el switch compatible con OpenFlow.\\
 
-En el controlador SDN se ejecuta RAUFlow, la aplicaci\'on encargada de proveer una implementaci\'on para servicios de redes privadas virtuales. A su vez esta aplicaci\'on implementa un algoritmo de ruteo CSPF centralizado, el algoritmo de distribución de etiquetas e implementa a su vez una interfaz gr\'afica de gesti\'on para la red del prototipo.\\
+En el controlador SDN se ejecuta RAUFlow, la aplicaci\'on encargada de proveer una implementaci\'on para servicios de redes privadas virtuales. A su vez esta aplicaci\'on implementa el algoritmo de ruteo  centralizado, el algoritmo de distribución de etiquetas e implementa a su vez una interfaz gr\'afica de gesti\'on para la red del prototipo.\\
 
 \begin{figure}[htbp!] 
 \centering    
@@ -167,9 +167,9 @@ En cada nodo se ejecuta una instancia del software de enrutamiento Quagga, confi
 
 El demonio ospf implementa el protocolo de igual nombre y se utiliza para obtener información de cada nodo y sus adyacencias en la topolog\'ia, guardando dicha información en una base de datos local(Link-State-Database o LSDB). Entre los datos que se incluyen en esta base de datos topol\'ogica se destaca por ejemplo el costo asociado a cada adyacencia.\\ 
 
-Como se menciona anteriormente, el algoritmo OSPF utiliza solamente para la construcci\'on de la base de datos topol\'ogica. Si bien en un inicio se piensa en trabajar con la salida de dicho algoritmo, finalmente se decidió trabajar con el algoritmo CSPF implementado en el controlador. Por ello en la versi\'on final del prototipo no se utiliza la salida de este algoritmo a pesar de que la arquitectura permite su utilización para alimentar la entrada de procesos que se ejecuten en el controlador.\\
+Como se menciona anteriormente, el algoritmo OSPF utiliza solamente para la construcci\'on de la base de datos topol\'ogica. Si bien en un inicio se piensa en trabajar con la salida de dicho algoritmo, finalmente se decidió trabajar con el algoritmo de ruteo centralizado implementado en el controlador. Por ello en la versi\'on final del prototipo no se utiliza la salida de este algoritmo a pesar de que la arquitectura permite su utilización para alimentar la entrada de procesos que se ejecuten en el controlador.\\
 
-De esta forma cada switch del prototipo así como el propio controlador ejecuta una instancia de Quagga con el demonio ospf configurado como se muestra en el apéndice[poner referencia al apendice]. Cabe destacar de dicha configuración que la adyacencia entre un switch y el Controlador(enlace utilizado para el canal de comunicación OpenFlow) tiene asociado costo infinito para evitar que sea utilizado tanto por el algoritmo OSPF como por el algoritmo CSPF en la construcción de algún camino. En la implementaci\'on de Quagga el costo infinito es representado por el numero 65535(16 bits).
+De esta forma cada switch del prototipo así como el propio controlador ejecuta una instancia de Quagga con el demonio ospf configurado como se muestra en el apéndice \ref{appendix4}. Cabe destacar de dicha configuración que la adyacencia entre un switch y el Controlador(enlace utilizado para el canal de comunicación OpenFlow) tiene asociado costo infinito para evitar que sea utilizado tanto por el algoritmo OSPF como por el algoritmo CSPF en la construcción de algún camino. En la implementaci\'on de Quagga el costo infinito es representado por el numero 65535(16 bits).
 
 \subsection{Agente SNMP}
 El protocolo de comunicación OpenFlow dentro de las estructuras de datos utilizadas para el intercambio de información entre un switch y el Controlador, no prevee una forma de comunicar el direccionamiento IP propio del equipo (direcciones IP de cada interfaz física). En particular la estructura \textit{ofp\_port} utilizada por el mensaje \textit{OFPMP\_PORT\_DESCRIPTION} no provee de dicho campo (ver especificación del protocolo OpenFlow 1.3\citep{ofv133spec}). Por esta razón es necesaria una forma de comunicar al controlador información adicional sobre características de cada nodo como la dirección IP de una interfaz, que no puede ser enviada a través del protocolo OpenFlow. Para evitar modificar el protocolo extendiéndolo para comunicar dicha informaci\'on, se utiliza un agente SNMP.\\
@@ -191,7 +191,11 @@ En el prototipo se instala un agente SNMP en cada switch (dispositivo administra
 No es el objetivo de este trabajo entrar en detalle sobre el protocolo SNMP por lo que si el lector desea profundizar en estos conceptos se recomienda seguir las referencia mencionadas anteriormente.
 
 \section{Entidad Controlador}
-Como se muestra en \ref{fig:OpenSourceRArch0} cada nodo del prototipo responde a una entidad denominada Controlador. Esta entidad en la pr\'actica es una PC convencional con determinadas componentes de software(ver figura \ref{fig:OpenSourceRArch3}) entre las cuales se destaca el controlador SDN Ryu utilizado para implementar y ejecutar la aplicaci\'on RAUFlow. A continuación se explica en detalle cada una de estas componentes y su funcionalidad.
+Como se muestra en \ref{fig:OpenSourceRArch0} cada nodo del prototipo responde a una entidad denominada Controlador. Esta entidad en la pr\'actica es una PC convencional con determinadas componentes de software(ver figura \ref{fig:OpenSourceRArch3}) entre las cuales se destaca el controlador SDN Ryu, pilar fundamental en la implemenatci\'on de la aplicaci\'on RAUFlow. A su vez se encuentran los módulos Administrador SNMP utilizado en la comunicaci\'on con los agentes SNMP instalados en cada nodo RAUSwitch del dispositivo y LSDBSync utilizado en el proceso de extracci\'on de informaci\'on de la base de datos topol\'ogica de Quagga. 
+
+Estas tres componentes se ejecutan en una PC de escritorio con Ubuntu 12.04 como sistema operativo. \\
+
+A continuación se explica en detalle cada una de las tres componentes mencionadas.
 
 \newpage
 \begin{figure}[htbp!] 
@@ -202,32 +206,40 @@ Como se muestra en \ref{fig:OpenSourceRArch0} cada nodo del prototipo responde a
 \end{figure}
 
 
-\subsection{Software de Control Ryu}
-Ryu es la alternativa de software elegido para implementar el controlador SDN compatible con el protocolo OpenFlow. Utilizando este controlador como ambiente de desarrollo y ejecuci\'on, se implementa la aplicaci\'on RAUFlow utilizada para construir el plano de control del prototipo. Esto quiere decir implementar un modelado de la realidad, proveer de funcionalidades para la creaci\'on de servicios de VPN, implementar estrategias para la clasificaci\'on de tr\'afico y brindar calidad de servicios(QoS), implementar un algoritmo de ruteo, entre otras responsabilidades.\\ 
+\subsection{Controlador Ryu}
+Ryu es la alternativa de software elegido para implementar el controlador SDN compatible con el protocolo OpenFlow. 
 
-Dada la complejidad de esta componente, se destina íntegramente el próximo cap\'itulo a la explicaci\'on de las diferentes características e implementaci\'on de esta aplicaci\'on. 
+Utilizando este herramienta para la construcci\'on y ejecuci\'on de una o m\'as aplicaciones SDN, se implementa el prácticamente la totalidad del plano de control del prototipo. Esto es en otras palabras la implementaci\'on del modelado de la realidad, la implementaci\'on de funcionalidades para la creaci\'on de servicios de redes privadas, implementaci\'on de cliasficiaci\'on de tr\'afico y eventualmente la implementaci\'on de pol\'iticas de ingenieria de tr\'afico y calidad de servicios (QoS).\\ 
+
+Dada la complejidad en el diseño y arquitectura de esta componente, se destina íntegramente el próximo cap\'itulo a la explicaci\'on de las diferentes características e implementaci\'on de esta la o las aplicaciones Ryu que constituyen el plano de control del prototipo, as\'i como la interacci\'on de las otras componentes mencionadas dentro del plano de control como los m\'odulos LSDBSync y Administrador SNMP. 
 
 \subsection{Quagga}
-Como se menciona anteriormente, el controlador ejecuta una instancia de Quagga, obteniendo de esta forma acceso local a la información de la base de datos topol\'ogica construida por OSPF, una vez que el algoritmo converge.
+Como se menciona anteriormente, el controlador ejecuta una instancia de Quagga, obteniendo de esta forma acceso local a la información de la base de datos topol\'ogica construida por OSPF (Link-State-Database), una vez que el algoritmo converge.
+
+Para obtener esta informaci\'on, as\'i como tambi\'en detectar cuando cambia la topolog\'ia se utiliza el siguiente m\'odulo, LSDB Sync.
 
 \subsection{LSDB Sync}
-LSDB Sync se encarga de tomar la información de la base de datos topol\'ogica una vez que el algoritmo ospf converge, procesarla y enviarla a las aplicaciones que se ejecutan en el software de control(Ryu); en este caso la aplicación RAUFlow.\\
+LSDB Sync se encarga de tomar la información de la base de datos topol\'ogica una vez que el algoritmo OSPF converge, procesarla y enviarla a las aplicaciones que se ejecutan en el controlador.\\
 
-Esta componente consta de dos módulos. El primero se encarga de escuchar los mensajes del protocolo ospf que envia Quagga, generando un evento cuando ospf reconverge, luego de producirse un cambio en la topolog\'ia; el cual luego es tomado por el segundo m\'odulo.
+Esta componente consta de dos módulos. El primero se encarga de escuchar los mensajes del protocolo que enviados por Quagga, generando un evento cuando el mismo reconverge, luego de producirse un cambio en la topolog\'ia; el cual luego es tomado por el segundo m\'odulo.
 
-Una vez capturado el evento anterior, el segundo m\'odulo toma la información topol\'ogica en la base local del controlador y la procesa para ser enviada a la aplicación RAUFlow.
+Una vez capturado el evento anterior, el segundo m\'odulo toma la información topol\'ogica en la base local del controlador y la procesa para ser enviada a las aplicaciones en el controlador.
+
+Luego se produce un proceso de actualizaci\'on topol\'ogica, en el que eventualmente el controlador utilizando el m\'odulo Administrador SNMP obtiene informaci\'on adicional sobre los dispositivos del prototipo. 
 
 \begin{subsection}{Administrador SNMP}
-El administrador SNMP es utilizado para consultar al agente SNMP instalado en un nodo particular, por la correspondencia entre números de puerto OpenFlow y direcciones IP. Esta componente es utilizada por RAUFlow cada vez que es preciso obtener esta información de mapeo para un nodo en particular(por ejemplo en el proceso de actualización de la topolog\'ia).\\\\\
+El administrador SNMP es utilizado para consultar al agente SNMP instalado en un nodo particular, por la correspondencia entre números de puerto OpenFlow y direcciones IP. Esta componente es utilizada por las aplicaciones en el Controlador cada vez que es preciso obtener esta información de mapeo para un nodo en particular(por ejemplo en el proceso de actualización de la topolog\'ia).\\\\\
 
 \end{subsection}
 
-\begin{figure}[htbp!] 
+En resumen, el prototipo se compone de nodos construidos en base al hardware NetFPGA y una PC convencional el la cual se instalan diferentes componentes de software de forma de implementar un switch MPLS/OpenFlow. Luego una PC normal en la que se instala el controlador Ryu m\'as un conjunto de m\'odulos adicionales. Como se muestra en la figura\ref{fig:OpenSourceRArch4}, luego la comunicación entre cada par de nodos es IP/MPLS, mientras que cada nodo es manipulado por el protocolo OpenFlow. Adicionalmente se tiene un canal IP entre cada nodo y el plano de control por donde se comunican cada agente SNMP con el administrador.
+
+\newpage
+\begin{figure}[Ht!] 
 \centering    
 \includegraphics[width=0.9\textwidth]{Arch_Figure4}
 \caption[Vista l\'ogica ampliada del prototipo]{Vista l\'ogica ampliada del prototipo}
 \label{fig:OpenSourceRArch4}
 \end{figure}
 
-En resumen, el prototipo se compone de nodos construidos en base al hardware NetFPGA y una PC convencional m\'as agregados de software, implementando un switch MPLS/OpenFlow, y una PC controlador Controlador Ryu mas alg\'unas otras componentes de software que implementan el plano de control. Como se muestra en la figura\ref{fig:OpenSourceRArch4}, luego la comunicación entre cada par de nodos es IP/MPLS, mientras que cada nodo es manipulado por el protocolo OpenFlow. Adicionalmente se tiene un canal IP entre cada nodo y el plano de control por donde se comunican cada agente snmp con el administrador.\\
-
+En el siguiente cap\'itulo se explica en detalle el proceso de diseño e implementaci\'on de la aplicaci\'on RAUFlow, as\'i como la interaci\'on con las diferentes componentes de RAUSwitch.
