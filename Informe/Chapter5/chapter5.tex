@@ -181,15 +181,19 @@ A continuaci\'on se detalla la capa de control.
 
 \subsection{Capa de Control}
 
-La capa de control esta conformada por tres componentes principalmente: el software de control Ryu con el respectivo conjunto de aplicaciones SDN ejecutadas sobre el mismo y los m\'odulos LSDBSync y Administrador SNMP.\\
+La capa de control esta conformada por tres componentes principalmente: el software de control Ryu con su respectivo conjunto de aplicaciones SDN, el m\'odulo LSDBSync, el m\'odulo Administrador SNMP y la instancia de Quagga ejecutada en el Controlador.\\
 
+[
+Vale la pena destacar, al igual que el propio controlador Ryu, el conjunto de alplicaciones que se ejecutan sobre este estan desarrolladas en el lenguaje de programaci\'on Python
+ 
 En relaci\'on al controlador Ryu y el conjunto de aplicaciones, como bien se ha mencionado anteriormente \'este software esta desarrollado en el lenguaje de programaci\'on Python y utiliza este mismo lenguaje para el desarrollo de las aplicaciones Ryu. Por consiguiente las cuatro aplicaciones que se ejecutan sobre el mismo están desarrolladas en este lenguaje. A continuaci\'on se detallan cada una de estas aplicaciones.
+]
 
 \subsubsection{Aplicaciones RYU(Terceros)}
-En RAUFlow se ejecuta este conjunto de aplicaciones con el objetivo de facilitar la representaci\'on gr\'afica del estado de la topolog\'ia a partir de funcionalidades de la aplicación \textbf{gui\_topology}, anterioemente mencionada. 
+En RAUFlow se ejecuta un conjunto de tres aplicaciones con el objetivo de facilitar la representaci\'on gr\'afica del estado de la topolog\'ia, a partir de las funcionalidades de la aplicación \textbf{gui\_topology}, anteriormente mencionada. 
 
-Esta aplicaci\'on depende a su vez de tres aplicaciones Ryu:
-(1) rest\_topology, (2) ws\_topology y (3) ofctl\_rest. Las funcionalidades de cada una de estas aplicaciones son las siguientes:
+Las tres aplicaciones utilizadas son:
+(1) rest\_topology, (2) ws\_topology y (3) ofctl\_rest. Por otro lado, las funcionalidades de cada una de estas aplicaciones son las siguientes:
 
 \begin{enumerate}
 \item rest\_topology: Implementa una API REST de servicios para el acceso a informaci\'on topol\'ogica de switches OpenFlow y links existentes entre ellos. Este API es utilizada por \textbf{ryu.topology} para construir la representaci\'on gr\'afica de la red.
@@ -202,12 +206,14 @@ Esta aplicaci\'on depende a su vez de tres aplicaciones Ryu:
 
 Por otro lado se ejecuta sobre el controlador una cuarta aplicaci\'on Ryu. A continuaci\'on se detalla su estructura y funcionamiento.
 
-\subsubsection{RAUFlowApp}
-Dentro de las aplicaciones que se ejecutan en el controlador, RauFlowApp es realmente la encargada de implementar el plano de control del prototipo. Esto quiere decir, guardar informaci\'on de la realidad modelada (servicios de redes privadas principalmente), guardar información de la topolog\'ia y su estado, implementar eventualmente políticas de Ingeniería de Tr\'afico y funcionalidades de QoS, ruteo din\'amico etc.\\
+\begin{subsubsection}{RAUFlowApp}
+Dentro de las aplicaciones Ryu, RauFlowApp es realmente la encargada de implementar el plano de control  del prototipo. Esto quiere decir, guardar informaci\'on de la realidad (servicios de redes privadas), guardar el estado de la topolog\'ia, implementar funcionalidades de QoS, ruteo din\'amico etc. 
+
+%Dentro de las aplicaciones que se ejecutan en el controlador, RauFlowApp es realmente la encargada de implementar el plano de control del prototipo. Esto quiere decir, guardar informaci\'on de la realidad modelada (servicios de redes privadas principalmente), guardar información de la topolog\'ia y su estado, implementar eventualmente políticas de Ingeniería de Tr\'afico y funcionalidades de QoS, ruteo din\'amico etc.\\
 
 Vale la pena aclarar, que a diferencia de las tres aplicaciones anteriores, las cuales fueron desarrolladas por el equipo detrás del softrwa Ryu, esta aplicaci\'on es completamente diseñada e implementada en el marco de este proyecto.\\
 
-En relaci\'on al diseño de esta aplicaci\'on, como puede apreciarse en la figura responde a una organización modular, en la cual se destacan cuatro componentes principalmente: (1) EventosOpenFlow, (2) API REST de Servicios, (3) L\'ogica de Negocios y (4) Agentes distribuidos. El funcionamiento de cada uno de ellos es el siguiente:
+En relaci\'on al diseño de esta aplicaci\'on, como puede apreciarse en la figura responde a una organización modular, en la cual se destacan cuatro componentes principalmente: (1) EventosOpenFlow (2) L\'ogica de Negocios, (3) API REST de Servicios y (4) Interfaces Externas. El funcionamiento de cada uno de ellos es el siguiente:
   
 %\subsection{Aplicaciones Ryu}
 %Se utilizan cuatro aplicaciones Ryu en el diseño de RAUFlow.
@@ -221,17 +227,19 @@ En relaci\'on al diseño de esta aplicaci\'on, como puede apreciarse en la figur
 
 %En esta capa se encuentran las diferentes aplicaciones Ryu utilizadas para implementar el plano de control OpenFlow. Esta compuesta por una aplicaci\'on desarrollada en este proyecto (RAUFlowApp), y tres aplicaciones desarrolladas por terceros (incluidas en las aplicaciones que vienen con el controlador).\\
 
-Dentro de las aplicaciones Ryu, RauFlowApp es realmente la encargada de implementar el plano de control  del prototipo. Esto quiere decir, guardar informaci\'on de la realidad (servicios de redes privadas), guardar el estado de la topolog\'ia, implementar funcionalidades de QoS, ruteo din\'amico etc. 
 
 %En consecuencia el alcance de esta aplicaci\'on puede ser casi tan grande como el propio alcance de RAUFlow. Sin embargo esto redundar\'ia en una complejidad mayor en el dise\~no de la aplicaci\'on, poca mantenibilidad, calidad del c\'odigo fuente, etc. Por estas razones se decide desacoplar la mayor cantidad de informaci\'on posible relacionada a la realidad modelada, de dicha aplicaci\'on; haciendo responsable a RauFlowApp solamente por el manejo de los eventos del protocolo OpenFlow.
 
 %De esta forma se justifica la mencionada capa de Negocios. 
-\subsubsection{EventosOpenFlow}
+
+\begin{enumerate}
+
+\item EventosOpenFlow
 EventosOpenFlow es una aplicaci\'on Ryu con el esquema b\'asico de este tipo de programas (las aplicaicones Ryu tienen un esquema particular). Se encarga de proveer m\'etodos para los principales eventos del protocolo OpenFlow; por ejemplo cuando un switch se reporta con el controlador por primera vez \'o deja de reportarse, cuando el controlador recibe un paquete (Packet IN), cuando se produce un cambio en la topolog\'ia como por ejemplo un puerto en un dispositivo que deja de funcionar, entre otros.\\
 
 A nivel de diseño el modelado de la realidad, la implementaci\'on de funcionalidades de acceso a la capa de dispositivos, estructuras de datos almacenadas en memoria, los algoritmos de ruteo y distribucion de etiquetas son implementados en la componente Logica de Negocios. De esta forma se desacoplan las responsabilidades, mejorando la claridad y transparencia en el diseño de la aplicaci\'on. No obstante esta aplicación es la responsable de gestionar el ciclo de vida de los diferentes objetos asociados a la componente Lógica de Negocios.
   
-\subsubsection{Lógica de Negocios}
+\item Lógica de Negocios
 Como se ha mencionado esta componente es responsable del modelado de la realidad y la implementaci\'on de las principales funcionalidades del plano de control de RAUFlow. Se subdivide a su vez en diferentes m\'odulos que agrupan funcionalidades acorde a su naturaleza y responsabilidad. Vale la pena destacar a su vez que cada uno de estos m\'odulos se corresponde en la implementaci\'on realizada con un m\'odulo de Python. A continuaci\'on se explican las responsabilidades de cada uno de ellos:
 
 \begin{itemize}
@@ -248,17 +256,38 @@ Como se ha mencionado esta componente es responsable del modelado de la realidad
 
 Para acceder a la componente de Logica de Negocios se tiene una API REST de Servicios.
 
-\subsubsection{API REST de servicios}
+\item API REST de servicios
 Esta componente define m\'etodos para el acceso a los datos y funcionalidades de la componente Lógica de Negocios. Es utilizada por ejemplo por la capa de Presentaci\'on para acceder a diferente informaci\'on de la realidad o crear nuevos servicios por ejemplo. A su vez es utilizada por otras componentes de la capa de control como lo es el caso del m\'odulo LSDBSync para enviar inormaci\'on actualizada de la topolog\'ia de red al momento de ejecutar RAUFlow por primera vez y luego cuando la topolog\'ia cambia. 
 
 Se subdivide en varios m\'odulos respondiendo al criterio utilizado para el dise\~no modular de la anterior componente. 
 
-\subsubsection{Interfaces Externas}
+\item Interfaces Externas
 Cuando se enciende RAUFlow y se recibe por primera vez la informaci\'on topol\'ogica, o cuando la topolog\'ia cambia y se produce una actualizaci\'on, es necesario obtener informaci\'on adicional sobre cada dispositivo (hecho ya mencionado en reiteradas ocasiones). Para esto la aplicaci\'on utiliza la componente denominada Interfaces Externas. 
 
 Esta componente funciona como punto de conexi\'on entre la componente L\'ogica de Negocios y otras componentes externas a la aplicaci\'on RAUFlowApp. Un ejemplo de una componente externa es el m\'odulo Administrador SNMP, encargado de obtener la informaci\'on extra en el proceso de actualizaci\'on topol\'ogica mencionado, utilizando el Agente SNMP instalado en cada dispositivo RAU-Switch del prototipo.\\
 
-Dentro de esta componente, actualmente existe un solo mo\'dulo denominado \textbf{agentes\_snmp}. Este m\'odulo es el encargado de la ya mencionada comunicaci\'on con el m\'odulo Administrador SNMP.
+Dentro de esta componente, actualmente existe un solo mo\'dulo denominado \textbf{agentes\_snmp}. Este m\'odulo es el encargado de la ya mencionada comunicaci\'on con el m\'odulo Administrador SNMP. \\ 
+
+\end{enumerate}
+
+\end{subsubsection}
+
+\subsubsection{Administrador SNMP}
+El funcionamiento de este m\'odulo se ha explicado anteriormente a lo largo de este cap\'itulo.
+
+\subsubsection{LSDB Sync}
+Como se muestra en el diagrama de arquitectura, \'este m\'odulo interactua con la instancia de Quagga instalada en el controlador en dos formas distintas. Por un lado advierte cuando la topolog\'ia cambia observando los mensajes que se env\'ian a través del ptotocolo OSPF en la red, y por otro lado accede, procesa y envia la informaci\'on de la base de datos topol\'ogica LSDB local a la aplicaci\'on RAUFlowApp a trav\'es de un web service de la API Rest implementada en esta aplicaci\'on.
+ 
+\subsection{Capa de Dispositivos}
+En la capa de dispositivos se muestran las diferentes componentes de RAU-Switch que interactuan con la capa de control, indicando para cada una de ellas el protocolo de comunicaci\'on utilizado.\\
+
+Por un lado se tiene la herramienta Open vSwitch de la cual tanto su rol en la implementaci\'on del prototipo, como su funcionamiento ya se ha explicado anteriormente. Vale la pena mencionar simplemente, que las \'unicas componentes de la capa de control de RAUFlow que interactuan con la misma, adem\'as de las tres aplicaciones que vienen con Ryu, son la aplicaci\'on EventosOpenFlow y el m\'odulo datapath.\\
+
+Por otro lado, se tiene el agente SNMP consultado por el Administrador SNMP en la capa de control mediante el protocolo SNMP\\
+
+Finalmente se tiene la instancia de Quagga, la cual a través del intercambio de mensajes del protocolo OSPF con las restantes instancias de Quagga de cada dispositivo RAU-Switch, construyen la base de datos topol\'ogica en la maquina controlador. \\
+
+Una vez presentada y explicada en detalle la arquitectura de RAUFlow, el lector esta en condiciones de abordar la siguiente secci\'on, en la que se abordan detalles relacionados a la implemenatci\'on.
 
 \section[Implementaci\'on]{Implementaci\'on}
 

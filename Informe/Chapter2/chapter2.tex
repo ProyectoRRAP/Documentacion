@@ -176,18 +176,18 @@ Aprovechando las capacidades de un switch OpenFlow h\'ibrido, se puede definir p
 \subsection{Reglas OpenFlow}
 Cada entrada en la tabla de flujos, distingue un tipo de tr\'afico en particular y la forma en que se procesa(acciones e instrucciones). Es uno de los pilares del protocolo la expresividad disponible para escribir las reglas de cada flujo; es decir, la capacidad de agrupar tipos de tr\'afico acorde a diferentes propiedades en el mismo.\\
 
-Las reglas OpenFlow se basan en los valores de cabezales asociados a diferentes capas del stack OSI. Estos cabezales a su vez varían con la versi\'on del protocolo, incorporándose m\'as opciones en cada versi\'on del mismo. Por ejemplo en la versi\'on 1.0 del protocolo se tiene un soporte mínimo para cabezales de capas 1 a 4 (ver imagen ~\ref{fig:OF10MatchingFields}).
-
-\begin{figure}[htbp!] 
+\begin{figure}[h] 
 \centering    
 \includegraphics[width=6cm]{ofv1MF}
 \caption[OF 1.0 Matching Fields]{OpenFlow v1.0 Matching Fields}
 \label{fig:OF10MatchingFields}
 \end{figure}
 
+Las reglas OpenFlow se basan en los valores de cabezales asociados a diferentes capas del stack OSI. Estos cabezales a su vez varían con la versi\'on del protocolo, incorporándose m\'as opciones en cada versi\'on del mismo. Por ejemplo en la versi\'on 1.0 del protocolo se tiene un soporte mínimo para cabezales de capas 1 a 4 (ver imagen ~\ref{fig:OF10MatchingFields}).
+
 Por otro lado en la version 1.3.3 del protocolo se cuenta soporte para utilizar cabezales de IPv6, ICMPv6 y MPLS en la definición de los flujos (ver imagen ~\ref{fig:OF13MatchingFields}).
  
-\begin{figure}[htbp!] 
+\begin{figure}[ht] 
 \centering    
 \includegraphics[width=6cm]{ofv13MF}
 \caption[OF 1.3.3 Matching Fields]{OF 1.3.3 Matching Fields}
