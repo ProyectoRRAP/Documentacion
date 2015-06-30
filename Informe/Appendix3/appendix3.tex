@@ -53,7 +53,11 @@ of_v13_match_fields:
 		
 \end{python}
 
-Estos atributos fueron estudiados uno por uno y se llega a las dos listas presentadas en las siguientes secciones.
+Estos atributos fueron estudiados uno por uno y se llega a las dos listas presentadas en las siguientes secciones.\\
+
+\section{Sintaxis de un flujo en Open vSwitch}
+
+ovs-ofctl add-flow <bridge> <flow>
 
 \section{OpenFlow v1.3 atributos soportados para definir reglas}
 
@@ -214,42 +218,103 @@ A continuaci\'on se detallan los atributos soportados para la definici\'on de ac
 
 \begin{itemize}
 
-\item \textbf{eth\_src}: Modifica direcci\'on origen de capa 2, mod\_dl\_src:<mac>
+\item \textbf{eth\_src}: Permite modificar el valor de direcci\'on origen de capa 2 (direcci\'on MAC).
 
-\item \textbf{eth\_dst}: Modifica direcci\'on destino de capa 2, mod\_dl\_dst:<mac>
+\begin{center}
+ovs-ofctl add-flow<bridge><match-field>actions=mod\_dl\_src:<mac>
+\end{center}
 
-\item \textbf{vlan\_vID}: Modifica identificador de VLAN, push\_vlan:<ethertype>,set\_field:<value> \'o
-                         mod\_vlan\_vid:<vlan\_vid>
+\item \textbf{eth\_dst}: Permite modificar el valor de direcci\'on destino de capa 2 (direcci\'on MAC).
 
-\item \textbf{vlan\_PCP}: Modifica valor de prioridad de VLAN, mod\_vlan\_pcp:<vlan\_pcp>
+\begin{center}
+ovs-ofctl add-flow<bridge><match-field>actions=mod\_dl\_dst:<mac>
+\end{center}
 
-\item \textbf{IP\_dscp}: Modifica bits TOS de paquete IP, mod\_nw\_tos:<tos>
-
-\item \textbf{IPv4\_src}: Modifica direcci\'on origen IP, mod\_nw\_src:<ip>
-
-\item \textbf{IPv4\_dst}: Modifica direcci\'on destino IP, mod\_nw\_dst:<ip>
-
-\item \textbf{TCP\_src}: Modifica puerto TCP origen de aplicaci\'on, mod\_tp\_src:<port> dl
-                         \_type=0x0800 + nw\_proto=6
-
-\item \textbf{TCP\_dst}: Modifica puerto TCP destino de aplicaci\'on , mod\_tp\_dst:<port> dl 
-                         \_type=0x0800 + nw\_proto=6
-
-\item \textbf{UDP\_src}: Modifica puerto UDP origen de aplicaci\'on, mod\_tp\_src:<port> dl	                    
-                         \_type=0x0800 + nw\_proto=17
+\item \textbf{vlan\_vID}: Permite modificar el valor del campo VLAN ID (identificador de VLAN).
                          
-\item \textbf{UDP\_src}: Modifica puerto UDP destino de aplicaci\'on, mod\_tp\_dst:<port> dl	                    
-                         \_type=0x0800 + nw\_proto=17
+\begin{center}
+ovs-ofctl add-flow <bridge> <match-field> actions=push\_vlan:<ethertype>,set\_field:<value>-\textbackslash >vlan\_vid,output:<port>
+\end{center}
 
-\item \textbf{SCTP\_src}: Modifica puerto SCTP origen de aplicaci\'on, mod\_tp\_src:<port> dl	                    
-                         \_type=0x0800 + nw\_proto=132
-                         
-\item \textbf{SCTP\_src}: Modifica puerto SCTP destino de aplicaci\'on, mod\_tp\_dst:<port> dl	                    
-                         \_type=0x0800 + nw\_proto=132
-                         
-\item \textbf{MPLS\_label}: Modifica etiqueta mpls en paquete, set\_field:mpls\_labe + dl\_type=0x8847 
-							en conjunto con push\_mpls, pop\_mpls 
+\item \textbf{vlan\_PCP}: Permite modificar el valor del campo VLAN PCP (prioridad de VLAN).
 
-\item \textbf{MPLS\_tc}: Modifica el valor de bits experimentales mpls, dl\_type=0x8847 + set\_mpls\_tc:<value>
+\begin{center}
+ovs-ofctl add-flow<bridge><match-field>actions=mod\_vlan\_pcp:<vlan\_pcp>
+\end{center}
+
+\item \textbf{IP\_dscp}: Permite modificar el valor de los bits TOS en el un cabezal IP. Esta acci\'on no modifica los 2 bits m\'as bajos del campo, los cuales representan los bits ECN.
+
+\begin{center}
+ovs-ofctl add-flow<bridge><match-field>actions=mod\_nw\_tos:<tos>
+\end{center}
+
+\item \textbf{IPv4\_src}: Permite modificar el valor de direcci\'on origen de capa 3 (IP).
+
+\begin{center}
+ovs-ofctl add-flow<bridge><match-field>actions=mod\_nw\_src:<ip>
+\end{center}
+
+\item \textbf{IPv4\_dst}: Permite modificar el valor de direcci\'on destino de capa 3 (IP).
+
+\begin{center}
+ovs-ofctl add-flow<bridge><match-field>actions=mod\_nw\_dst:<ip>
+\end{center}
+
+
+\item \textbf{TCP\_src}: Permite modificar el valor de puerto TCP origen de un paquete.
+
+\begin{center}
+ovs-ofctl add-flow<bridge><match-field>actions=mod\_tp\_src:<port>
+\end{center}
+
+\item \textbf{TCP\_dst}: Permite modificar el valor de puerto TCP destino de un paquete. 
+
+\begin{center}
+ovs-ofctl add-flow<bridge><match-field>actions=mod\_tp\_dst:<port>
+\end{center}
+
+\item \textbf{UDP\_src}: Permite modificar el valor de puerto UDP origen de un paquete.
+
+\begin{center}
+ovs-ofctl add-flow<bridge><match-field>actions=mod\_tp\_src:<port>
+\end{center}
+                   
+\item \textbf{UDP\_dst}: Permite modificar el valor de puerto UDP destino de un paquete.
+
+\begin{center}
+ovs-ofctl add-flow<bridge><match-field>actions=mod\_tp\_dst:<port>
+\end{center}
+
+\item \textbf{SCTP\_src}: Permite modificar el valor de puerto SCP origen de un paquete.
+
+\begin{center}
+ovs-ofctl add-flow<bridge><match-field>actions=mod\_tp\_src:<port>
+\end{center}
+                         
+\item \textbf{SCTP\_dst}: Permite modificar el valor de puerto SCP destino de un paquete.
+
+\begin{center}
+ovs-ofctl add-flow<bridge><match-field>actions=mod\_tp\_dst:<port>
+\end{center}
+                            
+\item \textbf{MPLS\_label}: Permite manipular el valor de una etiqueta en un cabezal mpls. Las primitivas existentes son PUSH y POP.
+
+\begin{center}
+ovs-ofctl add-flow <bridge> <match-field> dl\_type=[0x8847 | 0x8848],actions=push\_mpls:<ethertype>,set\_field:<value>-\textbackslash >mpls\_label
+\end{center}
+
+\begin{center}
+ovs-ofctl add-flow<bridge><match-field>actions=set\_field:<label>-\textbackslash >mpls\_label
+\end{center}
+
+\begin{center}
+ovs-ofctl add-flow<bridge><match-field>actions=pop\_mpls:<ethertype>
+\end{center}
+
+\item \textbf{MPLS\_tc}: Permite modificar el valor de los bits experimentales en el cabezal mpls.
+
+\begin{center}
+ovs-ofctl add-flow<bridge><match-field>actions=set\_field:<label>-\textbackslash >mpls\_tc
+\end{center}
 
 \end{itemize}
