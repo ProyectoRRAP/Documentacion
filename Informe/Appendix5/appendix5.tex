@@ -3,10 +3,29 @@
 \chapter{Ejecuci\'on de RAUF}
 \label{appendix5}
 
+% **************************** Define Graphics Path **************************
+\ifpdf
+    \graphicspath{{Appendix5/Figs/Raster/}{Appendix5/Figs/PDF/}{Appendix5/Figs/}}
+\else
+    \graphicspath{{Appendix5/Figs/Vector/}{Appendix5/Figs/}}
+\fi
+
 En el presente anexo se incluyen una peque\~na guía ilustrativa para la ejecuci\'on de la aplicaci\'on RAUFlow, así como una pequeña descripción de la interfaz web.\\
 
-Para ejecutar la aplicaci\'on es necesario ejecutar iniciar el controlador Ryu y ejecutar las cuatro aplicaciones Ryu incluidas en la arquitectura. Para ello se ejecuta el siguiente comando, dentro del directotorio en la estructura de carpetas del c\'odigo fuente del prototipo.
+Para ejecutar la aplicaci\'on es necesario ejecutar iniciar el controlador Ryu y ejecutar las cuatro aplicaciones Ryu incluidas en la arquitectura. Para ello se ejecuta el siguiente comando en el directorio Proyecto/ryu-master dentro de la estructura de directorios del proyecto.
 
 \begin{center}
+./bin/ryu run --observe-links ryu/app/proyecto/businessLogic/RAUFlowApp.py
 
 \end{center}
+
+\begin{figure}[h] 
+\centering    
+\includegraphics[width=1.0\textwidth]{Snap10}
+\caption[Ejecuci\'on RAUFlow]{Ejecuci\'on RAUFlow}
+\label{fig:Img2}
+\end{figure}
+
+Este comando levanta el controlador Ryu y le pasa como parametro la aplicaci\'on RAUFlowApp la cual internamente instancia las otras tres aplicaciones Ryu.
+
+Por otro lado la aplicaci\'on instancia la API REST de servicios, por defecto en el puerto 8080 en la direcci\'on localhost. Ambos valores pueden configurarse desde el archivo wsgi.py.
