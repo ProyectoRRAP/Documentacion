@@ -8,7 +8,7 @@
     \graphicspath{{Chapter5/Figs/Vector/}{Chapter5/Figs/}}
 \fi
 
-En cap\'itulos anteriores se han detallado las caracter\'isticas m\'as importantes del prototipo así como sus componentes. Resta detallar entonces el dise\~no e implementaci\'on de RAUFlow la aplicaci\'on encargada de implementar el plano de control en el prototipo. 
+En cap\'itulos anteriores se han detallado las caracter\'isticas m\'as importantes del prototipo así como sus componentes. Resta detallar entonces, el dise\~no e implementaci\'on de RAUFlow la aplicaci\'on encargada de implementar el plano de control en el prototipo. 
 
 En el presente cap\'itulo se propone un an\'alisis de RAUFlow siguiendo un proceso de dise\~no tradicional de Ingenier\'ia de Software dividido en cuatro etapas. Una primera etapa de an\'alisis de requerimientos, una segunda etapa de relevamiento de casos de uso, una tercera etapa de dise\~no del modelo de datos y finalmente una cuarta etapa destinada al dise\~no general de la arquitectura. Ademas se presentan los aspectos m\'as importantes relacionados a la implementaci\'on de RAUFlow como por ejemplo las implementaciones del algoritmo de ruteo y del algoritmo de distribución de etiquetas, como se implementa clasificaci\'on de tr\'afico y como se puede implementar QoS entre otros detalles. 
 
@@ -78,7 +78,7 @@ En un mulrigrafo dirigido se tienen nodos y aristas con sentido. Cada nodo de la
 
 En el modelo se tiene adem\'as el concepto de Interfaz de dispositivo. Este concepto re-define la noción de adyacencia entre dos nodos en el grafo de la siguiente forma: existe una arista para un par de nodos si cada uno de ellos esta asociado a una instancia de la clase Interfaz y existe una instancia de la clase Link asociada a ambas interfaces mediante las relaciones “Desde” y “Hacia”; indicando adem\'as estas el sentido del dicho Link.
 
-Cabe destacar que en el modelo la clase Nodo representa solamente dispositivos de capa 3. Esto quiere decir que dispositivos de capa 2 como switches no son contemplados. Sin embargo no se asume que el nodo este f\'isicamente implementado por RAU-Switch, con lo que se permite modelar nodos iplementados en base a otro tipo de dispositivos.\\
+Cabe destacar que en el modelo la clase Nodo representa solamente dispositivos de capa 3. Esto quiere decir que dispositivos de capa 2 como switches no son contemplados. Sin embargo no se asume que el nodo este f\'isicamente implementado por RAU-Switch, con lo que se permite modelar nodos implementados en base a otro tipo de dispositivos.\\
 
 Por otro lado en rosado se destacan las clases utilizadas para representar los principales conceptos de \textbf{mpls} como las tablas FTN, ILM, NHLFE y el concepto de LSP. Si bien esta \'ultima clase no tiene atributos asociados en esta versi\'on del modelo de datos, eventualmente tiene sentido en un futuro que se puedan asociar atributos del camino como el m\'aximo ancho de banda disponible y algunas otras propiedades orientadas a funcionalidades de QoS por ejemplo.\\
 
@@ -108,21 +108,21 @@ La lista de casos de uso presentada a continuaci\'on se corresponde con un conju
  								
 \item \textbf{CU5. Eliminar Servicio}: Elimina un Servicio existente en el sistema.
 
-\item \textbf{CU6. Agregar Servicio}: Crea un nuevo servicio de red privada en el sistema, con la inormaci\'on de nodos y sus respectivas interfaces a las que las subredes esta\'an directamente conectadas con la red del prototipo, ingresada. Adem\'as solicita para cada servicio los datos utilizados para la clasificaci\'on del tr\'afico asociado al servicio. 
+\item \textbf{CU6. Agregar Servicio}: Crea un nuevo servicio de red privada en el sistema, con la inormaci\'on de nodos y sus respectivas interfaces a las que las subredes est\'an directamente conectadas con la red del prototipo, ingresada. Adem\'as solicita para cada servicio los datos utilizados para la clasificaci\'on del tr\'afico asociado al servicio. 
 
 \item \textbf{CU7. Ver Topolog\'ia}: Muestra la topolog\'ia de red mediante una representaci\'on gr\'afica.
 
-\item \textbf{CU.8 Filtrar Lsps}: Superpone en la representaci\'on gr\'afica de la red (CU7.Ver Topolog\'ia), un conjunto de LSPs seleccionados.
+\item \textbf{CU.8 Filtrar Lsps}: Superpone en la representaci\'on gr\'afica de la red (CU7.Ver Topolog\'ia) un conjunto de LSPs seleccionados.
 
 \item \textbf{CU9. Seleccionar Nodo}: Selecciona un nodo de una lista de Nodos (CU7. Ver Topolog\'ia).
 
 \item \textbf{CU10. Ver informaci\'on b\'asica Nodo}: Despliega la informaci\'on asociada al nodo seleccionado de la topolog\'ia (CU9. Seleccionar Nodo).
 
-\item \textbf{CU11. Ver tabla de Flujos Nodo}: Muestra la inormaci\'on de la tabla de flujos OpenFlow asociada al nodo seleccionado (CU9. Seleccionar Nodo).
+\item \textbf{CU11. Ver tabla de Flujos Nodo}: Muestra la informaci\'on de la tabla de flujos OpenFlow asociada al nodo seleccionado (CU9. Seleccionar Nodo).
 
 \item \textbf{CU12. Ver tablas MPLS}: Muestra la informaci\'on asociada a las tablas FTN, ILM y NHLFE asociadas al nodo seleccionado (CU9. Seleccionar Nodo).
 
-\item \textbf{CU13. Editar Informaci\'on extra Nodo}: Permite ingresar informaci\'on adicional sobre un Nodo como Nombre, si es nodo de interno o de borde por ejemplo.
+\item \textbf{CU13. Editar Informaci\'on extra Nodo}: Permite ingresar informaci\'on adicional sobre un Nodo como el Nombre, el tipo (nodo interno o de borde) por ejemplo.
 
 \item \textbf{CU14. Editar Informaci\'on extra Interfaz}: Ingresa informaci\'on adicional sobre la interfaz de un nodo seleccionado (CU9. Seleccionar Nodo). Por ejemplo si la interfaz es interna o externa.
 \end{itemize}
@@ -146,7 +146,7 @@ En la siguiente secci\'on se presenta la arquitectura de la aplicaci\'on RAUFlow
 
 Como se menciona en el cap\'itulo anterior, RAUFlow es el nombre dado a la aplicaci\'on encargada de implementar el plano de control en el prototipo. Sin embargo como se menciona tambi\'en en dicho cap\'itulo, la o las aplicaciones que se ejecutan en el controlador Ryu interactuan con diferentes m\'odulos y componentes como el Administrador SNMP \'o la base de datos topol\'ogica de Quagga. Por esta raz\'on tiene sentido pensar en RAUFlow como el conjunto de todas estas componentes las cuales interactuando entre ellas implementan efectivamente el plano de control.\\
 
-Conceptualmente RAUFlow es una aplicaci\'on de gestión de red, basada en el enfoque de SDN e implementada utilizando el software de Control Ryu y el protocolo OpenFlow entre otras tecnologías principalmente. No es puramente una aplicaci\'on OpenFlow puesto que como se ha mencionado reiteradas veces utiliza un conjunto de componentes y m\'odulos independientes del ambiente del controlador Ryu.
+Conceptualmente RAUFlow es un conjunto de aplicaciones de control y gestión de red, basada en el enfoque de SDN e implementado utilizando el software de Control Ryu y el protocolo OpenFlow entre otras tecnologías principalmente. No es puramente una aplicaci\'on OpenFlow puesto que como se ha mencionado reiteradas veces utiliza un conjunto de componentes y m\'odulos independientes del ambiente del controlador Ryu.
 
 %Con el objetivo de mantener simple y modular el dise\~no de RauFlow, se implementa en RauFlowApp solamente aquellas funcionalidades y responsabilidades asociadas al protocolo OpenFlow y sus respectivos eventos. Luego responsabilidades y funcionalidades asociadas a la realidad modelada y sus reglas de negocios, son delegadas a una capa de negocios. Ademas se tiene un conjunto de aplicaciones Ryu dise\~nadas e implementadas por terceros, las cuales se encuentran dentro del conjunto de aplicaciones que vienen con el software Ryu. M\'as adelante se explicar\'a en detalle cual es el rol que cumplen estas aplicaciones en el dise\~no de RauFlow.
 
@@ -169,7 +169,7 @@ A continuaci\'ion se explica en detalle cada una de estas capas, as\'i como la i
 Esta capa esta destinada a proveer de funcionalidades para el acceso y manipulaci\'on de datos de la aplicaci\'on (estado de la topolog\'ia e informaci\'on asociada a servicios de redes privadas principalmente), as\'i como todas las funcionalidades especificadas como requerimientos en la secci\'on 
 \ref{section5.1}.\\ 
 
-Dentro de la capa de presentaci\'on se destacan: (1) una interfaz gr\'afica identificada en el esquema como RauFlowUI, la cual implementa cada uno de los casos de uso mencionados anteriormente en la secci\'on \ref{section5.3}, (2) ControladorUI, componente que implementa los m\'etodos de acceso entre las funcionalidades de RauFlowUI y la capa de control a trav\'es de una API Rest de Servicios enS la capa de control y (3) un m\'odulo javascript denominado \textbf{ryu.topology}.\\ 
+Dentro de la capa de presentaci\'on se destacan: (1) una interfaz gr\'afica identificada en el esquema como RauFlowUI, la cual implementa cada uno de los casos de uso mencionados anteriormente en la secci\'on \ref{section5.3}, (2) ControladorUI, componente que implementa los m\'etodos de acceso entre las funcionalidades de RauFlowUI y la capa de control a trav\'es de una API Rest de Servicios en la capa de control y (3) un m\'odulo javascript denominado \textbf{ryu.topology}.\\ 
 
 Ryu incluye a modo de documentaci\'on un conjunto de aplicaciones muy sencillas en las que se ejemplifica el uso de las principales funcionalidades del protocolo OpenFlow. Entre estas aplicaciones se encuentra \textbf{gui\_topology}. Esta aplicaci\'on brinda una representaci\'on gr\'afica b\'asica de de las componentes topol\'ogicas en una red OpenFlow (switches, puertos y links).
 
@@ -183,17 +183,17 @@ A continuaci\'on se detalla la capa de control.
 
 La capa de control esta conformada por tres componentes principalmente: el software de control Ryu con su respectivo conjunto de aplicaciones SDN, el m\'odulo LSDBSync, el m\'odulo Administrador SNMP y la instancia de Quagga ejecutada en el Controlador.\\
 
-[
-Vale la pena destacar, al igual que el propio controlador Ryu, el conjunto de alplicaciones que se ejecutan sobre este estan desarrolladas en el lenguaje de programaci\'on Python
+%[
+%Vale la pena destacar, al igual que el propio controlador Ryu, el conjunto de alplicaciones que se ejecutan sobre este estan desarrolladas en el lenguaje de programaci\'on Python
  
-En relaci\'on al controlador Ryu y el conjunto de aplicaciones, como bien se ha mencionado anteriormente \'este software esta desarrollado en el lenguaje de programaci\'on Python y utiliza este mismo lenguaje para el desarrollo de las aplicaciones Ryu. Por consiguiente las cuatro aplicaciones que se ejecutan sobre el mismo están desarrolladas en este lenguaje. A continuaci\'on se detallan cada una de estas aplicaciones.
-]
+%En relaci\'on al controlador Ryu y el conjunto de aplicaciones, como bien se ha mencionado anteriormente \'este software esta desarrollado en el lenguaje de programaci\'on Python y utiliza este mismo lenguaje para el desarrollo de las aplicaciones Ryu. Por consiguiente las cuatro aplicaciones que se ejecutan sobre el mismo están desarrolladas en este lenguaje. A continuaci\'on se detallan cada una de estas aplicaciones.
+%]
 
 \subsubsection{Aplicaciones RYU(Terceros)}
 En RAUFlow se ejecuta un conjunto de tres aplicaciones con el objetivo de facilitar la representaci\'on gr\'afica del estado de la topolog\'ia, a partir de las funcionalidades de la aplicación \textbf{gui\_topology}, anteriormente mencionada. 
 
 Las tres aplicaciones utilizadas son:
-(1) rest\_topology, (2) ws\_topology y (3) ofctl\_rest. Por otro lado, las funcionalidades de cada una de estas aplicaciones son las siguientes:
+(1) rest\_topology, (2) ws\_topology y (3) ofctl\_rest. Las funcionalidades de cada una de estas aplicaciones son las siguientes:
 
 \begin{enumerate}
 \item rest\_topology: Implementa una API REST de servicios para el acceso a informaci\'on topol\'ogica de switches OpenFlow y links existentes entre ellos. Este API es utilizada por \textbf{ryu.topology} para construir la representaci\'on gr\'afica de la red.
@@ -211,7 +211,7 @@ Dentro de las aplicaciones Ryu, RauFlowApp es realmente la encargada de implemen
 
 %Dentro de las aplicaciones que se ejecutan en el controlador, RauFlowApp es realmente la encargada de implementar el plano de control del prototipo. Esto quiere decir, guardar informaci\'on de la realidad modelada (servicios de redes privadas principalmente), guardar información de la topolog\'ia y su estado, implementar eventualmente políticas de Ingeniería de Tr\'afico y funcionalidades de QoS, ruteo din\'amico etc.\\
 
-Vale la pena aclarar, que a diferencia de las tres aplicaciones anteriores, las cuales fueron desarrolladas por el equipo detrás del softrwa Ryu, esta aplicaci\'on es completamente diseñada e implementada en el marco de este proyecto.\\
+Vale la pena aclarar, que a diferencia de las tres aplicaciones anteriores, las cuales fueron desarrolladas por el equipo detrás del software Ryu, esta aplicaci\'on es completamente diseñada e implementada en el marco de este proyecto.\\
 
 En relaci\'on al diseño de esta aplicaci\'on, como puede apreciarse en la figura responde a una organización modular, en la cual se destacan cuatro componentes principalmente: (1) EventosOpenFlow (2) L\'ogica de Negocios, (3) API REST de Servicios y (4) Interfaces Externas. El funcionamiento de cada uno de ellos es el siguiente:
   
@@ -234,12 +234,12 @@ En relaci\'on al diseño de esta aplicaci\'on, como puede apreciarse en la figur
 
 \begin{enumerate}
 
-\item EventosOpenFlow
+\item EventosOpenFlow\\
 EventosOpenFlow es una aplicaci\'on Ryu con el esquema b\'asico de este tipo de programas (las aplicaicones Ryu tienen un esquema particular). Se encarga de proveer m\'etodos para los principales eventos del protocolo OpenFlow; por ejemplo cuando un switch se reporta con el controlador por primera vez \'o deja de reportarse, cuando el controlador recibe un paquete (Packet IN), cuando se produce un cambio en la topolog\'ia como por ejemplo un puerto en un dispositivo que deja de funcionar, entre otros.\\
 
 A nivel de diseño el modelado de la realidad, la implementaci\'on de funcionalidades de acceso a la capa de dispositivos, estructuras de datos almacenadas en memoria, los algoritmos de ruteo y distribucion de etiquetas son implementados en la componente Logica de Negocios. De esta forma se desacoplan las responsabilidades, mejorando la claridad y transparencia en el diseño de la aplicaci\'on. No obstante esta aplicación es la responsable de gestionar el ciclo de vida de los diferentes objetos asociados a la componente Lógica de Negocios.
   
-\item Lógica de Negocios
+\item Lógica de Negocios\\
 Como se ha mencionado esta componente es responsable del modelado de la realidad y la implementaci\'on de las principales funcionalidades del plano de control de RAUFlow. Se subdivide a su vez en diferentes m\'odulos que agrupan funcionalidades acorde a su naturaleza y responsabilidad. Vale la pena destacar a su vez que cada uno de estos m\'odulos se corresponde en la implementaci\'on realizada con un m\'odulo de Python. A continuaci\'on se explican las responsabilidades de cada uno de ellos:
 
 \begin{itemize}
@@ -256,12 +256,12 @@ Como se ha mencionado esta componente es responsable del modelado de la realidad
 
 Para acceder a la componente de Logica de Negocios se tiene una API REST de Servicios.
 
-\item API REST de servicios
+\item API REST de servicios\\
 Esta componente define m\'etodos para el acceso a los datos y funcionalidades de la componente Lógica de Negocios. Es utilizada por ejemplo por la capa de Presentaci\'on para acceder a diferente informaci\'on de la realidad o crear nuevos servicios por ejemplo. A su vez es utilizada por otras componentes de la capa de control como lo es el caso del m\'odulo LSDBSync para enviar inormaci\'on actualizada de la topolog\'ia de red al momento de ejecutar RAUFlow por primera vez y luego cuando la topolog\'ia cambia. 
 
 Se subdivide en varios m\'odulos respondiendo al criterio utilizado para el dise\~no modular de la anterior componente. 
 
-\item Interfaces Externas
+\item Interfaces Externas\\
 Cuando se enciende RAUFlow y se recibe por primera vez la informaci\'on topol\'ogica, o cuando la topolog\'ia cambia y se produce una actualizaci\'on, es necesario obtener informaci\'on adicional sobre cada dispositivo (hecho ya mencionado en reiteradas ocasiones). Para esto la aplicaci\'on utiliza la componente denominada Interfaces Externas. 
 
 Esta componente funciona como punto de conexi\'on entre la componente L\'ogica de Negocios y otras componentes externas a la aplicaci\'on RAUFlowApp. Un ejemplo de una componente externa es el m\'odulo Administrador SNMP, encargado de obtener la informaci\'on extra en el proceso de actualizaci\'on topol\'ogica mencionado, utilizando el Agente SNMP instalado en cada dispositivo RAU-Switch del prototipo.\\
@@ -291,7 +291,7 @@ Una vez presentada y explicada en detalle la arquitectura de RAUFlow, el lector 
 
 \section[Implementaci\'on]{Implementaci\'on}
 
-En esta secci\'on se presentan los aspectos m\'as importantes relacionados a la implementaci\'on de RauFlow. Entre ellos se destacan la estrategia utilizada para implementar clasificaci\'on de tr\'afico,  la implementaci\'on de la clase servicio, la implementaci\'on de los algoritmos de ruteo y distribución de etiquetas distribusi\'on de etiquetas, entre otros.\\
+En esta secci\'on se presentan los aspectos m\'as importantes relacionados a la implementaci\'on de RauFlow. Entre ellos se destacan la estrategia utilizada para implementar clasificaci\'on de tr\'afico,  la implementaci\'on de la clase servicio, la implementaci\'on de los algoritmos de ruteo y distribución de etiquetas, entre otros.\\
 
 \subsection{Clasificación de tr\'afico}
 En la literatura de MPLS, tradicionalmente se utiliza el concepto de FEC(fordwarding equivalence class) para distinguir a un conjunto de paquetes a ser tratados en forma similar(por ejemplo para aplicar t\'ecnicas de QoS). Este concepto se define localmente a un dispositivo, determinando la forma en que un conjunto de paquetes son tratados solamente en el mismo.
@@ -318,9 +318,9 @@ La clase Servicio implementa en el prototipo el concepto de servicios de red pri
 
 En el prototipo se asume que por cada nodo de borde  se tiene una \'unica red privada directamente conectada a cada interfaz externa. Esto permite definir un servicio a partir de la clase de tr\'afico definida y los pares nodo-interfaz origen y nodo-interfaz destino.
 
-Por otro lado se pdr\'ia refinar la definici\'on de servicio agregando m\'as dimensiones; una dimensi\'on bastante \'util podr\'ia ser por ejemplo tiempo. Utilizando esta dimensi\'on se podr\'ia por ejemplo definir un servicio de red privada para un rango horario determinado.
+Por otro lado se podr\'ia refinar la definici\'on de servicio agregando m\'as dimensiones; una dimensi\'on bastante \'util podr\'ia ser por ejemplo tiempo. Utilizando esta dimensi\'on se podr\'ia por ejemplo definir un servicio de red privada para un rango horario determinado.
 
-De igual forma se pueden incorporarse m\'as dimensiones orientado a brindar una mayor flexibilidad en la definici\'on de servicios, de cara a lo que podr\'ian ser diferentes requerimientos de la RAU2. 
+De igual forma se pueden incorporar m\'as dimensiones orientado a brindar una mayor flexibilidad en la definici\'on de servicios, de cara a lo que podr\'ian ser diferentes requerimientos de la RAU2. 
 
 De todos modos teniendo en cuenta el alcance del proyecto se decide dejar estas dimensiones extras como una posible l\'inea de trabajo a futuro.\\ 
 
@@ -393,7 +393,7 @@ class Service(object):
 		
 \end{python}
 
-En RAUFlow, cuando se crea un nuevo servicio se ejecutan los algoritmos de ruteo y distribución de etiquetas par construir el menos un LSP. Luego este LSP es traducido a flujos OpenFlow que luego son instalados en cada uno de los nodos que forman parte. 
+En RAUFlow, cuando se crea un nuevo servicio se ejecutan los algoritmos de ruteo y distribución de etiquetas para construir al menos un LSP. Luego este LSP es traducido a flujos OpenFlow que luego son instalados en cada uno de los nodos que forman parte. 
 
 En la siguiente secci\'on se detalla el algoritmo de ruteo utilizado en RAUFlow.
 
@@ -866,7 +866,7 @@ De ambos algoritmos se elige \textbf{ActualizarServiciosLSPs} para mostrar a con
 \subsection{Ciclo de vida de un Nodo}
 En el prototipo se obtiene informaci\'on de varias fuentes de datos para la construcci\'on de la topolog\'ia. Algunas de ellas son la base de datos topol\'ogica de Quagga(LSDB), el datapath OpenFlow y a través del ingreso manual de informaci\'on mediante la interfaz gr\'afica de RAUFlow.
 
-Estas fuentes aportan datos en forma independiente, lo cual incide directamente en la construcci\'on de la topolog\'ia y en decisiones que se toman dentro del prototipo como por ejemplo en el algoritmo de ruteo entre otros. Por ello a contnuaci\'on se ejemplifica el proceso de construcci\'on de la topolog\'ia a partir de las fuentes de datos, tomando como ejemplo el ciclo de vida de un nodo en particular. Luego el ciclo de vida de interfaces y enlaces puede deducirse de forma análoga.\\
+Estas fuentes aportan datos en forma independiente, lo cual incide directamente en la construcci\'on de la topolog\'ia y en decisiones que se toman dentro del prototipo como por ejemplo en el algoritmo de ruteo entre otros. Por ello a continuaci\'on se ejemplifica el proceso de construcci\'on de la topolog\'ia a partir de las fuentes de datos, tomando como ejemplo el ciclo de vida de un nodo en particular. Luego el ciclo de vida de interfaces y enlaces puede deducirse de forma análoga.\\
 
 \begin{figure}[ht!] 
 \centering    
@@ -880,7 +880,7 @@ Como se muestra en la figura\ref{fig:CicloVidaNodo}, descartando el pseudo-estad
 El significado de cada uno de estos as\'i como las transiciones posibles se explican a continuación:
 
 \begin{itemize}
-\item \textit{Descubrimiento OpenFlow:} Cuando un switch se reporta mediante el canal OpenFlow por primera vez con RAUFlow, se guarda diferente informaci\'on del mismo entre la cual se encuentra la instancia de la clase Datapath en la implementaci\'on de Ryu(esta instancia es utilizada posteriormente para interactuar con el dispositivo). Si el switch OpenFlow no se encuentra instanciado en el sistema como Nodo, la informaci\'on recibida se almacena en una lista auxilar de nodos. No se crea una instancia de Nodo como tal a\'un, instanciandose solamente cuando se advierte la precencia de \'este en la Link State Database(LSDB). 
+\item \textit{Descubrimiento OpenFlow:} Cuando un switch se reporta mediante el canal OpenFlow por primera vez con RAUFlow, se guarda diferente informaci\'on del mismo entre la cual se encuentra la instancia de la clase Datapath en la implementaci\'on de Ryu(esta instancia es utilizada posteriormente para interactuar con el dispositivo). Si el switch OpenFlow no se encuentra instanciado en el sistema como Nodo, la informaci\'on recibida se almacena en una lista auxilar de nodos. No se crea una instancia de Nodo como tal a\'un, instanciandose solamente cuando se advierte la presencia de \'este en la Link State Database(LSDB). 
 
 Esto se corresponde con una decisión de diseño, en la cual se busca reconocer a un Nodo tanto para las funcionalidades de la interfaz gr\'afica de RAUFlow como para el algoritmo de ruteo, solamente cuando se advierte la existencia del mismo en la inforamci\'on de la LSDB. 
 

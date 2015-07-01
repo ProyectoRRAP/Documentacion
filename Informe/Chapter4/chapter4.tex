@@ -29,7 +29,7 @@ En este trabajo se combinan ambos enfoques, utilizando el protocolo de ruteo OSP
 
 Se decide utilizar OSPF por la sencilla razón de que es una opción robusta y confiable, adem\'as de que existen buenas implementaciones en software libre (por ejemplo Quagga\cite{Quagga} y BIRD\cite{BIRD}).
 
-OSPF basa su algoritmo para el c\'alculo de rutas en el algoritmo Dijkstra(ampliamente conocido para el calculo de mejores caminos en un grafo) y utiliza como m\'etrica el costo asociado a cada enlace. Este costo es ingresado manualmente por el administrador de la red y es un n\'umero \'unico, as\'i que es necesario definir una relaci\'on matem\'atica entre las diferentes caracter\'isticas de un enlace a considerar (ancho de banda disponible, tecnolog\'ia, latencia, etc.) y el valor en cuestión.
+OSPF basa su algoritmo para el c\'alculo de rutas en el algoritmo Dijkstra(ampliamente conocido para el calculo de mejores caminos en un grafo) y utiliza como m\'etrica el costo asociado a cada enlace. Este costo es ingresado manualmente por el administrador de la red y es un n\'umero \'unico, as\'i que es necesario definir una relaci\'on matem\'atica entre las diferentes caracter\'isticas de un enlace a considerar (ancho de banda disponible, tecnolog\'ia, latencia, etc.) y \'este n\'umero.
 
 Sin embargo, para la definición de políticas en ingeniería de tr\'afico que permitan hacer balanceo de carga y construcción de caminos alternativos, es necesario incorporar m\'as informaci\'on en el algoritmo de ruteo, como la saturaci\'on de enlaces por ejemplo entre otras restricciones.
 
@@ -45,7 +45,7 @@ Para la implementaci\'on de un algoritmo de distribución de etiquetas, se puede
 
 Siguiendo un enfoque distribuido una de las propuestas existentes es el protocolo LDP(Label distribution Protocol), del cual adem\'as se cuenta con la implementaci\'on ofrecida por Quagga-LDP. 
 
-Esta herramienta es una extension de Quagga, para brindar adem\'as soporte al protocolo LDP. Al igual que Quagga, el cual funciona interactuando con el kernel de Linux para la construcci\'on de la tabla de ruteo, Quagga-LDP interact\'ua con el kernel de Linux para la construcci\'on de dos tablas. Estas dos tablas implementan los conceptos de FTN (Fec To NHLFE), ILM (Incoming Label Mapping) y NHLFE (Next Hop Label Forwarding Entry) en la definición de MPLS, los cuales determinan la forma en que un paquete es procesado y reenviado en un nodo.
+Esta herramienta es una extension de Quagga, para brindar adem\'as soporte al protocolo LDP. Al igual que Quagga, el cual funciona interactuando con el kernel de Linux para la construcci\'on de la tabla de ruteo, Quagga-LDP interact\'ua con el kernel de Linux para la construcci\'on de dos tablas. Estas dos tablas implementan los conceptos de FTN (Fec To NHLFE), ILM (Incoming Label Mapping) y NHLFE (Next Hop Label Forwarding Entry) introducidos en la definición del protocolo MPLS.  Estas tablas determinan la forma en que un paquete es procesado y reenviado en un nodo.
 
 Quagga-LDP toma como entrada el resultado de la ejecuci\'on del protocolo OSPF, para luego ejecutar el protocolo LDP y así poblar las tablas mencionadas.
 
@@ -63,7 +63,7 @@ Por ello se decide implementar desde cero un algoritmo de distribución de etiqu
 
 A continuación se explica la arquitectura general del prototipo. 
 
-\section{Arquitectura del Prototipo}
+\section{Construcci\'on del prototipo y Arquitectura}
 
 La arquitectura del prototipo (ver figura ~\ref{fig:OpenSourceRArch0}), sigue la arquitectura del enfoque OpenFlow/SDN como se mencion\'o anteriormente. En concordancia con esta arquitectura en el prototipo se tienen dos componentes importantes: el controlador SDN y el switch compatible con OpenFlow.\\
 
@@ -85,7 +85,7 @@ De esta forma el prototipo para la RAU2 se compone entonces de unos pocos nodos 
 A continuaci\'on se explica en detalle cada una de estas componentes y su interacci\'on.
 
 \section{RAU-Switch}
-Cada nodo del prototipo es implementado por lo que en este trabajo se denomin\'o RAU-Switch: un switch MPLS/OpenFlow híbrido. Por un lado es un switch OpenFlow puesto que esta dise\~nado en base a dicha arquitectura y por otro lado es un router MPLS puesto que conceptualmente el plano de reenvío es implementado a trav\'es de la conmutación de etiquetas.\\
+Cada nodo en la red del prototipo es lo que en este trabajo se denomina RAU-Switch: un switch IP/MPLS h\'ibrido compatible con OpenFlow. Por un lado es un switch OpenFlow puesto que esta dise\~nado en base a dicha arquitectura y por otro lado es un router IP/MPLS puesto que conceptualmente el plano de reenvío es implementado a trav\'es de la conmutación de etiquetas mpls, mientras que el descubrimiento de la topolog\'ia y la construccui\'on de rutas se basa en algoritmos en base a IP.\\
 
 Puesto que en la literatura OpenFlow es común la denominación de switch OpenFlow a cualquier dispositivo, no importando si en la practica implementa las funcionalidades de un switch de capa dos \'o un router de capa tres, se decidió denominar a esta componente RAU-Switch.\\
 
@@ -121,16 +121,16 @@ El hardware NetFPGA puede funcionar tanto conectado a una PC por un slot PCIe(mo
 
 El hardware puede programarse mediante un cable programador JTAG y la herramienta Impact de la suite de desarrollo de Xilinx ISE SDK. Para ello es indispensable contar con una estaci\'on de trabajo con dichas herramientas instaladas, habilitando la programaci\'on  de la tarjeta NetFPGA que luego ser\'a colocada en la PC de cada nodo. A su vez esta suite se compone por varias herramientas las cuales están licenciadas. Estas licencias adem\'as contemplan la arquitectura del chip Xilinx que en este caso tiene la tarjeta NetFPGA, por ello es indispensable contar con el paquete de licencias apropiado al modelo de chip con que se trabaja (en nuestro caso Virtex5) y a las herramientas utilizadas. 
 
-Esta estaci\'on de trabajo puede o bien ser la propia PC utilizada para el switch(alternativa utilizada en este proyecto) \'o bien puede ser una PC independiente. Por ello no se incluye explicitamente esta componente en el diagrama a pesar de que forma parte de la arquitectura.
+Esta estaci\'on de trabajo puede o bien ser la propia PC utilizada para el switch(alternativa utilizada en este proyecto) \'o bien puede ser una PC independiente.
 
 %Cabe destacar que en la b\'usqueda de una plataforma compatible para la programaci\'on del hardware se probo con diferentes sistemas operativos como se menciono, logrando programarse el mismo en Windows XP y Ubuntu 12.04.
 
 \subsubsection{Programaci\'on simple}
-Programar el hardware con un proyecto puede hacerse al menos de dos formas diferentes; una de ellas es lo que aqu\'i se denomina programaci\'on simple. Esta estrategia consiste en la utilizaci\'on de la herramienta Impact y el cable JTAG para grabar en dos chips de la tarjeta (chip FPGA y chip CPLD) dos archivos binarios, uno con la arquitectura del proyecto y otro con la implementaci\'on.
+El hardware puede programarse al menos de dos formas diferentes; una de ellas es lo que aqu\'i se denomina programaci\'on simple. Esta estrategia consiste en la utilizaci\'on de la herramienta Impact y el cable JTAG para grabar en dos chips de la tarjeta (chip FPGA y chip CPLD) dos archivos binarios, uno con la arquitectura de un proyecto y otro con la implementaci\'on del mismo.
 
 Como principales ventajas de esta estrategia se destacan su simplicidad, no requiere de licencias pagas (puede descargarse una licencia gratuita para la herramienta Impact) y adem\'as es el procedimiento que se describe en la documentaci\'on de la plataforma NetFPGA.
 
-No obstante presenta una desventaja importante y es que al producirse un ciclo completo de corriente (apagado y encendido del equipo) el hardware se “desprograma”. Concretamente el contenido del chip FPGA es borrado y solo perdura el contenido del chip CPLD.\\
+No obstante presenta una desventaja importante y es que al producirse un corte de corriente el hardware se “desprograma”. Concretamente el contenido del chip FPGA se borrada y solo perdura el contenido del chip CPLD.\\
 
 Tras constatarse este comportamiento, luego de revisar la documentaci\'on de la plataforma y recurrir al foro de la comunidad NetFPGA, se accede a una lista de correos mediante la cual se establece una comunicaci\'on con el equipo de desarrollo de NetFPGA(ver ap\'endice ~\ref{apendiceB2}). Este di\'alogo adem\'as de ayudar en la comprensión del funcionamiento de la plataforma, desemboca en la segunda estrategia de programaci\'on.
 
@@ -143,7 +143,7 @@ En el procedimiento empleado, inicialmente se programa el hardware con el proyec
 
 Cabe destacar que durante la ejecuci\'on de este procedimiento se detectan algunos errores y comportamientos inesperados en el hardware. Esto es reportado al equipo de desarrollo de NetFPGA a través de la lista oficial de correos de soporte, reportándose en total dos errores. Luego de este di\'alogo se obtiene una soluci\'on a dichos errores los cuales cabe destacar que son contemplados y resueltos en la siguiente actualizaci\'on del repositorio de c\'odigo fuente. Por m\'as detalles acerca de estos errores y la forma en que son resueltos provisoriamente referirse al ap\'endice~\ref{apendiceA}.\\
 
-Otro detalle a destacar de esta estrategia es la utilizaci\'on de herramientas de la suite de Xilinx que requieren de licencias especiales pagas. En el marco de este proyecto se solicita apoyo en relaci\'on a este tema a docentes del Instituto de Ingeniería Eléctrica de la Facultad de Ingenieria (IIE) y a través del programa de apoyo universitario de Xilinx, en busca de una soluci\'on a este problema.
+Otro detalle a destacar de esta estrategia, es que la utilizaci\'on de herramientas de la suite de Xilinx requieren de licencias especiales pagas. En el marco de este proyecto se solicita apoyo en relaci\'on a este tema a docentes del Instituto de Ingeniería Eléctrica de la Facultad de Ingenieria (IIE) y a través del programa de apoyo universitario de Xilinx, en busca de una soluci\'on a este problema.
 
 Si bien en el IIE no se trabaja con esta plataforma se obtiene de parte de este instituto asesoramiento sumamente \'util para la resoluci\'on de este obstáculo. Por otro lado a través del programa de apoyo a universidades de Xilinx se obtiene una interesante donaci\'on de licencias, posibilitando a una real explotaci\'on del hardware y de la plataforma. Por mayores detalles acerca de este problema puede consultarse el apéndice ~\ref{apendiceB3}.
 
