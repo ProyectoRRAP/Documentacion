@@ -52,19 +52,35 @@ Esta es estrategia funciona correctamente, y es lo que en este trabajo se di\'o 
 
 \section{Falta de licencias para suite de Xilinx ISE SDK}
 \label{apendiceB3}
+La suite de desarrollo Xilinx ISE SDK se compone por un conjunto extenso de herramientas para la progrmaci\'on y desarrollo de software utilizando los productos de este fabricante; entre los cuales se encuentra el chip Virtex 5 utilizado en el hardware NetFPGA.\\
 
-La suite de Xilinx ISE SDK, se componen por un conjunto extenso de herramientas y entornos de desarrollo. Dentro de la suite se encuentran herramientas habilitadas para su uso bajo licencias gratuitas, otras bajo licencias de prueba (tipicamente 30 dias), y otras solamente bajo licencias pagas.\\
+Estas herramientas de software son licenciadas lo que significa que para su use es necesario contar con una licencia de software apropiada.
 
-En particular en este proyecto se comienza trabajando con un paquete de licencias gratuitas. Seguir explicando \dots\\
+Cada herramienta particular de la suite Xilinx tiene una licencia particular y se agrupan en diferentes paquetes de licencias. De esta forma dependiendo del uso que se vaya a hacer de esta plataforma el o los paquetes de licencias que se deben adquirir.
 
-Por otro lado, esta estrat\'egia de programaci\'on utiliza herramientas de la suite de Xilinx que requieren de licencias pagas. Este detalle se constato experimentalmente en la ejecuci\'on del proyecto. Cabe destacar que la informaci\'on de error proporcionada por la herramienta al intentar ejecutarla sin las licencias correspondientes, asi como la documentaci\'on disponible no suguieren de forma intuitiva la naturaleza del problema. Por ello, teniendo la intuici\'on de que se trataba efectivamente de un problema de licenciamiento se solicitaron licencias adicionales a trav\'es del programa de apoyo universitario de Xilinx.
+Por otro lado cada licencia brinda soporte de la herramienta asociada, para una familia de chips en particular. Por ejemplo en el contexto de este proyecto se necesitan licencias compatibles con la familia de chips Virtex5 TX240T.\\
 
-Tras pasar varias semanas a la espera de una respuesta, se establecio un contacto con docentes del IIE de Facultad de Ingenieria. Desde el IIE se contesto que no trabajaban con esta plataforma pero que lo hab\'ian hecho en un pasado; facilit\'andonos un conjunto de licencias con el que se logro resolver el problema de licenciamiento. 
+Si bien Xilinx provee de un paquete de licencias gratuito para un conjunto de herramientas mínimas dentro de la suite (entre estas se encuentra la herramienta Impact), en el desarrollo de este proyecto y en especial en el proceso de programaci\'on persistente del hardware se necesitan licencias para herramientas que no estan incluidas en este paquete.
 
-Mucho tiempo despu\'es el programa universitario de Xilinix don\'o un paquete de licencias entre las cuales se encontraban las necesarias.
+A su vez, Xilinx provee de un paquete de licencias de prueba de 30 días en el cual se incluyen las herramientas necesarias para el proceso de programaci\'on persistente. No obstante en la familia de chips para las cuales este paquete de licencias provee de compatibilidad no se incluye la arquitectura del chip del hardware NetFPGA (mientras que la familia del hardware NetFPGA es Virtex5 TX240T, este paquete soporta familias de la arquitectura Virtex7).\\
+
+Entonces, el conjunto de licencias necesarias para la ejecuci\'on de este proyecto se incluyen en un paquete de licencias el cual no es gratuito (al mes de Setiembre del año 2014 rondaba los USD500 aproximadamente por PC) y no hay paquete de licencias gratuitas o de prueba que posibiliten la configuraci\'on del hardware NetFPGA de la manera pretendida en este proyecto.\\
+
+Identificado este problema, se solicita por medio del programa de soporte a Universidades de Xilinx el paquete de licencias necesario, a la vez que se inicia un contacto con el Instituto de Ingeniería Eléctrica de la Facultad de Ingeniería (IIE) solicitando orientación en relación a este problema.
+
+Tras este contacto se toma conocimiento que en el IIE no se trabaja actualmente con esta plataforma aunque en alg\'un momento si lo hicieron y gracias a ello se obtiene de parte de este instituto
+el asesoramiento y apoyo necesario para la resolución de este obstáculo. 
+
+Por otro lado, a través del programa de apoyo a universidades de Xilinx se obtiene una interesante donación de licencias, posibilitando a una real explotación del hardware y de la plataforma a futuro. Sin embargo, vale la pena destacar que esta donaci\'on se recibe bastante tiempo después de enviada la solicitud en dicho programa, y que estas licencias fueron un insumo necesario para continuar con la ejecuci\'on de este proyecto.  
 
 \section{Falta de driver para cable JTAG Xilinx}
-Si mal no recuerdo tuvimos algun problema en relacion a esto. Tengo la vaga idea de que yo queria usar algo de linux que te permite correr drivers no recuerdo si viejos.... Fa capaz me estoy mareando con lo de la wireless de asus.
+Para la programación del hardware NetFPGA se utiliza un cable programador especial con una interfaz de conexi\'on JTAG. 
+
+Por un lado, para utilizar este cable es necesario instalar un driver especifico para el mismo. Para la marca de cable JTAG utilizado en este proyecto (Xilinx) el driver oficial provisto por el fabricante tiene soporte solamente para sistemas Windows.
+
+A pesar de que existe una implementaci\'on de este driver para sistemas basados en GNU/Linux (la cual no guarda relación con el fabricante), se prueba en este proyecto que funciona solamente en Fedora.\\
+
+Finalmente luego de un esfuerzo mayor buscando una implementaci\'on de driver compatible con Ubuntu 12.04 se encuentra la implementaci\'on \ref{JtagD}, la cual tras bajar el codigo fuente y compilarlo apropiadamente, se puede utilizar el cable de programaci\'on JTAG exitosamente.
 
 \section{Desaf\'ios con Open vSwitch}
 \label{apendiceB5}

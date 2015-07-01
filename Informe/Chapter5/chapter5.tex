@@ -470,12 +470,17 @@ Las operaciones \textit{ObtenerNodosMenorCostoLink} y \textit{ObtenerNodoAdyacen
     GmenosS $\gets$ GmenosS $- \lbrace inicio \rbrace$\\
     
     \ForEach{i in G}{
-    	\If{i in G[inicio]}{\Comment{Si los nodos son adyacentes actualiza el costo en D y el link 	
+    	\uIf{i in G[inicio]}{\Comment{Si los nodos son adyacentes actualiza el costo en D y el link 	
     								predecesor}
     		link $\gets$ ObtenerNodosMenorCostoLink(inicio, i)\Comment{Obtiene el link de 
     																	menor costo entre los nodos}\\
     		D[i] $\gets$ link.costo\\
     		P[i] $\gets$ link\\	
+ 		}
+ 		\Else{
+ 			D[i] $\gets$ -1\\
+			D[i] = -1 \\
+            P[i] $\gets$ Null \\ 		
  		}
     }
     
@@ -489,7 +494,7 @@ Las operaciones \textit{ObtenerNodosMenorCostoLink} y \textit{ObtenerNodoAdyacen
     	\Comment{Actualiza la lista de costos y predecesores para todos los nodos en $G\setminus S$}\\
     	\ForEach{v in GmenosS}{
 			l $\gets$ ObtenerNodosMenorCostoLink(w, v)\\
-			\If{ D[w] + l.costo < D[v]}{
+			\If{ l <> Null AND (D[v] = -1 OR D[w] + l.costo < D[v])}{
 				D[v] $\gets$ D[w] + l.costo\\
                 P[v] $\gets$ l\\
 			}    	
@@ -554,25 +559,25 @@ En RauFlow se implementa la segunda alternativa mencionada. En \ref{fig:Algoritm
  	labelBase $\gets$ Null\\
  
 	\uIf{len(path) = 1}{
-    	$mplsPath \gets mplsPath \cup \{None\}$ \Comment{Si el camino es de largo 1, no tiene 
+    	$mplsPath \gets mplsPath \cup \{Null\}$ \Comment{Si el camino es de largo 1, no tiene 
     													etiquetas porque primer nodo hace PHP}
  	}
  	\Else{
     	labelBase $\gets$ MPLS\_LABEL\_SPACE\_MIN \Comment{Se asignan etiquetas secuencialmente en el
     														 espacio de etiquetas}
     
-   		\ForEach{l in path}{
+   		\ForEach{l in path-1}{
 			label $\gets$ \obtenerEtiquetaParaInterfaz(l, labelBase) \Comment{Obtiene una etiqueta 
 												libre del espacio de etiquetas local a la interfaz}\\
 			
 			$mplsPath \gets mplsPath \cup \{label\}$\\
 			
 			$labelBase \gets labelBase + 1$\\
-			
-			$mplsPath \gets mplsPath \cup \{None\}$\Comment{Como \'ultimo nodo implementa PHP el 
-													\'ultimo link no tiene etiqueta asociada}\\
 				
  		}
+ 		
+ 		$mplsPath \gets mplsPath \cup \{Null\}$\Comment{Como \'ultimo nodo implementa PHP el 
+													\'ultimo link no tiene etiqueta asociada}\\
  	}        
  
  	\Return{mplsPath[]}
@@ -595,7 +600,7 @@ En RauFlow se implementa la segunda alternativa mencionada. En \ref{fig:Algoritm
 	 next\_label $\gets$ label\_base\\
 	 label $\gets$ Null\\
 	 
-	 \While{label is Null AND next\_label $<$ MPLS\_LABEL\_SPACE\_MAX}{
+	 \While{label == Null AND next\_label $<$ MPLS\_LABEL\_SPACE\_MAX}{
 		\uIf{next\_label in etiquetas\_usadas)}{
     		next\_label $\gets$ next\_label + 1\\
     	}
