@@ -80,7 +80,7 @@ Por un lado, para utilizar este cable es necesario instalar un driver especifico
 
 A pesar de que existe una implementaci\'on de este driver para sistemas basados en GNU/Linux (la cual no guarda relación con el fabricante), se prueba en este proyecto que funciona solamente en Fedora.\\
 
-Finalmente luego de un esfuerzo mayor buscando una implementaci\'on de driver compatible con Ubuntu 12.04 se encuentra la implementaci\'on \ref{JtagD}, la cual tras bajar el codigo fuente y compilarlo apropiadamente, se puede utilizar el cable de programaci\'on JTAG exitosamente.
+Finalmente luego de un esfuerzo mayor buscando una implementaci\'on de driver compatible con Ubuntu 12.04 se encuentra la implementaci\'on \cite{JtagD}, la cual tras bajar el codigo fuente y compilarlo apropiadamente, se puede utilizar el cable de programaci\'on JTAG exitosamente.
 
 \section{Desaf\'ios con Open vSwitch}
 \label{apendiceB5}
@@ -142,35 +142,27 @@ Para solucionar este problema se utilizan interfaces virtuales. Ficha por favor 
 \section{MPLS Linux y Quagga LDP}
 \label{apendiceB6}
 
-Bueno creo que es aca donde sacarnos las ganas de hablar de Quagga LDP y MPLS linux
+MPLS Linux\cite{MplsLinux1} es un proyecto orientado a dotar de funcionalidades de MPLS al Kernek de Linux. 
+Para esto se utiliza un parche con el cual se extiende el kernel original el cual tras recompilarse queda pronto para brindar soporte nativo al protocolo MPLS. Sin embargo es necesario instalar luego herramientas adicionales par por ejemplo acceder a las tablas de mpls (en particular existe una extension de la herramienta iproute denominada iproute2 para esto).\\
 
-Que es MPLS LINUX, las dos versiones que hay, que es quagga LDP las dos versiones que hay.
+El proyecto, cuyo desarrollo fue encabezado por James R. Leu, data de hace m\'as de 15 a\~nos y no se han hecho contribuciones importantes desde hace aproximadamente 9. Adem\'as de que la documentaci\'on existente es muy poca, las versiones de kernel de Linux para las cuales se pensó este parche rondan por la versi\'o 2.6.3.16 por ejemplo, cuando la \'ultima versi\'on de kernel es la 4.1.1.\\
 
-Con que se empezo, que problemas tuvimos. Poca documentacion o practicamente nada.
+Durante la ejecuci\'on de este proyecto, se prueba de instalar este parche en dos kernel de Linux contemporáneos a este desarrollo de software; version 2.6.32.16 y 2.6.32.65; obteniendo resultados no satisfactorios. Concretamente estas versiones de kernel son tan antiguas que no soportaron diferentes características del hardware utilizado para la contrucci\'on de RAU-Switch, adem\'as de que tampoco soportaron completamente la herramienta Open vSwitch.
 
-Se recompila kernel, cambia configuracion, se logra configuracion intermedia.
+Se prueba compilar este parche enla versi\'on de kernel con la que se estaba trabajando hasta el momento (3.11.0-15 generic) tampoco obteniendo resultados satisfactorios.\\
 
-La version original de MPLS Linux, no andaba porque no soportaba openvswitch, no reconocia la placa etc.
+Cabe desatacar por otro lado, para esta versi\'on de MPLS-Linux el mismo autor, James R. Leu desarroll\'o una extension de la suite Quagga para trabajar con MPLS-Linux y el protocolo LDP, lo cual se dio a llamar Quagga LDP\cite{QuaggaLDP1}.\\  
 
-Ademas no compilaba la version que estaba en repositorio. Tenia errores de compilacion, faltaban herramientas para instalar que no existian. Muchos pero muchos problemas tecnicos.
+Por otro lado, Igor Maravick; quien trabajara junto a James R. Leu en el desarrollo de MPLS-Linux, decide retomar este proyecto y actualizarlo a una versi\'on de kernel de linux m\'as actual. 
 
-Se probaron kernels desde la 3.09.algo hasra la 3.11.26 creo generic, a unas versiones mas viejas. En la confuguracion del kernel no estaba disponible MPLS, Openvswitch, un asco todo.
+Lo que comenzó en el a\~no 2010 como un proyecto para portar MPLS-Linux termino en el a\~o 2013, en prácticamente una reimplementaci\'on del proyecto original utilizando un kernel version 3.9.0-rc3. 
 
-Se logor hacer andar el MPLS linux nuevo con el LDP nuevo.
+Como gran diferencia del proyecto original adem\'as, no se incluye MPLS-Linux como un parche si no que viene integrado en la propia distribución.\\
 
-Se podian insertar cosas en las tablas de MPLS y el quagga por si solo andaba. No obstante no funcionaba que se insertaran desde el LDP cosas a las tablas MPLS. En particular se moria cuando intentaba insertar la primer entrada de MPLS asociada a la tabla FTN para una fec en particualr. Debugueamos el codigo, inspeccionamos y acorralamos el bug pero no pudimos solucionarlo. Se co nsidero una perdida de tiempo asi que se siguio.
+En el contexto del proyecto, tras varias semanas de esfuerzo se logra configurar, compilar e instalar \'este kernel con la configuraci\'on del kernel con la que se ven\'ia trabajando al momento, garantizando as\'i el correcto funcionamiento del resto de las herramientas de software y hardware instaladas, entre las cuales se encuentran principalmente el hardware NetFPGA. Vale la pena resaltar sobre este aspecto que la documentaci\'on existente sobre este proyecto es prácticamente nula, adem\'as de que al cambiar la implementaci\'on del proyecto, la documentaci\'on del proyecto original no sirve.\\
 
-[make menuconfig]
+Por otro lado, puesto que la implementaci\'on original de Quagga LDP realizada por James R. Leu no es compatible con esta versi\'ion m\'as nueva de MPLS-Linux, es necesario encontrar una versi\'on m\'as nueva. Afortunadamente, contemporáneo con el proyecto de Igor Maravic, se origina un proyecto\citep{QuaggaLDP2} para portar la versi\'on original de Quagga LDP a la implementaci\'on de MPLS-Linux m\'as reciente.\\
 
-\section{Instalaci\'on de Sistema Operativo}
-\label{B.7}
+En el contexto del proyecto se compila e instala esta implementaci\'on de Quagga y nuevamente tras largos esfuerzos puesto que de esta herramienta se tiene prácticamente nada de documentaci\'on se logra ejecutar correctamente. 
 
-Instalamos Fedora 14 y no booteaba. Desactivamos el uefi de la bios y tampoco. Probamos con varias versiones de Fedora incluso con un dvd de la uri y descargada de internet. Probamos con dvd y usb.
-
-Fedeora 20 era compatible con la mother pero no encontrabamos driver para el cable programador.
-
-Logramos instalar Xilinx en window XP SP3 con los drivers del cable. Aqui se podian programar las placas para las pruebas de aceptacion.
-
-Probamos con Ubuntu 14.04, y las placas se reconocian el driver existia pero las pruebas de aceptacion no encaraban (fallaban todas). Problemas con el DMA.
-
-Se probo con Ubuntu 12.04 y se logro instalar Xilinx, conseguir driver, reconocer placa y las pruebas de aceptacion ok!. 
+No obstante al momento de integrar ambas herramientas surgieron problemas, concretamente en los logs del demonio zebra se detectaron errores al momento de insertar entradas en las tablas mpls del kernel de linux, y tras varias semanas de buscar informaci\'on en la web, analizar el error e inspeccionar el código fuente en busca de alguna pista, se descarta finalmente la alternativa de utilizar MPLS-Linux y Quagga LDP en el prototipo, 
