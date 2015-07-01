@@ -115,7 +115,12 @@
 
 % ------------ Glosario
 \usepackage[refpages]{gloss}
+
+\renewcommand*{\glossname}{Glosario}
+%\newgloss{default}{.gls}{\glossname}{glsplain}
 \makegloss
+%\usepackage{glossaries}
+%\usepackage[acronym]{glossaries}
 
 \def\acknowledgementsname{acknowledgements}
 \renewcommand{\acknowledgementsname}{Agradecimientos}
@@ -336,3 +341,5 @@ rulesepcolor=\color{BashText}
 % ************************ Para hacer cuadraditos de colores *****************************
 \usepackage{xcolor}
 \newcommand\crule[3][black]{\textcolor{#1}{\rule{#2}{#3}}}
+
+
