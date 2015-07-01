@@ -15,16 +15,16 @@ del arte de las Redes Definidas por Software(Software Defined Networking), lengu
 de programación y herramientas para el desarrollo sobre dicha arquitectura, hardware NetFPGA y otros conceptos esenciales para el desarrollo de este trabajo. En caso de que el lector desee profundizar en alguno de los conceptos presentados en este cap\'itulo o consultar enfoques alternativos
 y/o complementarios se recomiendan los siguientes trabajos~\citep{StateOfArt1}~\citep{StateOfArt2}. Para el caso particular en que el lector este familiarizándose con el enfoque de las Redes Definidas por Software, se sugiere también la siguiente lista de lecturas\citep{SDNReadingList} y el libro\citep{SDNBook1}.\\
 
-En relación a como se estructura este cap\'itulo, primero se introduce el concepto de Software Defined Netoworking(SDN) analizando sus principales antecedentes y finalmente brindando una definición. Luego se presenta y analiza en profundidad una de las arquitecturas existentes basadas en este enfoque y en particular utilizada por este trabajo para la construcción del prototipo. Se contin\'ua con la introducción de algunos conceptos esenciales para el desarrollo de este trabajo como el concepto de Redes Privadas Virtuales y Multilabel Protocol Switch(MPLS) entre otros. Finalmente se presenta el relevamiento en el estado del arte realizado sobre la plataforma NetFPGA.  
+En relación a como se estructura este cap\'itulo, primero se introduce el concepto de Software Defined Netoworking(SDN) analizando sus principales antecedentes y finalmente brindando una definición. Luego se presenta y analiza en profundidad una de las arquitecturas existentes basadas en este enfoque y en particular utilizada por este trabajo para la construcción del prototipo. Se contin\'ua con la introducción de algunos conceptos esenciales para el desarrollo de este trabajo como el concepto de Redes Privadas Virtuales y Multilabel Protocol Switch(\gloss{MPLS}) entre otros. Finalmente se presenta el relevamiento en el estado del arte realizado sobre la plataforma NetFPGA.  
 
 %********************************** %First Section  **************************************
 \section{Antecedentes de SDN} %Section - 1.1
 Software Defined Networking, Redes Definidas por Software en español o simplemente SDN por su sigla en ingl\'es, es un concepto relativamente nuevo ya que bajo este nombre puede contextualizarse en la \'ultima década. No obstante muchas de las ideas que yacen detrás de este enfoque han sido introducidas por diferentes propuestas en el pasado. Por ello vale la pena repasar los principales antecedentes que desde nuestra perspectiva contribuyeron al enfoque de SDN. 
 
 \subsection{Open Signaling}
-En el año 1995 el grupo de investigación OPENSIG\cite{campbell1999open} dentro del IETF, comenzó a trabajar en alternativas para hacer ATM, Internet y las redes móviles ``más'' abiertas, extensibles y programables.
+En el año 1995 el grupo de investigación OPENSIG\cite{campbell1999open} dentro del \gloss{IETF}, comenzó a trabajar en alternativas para hacer ATM, Internet y las redes móviles ``más'' abiertas, extensibles y programables.
 
-El principal objetivo de este grupo fue proveer de un acceso al hardware de red(routers, switches, etc) mediante un conjunto de interfaces abiertas. Con esto se buscaba permitir el despliegue de nuevos servicios de red a través de un ambiente de programación distribuido.
+El principal objetivo de este grupo fue proveer de un acceso al hardware de red(\gloss{router}s, \gloss{switch}es, etc) mediante un conjunto de interfaces abiertas. Con esto se buscaba permitir el despliegue de nuevos servicios de red a través de un ambiente de programación distribuido.
 
 El principal desafío con el que tuvo que lidiar esta iniciativa fue la estricta arquitectura en forma vertical que presenta el hardware de red(división en capas del stack OSI), cuya naturaleza a su vez solía ser cerrada. Esto dificultaba una estricta separación entre el software de control y el hardware.\\
 
@@ -39,7 +39,7 @@ Active Networking\citep{tennenhouse1997survey}\citep{tennenhouse2002towards}\cit
 
 Se propusieron dos enfoques: (1) enfoque de Switches Programables en donde el tr\'afico es encaminado a través de nodos que ejecutan programas y cada paquete o su segmento correspondiente es derivado al programa apropiado en el nodo y (2) enfoque de C\'apsulas en donde cada paquete enviado en la red transporta un programa, evaluándose en cada nodo en su ambiente de ejecución correspondiente.\\
 
-Como tal, este proyecto no alcanz\'o la suficiente masa cr\'itica como para imponerse en la industria, entre otras razones por la necesidad de un hardware diferente m\'as caro (tradicionalmente se utilizaba hardware de tipo ASIC y se requería de tipo TCAM, FPGA \'o NPU) adem\'as de interrogantes de seguridad y desarrollo de lenguajes de programación apropiados.
+Como tal, este proyecto no alcanz\'o la suficiente masa cr\'itica como para imponerse en la industria, entre otras razones por la necesidad de un hardware diferente m\'as caro (tradicionalmente se utilizaba hardware de tipo \gloss{ASIC} y se requería de tipo \gloss{TCAM}, \gloss{FPGA} \'o \gloss{NPU}) adem\'as de interrogantes de seguridad y desarrollo de lenguajes de programación apropiados.
 
 \subsection{Routing Control Plataorm}
 Routing Control Plataform (RCP)\citep{feamster2004case}\citep{caesar2005design} o Plataforma de Control de Ruteo, propone una entidad de control(Routing Control Plataform) encargada de computar las rutas en una red, que luego utilizando protocolos estándares como iBGP traslada dicha configuración a los diferentes dispositivos.\\ 
@@ -65,7 +65,7 @@ En el año 2004 el proyecto 4D \citep{rexford2004network}\citep{greenberg2005cle
 
 Basándose en estos principios se construye el esquema denominado ``4D'' que merece su nombre por los cuatro planos presentes en su arquitectura: decisión(decision), diseminación(dissemination), descubrimiento(discovery) y datos (data).\\
 
-Dicha arquitectura hace un fuerte énfasis en una completa separación de lo que son las decisiones lógicas que toma un Sistema Autónomo(AS), del conjunto de protocolos que gobiernan las redes e interacciones entre sus diferentes componentes.\\
+Dicha arquitectura hace un fuerte énfasis en una completa separación de lo que son las decisiones lógicas que toma un Sistema Autónomo(\gloss{AS}), del conjunto de protocolos que gobiernan las redes e interacciones entre sus diferentes componentes.\\
 
 Los objetivos al nivel de un AS son especificados en el plano de decisiones y mediante los servicios de los planos de diseminación y descubrimiento se ejerce un control directo sobre como se encamina y redirigen paquetes en el plano de datos.\\
 
@@ -83,7 +83,7 @@ Habiendo introducido a los principales antecedentes de las redes definidas por s
 \section{Software Defined Networking}
 \label{section2.2}
 
-Definir el concepto de Software Defined Networking no es una tarea simple, puesto que no se encuentra por completo estandarizado a pesar de la existencia de varias organizaciones trabajando en la temática. En particular se pueden destacar el grupo de trabajo Software-Defined Networking Research Group(SDNRG) del IRTF, quien se encuentra trabajando en la redacción de las definiciones y estándares para este concepto, la Open Networking Foundation(ONF) organización que concentra gran cantidad de material y documentación sobre SDN y se encuentra trabajando en el desarrollo del protocolo OpenFlow el cual se explica mas adelante en este trabajo.\\
+Definir el concepto de Software Defined Networking no es una tarea simple, puesto que no se encuentra por completo estandarizado a pesar de la existencia de varias organizaciones trabajando en la temática. En particular se pueden destacar el grupo de trabajo Software-Defined Networking Research Group(SDNRG) del \gloss{IRTF}, quien se encuentra trabajando en la redacción de las definiciones y estándares para este concepto, la Open Networking Foundation(ONF) organización que concentra gran cantidad de material y documentación sobre SDN y se encuentra trabajando en el desarrollo del protocolo \gloss{OpenFlow} el cual se explica mas adelante en este trabajo.\\
 
 Acorde a la Open Networking Foundation, SDN puede resumirse como:
 
@@ -115,7 +115,7 @@ El Controlador implementa una API de operaciones a ser expuestas a las aplicacio
 
 Por otro lado la capa de aplicaciones contiene implementados en software en forma de aplicaciones toda la inteligencia que originalmente se agregaba en un dispositivo de la capa de infraestructura, por ejemplo la implementaci\'on de protocolos de red.
 
-En dicha capa se pueden implementar desde protocolos de ruteo como OSPF y RIP, backbones sobre MPLS, políticas de seguridad y hasta aplicaciones de ingeniería de tráfico.\\
+En dicha capa se pueden implementar desde protocolos de ruteo como OSPF y \gloss{RIP}, backbones sobre MPLS, políticas de seguridad y hasta aplicaciones de ingeniería de tráfico.\\
 
 De esta forma Software Defined Networking centraliza el control de la red en una aplicación de software (Controlador) y transforma algoritmos, procesos de control, políticas de seguridad y toda la inteligencia antiguamente acoplados a los dispositivos de red, en aplicaciones de controlador.\\
 
@@ -203,7 +203,7 @@ Como se menciona anteriormente la acci\'on de un flujo OpenFlow determina la for
 
 \item \textbf{[Output:Controller]:} Encapsular y reenviar un paquete hacia el Controlador. Utilizando el canal de comunicación con el Controlador y el protocolo OpenFlow, se reenvía el paquete al plano de Control. Esto permite procesar un paquete no identificado en ningún flujo en cualquier momento o en una etapa de configuración de la red. Luego el Controlador decide si descartar el paquete o instalar un nuevo flujo que lo contemple.
 
-\item \textbf{[Drop]:} Descartar un paquete. Puede ser utilizado por razones de seguridad, para prevenir ataques de negación de servicios (DoS), eliminar paquetes sospechosos, disminuir el impacto de paquetes de descubrimiento en redes de difusión(broadcast), o simplemente descartar paquetes no contemplados.
+\item \textbf{[Drop]:} Descartar un paquete. Puede ser utilizado por razones de seguridad, para prevenir ataques de negación de servicios (\gloss{DoS}), eliminar paquetes sospechosos, disminuir el impacto de paquetes de descubrimiento en redes de difusión(broadcast), o simplemente descartar paquetes no contemplados.
 \end{enumerate}
 
 \subsection{Controlador OpenFlow}
@@ -221,7 +221,7 @@ Sin embargo existen aspectos relacionados a la entidad Controlador dentro del en
 \end{figure}
 
 \subsubsection{Granularidad en el control}
-Tradicionalmente, la unidad básica de tráfco en una red es el paquete. Cada paquete contiene información de direccionamiento necesaria para la toma de decisiones dentro del switch a nivel de reenvío. Sin embargo muchas aplicaciones de red envían datos como un flujo de muchos paquetes individuales, mientras que las redes que desean proveer de calidad de servicios(QoS) se benefician utilizando flujos. Por ello resulta beneficioso adoptar un nivel de abstracción superior en el control del plano de datos, distinguiendo tr\'afico por flujos y a través de paquetes individuales.\\
+Tradicionalmente, la unidad básica de tráfco en una red es el paquete. Cada paquete contiene información de direccionamiento necesaria para la toma de decisiones dentro del switch a nivel de reenvío. Sin embargo muchas aplicaciones de red envían datos como un flujo de muchos paquetes individuales, mientras que las redes que desean proveer de calidad de servicios(\gloss{QoS}) se benefician utilizando flujos. Por ello resulta beneficioso adoptar un nivel de abstracción superior en el control del plano de datos, distinguiendo tr\'afico por flujos y a través de paquetes individuales.\\
  
 Por otro lado uno de los puntos vulnerables del enfoque SDN, es la comunicación entre switch y Controlador. Sobrecargar este canal de comunicación, pensando en redes a gran escala en la cantidad de dispositivos, supone una debilidad importante. Basar la granularidad de control en paquetes individuales, profundiza esta debilidad; mientras que el enfoque basado en flujos atenúa esta debilidad. 
 
@@ -240,7 +240,7 @@ Algunos proyectos como Onix\cite{koponen2014distributed} e HyperFlow\cite{tootoo
 
 Kandoo\cite{hassas2012kandoo}, proponen utilizar controladores locales para el manejo de aplicaciones y redirigir hacia un Controlador global flujos que requieran de una visión global del estado de la red, bastante similar a lo anterior. Esto tiene como principal beneficio la reducción de la carga sobre el Controlador global, debido al filtrado de solicitudes de flujo que realizan los controladores locales, y a la vez proveen al plano de datos de una rápida respuesta para las solicitudes que pueden ser manejadas por los controladores locales.\\
 
-Concluyendo con este apartado, otro de los enfoques que buscan generar una distribución del plano de control en SDN es el asumido por FlowVisor\cite{sherwood2010carving}. Este enfoque propone la virtualización de una red de switches OpenFlow con múltiples controladores, construyendo lo que denominan Slices de la red. De esta forma brindan a cada controlador una visión local a su slice; mientras que un controlador especial actuá de proxy, manteniendo una visión global de toda la red.
+Concluyendo con este apartado, otro de los enfoques que buscan generar una distribución del plano de control en SDN es el asumido por FlowVisor\cite{sherwood2010carving}. Este enfoque propone la virtualización de una red de switches OpenFlow con múltiples controladores, construyendo lo que denominan Slices de la red. De esta forma brindan a cada controlador una visión local a su slice; mientras que un controlador especial actuá de \gloss{Proxy}, manteniendo una visión global de toda la red.
 
 \subsubsection{Políticas reactivas vs proactivas}
 Existen dos enfoques para la intervención del controlador en el plano de datos: (1) reactivo y (2) proactivo.
@@ -295,7 +295,7 @@ Floodlight\cite{ControllersFloodlight}           & Java                    & Si 
 \hline
 SNAC\cite{ControllersSNAC}                 & C++                     & No                  & Nicira                         & -                 & Controlador basado en OpenFlow para redes LAN con GUI y un lenguaje definido para declarar reglas. Esta basado en el controlador NOX más un módulo para un lenguaje de modelado formal (FML).                                                                                                                             \\
 \hline
-Ryu\cite{ControllersRyu}                  & Python                  & Si                  & NTT, OSRG group                & 1.4               & Framework de programación para SDN, provee Controladores basados en OpenFlow, Netconf, Of-config entre otros. Brinda soporte para OpenFlow v1.0 v1.2 v1.3 y v1.4 y extensiones propuestas por le empresa Nicira.                                                                                                                                    \\
+\gloss{Ryu}\cite{ControllersRyu}                  & Python                  & Si                  & NTT, OSRG group                & 1.4               & Framework de programación para SDN, provee Controladores basados en OpenFlow, Netconf, Of-config entre otros. Brinda soporte para OpenFlow v1.0 v1.2 v1.3 y v1.4 y extensiones propuestas por le empresa Nicira.                                                                                                                                    \\
 \hline
 Nodeflow\cite{ControllersNodeFlow}             & Javascript              & Si                  & NTT, OSRG group                &                   & Controlador basado en OpenFlow orientado a programación en Javascript, basado en el framework Node.js.                                                                                                                                                                                                                    \\
 \hline
@@ -329,7 +329,7 @@ SDN presenta un campo de aplicación bastante extenso, y es posible que a medida
 \item \textbf{Monitoreo de Red:}
 En una arquitectura OpenFlow por ejemplo, cada switch provee de información estadística(similar a SNMP) de cada flujo en tiempo real. De esta forma un Controlador puede recolectar información estadística sobre el tráfico en el plano de datos, lo cual es de gran interés para operadores de red y aplicaciones, con la granularidad exacta que estos requieran. Esta información puede ser agregada de diferentes formas: por dirección IP, por dirección MAC, etiquetas VLAN, por aplicación, etc. De esta forma se logra una gran versatilidad en la entrega de información estadística sobre el tráfico en una red.
 
-\item \textbf{Redes Tap programables:}
+\item \textbf{Redes \gloss{Tap} programables:}
 Utilizando OpenFlow se pueden implementar redes taps programables y replicar el tráfico para su monitoreo de una forma más eficiente que los métodos tradicionales de SPAN/RSPAN. También pueden filtrarse los datos que son enviados por ejemplo a un sistema de detección de intrusos(IDS), reduciendo la carga de trabajo a los dispositivos de procesamiento de datos utilizados, filtrando previamente los datos que son realmente necesarios y evitando replicar datos innecesarios.\\
 Además desde que el control de los dispositivos intermediarios puede realizarse desde un controlador, se facilita enormemente a gestión de los mismos, permitiendo una configuración dinámica en caso de fallas o averías técnicas.
 
@@ -364,7 +364,7 @@ A continuaci\'on se explica en detalle el primer caso de exito, en relaci\'on a 
 
 \textbf{Google InterDatacenter:}\\
 
-Los servicios de Google orientados a usuarios de Internet como su motor de búsquedas, Google+, GMail, Youtube, Google Maps, entre otros, requieren que una gran cantidad de datos sean movidas desde una región a otra todo el tiempo, haciendo a estas aplicaciones y servicios consumidores intensivos de la WAN. Debido a esto Google concluy\'o que la oferta de dichos servicios no sería escalable con las tecnologías disponibles actualmente, debido a la complejidad en la configuración y manejo de dichas tecnologías las cuales no son lineales con el crecimiento en la demanda de dichos servicios. Como resultado, Google decidió apostar por el enfoque de SDN para el manejo de su WAN. Si el lector est\'a interesado en esta experiencia, puede encontrar una descripción completa en \cite{jain2013b4}.
+Los servicios de Google orientados a usuarios de Internet como su motor de búsquedas, Google+, GMail, Youtube, Google Maps, entre otros, requieren que una gran cantidad de datos sean movidas desde una región a otra todo el tiempo, haciendo a estas aplicaciones y servicios consumidores intensivos de la WAN. Debido a esto Google concluy\'o que la oferta de dichos servicios no sería escalable con las tecnologías disponibles actualmente, debido a la complejidad en la configuración y manejo de dichas tecnologías las cuales no son lineales con el crecimiento en la demanda de dichos servicios. Como resultado, Google decidió apostar por el enfoque de SDN para el manejo de su \gloss{WAN}. Si el lector est\'a interesado en esta experiencia, puede encontrar una descripción completa en \cite{jain2013b4}.
 
 %\item NTT Provider Edge:
 
@@ -414,7 +414,7 @@ En relaci\'on a la implementaci\'on de redes privadas, a lo largo de los años h
 	\item ATM (Capa 2)
 	\end{itemize}
 	
-\item VPNs basadas en CPE
+\item VPNs basadas en \gloss{CPE}
 	\begin{itemize}
 	\item L2TP (Capa 2)
 	\item IPSec (Capa 2)
@@ -423,7 +423,7 @@ En relaci\'on a la implementaci\'on de redes privadas, a lo largo de los años h
 \item VPNs implementadas por proveedores de servicios
 	\begin{itemize}
 	\item VPN de capa dos con MPLS (Capa 2)
-	\item BGP/MPLS VPNs de capa tres(Capa 3)
+	\item \gloss{BGP}/MPLS VPNs de capa tres(Capa 3)
 	\end{itemize}
 \end{itemize}
 
@@ -448,7 +448,7 @@ Las redes privadas multipunto, extienden el enfoque punto a punto con el objetiv
 
 Permiten establecer dominios de difusi\'on compartidos, creando de forma transparente la ilusi\'on de que se tiene una gran LAN compuesta por varias subredes. Sin embargo al ser m\'as completas en funcionalidades y casos de uso soportados, tambi\'en son m\'as complejas de implementar.\\ 
 
-Virtual Private LAN Service(VPLS), es una implementaci\'on de red privada multipunto, bastante difundida y provista de los dos enfoques definidos en los RFC4761\citep{kompella2007virtual} y RFC4762\cite{lasserre2007virtual}. Esta implementaci\'on crea dominios de difusión Ethernet utilizando diferentes tecnologías como IP/MPLS, L2TPv3 y túneles GRE.
+Virtual Private LAN Service(VPLS), es una implementaci\'on de red privada multipunto, bastante difundida y provista de los dos enfoques definidos en los \gloss{RFC4761}\citep{kompella2007virtual} y RFC4762\cite{lasserre2007virtual}. Esta implementaci\'on crea dominios de difusión Ethernet utilizando diferentes tecnologías como IP/MPLS, L2TPv3 y túneles GRE.
 
 \begin{figure}[htbp!] 
 \centering    
@@ -495,7 +495,7 @@ Alguno de los principales términos en la literatura MPLS son:
 \item LER(Label Edge Router): Elemento de la red MPLS por la cual ingresa o egresa tráfico hacia o desde la misma.
 \item LSR(Label Switching Router): Elemento de la red MPLS que conmuta etiquetas.
 \item LSP(Label Switched Path): Nombre genérico que se le asigna a un camino MPLS para tráfico de una determinada FEC, es decir un túnel MPLS establecido entre dos extremos de la red.
-\item LDP(Label Distribution Protocol): Protocolo de distribución de etiquetas MPLS entre los equipos de la red.
+\item \gloss{LDP}(Label Distribution Protocol): Protocolo de distribución de etiquetas MPLS entre los equipos de la red.
 \item FEC(Forwarding Equivalence Class): Nombre asignado al tráfico que es encaminado bajo una misma etiqueta. En otras palabras, es una clase de equivalencia de tráfico a la cual se le asigna una etiqueta.
  
 \end{itemize}
@@ -508,7 +508,7 @@ Hasta ahora, se ha presentado un resumen del trabajo de estudio en el estado del
 
 NetFPGA\cite{NetFPGA1} es una plataforma de hardware reconfigurable y software opensource, flexible y potente, diseñada para un uso principalmente académico en tareas de investigación y enseñanza.\\
 
-El hardware esta basado en un chip FPGA(Field Programmable Gate Array), el cual se programa con lenguajes de descripci\'on de hardware (HDL) como por ejemplo VeriLog. Cuenta con una amplia variedad de proyectos desarrollados tanto por el equipo de NetFPGA(proyectos de referencia), como por instituciones académicas y comerciales involucradas(proyectos comunitarios) que permiten programar el comportamiento del hardware  de diferentes formas. Se pueden encontrar desde proyectos que programan el hardware con una implementación de referencia de una tarjeta de red (Reference NIC), como un Learning Switch, Simple Router, Router OpenFlow, hasta un generador de tr\'afico entre otros(por mayor informaci\'on ver \citep{NetFPGA2}).\\ 
+El hardware esta basado en un chip FPGA(Field Programmable Gate Array), el cual se programa con lenguajes de descripci\'on de hardware (\gloss{HDL}) como por ejemplo \gloss{VeriLog}. Cuenta con una amplia variedad de proyectos desarrollados tanto por el equipo de NetFPGA(proyectos de referencia), como por instituciones académicas y comerciales involucradas(proyectos comunitarios) que permiten programar el comportamiento del hardware  de diferentes formas. Se pueden encontrar desde proyectos que programan el hardware con una implementación de referencia de una tarjeta de red (Reference NIC), como un Learning Switch, Simple Router, Router OpenFlow, hasta un generador de tr\'afico entre otros(por mayor informaci\'on ver \citep{NetFPGA2}).\\ 
 
 Surge en el año 2007 como un proyecto de investigación en la Universidad de Stanford, bajo el nombre de NetFPGA-1G, con la consigna de construir una plataforma de desarrollo e investigación basada en un chip FPGA.
  

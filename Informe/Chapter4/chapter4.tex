@@ -23,11 +23,11 @@ A continuaci\'on se explica de que forma el prototipo implementa cada uno de los
 
 Una alternativa para el c\'alculo de rutas en el prototipo es utilizar protocolos de ruteo en base a IP, sacando provecho as\'i de algoritmos existentes, robustos y ampliamente probados tanto en la academia como en la industria.\\
 
-Hist\'oricamente se han utilizado algoritmos distribuidos para el computo de rutas, siendo algunos de los m\'as renombrados en la literatura OSPF\cite{moy1998rfc}, RIP\cite{malkin1994rip} y IS-IS\cite{routingprotocol}. Por otro lado también puede sacarse provecho de la visi\'on global del plano de control de SDN para implementar un algoritmo de ruteo centralizado, sencillo y transparente.
+Hist\'oricamente se han utilizado algoritmos distribuidos para el computo de rutas, siendo algunos de los m\'as renombrados en la literatura \gloss{OSPF}\cite{moy1998rfc}, RIP\cite{malkin1994rip} y \gloss{IS-IS}\cite{routingprotocol}. Por otro lado también puede sacarse provecho de la visi\'on global del plano de control de SDN para implementar un algoritmo de ruteo centralizado, sencillo y transparente.
 
 En este trabajo se combinan ambos enfoques, utilizando el protocolo de ruteo OSPF en conjunto con un algoritmo centralizado en el controlador.\\
 
-Se decide utilizar OSPF por la sencilla razón de que es una opción robusta y confiable, adem\'as de que existen buenas implementaciones en software libre (por ejemplo Quagga\cite{Quagga} y BIRD\cite{BIRD}).
+Se decide utilizar OSPF por la sencilla razón de que es una opción robusta y confiable, adem\'as de que existen buenas implementaciones en software libre (por ejemplo \gloss{Quagga}\cite{Quagga} y \gloss{BIRD}\cite{BIRD}).
 
 OSPF basa su algoritmo para el c\'alculo de rutas en el algoritmo Dijkstra(ampliamente conocido para el calculo de mejores caminos en un grafo) y utiliza como m\'etrica el costo asociado a cada enlace. Este costo es ingresado manualmente por el administrador de la red y es un n\'umero \'unico, as\'i que es necesario definir una relaci\'on matem\'atica entre las diferentes caracter\'isticas de un enlace a considerar (ancho de banda disponible, tecnolog\'ia, latencia, etc.) y \'este n\'umero.
 
@@ -67,7 +67,7 @@ A continuación se explica la arquitectura general del prototipo.
 
 La arquitectura del prototipo (ver figura ~\ref{fig:OpenSourceRArch0}), sigue la arquitectura del enfoque OpenFlow/SDN como se mencion\'o anteriormente. En concordancia con esta arquitectura en el prototipo se tienen dos componentes importantes: el controlador SDN y el switch compatible con OpenFlow.\\
 
-En el controlador SDN se ejecuta RAUFlow, la aplicaci\'on encargada de proveer una implementaci\'on para servicios de redes privadas virtuales. A su vez esta aplicaci\'on implementa el algoritmo de ruteo  centralizado, el algoritmo de distribución de etiquetas e implementa a su vez una interfaz gr\'afica de gesti\'on para la red del prototipo.\\
+En el controlador SDN se ejecuta \gloss{RAUFlow}, la aplicaci\'on encargada de proveer una implementaci\'on para servicios de redes privadas virtuales. A su vez esta aplicaci\'on implementa el algoritmo de ruteo  centralizado, el algoritmo de distribución de etiquetas e implementa a su vez una interfaz gr\'afica de gesti\'on para la red del prototipo.\\
 
 \begin{figure}[htbp!] 
 \centering    
@@ -76,7 +76,7 @@ En el controlador SDN se ejecuta RAUFlow, la aplicaci\'on encargada de proveer u
 \label{fig:OpenSourceRArch0}
 \end{figure}
 
-Por otro lado se tiene el switch compatible con el protocolo OpenFlow. Este dispositivo, denominado de aqu\'i en m\'as RAU-Switch, es implementado mediante una PC de escritorio con el hardware NetFPGA instalado y el software Open vSwitch entre otras componentes.\\ 
+Por otro lado se tiene el switch compatible con el protocolo OpenFlow. Este dispositivo, denominado de aqu\'i en m\'as \gloss{RAU-Switch}, es implementado mediante una PC de escritorio con el hardware NetFPGA instalado y el software \gloss{Open vSwitch} entre otras componentes.\\ 
 
 Para la implementaci\'on del plano de reenvío(encaminar un paquete de un nodo origen a otro destino), en cada nodo del prototipo se utilizan las tablas de flujos de OpenFlow. Mediante el esquema de flujos de OpenFlow se definen reglas de reenv\'io en base a la conmutaci\'on de etiquetas MPLS, as\'i como pol\'iticas de clasificaci\'on de tr\'afico.\\
 
@@ -126,7 +126,7 @@ Esta estaci\'on de trabajo puede o bien ser la propia PC utilizada para el switc
 %Cabe destacar que en la b\'usqueda de una plataforma compatible para la programaci\'on del hardware se probo con diferentes sistemas operativos como se menciono, logrando programarse el mismo en Windows XP y Ubuntu 12.04.
 
 \subsubsection{Programaci\'on simple}
-El hardware puede programarse al menos de dos formas diferentes; una de ellas es lo que aqu\'i se denomina programaci\'on simple. Esta estrategia consiste en la utilizaci\'on de la herramienta Impact y el cable JTAG para grabar en dos chips de la tarjeta (chip FPGA y chip CPLD) dos archivos binarios, uno con la arquitectura de un proyecto y otro con la implementaci\'on del mismo.
+El hardware puede programarse al menos de dos formas diferentes; una de ellas es lo que aqu\'i se denomina programaci\'on simple. Esta estrategia consiste en la utilizaci\'on de la herramienta Impact y el cable JTAG para grabar en dos chips de la tarjeta (chip FPGA y chip \gloss{CPLD}) dos archivos binarios, uno con la arquitectura de un proyecto y otro con la implementaci\'on del mismo.
 
 Como principales ventajas de esta estrategia se destacan su simplicidad, no requiere de licencias pagas (puede descargarse una licencia gratuita para la herramienta Impact) y adem\'as es el procedimiento que se describe en la documentaci\'on de la plataforma NetFPGA.
 
@@ -165,7 +165,7 @@ Por otro lado, resulta interesante a tener en consideraci\'on que las operacione
 \subsection{Quagga}
 En cada nodo se ejecuta una instancia del software de enrutamiento Quagga, configurada para ejecutar el demonio ospf.\\ 
 
-El demonio ospf implementa el protocolo de igual nombre y se utiliza para obtener información de cada nodo y sus adyacencias en la topolog\'ia, guardando dicha información en una base de datos local(Link-State-Database o LSDB). Entre los datos que se incluyen en esta base de datos topol\'ogica se destaca por ejemplo el costo asociado a cada adyacencia.\\ 
+El demonio ospf implementa el protocolo de igual nombre y se utiliza para obtener información de cada nodo y sus adyacencias en la topolog\'ia, guardando dicha información en una base de datos local(Link-State-Database o \gloss{LSDB}). Entre los datos que se incluyen en esta base de datos topol\'ogica se destaca por ejemplo el costo asociado a cada adyacencia.\\ 
 
 Como se menciona anteriormente, el algoritmo OSPF utiliza solamente para la construcci\'on de la base de datos topol\'ogica. Si bien en un inicio se piensa en trabajar con la salida de dicho algoritmo, finalmente se decidió trabajar con el algoritmo de ruteo centralizado implementado en el controlador. Por ello en la versi\'on final del prototipo no se utiliza la salida de este algoritmo a pesar de que la arquitectura permite su utilización para alimentar la entrada de procesos que se ejecuten en el controlador.\\
 
