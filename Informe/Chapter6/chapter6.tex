@@ -266,14 +266,8 @@ Luego el tramo final del camino es implementado en el nodo \textit{Galois} media
 mpls,in\_port=2,mpls\_label=33,mpls\_bos=1 actions=pop\_mpls:0x0800,output:1 }
 \end{center}
 
-Análogamente el lector puede completar el análisis de la correspondencia entre los caminos te\'oricos y los calculados por el algoritmo de ruteo. A continuaci\'on se analiza el algoritmo de distribucion de etiquetas.
-
-\subsubsection{Verificaci\'on de Algoritmo de distribución de etiquetas}
-
-[De repente comentar en funcion al escenario anterior porque anda bien]
-
-En la siguiente secci\'on se analiza la clasificaci\'on de tr\'afico.
-
+Análogamente el lector puede completar el análisis de la correspondencia entre los caminos te\'oricos y los calculados por el algoritmo de ruteo. A continuaci\'on se analiza la clasificaci\'on de tr\'afico.
+ 
 \subsubsection{Clasificaci\'on de tr\'afico}
 Se implementa clasificaci\'on de tr\'afico en el nodo ingreso para un servicio en particular. En el escenario definido, se realiza clasificaci\'on de tr\'afico basándose en la numeraci\'on IP origen y destino de un paquete. De esta forma, por ejemplo el nodo Galois determina que camino debe tomar un paquete con origen en la Subred A y destino la Subred B. Luego en cada nodo intermedio los paquetes son procesados acorde a las reglas de reenvío en base a la conmutación de etiquetas mpls.
 
