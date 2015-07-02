@@ -456,7 +456,7 @@ Vale la pena mencionar que debido a las limitaciones impuestas por el hardware d
 
 Este escenario se traduce en dos servicios de VPN punto a punto. Sin embargo los aspectos de implementaci\'on que en esta secci\'on se pretenden verificar, son independientes de si el servicio de VPN es punto a punto o multipunto.
 
-\begin{figure}[h] 
+\begin{figure}[h!] 
 \centering    
 \includegraphics[width=1.0\textwidth]{CU1P2}
 \caption[VPN de capa 3 - Escenario 2]{VPN de capa 3 - Escenario 2}
@@ -522,6 +522,22 @@ Para todos estos servicios adem\'as se indica como valor de ethertype 0x0800, co
 \label{fig:CU1P1DumpFlows4}
 \end{figure}
 
+\begin{figure}[h!] 
+\centering    
+\includegraphics[width=1.0\textwidth]{Escenario2/LabE2H2H1CapturasTCPDUMP}
+\caption[Ping Subred A H3 - Subred B H1, capturas tcpdump]{Ping Subred A H3 - Subred B H1, capturas tcpdump}
+\label{fig:CU1P1DumpFlows5}
+\end{figure}
+
+\newpage
+\begin{figure}[ht!] 
+\centering    
+\includegraphics[width=1.0\textwidth]{Escenario2/LabE2H3H1Ping}
+\caption[Ping Subred A H3 - Subred B H1]{Ping Subred A H3 - Subred B H1}
+\label{fig:CU1P1DumpFlows6}
+\end{figure}
+
+
 \newpage
 \section{VPN de capa 2}
 
@@ -583,21 +599,24 @@ De acuerdo al camino calculado para el tr\'afico asociado al servicio S1, los pa
 
 La imagen se corresponde con capturas de tr\'afico realizadas para las interfaces \textbf{eth1}, \textbf{nf2} del nodo \textit{Galois} y la interfaz \textbf{eth1} del nodo \textit{Poisson}. Por otro lado la primer fila de capturas se corresponde con capturas realizadas para paquetes IPv4, la segunda fila para paquetes IPv6 y finalmente la tercera fila para paquetes ARP.\\
 
-\begin{figure}[h] 
+A continuaci\'on se muestran los paquetes recibidos en la subred B utilizando la herramienta Wireshark, en donde puede observarse que los paquetes entregados por la red del prototipo son exactamente iguales a los recibidos.
+
+\newpage
+\begin{figure}[h!] 
 \centering    
 \includegraphics[width=0.8\textwidth]{Escenario3/ipv4n}
 \caption[Captura de paquetes IPv4 recibidos con Wireshark]{Captura de paquetes IPv4 recibidos con Wireshark}
 \label{fig:CapturaTCP}
 \end{figure}
 
-\begin{figure}[h] 
+\begin{figure}[h!] 
 \centering    
 \includegraphics[width=0.8\textwidth]{Escenario3/ipV6TagVLan48n}
 \caption[Captura de paquetes IPv6 recibidos con Wireshark]{Captura de paquetes IPv6 recibidos con Wireshark}
 \label{fig:CapturaTCP}
 \end{figure}
 
-\begin{figure}[h] 
+\begin{figure}[h!] 
 \centering    
 \includegraphics[width=0.8\textwidth]{Escenario3/arpn}
 \caption[Captura de paquetes ARP recibidos con Wireshark]{Captura de paquetes ARP recibidos con Wireshark}
