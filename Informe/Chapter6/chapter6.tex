@@ -522,8 +522,6 @@ Para todos estos servicios adem\'as se indica como valor de ethertype 0x0800, co
 \label{fig:CU1P1DumpFlows4}
 \end{figure}
 
-llalala
-
 \newpage
 \section{VPN de capa 2}
 
@@ -539,27 +537,50 @@ De esta forma lo que se busca con este escenario es construir dos “cable” y 
 El escenario implementado para este caso de uso se muestra en la figura \ref{fig:CUP3} . El mismo se compone de una organización con dos sucursales físicamente separadas. Se instancia dos servicios (uno para cada sentido del tr\'afico), para los cuales a su vez se muestra en la figura los caminos calculados por el algoritmo de ruteo.
 
 \newpage
-\begin{figure}[h] 
+\begin{figure}[h!] 
 \centering    
-\includegraphics[width=1.0\textwidth]{CU1P2}
-\caption[VPN de capa 2]{VPN de capa 2}
+\includegraphics[width=1.0\textwidth]{CU3}
+\caption[VPN de capa 2 Escenario]{VPN de capa 2 Escenario}
 \label{fig:CUP3}
 \end{figure}
 
 En la siguiente tabla (ver tabla \ref{table:TablaFlujos4}) se muestran los servicios instanciados.
 
-\begin{table}[h]
+\begin{table}[h!]
 \begin{tabular}{| l | l | l | p{4cm} | p{4cm} |}
 \hline
 Nombre & Ingreso & Egreso & Clasificación & Descripción \\ \hline
 
-\crule[Aquamarine]{0.3cm}{0.3cm} S1 & Galois - eth1 & Poisson - eth1 & - & Tr\'afico de capa 2 de Subred A a Subred B \\ \hline
+\crule[ForestGreen]{0.3cm}{0.3cm} S1 & Galois - eth1 & Poisson - eth1 & - & Tr\'afico de capa 2 de Subred A a Subred B \\ \hline
 
-\crule[Red]{0.3cm}{0.3cm} S2 & Poisson - eth1 & Galois - eth1 & - & Tr\'afico de capa 2 de Subred B a Subred A \\ \hline
-
+\crule[LimeGreen]{0.3cm}{0.3cm} S2 & Poisson - eth1 & Galois - eth1 & - & Tr\'afico de capa 2 de Subred B a Subred A \\ \hline
 
 \end{tabular}
 \vspace{0.3cm}
 \caption[CU2 - Escenario, servicios creados]{CU2 - Escenario, servicios creados}
 \label{table:TablaFlujos4}
 \end{table}
+
+Teniendo este escenario configurado, se genera tr\'afico desde la subred A a la subred B (servicio S1), probando con diferentes protocolos de capa 3, buscando verificar si el mismo atraviesa la red del laboratorio independientemente del protocolo. \\
+
+Para generar el tr\'afico se utiliza la herramienta PacketH\cite{PacketH}, la cual permite generar paquetes asociados a diferentes protocolos desde una interfaz gr\'afica. Con esta herramienta se generan paquetes asociados a tres protocolos diferentes: ARP, IPv4 e IPv6 con tags de VLAN. En la figura \ref{fig:PaquetsSend} se muestran los paquetes generados.\\
+
+\begin{figure}[h!] 
+\centering    
+\includegraphics[width=0.75\textwidth]{Escenario3/Img1}
+\caption[Paquetes generados con PacketH]{Paquetes generados con PacketH}
+\label{fig:PaquetsSend}
+\end{figure}
+
+De acuerdo al camino calculado para el tr\'afico asociado al servicio S1, los paquetes ingresan a la red del laboratorio por el nodo Galois y dejan el mismo por a través del nodo Poisson. Capturando tr\'afico en las interfaces asociadas a esta camino, se observa el siguiente procesamiento de tr\'afico (ver figura \ref{fig:CapturaTCP}):
+
+\begin{figure}[h!] 
+\centering    
+\includegraphics[width=1.0\textwidth]{Escenario3/Img2}
+\caption[Caso de Uso 2 capturas]{Caso de Uso 2 capturas}
+\label{fig:CapturaTCP}
+\end{figure}
+
+La imagen se corresponde con capturas de tr\'afico realizadas para las interfaces \textbf{eth1}, \textbf{nf2} del nodo \textit{Galois} y la interfaz \textbf{eth1} del nodo \textit{Poisson}. Por otro lado la primer fila de capturas se corresponde con capturas realizadas para paquetes IPv4, la segunda fila para paquetes IPv6 y finalmente la tercera fila para paquetes ARP.\\
+
+De esta forma se verifica la capacidad de la implementaci\'on de VPN de capa 2 para procesar tr\'afico asociado a diferentes protocolos de capas superiores con la definici\'on de un solo servicio. De igual forma se puede verificar la capacidad para procesar paquetes de cualquier otro protocolo de capas superiores.\\ 
