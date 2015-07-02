@@ -61,7 +61,7 @@ En este trabajo se implementan dos escenarios diferentes para este tipo de red p
 
 A continuaci\'on se detalla la construcci\'on de ambos escenarios y los resultados obtenidos.
 
-\subsection{Escenario 1 - Red Privada Multipunto}
+\subsection{Escenario 1}
 
 Este escenario representa una red privada multipunto de capa 3. En el mismo se tiene una sola organizaci\'on o red privada dividida en 3 sucursales o subredes físicamente separadas.
 
@@ -526,3 +526,40 @@ llalala
 
 \newpage
 \section{VPN de capa 2}
+
+A diferencia de las VPN de capa 3, las cuales se definen para un protocolo o aplicaci\'on particular (por ejemplo IPv4), las redes privadas de capa 2 permiten definir servicios de forma agnóstica a los mismos, transportando tr\'afico entre dos subredes de cualquier protocolo de capa 3 o aplicación.
+
+En cierta forma, puede pensarse en un servicio de VPN de capa 2 entre dos subredes por ejemplo, como un “cable” virtual que los conecta directamente.\\
+
+En este trabajo, a modo de ejemplo se implementan dos servicios de VPN de capa 2, sobre un escenario minimista en el que se cuenta con una \'unica organización compuesta por dos sucursales físicamente separadas, sobre la red del laboratorio previamente definida.
+
+De esta forma lo que se busca con este escenario es construir dos “cable” y verificar que se transporta correctamente tr\'afico desde una subred a otra, independientemente del protocolo de capa 3 por ejemplo.
+
+\subsection{Escenario}
+El escenario implementado para este caso de uso se muestra en la figura \ref{fig:CUP3} . El mismo se compone de una organización con dos sucursales físicamente separadas. Se instancia dos servicios (uno para cada sentido del tr\'afico), para los cuales a su vez se muestra en la figura los caminos calculados por el algoritmo de ruteo.
+
+\newpage
+\begin{figure}[h] 
+\centering    
+\includegraphics[width=1.0\textwidth]{CU1P2}
+\caption[VPN de capa 2]{VPN de capa 2}
+\label{fig:CUP3}
+\end{figure}
+
+En la siguiente tabla (ver tabla \ref{table:TablaFlujos4}) se muestran los servicios instanciados.
+
+\begin{table}[h]
+\begin{tabular}{| l | l | l | p{4cm} | p{4cm} |}
+\hline
+Nombre & Ingreso & Egreso & Clasificación & Descripción \\ \hline
+
+\crule[Aquamarine]{0.3cm}{0.3cm} S1 & Galois - eth1 & Poisson - eth1 & - & Tr\'afico de capa 2 de Subred A a Subred B \\ \hline
+
+\crule[Red]{0.3cm}{0.3cm} S2 & Poisson - eth1 & Galois - eth1 & - & Tr\'afico de capa 2 de Subred B a Subred A \\ \hline
+
+
+\end{tabular}
+\vspace{0.3cm}
+\caption[CU2 - Escenario, servicios creados]{CU2 - Escenario, servicios creados}
+\label{table:TablaFlujos4}
+\end{table}
