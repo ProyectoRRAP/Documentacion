@@ -56,9 +56,22 @@ of_v13_match_fields:
 Estos atributos fueron estudiados uno por uno y se llega a las dos listas presentadas en las siguientes secciones.\\
 
 \section{Sintaxis de un flujo en Open vSwitch}
+La sintaxis del comando ovs-ofctl, utilizado para agregar un flujo en la tabla de Open vSwitch es la siguiente:
 
+\begin{center}
 ovs-ofctl add-flow <bridge> <flow>
+\end{center}
 
+Los parámetros de este comando son el nombre del brdige (<bridge>) y el flujo definido. La sintaxis de un flujo es la siguiente:
+
+\begin{center}
+attr1\_name=<value>,attr2\_name=<value>,.. actions=<action1>,<action2>,...
+\end{center}
+
+Primero tiene una lista de pares atributo valor separados por una “,” las cuales definen la regla de un flujo; es decir, los campos del cabezal OpenFlow utilizados para aparear tr\'afico. Un ejemplo común es es utilizar el numero de puerto OpenFlow de entrada, in\_port=1 por ejemplo.
+
+La segunda parte de un flujo es la lista de acciones, una lista de acciones precedida por la palabra \textbf{actions}. Un ejemplo común es reenviar paquetes por un puerto particular, por ejemplo out\_port:2. 
+ 
 \section{OpenFlow v1.3 atributos soportados para definir reglas}
 
 A continuaci\'on se detallan los atributos soportados para la definici\'on de reglas en un flujo lo cual en otras palabras permite la construcci\'on de una FEC y así clasificar tr\'afico.

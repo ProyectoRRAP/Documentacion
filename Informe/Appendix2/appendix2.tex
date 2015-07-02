@@ -127,9 +127,22 @@ No obstante, el procesamiento del paquete al ingresar por la interfaz f\'isica \
 
 Esto implica que el switch se comporte como una mezcla de un switch OpenFlow  con una PC Linux normal, ocasionando un tratamiento de paquetes en el prototipo diferente al especificado por las reglas OpenFlow calculadas.\\
 
-Para solucionar este problema se utilizan interfaces virtuales. Ficha por favor como seguimos aca\dots...
+Para solucionar este problema se utilizan interfaces virtuales de la siguiente forma:
 
-\newpage
+\begin{enumerate}
+\item Se crea una interfaz virtual por cada interfaz física y se conecta a través de dichas interfaces,  openvswitch con el kernel.
+
+\item La direccion IP que antes se asignaba a cada interfaz física ahora se le asigna a su correspondiente interfaz virtual.
+
+\item Se deja la interfaz física sin direccion IP y de esta forma se asegura que ningún paquete que arribe a dicha interfaz será procesado por el kernel, ya que nunca coincidirá la direccion IP que contenga un paquete con la direccion de la interfaz.
+
+\item Se crean entradas de prioridad mínima en la tabla de flujos de openvswitch que indiquen que todo lo que entre por la interfaz física se envíe a través su correspondiente interfaz virtual y viceversa.
+
+\item De esta forma si no hay un flujo de mayor prioridad para procesar los paquetes que entran por determinada interfaz física, estos serán enviados al kernel mediante la interfaz virtual, procesados por este para luego ser enviado por la interfaz virtual a la física y seguir su camino.
+
+\item Estos pasos aseguran que todo el tráfico sea procesado por las tablas de openvswitch, y serán procesados por el kernel solo en caso de ser necesario.
+\end{enumerate}
+
 \begin{figure}[h] 
 \centering    
 \includegraphics[width=0.40\textwidth]{ovs_figure4}
@@ -165,4 +178,4 @@ Por otro lado, puesto que la implementaci\'on original de Quagga LDP realizada p
 
 En el contexto del proyecto se compila e instala esta implementaci\'on de Quagga y nuevamente tras largos esfuerzos puesto que de esta herramienta se tiene prácticamente nada de documentaci\'on se logra ejecutar correctamente. 
 
-No obstante al momento de integrar ambas herramientas surgieron problemas, concretamente en los logs del demonio zebra se detectaron errores al momento de insertar entradas en las tablas mpls del kernel de linux, y tras varias semanas de buscar informaci\'on en la web, analizar el error e inspeccionar el código fuente en busca de alguna pista, se descarta finalmente la alternativa de utilizar MPLS-Linux y Quagga LDP en el prototipo, 
+No obstante al momento de integrar ambas herramientas surgieron problemas, concretamente en los logs del demonio zebra se detectaron errores al momento de insertar entradas en las tablas mpls del kernel de linux, y tras varias semanas de buscar informaci\'on en la web, analizar el error e inspeccionar el código fuente en busca de alguna pista, se descarta finalmente la alternativa de utilizar MPLS-Linux y Quagga LDP en el prototipo. 
