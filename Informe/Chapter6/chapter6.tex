@@ -438,7 +438,7 @@ Enumerando las figuras de izquierda a derecha y de arriba hacia abajo, la primer
 \begin{figure}[ht!] 
 \centering    
 \includegraphics[width=1.0\textwidth]{LabE1P2SnapshotTrafico1}
-\caption[Tabla de flujos ovs - Oz]{Capturas de tr\'afico con tcpdump para el servicio S3 tras actualización topol\'ogica}
+\caption[Capturas de tr\'afico con tcpdump para el servicio S3 tras actualización topol\'ogica]{Capturas de tr\'afico con tcpdump para el servicio S3 tras actualización topol\'ogica}
 \label{fig:LabE1P1CapsTraf3}
 \end{figure}
 
@@ -487,7 +487,7 @@ Nombre & Ingreso & Egreso & Clasificación & Descripción \\ \hline
 
 \end{tabular}
 \vspace{0.3cm}
-\caption[CU1 - Escenario 2]{CU1 - Escenario 2}
+\caption[CU1 - Escenario 2, servicios creados]{CU1 - Escenario 2, servicios creados}
 \label{table:TablaFlujos3}
 \end{table}
 
@@ -534,7 +534,7 @@ En este trabajo, a modo de ejemplo se implementan dos servicios de VPN de capa 2
 De esta forma lo que se busca con este escenario es construir dos “cable” y verificar que se transporta correctamente tr\'afico desde una subred a otra, independientemente del protocolo de capa 3 por ejemplo.
 
 \subsection{Escenario}
-El escenario implementado para este caso de uso se muestra en la figura \ref{fig:CUP3} . El mismo se compone de una organización con dos sucursales físicamente separadas. Se instancia dos servicios (uno para cada sentido del tr\'afico), para los cuales a su vez se muestra en la figura los caminos calculados por el algoritmo de ruteo.
+El escenario implementado para este caso de uso se muestra en la figura \ref{fig:CUP3}. El mismo se compone de una organización con dos sucursales físicamente separadas. Se instancia dos servicios (uno para cada sentido del tr\'afico), para los cuales a su vez se muestra en la figura los caminos calculados por el algoritmo de ruteo.
 
 \newpage
 \begin{figure}[h!] 
@@ -582,5 +582,27 @@ De acuerdo al camino calculado para el tr\'afico asociado al servicio S1, los pa
 \end{figure}
 
 La imagen se corresponde con capturas de tr\'afico realizadas para las interfaces \textbf{eth1}, \textbf{nf2} del nodo \textit{Galois} y la interfaz \textbf{eth1} del nodo \textit{Poisson}. Por otro lado la primer fila de capturas se corresponde con capturas realizadas para paquetes IPv4, la segunda fila para paquetes IPv6 y finalmente la tercera fila para paquetes ARP.\\
+
+\begin{figure}[h] 
+\centering    
+\includegraphics[width=0.8\textwidth]{Escenario3/ipv4n}
+\caption[Captura de paquetes IPv4 recibidos con Wireshark]{Captura de paquetes IPv4 recibidos con Wireshark}
+\label{fig:CapturaTCP}
+\end{figure}
+
+\begin{figure}[h] 
+\centering    
+\includegraphics[width=0.8\textwidth]{Escenario3/ipV6TagVLan48n}
+\caption[Captura de paquetes IPv6 recibidos con Wireshark]{Captura de paquetes IPv6 recibidos con Wireshark}
+\label{fig:CapturaTCP}
+\end{figure}
+
+\begin{figure}[h] 
+\centering    
+\includegraphics[width=0.8\textwidth]{Escenario3/arpn}
+\caption[Captura de paquetes ARP recibidos con Wireshark]{Captura de paquetes ARP recibidos con Wireshark}
+\label{fig:CapturaTCP}
+\end{figure}
+
 
 De esta forma se verifica la capacidad de la implementaci\'on de VPN de capa 2 para procesar tr\'afico asociado a diferentes protocolos de capas superiores con la definici\'on de un solo servicio. De igual forma se puede verificar la capacidad para procesar paquetes de cualquier otro protocolo de capas superiores.\\ 
