@@ -1026,7 +1026,7 @@ wish to left align your text}
 \newenvironment{acknowledgements}{
 \cleardoublepage
 \setsinglecolumn
-\chapter*{\centering \Large Acknowledgements}
+\chapter*{\centering \Large Agradecimientos}
 \thispagestyle{empty}
 }
 
@@ -1128,7 +1128,7 @@ wish to left align your text}
 % Normal abstract in the thesis
 	\cleardoublepage
 	\setsinglecolumn
-	\chapter*{\centering \Large Abstract}
+	\chapter*{\centering \Large Resumen}
 	\thispagestyle{empty}
 \fi
 }
