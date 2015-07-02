@@ -470,7 +470,7 @@ Sobre este escenario se busca validar los siguientes aspectos en relaci\'on a la
 \item La implementaci\'on utilizada en el prototipo para transportar tr\'afico de una organización desde un nodo de ingreso a un nodo de egreso, es independiente de la numeraci\'on de capa 3 de dicho tr\'afico. En otras palabras soporta organizaciones con numeraci\'on IP solapadas.
 \end{enumerate}
 
-Para la construcci\'on de este escenario se instancian los siguientes servicios en el sistema (ver tabla). Por cada red privada se instancian dos servicios (uno para cada sentido del tr\'afico).
+Para la construcci\'on de este escenario se instancian los siguientes servicios en el sistema (ver tabla \ref{table:TablaFlujos3}). Por cada red privada se instancian dos servicios (uno para cada sentido del tr\'afico).
 
 \begin{table}[h]
 \begin{tabular}{| l | l | l | p{4cm} | p{4cm} |}
@@ -491,7 +491,9 @@ Nombre & Ingreso & Egreso & Clasificación & Descripción \\ \hline
 \label{table:TablaFlujos3}
 \end{table}
 
-Para todos estos servicios adem\'as se indica como valor de ethertype 0x0800, correspondiente al tipo de tr\'afico IPv4.
+Para todos estos servicios adem\'as se indica como valor de ethertype 0x0800, correspondiente al tipo de tr\'afico IPv4.\\
+
+Las tablas de flujos correspondientes a cada nodo en la red del prototipo se muestran a continuaci\'on.
 
 \newpage
 \begin{figure}[ht!] 
@@ -523,6 +525,9 @@ Para todos estos servicios adem\'as se indica como valor de ethertype 0x0800, co
 \label{fig:CU1P1DumpFlows4}
 \end{figure}
 
+Sobre este escenario se realizan pruebas de generar tr\'afico en una subred con destino a otra, para ambas organizaciones, probando en diferentes sentidos (primero de Subred A a Subred B y luego al reves por ejemplo), verificando adem\'as que el tr\'afico llega a la subred correcta sin importar que la numeraci\'on IP se repita (aislamiento de espacio de direccionamiento).\\
+
+En la figura \ref{fig:CU1P1DumpFlows5} se muestran capturas realizadas con tcpdump para los nodos involucrados en el LSP del servicio S1, cuando el host H3 realiza un ping al host H1.\\
 \begin{figure}[h!] 
 \centering    
 \includegraphics[width=1.0\textwidth]{Escenario2/LabE2H2H1CapturasTCPDUMP}
@@ -530,8 +535,9 @@ Para todos estos servicios adem\'as se indica como valor de ethertype 0x0800, co
 \label{fig:CU1P1DumpFlows5}
 \end{figure}
 
-\newpage
-\begin{figure}[ht!] 
+A continuaci\'on se muestra el comando ping ejecutado.
+
+\begin{figure}[h!] 
 \centering    
 \includegraphics[width=1.0\textwidth]{Escenario2/LabE2H3H1Ping}
 \caption[Ping Subred A H3 - Subred B H1]{Ping Subred A H3 - Subred B H1}
