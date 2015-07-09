@@ -15,7 +15,7 @@ Por otro lado aspectos muy t\'ecnicos o problemas encontrados en cada componente
 
 Como se menciona en el cap\'itulo destinado al estado del arte, la arquitectura del prototipo a construir esta orientada a la implementaci\'on de servicios de VPN IP/MPLS Multipunto.
 
-Sin embargo varios aspectos de la arquitectura a\'un deben ser definidos. Es necesario definir la estrategia para calcular las rutas o caminos en la red del prototipo(algoritmo de ruteo), la forma en que se asignan y distribuyen etiquetas mpls para implementar el plano de reenvío(algoritmo de distribución de etiquetas), como se implementa la clasificaci\'on de tr\'afico y de que forma se implementan múltiples caminos para un mismo destino, ya sea para priorizar tr\'afico por tipo de aplicaci\'on por ejemplo o simplemente para hacer balanceo de carga. 
+Sin embargo varios aspectos de la arquitectura a\'un deben ser definidos. Es necesario definir la estrategia para calcular las rutas o caminos en la red del prototipo (algoritmo de ruteo), la forma en que se asignan y distribuyen etiquetas mpls para implementar el plano de reenvío (algoritmo de distribución de etiquetas), como se implementa la clasificaci\'on de tr\'afico y de que forma se implementan múltiples caminos para un mismo destino, ya sea para priorizar tr\'afico por tipo de aplicaci\'on por ejemplo o simplemente para hacer balanceo de carga. 
 
 A continuaci\'on se explica de que forma el prototipo implementa cada uno de los aspectos anteriores.
 
@@ -29,11 +29,11 @@ En este trabajo se combinan ambos enfoques, utilizando el protocolo de ruteo OSP
 
 Se decide utilizar OSPF por la sencilla razón de que es una opción robusta y confiable, adem\'as de que existen buenas implementaciones en software libre (por ejemplo \gloss{Quagga}\cite{Quagga} y \gloss{BIRD}\cite{BIRD}).
 
-OSPF basa su algoritmo para el c\'alculo de rutas en el algoritmo Dijkstra(ampliamente conocido para el calculo de mejores caminos en un grafo) y utiliza como m\'etrica el costo asociado a cada enlace. Este costo es ingresado manualmente por el administrador de la red y es un n\'umero \'unico, as\'i que es necesario definir una relaci\'on matem\'atica entre las diferentes caracter\'isticas de un enlace a considerar (ancho de banda disponible, tecnolog\'ia, latencia, etc.) y \'este n\'umero.
+OSPF basa su algoritmo para el c\'alculo de rutas en el algoritmo Dijkstra (ampliamente conocido para el calculo de mejores caminos en un grafo) y utiliza como m\'etrica el costo asociado a cada enlace. Este costo es ingresado manualmente por el administrador de la red y es un n\'umero \'unico, as\'i que es necesario definir una relaci\'on matem\'atica entre las diferentes caracter\'isticas de un enlace a considerar (ancho de banda disponible, tecnolog\'ia, latencia, etc.) y \'este n\'umero.
 
 Sin embargo, para la definición de políticas en ingeniería de tr\'afico que permitan hacer balanceo de carga y construcción de caminos alternativos, es necesario incorporar m\'as informaci\'on en el algoritmo de ruteo, como la saturaci\'on de enlaces por ejemplo entre otras restricciones.
 
-Esto es equivalente a extender OSPF para implementar un algoritmo de ruteo con restricciones, lo que en algunas implementaciones se denomina CSPF(Constrained Shortest Path First). Adem\'as interesa que estas restricciones puedan definirse dinamicamente en función de la alta y baja de servicios en el prototipo.\\
+Esto es equivalente a extender OSPF para implementar un algoritmo de ruteo con restricciones, lo que en algunas implementaciones se denomina CSPF (Constrained Shortest Path First). Adem\'as interesa que estas restricciones puedan definirse dinamicamente en función de la alta y baja de servicios en el prototipo.\\
 
 En el prototipo se ejecuta el protocolo OSPF en cada nodo y el propio controlador para construir y mantener una base de datos topol\'ogica de la red. Luego esta información es utilizada por el algoritmo de ruteo centralizado en el controlador (eventualmente CSPF) para el computo de las mejores rutas asociadas al tr\'afico de cada servicio de VPN.\\
 
@@ -43,7 +43,7 @@ La clasificaci\'on de tr\'afico, creación de m\'ultiples caminos y balanceo de 
 
 Para la implementaci\'on de un algoritmo de distribución de etiquetas, se pueden tomar también dos enfoques posibles: enfoque centralizado y enfoque distribuido.\\
 
-Siguiendo un enfoque distribuido una de las propuestas existentes es el protocolo LDP(Label distribution Protocol), del cual adem\'as se cuenta con la implementaci\'on ofrecida por Quagga-LDP. 
+Siguiendo un enfoque distribuido una de las propuestas existentes es el protocolo LDP (Label distribution Protocol), del cual adem\'as se cuenta con la implementaci\'on ofrecida por Quagga-LDP. 
 
 Esta herramienta es una extension de Quagga, para brindar adem\'as soporte al protocolo LDP. Al igual que Quagga, el cual funciona interactuando con el kernel de Linux para la construcci\'on de la tabla de ruteo, Quagga-LDP interact\'ua con el kernel de Linux para la construcci\'on de dos tablas. Estas dos tablas implementan los conceptos de FTN (Fec To NHLFE), ILM (Incoming Label Mapping) y NHLFE (Next Hop Label Forwarding Entry) introducidos en la definición del protocolo MPLS.  Estas tablas determinan la forma en que un paquete es procesado y reenviado en un nodo.
 
@@ -78,7 +78,7 @@ En el controlador SDN se ejecuta \gloss{RAUFlow}, la aplicaci\'on encargada de p
 
 Por otro lado se tiene el switch compatible con el protocolo OpenFlow. Este dispositivo, denominado de aqu\'i en m\'as \gloss{RAU-Switch}, es implementado mediante una PC de escritorio con el hardware NetFPGA instalado y el software \gloss{Open vSwitch} entre otras componentes.\\ 
 
-Para la implementaci\'on del plano de reenvío(encaminar un paquete de un nodo origen a otro destino), en cada nodo del prototipo se utilizan las tablas de flujos de OpenFlow. Mediante el esquema de flujos de OpenFlow se definen reglas de reenv\'io en base a la conmutaci\'on de etiquetas MPLS, as\'i como pol\'iticas de clasificaci\'on de tr\'afico.\\
+Para la implementaci\'on del plano de reenvío (encaminar un paquete de un nodo origen a otro destino), en cada nodo del prototipo se utilizan las tablas de flujos de OpenFlow. Mediante el esquema de flujos de OpenFlow se definen reglas de reenv\'io en base a la conmutaci\'on de etiquetas MPLS, as\'i como pol\'iticas de clasificaci\'on de tr\'afico.\\
 
 De esta forma el prototipo para la RAU2 se compone entonces de unos pocos nodos constru\'idos en base a RAU-Switch y un controlador SDN compatible con OpenFlow, en donde se ejecuta la aplicaci\'on RAUFlow.\\
 
@@ -98,7 +98,7 @@ La estructura de este dispositivo esta caracterizada por las componentes que se 
 \label{fig:OpenSourceRArch}
 \end{figure}
 
-Se utiliza una PC de escritorio como plataforma inicial a la cual se le incorpora una tarjeta NetFPGA-10G programada para que se comporte como una placa de red(proyecto ReferenceNIC) m\'as componentes adicionales de software como Open vSwitch, Quagga y un administrador SNMP. A continuaci\'on se explica en profundidad el rol de cada componente.
+Se utiliza una PC de escritorio como plataforma inicial a la cual se le incorpora una tarjeta NetFPGA-10G programada para que se comporte como una placa de red (proyecto ReferenceNIC) m\'as componentes adicionales de software como Open vSwitch, Quagga y un administrador SNMP. A continuaci\'on se explica en profundidad el rol de cada componente.
 
 \subsection{Plataforma de la PC}
 El switch esta constru\'ido sobre la plataforma de una PC de escritorio convencional. En particular se trabaja con un procesador Intel Core i7 de 64 bits, una Mother ASUS ROG Maximus Formula VI, 16GB de memoria DDR3, y un disco HDD de 1TB de capacidad. En el anexo \ref{annexI.1} pueden encontrarse estos detalles con mayor profundidad.
@@ -112,7 +112,7 @@ Finalmente tras probar con otras alternativas, se logra instalar y configurar ex
 
 \subsection{Hardware NetFPGA}
 
-El hardware NetFPGA puede funcionar tanto conectado a una PC por un slot PCIe(modo servidor), como conectado \'unicamente a una fuente de energ\'ia el\'ectrica(modo standalone). En el dise\~no planteado el hardware se encuentra conectado a la PC mediante un slot PCIe; es decir, en modo servidor.
+El hardware NetFPGA puede funcionar tanto conectado a una PC por un slot PCIe (modo servidor), como conectado \'unicamente a una fuente de energ\'ia el\'ectrica (modo standalone). En el dise\~no planteado el hardware se encuentra conectado a la PC mediante un slot PCIe; es decir, en modo servidor.
 
 %\subsubsection{Instaaci\'on}
 %La tarjeta NetFPGA se encuentra conectada a la PC mediante un slot PCIe. Para programarla, es necesario contar con la suite de Xilinx ISE instalada correctamente, con las respectivas licencias de productos, y un cable de programaci\'on JTAG. En particular, en el prototipo cada router cuenta con la suite de Xilinx ISE instalada, habilitando su reprogramaci\'on. Notar de todos modos que no es estrictamente necesario contar con la suite de Xilinx en el router para su funcionamiento.  
@@ -121,38 +121,40 @@ El hardware NetFPGA puede funcionar tanto conectado a una PC por un slot PCIe(mo
 
 El hardware puede programarse mediante un cable programador JTAG y la herramienta Impact de la suite de desarrollo de Xilinx ISE SDK. Para ello es indispensable contar con una estaci\'on de trabajo con dichas herramientas instaladas, habilitando la programaci\'on  de la tarjeta NetFPGA que luego ser\'a colocada en la PC de cada nodo. A su vez esta suite se compone por varias herramientas las cuales están licenciadas. Estas licencias adem\'as contemplan la arquitectura del chip Xilinx que en este caso tiene la tarjeta NetFPGA, por ello es indispensable contar con el paquete de licencias apropiado al modelo de chip con que se trabaja (en nuestro caso Virtex5) y a las herramientas utilizadas. 
 
-Esta estaci\'on de trabajo puede o bien ser la propia PC utilizada para el switch(alternativa utilizada en este proyecto) \'o bien puede ser una PC independiente.
+Esta estaci\'on de trabajo puede o bien ser la propia PC utilizada para el switch (alternativa utilizada en este proyecto) \'o bien puede ser una PC independiente.
 
 %Cabe destacar que en la b\'usqueda de una plataforma compatible para la programaci\'on del hardware se probo con diferentes sistemas operativos como se menciono, logrando programarse el mismo en Windows XP y Ubuntu 12.04.
 
 \subsubsection{Programaci\'on simple}
 El hardware puede programarse al menos de dos formas diferentes; una de ellas es lo que aqu\'i se denomina programaci\'on simple. Esta estrategia consiste en la utilizaci\'on de la herramienta Impact y el cable JTAG para grabar en dos chips de la tarjeta (chip FPGA y chip \gloss{CPLD}) dos archivos binarios, uno con la arquitectura de un proyecto y otro con la implementaci\'on del mismo.
 
-Como principales ventajas de esta estrategia se destacan su simplicidad, no requiere de licencias pagas (puede descargarse una licencia gratuita para la herramienta Impact) y adem\'as es el procedimiento que se describe en la documentaci\'on de la plataforma NetFPGA.
+Como principales ventajas de esta estrategia se destacan su simplicidad, no requiere de licencias pagas 
+ (puede descargarse una licencia gratuita para la herramienta Impact) y adem\'as es el procedimiento que se describe en la documentaci\'on de la plataforma NetFPGA.
 
 No obstante presenta una desventaja importante y es que al producirse un corte de corriente el hardware se “desprograma”. Concretamente el contenido del chip FPGA se borrada y solo perdura el contenido del chip CPLD.\\
 
-Tras constatarse este comportamiento, luego de revisar la documentaci\'on de la plataforma y recurrir al foro de la comunidad NetFPGA, se accede a una lista de correos mediante la cual se establece una comunicaci\'on con el equipo de desarrollo de NetFPGA(ver ap\'endice ~\ref{apendiceB2}). Este di\'alogo adem\'as de ayudar en la comprensión del funcionamiento de la plataforma, desemboca en la segunda estrategia de programaci\'on.
+Tras constatarse este comportamiento, luego de revisar la documentaci\'on de la plataforma y recurrir al foro de la comunidad NetFPGA, se accede a una lista de correos mediante la cual se establece una comunicaci\'on con el equipo de desarrollo de NetFPGA (ver ap\'endice ~\ref{apendiceB2}). Este di\'alogo adem\'as de ayudar en la comprensión del funcionamiento de la plataforma, desemboca en la segunda estrategia de programaci\'on.
 
 \subsubsection{Programaci\'on persistente}
-El hardware NetFPGA cuenta en su arquitectura con dos unidades de memoria flash(Flash A y Flash B). En la programaci\'on persistente estas unidades se utilizan para almacenar la programaci\'on del hardware, permitiendo que en cada encendido el chip FPGA sea programado a partir del contenido de una de estas unidades. Por defecto el chip siempre se programa con el contenido de la memoria flash A, habilitando su reprogramaci\'on desde la memoria flash B v\'ia la interfaz PCIe (por mayores detalles de este procedimiento ver ~\citep{PCIEProgProject}).\\
+El hardware NetFPGA cuenta en su arquitectura con dos unidades de memoria flash (Flash A y Flash B). En la programaci\'on persistente estas unidades se utilizan para almacenar la programaci\'on del hardware, permitiendo que en cada encendido el chip FPGA sea programado a partir del contenido de una de estas unidades. Por defecto el chip siempre se programa con el contenido de la memoria flash A, habilitando su reprogramaci\'on desde la memoria flash B v\'ia la interfaz PCIe (por mayores detalles de este procedimiento ver ~\citep{PCIEProgProject}).\\
 
 Reprogramar el contenido del chip FPGA en tiempo de encendido, así como también mediante la interfaz PCIe requiere de módulos adicionales tanto en el contenido del chip FPGA, como en el del CPLD. En particular los proyectos ReferenceNIC\citep{ReferenceNICProject}, ReferenceSwitch~\citep{ReferenceSwitchProject} y ReferenceRouter~\citep{ReferenceRouterProject} incorporan estas características.\\
 
-En el procedimiento empleado, inicialmente se programa el hardware con el proyecto ReferenceNIC utilizando la Programaci\'on Simple. Luego es necesario transformar la implementaci\'on del proyecto(archivo bitfile) en un archivo con el formato apropiado para ser almacenado en una de las memorias flash(archivo binario). Esto \'ultimo se realiza utilizando herramientas inclu\'idas en la plataforma de NetFPGA. Finalmente utilizando la herramienta \textbf{pcieprog} también de la plataforma se transfiere el archivo generado a una de las memorias.\\
+En el procedimiento empleado, inicialmente se programa el hardware con el proyecto ReferenceNIC utilizando la Programaci\'on Simple. Luego es necesario transformar la implementaci\'on del proyecto (archivo bitfile) en un archivo con el formato apropiado para ser almacenado en una de las memorias flash (archivo binario). Esto \'ultimo se realiza utilizando herramientas inclu\'idas en la plataforma de NetFPGA. Finalmente utilizando la herramienta \textbf{pcieprog} también de la plataforma se transfiere el archivo generado a una de las memorias.\\
 
 Cabe destacar que durante la ejecuci\'on de este procedimiento se detectan algunos errores y comportamientos inesperados en el hardware. Esto es reportado al equipo de desarrollo de NetFPGA a través de la lista oficial de correos de soporte, reportándose en total dos errores. Luego de este di\'alogo se obtiene una soluci\'on a dichos errores los cuales cabe destacar que son contemplados y resueltos en la siguiente actualizaci\'on del repositorio de c\'odigo fuente. Por m\'as detalles acerca de estos errores y la forma en que son resueltos provisoriamente referirse al ap\'endice~\ref{apendiceA}.\\
 
-Otro detalle a destacar de esta estrategia, es que la utilizaci\'on de herramientas de la suite de Xilinx requieren de licencias especiales pagas. En el marco de este proyecto se solicita apoyo en relaci\'on a este tema a docentes del Instituto de Ingeniería Eléctrica de la Facultad de Ingenieria (IIE) y a través del programa de apoyo universitario de Xilinx, en busca de una soluci\'on a este problema.
+Otro detalle a destacar de esta estrategia, es que la utilizaci\'on de herramientas de la suite de Xilinx requieren de licencias especiales pagas. En el marco de este proyecto se solicita apoyo en relaci\'on a este tema a docentes del Instituto de Ingeniería Eléctrica de la Facultad de Ingenieria 
+ (IIE) y a través del programa de apoyo universitario de Xilinx, en busca de una soluci\'on a este problema.
 
 Si bien en el IIE no se trabaja con esta plataforma se obtiene de parte de este instituto asesoramiento sumamente \'util para la resoluci\'on de este obstáculo. Por otro lado a través del programa de apoyo a universidades de Xilinx se obtiene una interesante donaci\'on de licencias, posibilitando a una real explotaci\'on del hardware y de la plataforma. Por mayores detalles acerca de este problema puede consultarse el apéndice ~\ref{apendiceB3}.
 
 \subsection{Open vSwitch}
 En la arquitectura del dispositivo, Open vSwitch es el encargado de implementar el plano de datos de OpenFlow. En otras palabras es la componente que convierte mediante una implementaci\'on en software a la PC construida en un switch OpenFlow.\\
 
-Siguiendo la especificaci\'on de OpenFlow, Open vSwitch implementa el concepto de tabla de flujos. Estas tablas(Open vSwitch implementa 256 tablas) son utilizadas por la aplicaci\'on RAUFlow para construir caminos en la topolog\'ia, instalando en forma de flujos OpenFlow las reglas de reenvío que sean necesarias en cada nodo involucrado en un camino.
+Siguiendo la especificaci\'on de OpenFlow, Open vSwitch implementa el concepto de tabla de flujos. Estas tablas (Open vSwitch implementa 256 tablas) son utilizadas por la aplicaci\'on RAUFlow para construir caminos en la topolog\'ia, instalando en forma de flujos OpenFlow las reglas de reenvío que sean necesarias en cada nodo involucrado en un camino.
 
-Para implementar el plano de reenvío en base a la conmutaci\'on de etiquetas MPLS, se utilizan primitivas del protocolo OpenFlow, que permiten colocar y extraer etiquetas MPLS de un paquete(PUSH y POP), así como clasificar un paquete acorde al valor de la etiqueta MPLS contenida en \'el.\\
+Para implementar el plano de reenvío en base a la conmutaci\'on de etiquetas MPLS, se utilizan primitivas del protocolo OpenFlow, que permiten colocar y extraer etiquetas MPLS de un paquete (PUSH y POP), así como clasificar un paquete acorde al valor de la etiqueta MPLS contenida en \'el.\\
 
 En relaci\'on a este \'ultimo punto, vale la pena destacar que la compatibilidad con estas funcionalidades del protocolo OpenFlow, están acotadas naturalmente  por la implementaci\'on de Open vSwitch. En este trabajo inicialmente se utiliza la versi\'on oficial m\'as reciente de dicha herramienta (versi\'on 2.3.1), en la cual acorde a las notas de liberaci\'on y a la secci\'on de preguntas frecuentes se garantiza soporte para solo un subconjunto de funcionalidades de la versi\'on 1.3 del protocolo OpenFlow. Entre estas funcionalidades se destacan la capacidad para match, push y pop de una \'unica etiqueta MPLS, así como su posterior procesamiento en el pipe de OpenFlow. No obstante como se explica en el apéndice ~\ref{apendiceB5} junto a otras características a destacar de Open vSwitch, este comportamiento no es el que realmente manifiesta esta versi\'on de la herramienta. En particular la operación Pop de MPLS no funciona correctamente, así como el posterior procesamiento del paquete tras manipular etiquetas acorde al pipe de OpenFlow.\\ 
 
@@ -165,11 +167,11 @@ Por otro lado, resulta interesante a tener en consideraci\'on que las operacione
 \subsection{Quagga}
 En cada nodo se ejecuta una instancia del software de enrutamiento Quagga, configurada para ejecutar el demonio ospf.\\ 
 
-El demonio ospf implementa el protocolo de igual nombre y se utiliza para obtener información de cada nodo y sus adyacencias en la topolog\'ia, guardando dicha información en una base de datos local(Link-State-Database o \gloss{LSDB}). Entre los datos que se incluyen en esta base de datos topol\'ogica se destaca por ejemplo el costo asociado a cada adyacencia.\\ 
+El demonio ospf implementa el protocolo de igual nombre y se utiliza para obtener información de cada nodo y sus adyacencias en la topolog\'ia, guardando dicha información en una base de datos local (Link-State-Database o \gloss{LSDB}). Entre los datos que se incluyen en esta base de datos topol\'ogica se destaca por ejemplo el costo asociado a cada adyacencia.\\ 
 
 Como se menciona anteriormente, el algoritmo OSPF utiliza solamente para la construcci\'on de la base de datos topol\'ogica. Si bien en un inicio se piensa en trabajar con la salida de dicho algoritmo, finalmente se decidió trabajar con el algoritmo de ruteo centralizado implementado en el controlador. Por ello en la versi\'on final del prototipo no se utiliza la salida de este algoritmo a pesar de que la arquitectura permite su utilización para alimentar la entrada de procesos que se ejecuten en el controlador.\\
 
-De esta forma cada switch del prototipo así como el propio controlador ejecuta una instancia de Quagga con el demonio ospf configurado como se muestra en el apéndice \ref{appendix4}. Cabe destacar de dicha configuración que la adyacencia entre un switch y el Controlador(enlace utilizado para el canal de comunicación OpenFlow) tiene asociado costo infinito para evitar que sea utilizado tanto por el algoritmo OSPF como por el algoritmo CSPF en la construcción de algún camino. En la implementaci\'on de Quagga el costo infinito es representado por el numero 65535(16 bits).
+De esta forma cada switch del prototipo así como el propio controlador ejecuta una instancia de Quagga con el demonio ospf configurado como se muestra en el apéndice \ref{appendix4}. Cabe destacar de dicha configuración que la adyacencia entre un switch y el Controlador (enlace utilizado para el canal de comunicación OpenFlow) tiene asociado costo infinito para evitar que sea utilizado tanto por el algoritmo OSPF como por el algoritmo CSPF en la construcción de algún camino. En la implementaci\'on de Quagga el costo infinito es representado por el numero 65535 (16 bits).
 
 \subsection{Agente SNMP}
 El protocolo de comunicación OpenFlow dentro de las estructuras de datos utilizadas para el intercambio de información entre un switch y el Controlador, no prevee una forma de comunicar el direccionamiento IP propio del equipo (direcciones IP de cada interfaz física). En particular la estructura \textit{ofp\_port} utilizada por el mensaje \textit{OFPMP\_PORT\_DESCRIPTION} no provee de dicho campo (ver especificación del protocolo OpenFlow 1.3\citep{ofv133spec}). Por esta razón es necesaria una forma de comunicar al controlador información adicional sobre características de cada nodo como la dirección IP de una interfaz, que no puede ser enviada a través del protocolo OpenFlow. Para evitar modificar el protocolo extendiéndolo para comunicar dicha informaci\'on, se utiliza un agente SNMP.\\
@@ -186,12 +188,12 @@ SNMP definido a través de los RFC1065~\citep{rose1990structure} y RFC1157~\cite
 
 \end{enumerate}	
 
-En el prototipo se instala un agente SNMP en cada switch (dispositivo administrado), para enviar la correspondencia entre números de puerto OpenFlow y direcciones IP al Controlador(sistema administrador).\\
+En el prototipo se instala un agente SNMP en cada switch (dispositivo administrado), para enviar la correspondencia entre números de puerto OpenFlow y direcciones IP al Controlador (sistema administrador).\\
 
 No es el objetivo de este trabajo entrar en detalle sobre el protocolo SNMP por lo que si el lector desea profundizar en estos conceptos se recomienda seguir las referencia mencionadas anteriormente.
 
 \section{Entidad Controlador}
-Como se muestra en \ref{fig:OpenSourceRArch0} cada nodo del prototipo responde a una entidad denominada Controlador. Esta entidad en la pr\'actica es una PC convencional con determinadas componentes de software(ver figura \ref{fig:OpenSourceRArch3}) entre las cuales se destaca el controlador SDN Ryu, pilar fundamental en la implemenatci\'on de la aplicaci\'on RAUFlow. A su vez se encuentran los módulos Administrador SNMP utilizado en la comunicaci\'on con los agentes SNMP instalados en cada nodo RAUSwitch del dispositivo y LSDBSync utilizado en el proceso de extracci\'on de informaci\'on de la base de datos topol\'ogica de Quagga. 
+Como se muestra en \ref{fig:OpenSourceRArch0} cada nodo del prototipo responde a una entidad denominada Controlador. Esta entidad en la pr\'actica es una PC convencional con determinadas componentes de software (ver figura \ref{fig:OpenSourceRArch3}) entre las cuales se destaca el controlador SDN Ryu, pilar fundamental en la implemenatci\'on de la aplicaci\'on RAUFlow. A su vez se encuentran los módulos Administrador SNMP utilizado en la comunicaci\'on con los agentes SNMP instalados en cada nodo RAUSwitch del dispositivo y LSDBSync utilizado en el proceso de extracci\'on de informaci\'on de la base de datos topol\'ogica de Quagga. 
 
 Estas tres componentes se ejecutan en una PC de escritorio con Ubuntu 12.04 como sistema operativo. \\
 
@@ -228,7 +230,7 @@ Una vez capturado el evento anterior, el segundo m\'odulo toma la información t
 Luego se produce un proceso de actualizaci\'on topol\'ogica, en el que eventualmente el controlador utilizando el m\'odulo Administrador SNMP obtiene informaci\'on adicional sobre los dispositivos del prototipo. 
 
 \begin{subsection}{Administrador SNMP}
-El administrador SNMP es utilizado para consultar al agente SNMP instalado en un nodo particular, por la correspondencia entre números de puerto OpenFlow y direcciones IP. Esta componente es utilizada por las aplicaciones en el Controlador cada vez que es preciso obtener esta información de mapeo para un nodo en particular(por ejemplo en el proceso de actualización de la topolog\'ia).\\\\\
+El administrador SNMP es utilizado para consultar al agente SNMP instalado en un nodo particular, por la correspondencia entre números de puerto OpenFlow y direcciones IP. Esta componente es utilizada por las aplicaciones en el Controlador cada vez que es preciso obtener esta información de mapeo para un nodo en particular (por ejemplo en el proceso de actualización de la topolog\'ia).\\\\\
 
 \end{subsection}
 

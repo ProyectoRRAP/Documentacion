@@ -55,7 +55,7 @@ A continuaci\'on se describen los resultados obtenidos en la implementaci\'on de
 
 \section{VPN de capa 3}
 
-Las redes privadas virtuales de capa 3 son un tipo de servicio comunmente brindado por un operador de red y es en particular uno de los servicios que se quiere implementar en la RAU2. En particular sobre este tipo de redes privadas puede implementarse clasificaci\'on de tr\'afico por tipo de aplicaci\'on o numeraci\'on de capa 3 por ejemplo.\\
+Las redes privadas virtuales de capa 3 son un tipo de servicio comúnmente brindado por un operador de red y es en particular uno de los servicios que se quiere implementar en la RAU2. En particular sobre este tipo de redes privadas puede implementarse clasificaci\'on de tr\'afico por tipo de aplicaci\'on o numeraci\'on de capa 3 por ejemplo.\\
 
 En este trabajo se implementan dos escenarios diferentes para este tipo de red privada: (a) red privada multipunto con una \'unica organizaci\'on y tres sucursales f\'isicamente separadas, (b) red privada punto a punto con dos organizaciones, cada una de ellas con dos sucursales f\'isicamente separadas.
 
@@ -82,7 +82,7 @@ Sobre este escenario se ejecutan una serie de pruebas orientadas a verificar los
 \item Capacidad para crear VPN multipunto
 \end{enumerate}
 
-Para construir la red privada multipunto uniendo las tres subredes mencionadas y adem\'as verificar los puntos anteriores, se instancian los siguientes servicios(ver tabla \ref{table:TablaFlujos}). Por cada par de subredes se crean dos servicios (un servicio para cada sentido del tr\'afico).\\
+Para construir la red privada multipunto uniendo las tres subredes mencionadas y adem\'as verificar los puntos anteriores, se instancia los siguientes servicios (ver tabla \ref{table:TablaFlujos}). Por cada par de subredes se crean dos servicios (un servicio para cada sentido del tr\'afico).\\
 
 \begin{table}[h]
 \begin{tabular}{| l | l | l | p{4cm} | p{4cm} |}
@@ -111,9 +111,11 @@ Para cada uno de estos servicios adem\'as se indica el etherype 0x0800 correspon
 
 Este conjunto de servicios establece el procesamiento de paquetes de capa 3 para las diferentes subredes de forma de conectarlas en una red privada de capa 3. Sin embargo no alcanzan para la implementaci\'on de la misma. Es necesario definir un conjunto de servicios adicionales.\\
 
-Para fija ideas, cuando el host H1 en la sub red A envia un paquete con destino al host H3 en la subred B, primero envía el paquete al gateway de la subred A (r1) el cual entiende que el paquete debe ser reenviado al router de borde de la red del prototipo al cual esta conectada la subred, en este caso Galois. No obstante en este paso r1 no conoce la dirección de capa de enlace (direcci\'on MAC) que debe colocarse al paquete para ser reenviado a Galois; por ello utilizando el protocolo ARP (Address Resolution Protocol) inicia una consulta ARP con la direcci\'on del siguiente paso, el router r2 (192.168.2.113).
+Para fija ideas, cuando el host H1 en la sub red A envía un paquete con destino al host H3 en la subred B, primero envía el paquete al gateway de la subred A (r1) el cual entiende que el paquete debe ser reenviado al router de borde de la red del prototipo al cual esta conectada la subred, en este caso Galois. No obstante en este paso r1 no conoce la dirección de capa de enlace (direcci\'on MAC) que debe colocarse al paquete para ser reenviado a Galois; por ello utilizando el protocolo ARP (Address Resolution Protocol) inicia una consulta ARP con la direcci\'on del siguiente paso, el router r2  
+ (192.168.2.113).
 
-Para que esta consulta ARP pueda atravesar la red del laboratorio, así como su respuesta y para todas las combinaciones de consultas ARP en el escenario planteado, se instancian los siguientes servicios (ver tabla \ref{table:TablaFlujos2}). 
+Para que esta consulta ARP pueda atravesar la red del laboratorio, así como su respuesta y para todas las combinaciones de consultas ARP en el escenario planteado, se instancia los siguientes servicios 
+ (ver tabla \ref{table:TablaFlujos2}). 
 
 \begin{table}[h]
 \begin{tabular}{| l | l | l | p{4cm} | p{4cm} |}
@@ -140,7 +142,7 @@ S12 & Oz - eth1 & Poisson - eth1 & arp\_tpa=192.168.2.113 eth\_type=0x0806 & Con
 Ahora si, se tiene definido el conjunto de servicios que implementa la red privada de capa 3 multipunto en dicho escenario, utilizando el prototipo. A continuaci\'on se detallan las pruebas realizadas para cada uno de los aspectos mencionados anteriormente.
 
 \subsubsection{Verificaci\'on de Algoritmo de ruteo}
-En esta secci\'on se eval\'ua el correcto funcionamiento del algoritmo de ruteo. Para ello se comparan los caminos computados por el algoritmo para cada servicio, con los respectivos mejores caminos te\'oricos(previamente calculados de forma manual). 
+En esta secci\'on se eval\'ua el correcto funcionamiento del algoritmo de ruteo. Para ello se comparan los caminos computados por el algoritmo para cada servicio, con los respectivos mejores caminos te\'oricos (previamente calculados de forma manual). 
 
 Para cada camino se verifican dos cosas: (1) que el camino calculado se corresponde con el camino te\'orico y (2) que el camino es correctamente instalado en forma de reglas de reenvío (en base a conmutaci\'on de etiquetas) en las respectivas tablas de flujos OpenFlow de cada nodo en el camino.\\
 
@@ -155,7 +157,7 @@ Como se ha mencionado, los caminos te\'oricos son calculados manualmente observa
 
 Para obtener los caminos calculados por el algoritmo de ruteo, se analizan las tablas de flujos de Open vSwitch en cada nodo de la red del laboratorio. A partir del contenido de estas tablas fácilmente puede reconstruirse el camino previamente calculado.\\
 
-En las figuras ~\ref{fig:CU1P1DumpFlows1}~-~\ref{fig:CU1P1DumpFlows4} se muestran las tablas de flujos asociadas a cada nodo del laboratorio. Para conseguir esta informaci\'on se utiliza el comando \textbf{dump-flows} de la herrmaienta Open vSwitch. Sin embargo puede obtenerse tambi\'en esta informaci\'on desde la propia interfaz gr\'afica de RAUFlow.\\
+En las figuras ~\ref{fig:CU1P1DumpFlows1}~-~\ref{fig:CU1P1DumpFlows4} se muestran las tablas de flujos asociadas a cada nodo del laboratorio. Para conseguir esta informaci\'on se utiliza el comando \textbf{dump-flows} de la herramienta Open vSwitch. Sin embargo puede obtenerse tambi\'en esta informaci\'on desde la propia interfaz gr\'afica de RAUFlow.\\
 
 \newpage
 \begin{figure}[ht!] 
@@ -187,7 +189,7 @@ En las figuras ~\ref{fig:CU1P1DumpFlows1}~-~\ref{fig:CU1P1DumpFlows4} se muestra
 \end{figure}
 
 \newpage
-Asumiendose la notaci\'on $(n, i)$ para referirse a un enlace, donde \textit{n} indica nodo origen e \textit{i} interfaz de reenvío en \textit{n} para el próximo salto, entonces $<(n_1, i_1), \dots, (n_k, i_k)>$ puede usarse para denotar un camino en el laboratorio. De esta forma se pueden comparar f\'acilmente los caminos te\'oricos con los calculados.\\
+Asumiéndose la notaci\'on $(n, i)$ para referirse a un enlace, donde \textit{n} indica nodo origen e \textit{i} interfaz de reenvío en \textit{n} para el próximo salto, entonces $<(n_1, i_1), \dots, (n_k, i_k)>$ puede usarse para denotar un camino en el laboratorio. De esta forma se pueden comparar f\'acilmente los caminos te\'oricos con los calculados.\\
 
 Tomando como ejemplo el caso del servicio S3, el camino te\'orico puede denotarse de la siguiente forma:
  
@@ -210,7 +212,7 @@ actions=dec\_ttl,push\_mpls:0x8847,set\_field:30->mpls\_label,set\_mpls\_ttl(128
 \label{fig:Flujo1}
 \end{figure}
 
-Este flujo toma todo paquete recibido por el puerto openflow identificado con el n\'umero 1(interfaz eth1), numeración IP origen 20.20.20.128/26(subred A) y destino 20.20.20.64/26 (subred B), decrementa el TTL del paquete, coloca un cabezal mpls con la etiqueta 32 y finalmente lo reenvía por el puerto openflow identificado con el n\'umero 4(interfaz nf2). Observar que el valor de la etiqueta mpls colocado es el utilizado para identificar el servicio(etiqueta interna). \\
+Este flujo toma todo paquete recibido por el puerto openflow identificado con el n\'umero 1 (interfaz eth1), numeración IP origen 20.20.20.128/26 (subred A) y destino 20.20.20.64/26 (subred B), decrementa el TTL del paquete, coloca un cabezal mpls con la etiqueta 32 y finalmente lo reenvía por el puerto openflow identificado con el n\'umero 4 (interfaz nf2). Observar que el valor de la etiqueta mpls colocado es el utilizado para identificar el servicio (etiqueta interna). \\
 
 %Notese adem\'as la acci\'on \textbf{dec\_ttl} en el flujo. Esta acci\'on es utilizada en cada nodo de borde en la definici\'on de un servicio para decrementar el ttl de un paquete ip cada vez que ingresa a la red del prototipo (en este caso a la red del laboratorio). Observese tambi\'en el valor de la etiqueta mpls(34) colocado en el paquete para identificar el servicio(etiqueta interna).
 
@@ -225,11 +227,11 @@ actions=pop\_mpls:0x0800,output:1 }
 \label{fig:Flujo2}
 \end{figure}
 
-Este flujo toma todo paquete recibido por el puerto openflow n\'umero 4(interfaz nf2), retira el cabezal mpls y finalmente lo reenvía por el puerto n\'umero 1(interfaz eth1).\\
+Este flujo toma todo paquete recibido por el puerto openflow n\'umero 4 (interfaz nf2), retira el cabezal mpls y finalmente lo reenvía por el puerto n\'umero 1 (interfaz eth1).\\
 
 De esta forma todos los paquetes asociados al servicio S3 son transportados desde el nodo de ingreso \textit{Galois} al nodo de egreso \textit{Poisson} mediante un solo enlace, utilizando un solo nivel de etiquetas mpls.\\
 
-Analizando el camino que deben seguir los paquetes que atraviesan la red del laboratorio en el sentido inverso; es decir, desde la subred B hacia la subred A(servicio S4), el camino teórico es el siguiente:
+Analizando el camino que deben seguir los paquetes que atraviesan la red del laboratorio en el sentido inverso; es decir, desde la subred B hacia la subred A (servicio S4), el camino teórico es el siguiente:
 
 $$<(Poisson, nf_1), (Oz, nf_0)>$$ 
 
@@ -238,7 +240,7 @@ Analizando primero la tabla de flujos del nodo \textit{Poisson}, el primer salto
 \begin{center}
 \textit{cookie=0.0, duration=655.065s, table=0, n\_packets=0, n\_bytes=0, priority=5, \\
 ip,in\_port=1, nw\_src=20.20.20.64/26,nw\_dst=20.20.20.128/26 \\
-actions=dec\_ttl,push\_mpls:0x8847,set\_field:33->mpls\_label,set\_mpls\_ttl(128), goto\_table:1 \\
+actions=dec\_ttl,push\_mpls:0x8847,set\_field:33->mpls\_label,set\_mpls\_ttl (128), goto\_table:1 \\
 cookie=0.0, duration=655.065s, table=0, n\_packets=0, n\_bytes=0, priority=5, \\
 mpls,in\_port=1,mpls\_label=33 actions=push\_mpls:0x8847,set\_fied:30->mpls\_label,set\_mpls\_ttl(128),output:3
 }
@@ -248,7 +250,7 @@ Notar como primera diferencia en comparación al camino anterior, en este caso s
 
 El camino anterior carece de etiqueta externa puesto que al ser un camino de un solo salto, el primer nodo coincide con el pen\'ultimo, y al implementar PHP no es necesario colocar etiqueta externa. 
 
-Tras colocar el par de etiquetas mpls sobre el paquete al ingreso, el mismo es reenviado a trav\'es del puerto n\'umero 3(interfaz nf1).\\
+Tras colocar el par de etiquetas mpls sobre el paquete al ingreso, el mismo es reenviado a trav\'es del puerto n\'umero 3 (interfaz nf1).\\
 
 El siguiente salto en el camino, es implementado por el siguiente flujo en la tabla del nodo \textit{Oz}:
 
@@ -257,7 +259,7 @@ El siguiente salto en el camino, es implementado por el siguiente flujo en la ta
 mpls,in\_port=3,mpls\_label=30,mpls\_bos=0 actions=pop\_mpls:0x8847,output:2 }
 \end{center}
 
-Tras ingresar un paquete, se cambia el valor de la etiqueta externa para luego reenviarse por el puerto n\'umero 4(interfaz nf2).\\
+Tras ingresar un paquete, se cambia el valor de la etiqueta externa para luego reenviarse por el puerto n\'umero 4 (interfaz nf2).\\
 
 Luego el tramo final del camino es implementado en el nodo \textit{Galois} mediante el siguiente flujo:
 
@@ -284,7 +286,7 @@ En la figura \ref{fig:LabE1P1CapsTraf} se muestra el procesamiento de los paquet
 
 Como puede observarse en el primer cuarto de la imagen (cuarto superior izquierdo), el cual se corresponde con una captura hecha con el comando \textbf{tcpdump} en la interfaz \textbf{eth1} del nodo \textit{Galois}, se reciben paquetes ICMP request con origen 20.20.20.131 y destino 20.20.20.05. Tambi\'en puede observarse en esta imagen paquetes ICMP reply a los paquetes request enviados.
 
-Luego, como se muestra en el segundo cuarto de la imagen(cuarto superior derecho), el cual se corresponde con una captura realizada en la interfaz nf0 de dicho nodo, a cada paquete ICMP request recibido por la interfaz eth1 se le coloca un cabezal mpls con la etiqueta 31 y se reenvía por la interfaz en cuestión. Finalmente al arribar al nodo \textit{Oz} por la interfaz \textbf{nf0} (cuarto inferior izquierdo de la imagen), el cabezal mpls es retirado de cada paquete para luego ser reenviado por la interfaz \textbf{eth1} hacia la subred C (cuarto inferior derecho de la imagen).\\
+Luego, como se muestra en el segundo cuarto de la imagen (cuarto superior derecho), el cual se corresponde con una captura realizada en la interfaz nf0 de dicho nodo, a cada paquete ICMP request recibido por la interfaz eth1 se le coloca un cabezal mpls con la etiqueta 31 y se reenvía por la interfaz en cuestión. Finalmente al arribar al nodo \textit{Oz} por la interfaz \textbf{nf0} (cuarto inferior izquierdo de la imagen), el cabezal mpls es retirado de cada paquete para luego ser reenviado por la interfaz \textbf{eth1} hacia la subred C (cuarto inferior derecho de la imagen).\\
 
 En la figura \ref{fig:LabE1P1CapHost} se muestra una captura de pantalla del comando ping utilizado para generar tr\'afico ICMP desde el host 20.20.20.131 en la subred A, al host 20.20.20.05 en la subred C.
 
@@ -295,7 +297,8 @@ En la figura \ref{fig:LabE1P1CapHost} se muestra una captura de pantalla del com
 \label{fig:LabE1P1CapHost}
 \end{figure}
 
-Análogamente se procesan los paquetes asociados a los restantes servicios en el sistema. Para complementar el ejemplo anterior, en la figura \ref{fig:LabE1P1CapsTraf2} se muestra el procesamiento de los paquetes asociados al servicio S3, utilizando el comando ping para generar tr\'afico desde el host 20.20.20.131 en la subred A, al host 20.20.20.67 en la subred B. En la imagen se muestran las capturas de tr\'afico utilizando el comando tcpdump para las interfaces eth1 (cuarto superior izquierdo de la imagen) y nf2 (cuarto superior derecho de la imagen) en el nodo Galois, y las interfaces nf2 (cuarto inferior izquierdo) y eth1 (cuarto inferior derecho) en el nodo Poisson.\\
+Análogamente se procesan los paquetes asociados a los restantes servicios en el sistema. Para complementar el ejemplo anterior, en la figura \ref{fig:LabE1P1CapsTraf2} se muestra el procesamiento de los paquetes asociados al servicio S3, utilizando el comando ping para generar tr\'afico desde el host 20.20.20.131 en la subred A, al host 20.20.20.67 en la subred B. En la imagen se muestran las capturas de tr\'afico utilizando el comando tcpdump para las interfaces eth1 (cuarto superior izquierdo de la imagen) y nf2 (cuarto superior derecho de la imagen) en el nodo Galois, y las interfaces nf2  
+ (cuarto inferior izquierdo) y eth1 (cuarto inferior derecho) en el nodo Poisson.\\
 
 En la siguiente secci\'on se discute el comportamiento del prototipo, cuando la topolog\'ia cambia por ejemplo por una falla t\'ecnica en un enlace, utilizando el escenario y los servicios definidos anteriormente.
 
@@ -349,7 +352,7 @@ Acorde a los costos de la topolog\'ia (ver figura \ref{fig:LaboratorioDePruebasC
 \label{fig:CUP1Caminos2}
 \end{figure}
  
-Notese que los \'unicos caminos que cambian son los asociados a los servicios S3 y S6. Cabe destacar adem\'as que en la nueva topolog\'ia existe m\'as de un camino de m\'inimo costo para el servicio S3; los caminos $<(Galois, nf0), (Oz, nf1)>$ y $<(Galois, nf0), (Oz, nf2), (Alice, nf0)>$ presentan ambos el costo 4. Por tanto se tienen dos resultados v\'alidos posibles para la salida del algoritmo de ruteo para este servicio.\\
+N\'otese que los \'unicos caminos que cambian son los asociados a los servicios S3 y S6. Cabe destacar adem\'as que en la nueva topolog\'ia existe m\'as de un camino de m\'inimo costo para el servicio S3; los caminos $<(Galois, nf0), (Oz, nf1)>$ y $<(Galois, nf0), (Oz, nf2), (Alice, nf0)>$ presentan ambos el costo 4. Por tanto se tienen dos resultados v\'alidos posibles para la salida del algoritmo de ruteo para este servicio.\\
 
 Para comprobar que el algoritmo de ruteo recaclula correctamente las rutas, se inspeccionan nuevamente las tablas de flujos de cada nodo en el laboratorio (ver figuras \ref{fig:CU1P2DumpFlows1}-\ref{fig:CU1P2DumpFlows4}), comparando los caminos calculados con los caminos te\'oricos.\\
 
@@ -406,7 +409,7 @@ Por otra parte en la tabla de flujos del nodo \textit{Oz}, se incorpora el sigui
 mpls,in\_port=2,mpls\_label=32,mpls\_bos=0 actions=set\_field:30->mpls\_label,dec\_mpls\_ttl,output:4 }
 \end{center}
 
-El mismo implementa el cambio de etiqueta mpls en el paquete, y su posterior reenvio por el puerto n\'umero 4 (interfaz nf2).\\
+El mismo implementa el cambio de etiqueta mpls en el paquete, y su posterior reenvío por el puerto n\'umero 4 (interfaz nf2).\\
 
 Luego en la tabla de flujos del nodo \textit{Alice} se incorpora el siguiente flujo:
 
@@ -415,7 +418,7 @@ Luego en la tabla de flujos del nodo \textit{Alice} se incorpora el siguiente fl
 mpls,in\_port=2,mpls\_label=32,mpls\_bos=0 actions=pop\_mpls:0x8847,output:2 }
 \end{center}
 
-Este flujo implementa el pop de la etiqueta mpls externa en el penultimo nodo del LSP (penultimate-pop-hoping). Tras realizar esta acci\'on reenvia el paquete por el puerto n\'umero 2 (interfaz nf0).\\
+Este flujo implementa el pop de la etiqueta mpls externa en el penúltimo nodo del LSP (penultimate-pop-hoping). Tras realizar esta acci\'on reenvía el paquete por el puerto n\'umero 2 (interfaz nf0).\\
 
 Finalmente cuando el paquete arriba al nodo \textit{Poisson}, el procesamiento final del paquete, realizado con anterioridad por el flujo \ref{fig:Flujo2} ahora se realiza mediante el siguiente flujo: 
 
@@ -438,13 +441,13 @@ Enumerando las figuras de izquierda a derecha y de arriba hacia abajo, la primer
 
 Análogamente se puede estudiar la correspondencia entre el camino te\'orico y el camino calculado para el servicio S6.\\
  
-De esta forma se verifica para el laboratorio de pruebas construido, la correctitud del algoritmo de ruteo, el algoritmo de distribución de etiquetas, se prueba el correcto funcionamiento de las tablas de flujos Open vSwitch y los flujos particulares utilizados para implementar clasificacion de tr\'afico, se comprueba el correcto accionar del programa ante cambios en la topolog\'ia (recalculo de LSPs), y finalmente se valida la construcción de un servicio de rede privada multipunto de capa 3.
+De esta forma se verifica para el laboratorio de pruebas construido, la correctitud del algoritmo de ruteo, el algoritmo de distribución de etiquetas, se prueba el correcto funcionamiento de las tablas de flujos Open vSwitch y los flujos particulares utilizados para implementar clasificación de tr\'afico, se comprueba el correcto accionar del programa ante cambios en la topolog\'ia (recalculo de LSPs), y finalmente se valida la construcción de un servicio de rede privada multipunto de capa 3.
 
-En la siguiente seccci\'on se discute la verificacion de otros aspectos importantes en el funcionamiento del prototipo, utilizando como escenario de pruebas la construcci\'on de dos servicios de red privada punto a punto de capa 3, utilizando dos organizaciones diferentes.   
+En la siguiente seccci\'on se discute la verificación de otros aspectos importantes en el funcionamiento del prototipo, utilizando como escenario de pruebas la construcci\'on de dos servicios de red privada punto a punto de capa 3, utilizando dos organizaciones diferentes.   
 
 \subsection{Escenario 2}
 
-Este escenario representa una red privada punto a punto de capa 3. Esta compuesto por dos organizaciones diferentes, cada una de ellas con dos sucursales f\'isicamente separadas. Adem\'as, ambas organizaciones utilizan el mismo espacio de direccionamiento IP para sus repectivas subredes.\\
+Este escenario representa una red privada punto a punto de capa 3. Esta compuesto por dos organizaciones diferentes, cada una de ellas con dos sucursales f\'isicamente separadas. Adem\'as, ambas organizaciones utilizan el mismo espacio de direccionamiento IP para sus respectivas subredes.\\
 
 Vale la pena mencionar que debido a las limitaciones impuestas por el hardware disponible; recordar que cada nodo en el prototipo cuenta con una \'unica interfaz f\'isica disponible para conectarse a la subred de un “cliente”, solo se pueden conectar cuatro subredes al prototipo. De esta forma, el \'unico  escenario para el cual se tienen al menos dos clientes diferentes con al menos dos oficinas físicamente separadas, es el caso m\'as simple en donde cada organización tiene dos subredes. 
 
@@ -460,11 +463,11 @@ Este escenario se traduce en dos servicios de VPN punto a punto. Sin embargo los
 Sobre este escenario se busca validar los siguientes aspectos en relaci\'on a la implementaci\'on:
 
 \begin{enumerate}
-\item El prototipo soporta la construcci\'on de servicios de VPN de capa 3 para multiples organizaciones (recordar que en el escenario anterior se trabaja con una \'unica organización)
+\item El prototipo soporta la construcci\'on de servicios de VPN de capa 3 para múltiples organizaciones (recordar que en el escenario anterior se trabaja con una \'unica organización)
 \item La implementaci\'on utilizada en el prototipo para transportar tr\'afico de una organización desde un nodo de ingreso a un nodo de egreso, es independiente de la numeraci\'on de capa 3 de dicho tr\'afico. En otras palabras soporta organizaciones con numeraci\'on IP solapadas.
 \end{enumerate}
 
-Para la construcci\'on de este escenario se instancian los siguientes servicios en el sistema (ver tabla \ref{table:TablaFlujos3}). Por cada red privada se instancian dos servicios (uno para cada sentido del tr\'afico).
+Para la construcci\'on de este escenario se instancia los siguientes servicios en el sistema (ver tabla \ref{table:TablaFlujos3}). Por cada red privada se instancia dos servicios (uno para cada sentido del tr\'afico).
 
 \begin{table}[h]
 \begin{tabular}{| l | l | l | p{4cm} | p{4cm} |}
@@ -541,7 +544,8 @@ A continuaci\'on se muestra el comando ping ejecutado.
 
 \section{VPN de capa 2}
 
-A diferencia de las VPN de capa 3, las cuales se definen para un protocolo o aplicaci\'on particular (por ejemplo IPv4), las redes privadas de capa 2 permiten definir servicios de forma agnóstica a los mismos, transportando tr\'afico entre dos subredes de cualquier protocolo de capa 3 o aplicación.
+A diferencia de las VPN de capa 3, las cuales se definen para un protocolo o aplicaci\'on particular  
+ (por ejemplo IPv4), las redes privadas de capa 2 permiten definir servicios de forma agnóstica a los mismos, transportando tr\'afico entre dos subredes de cualquier protocolo de capa 3 o aplicación.
 
 En cierta forma, puede pensarse en un servicio de VPN de capa 2 entre dos subredes por ejemplo, como un “cable” virtual que los conecta directamente.\\
 
@@ -588,7 +592,8 @@ Para generar el tr\'afico se utiliza la herramienta PacketH\cite{PacketH}, la cu
 \label{fig:PaquetsSend}
 \end{figure}
 
-De acuerdo al camino calculado para el tr\'afico asociado al servicio S1, los paquetes ingresan a la red del laboratorio por el nodo Galois y dejan el mismo por a través del nodo Poisson. Capturando tr\'afico en las interfaces asociadas a esta camino, se observa el siguiente procesamiento de tr\'afico (ver figura \ref{fig:CapturaTCP}):
+De acuerdo al camino calculado para el tr\'afico asociado al servicio S1, los paquetes ingresan a la red del laboratorio por el nodo Galois y dejan el mismo por a través del nodo Poisson. Capturando tr\'afico en las interfaces asociadas a esta camino, se observa el siguiente procesamiento de tr\'afico  
+ (ver figura \ref{fig:CapturaTCP}):
 
 \begin{figure}[h!] 
 \centering    

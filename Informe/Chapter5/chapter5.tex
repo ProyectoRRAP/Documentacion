@@ -53,9 +53,9 @@ Teniendo en cuenta la descripci\'on del problema y los requerimientos anteriores
 
 \section[Modelado de la realidad]{Modelado de la realidad}
 
-Para la representaci\'on de la realidad se utiliza el paradigma de orientaci\'on a objetos. De esta forma el modelo de datos queda representado a través del siguiente diagrama de clases de diseño(ver ver figura ~\ref{fig:ModeloDeDatos}).
+Para la representaci\'on de la realidad se utiliza el paradigma de orientaci\'on a objetos. De esta forma el modelo de datos queda representado a través del siguiente diagrama de clases de diseño (ver ver figura ~\ref{fig:ModeloDeDatos}).
 
-En el mismo se destacan en color amarillo las clases utilizadas para representar la topolog\'ia de red y sus elementos(Nodos, Interfaces y Enlaces). Cabe destacar sobre estas tres clases que en la representaci\'on asumida se busca modelar la topolog\'ia como un multigrafo dirigido. Esto se debe a que:
+En el mismo se destacan en color amarillo las clases utilizadas para representar la topolog\'ia de red y sus elementos (Nodos, Interfaces y Enlaces). Cabe destacar sobre estas tres clases que en la representaci\'on asumida se busca modelar la topolog\'ia como un multigrafo dirigido. Esto se debe a que:
 
 \begin{enumerate}
 \item Tradicionalmente se utilizan grafos para el modelado de una topolog\'ia de red, siendo una representaci\'on sencilla y clara.
@@ -74,7 +74,7 @@ En el mismo se destacan en color amarillo las clases utilizadas para representar
 \end{figure}
 
 \newpage
-En un mulrigrafo dirigido se tienen nodos y aristas con sentido. Cada nodo de la red puede ser representado por un nodo del grafo y cada enlace entre un par de nodos con dos aristas(una arista para cada sentido del enlace).
+En un mulrigrafo dirigido se tienen nodos y aristas con sentido. Cada nodo de la red puede ser representado por un nodo del grafo y cada enlace entre un par de nodos con dos aristas (una arista para cada sentido del enlace).
 
 En el modelo se tiene adem\'as el concepto de Interfaz de dispositivo. Este concepto re-define la noción de adyacencia entre dos nodos en el grafo de la siguiente forma: existe una arista para un par de nodos si cada uno de ellos esta asociado a una instancia de la clase Interfaz y existe una instancia de la clase Link asociada a ambas interfaces mediante las relaciones “Desde” y “Hacia”; indicando adem\'as estas el sentido del dicho Link.
 
@@ -82,7 +82,7 @@ Cabe destacar que en el modelo la clase Nodo representa solamente dispositivos d
 
 Por otro lado en rosado se destacan las clases utilizadas para representar los principales conceptos de \textbf{mpls} como las tablas FTN, ILM, NHLFE y el concepto de LSP. Si bien esta \'ultima clase no tiene atributos asociados en esta versi\'on del modelo de datos, eventualmente tiene sentido en un futuro que se puedan asociar atributos del camino como el m\'aximo ancho de banda disponible y algunas otras propiedades orientadas a funcionalidades de QoS por ejemplo.\\
 
-Finalmente en azul se destaca el concepto Servicio con el cual se busca representar un servicio de red privada virtual. En particular cada instancia de Servicio representa una red privada punto a punto entre dos nodos en el prototipo; por ello esta clase tiene asociados los atributos nodo de ingreso y nodo de egreso. Adem\'as se asume que por cada nodo de borde se tiene a lo sumo una \'unica red privada conectada directamente a cada interfaz. Por ello un servicio queda determinado por los pares <nodo, intefaz> origen y <nodo, interfaz> destino. 
+Finalmente en azul se destaca el concepto Servicio con el cual se busca representar un servicio de red privada virtual. En particular cada instancia de Servicio representa una red privada punto a punto entre dos nodos en el prototipo; por ello esta clase tiene asociados los atributos nodo de ingreso y nodo de egreso. Adem\'as se asume que por cada nodo de borde se tiene a lo sumo una \'unica red privada conectada directamente a cada interfaz. Por ello un servicio queda determinado por los pares <nodo, interfaz> origen y <nodo, interfaz> destino. 
 
 Luego una red privada multipunto puede construirse por ejemplo definiendo servicios punto a punto para cada par de nodos involucrados.
 
@@ -112,7 +112,7 @@ La lista de casos de uso presentada a continuaci\'on se corresponde con un conju
 
 \item \textbf{CU7. Ver Topolog\'ia}: Muestra la topolog\'ia de red mediante una representaci\'on gr\'afica.
 
-\item \textbf{CU.8 Filtrar Lsps}: Superpone en la representaci\'on gr\'afica de la red (CU7.Ver Topolog\'ia) un conjunto de LSPs seleccionados.
+\item \textbf{CU.8 Filtrar LSPs}: Superpone en la representaci\'on gr\'afica de la red (CU7.Ver Topolog\'ia) un conjunto de LSPs seleccionados.
 
 \item \textbf{CU9. Seleccionar Nodo}: Selecciona un nodo de una lista de Nodos (CU7. Ver Topolog\'ia).
 
@@ -144,7 +144,7 @@ En la siguiente secci\'on se presenta la arquitectura de la aplicaci\'on RAUFlow
 
 %Previo a la presentación de la arquitectura de RAUFlow vale la pena dedicar un pequeño espacio de esta sección al esclarecimiento de algunos aspectos clave para el entendimiento de la arquitectura de la aplicaci\'on. 
 
-Como se menciona en el cap\'itulo anterior, RAUFlow es el nombre dado a la aplicaci\'on encargada de implementar el plano de control en el prototipo. Sin embargo como se menciona tambi\'en en dicho cap\'itulo, la o las aplicaciones que se ejecutan en el controlador Ryu interactuan con diferentes m\'odulos y componentes como el Administrador SNMP \'o la base de datos topol\'ogica de Quagga. Por esta raz\'on tiene sentido pensar en RAUFlow como el conjunto de todas estas componentes las cuales interactuando entre ellas implementan efectivamente el plano de control.\\
+Como se menciona en el cap\'itulo anterior, RAUFlow es el nombre dado a la aplicaci\'on encargada de implementar el plano de control en el prototipo. Sin embargo como se menciona tambi\'en en dicho cap\'itulo, la o las aplicaciones que se ejecutan en el controlador Ryu interact\'uan con diferentes m\'odulos y componentes como el Administrador SNMP \'o la base de datos topol\'ogica de Quagga. Por esta raz\'on tiene sentido pensar en RAUFlow como el conjunto de todas estas componentes las cuales interactuando entre ellas implementan efectivamente el plano de control.\\
 
 Conceptualmente RAUFlow es un conjunto de aplicaciones de control y gestión de red, basada en el enfoque de SDN e implementado utilizando el software de Control Ryu y el protocolo OpenFlow entre otras tecnologías principalmente. No es puramente una aplicaci\'on OpenFlow puesto que como se ha mencionado reiteradas veces utiliza un conjunto de componentes y m\'odulos independientes del ambiente del controlador Ryu.
 
@@ -189,7 +189,7 @@ La capa de control esta conformada por tres componentes principalmente: el softw
 %En relaci\'on al controlador Ryu y el conjunto de aplicaciones, como bien se ha mencionado anteriormente \'este software esta desarrollado en el lenguaje de programaci\'on Python y utiliza este mismo lenguaje para el desarrollo de las aplicaciones Ryu. Por consiguiente las cuatro aplicaciones que se ejecutan sobre el mismo están desarrolladas en este lenguaje. A continuaci\'on se detallan cada una de estas aplicaciones.
 %]
 
-\subsubsection{Aplicaciones RYU(Terceros)}
+\subsubsection{Aplicaciones RYU (Terceros)}
 En RAUFlow se ejecuta un conjunto de tres aplicaciones con el objetivo de facilitar la representaci\'on gr\'afica del estado de la topolog\'ia, a partir de las funcionalidades de la aplicación \textbf{gui\_topology}, anteriormente mencionada. 
 
 Las tres aplicaciones utilizadas son:
@@ -237,7 +237,7 @@ En relaci\'on al diseño de esta aplicaci\'on, como puede apreciarse en la figur
 \item EventosOpenFlow\\
 EventosOpenFlow es una aplicaci\'on Ryu con el esquema b\'asico de este tipo de programas (las aplicaicones Ryu tienen un esquema particular). Se encarga de proveer m\'etodos para los principales eventos del protocolo OpenFlow; por ejemplo cuando un switch se reporta con el controlador por primera vez \'o deja de reportarse, cuando el controlador recibe un paquete (Packet IN), cuando se produce un cambio en la topolog\'ia como por ejemplo un puerto en un dispositivo que deja de funcionar, entre otros.\\
 
-A nivel de diseño el modelado de la realidad, la implementaci\'on de funcionalidades de acceso a la capa de dispositivos, estructuras de datos almacenadas en memoria, los algoritmos de ruteo y distribucion de etiquetas son implementados en la componente Logica de Negocios. De esta forma se desacoplan las responsabilidades, mejorando la claridad y transparencia en el diseño de la aplicaci\'on. No obstante esta aplicación es la responsable de gestionar el ciclo de vida de los diferentes objetos asociados a la componente Lógica de Negocios.
+A nivel de diseño el modelado de la realidad, la implementaci\'on de funcionalidades de acceso a la capa de dispositivos, estructuras de datos almacenadas en memoria, los algoritmos de ruteo y distribución de etiquetas son implementados en la componente Lógica de Negocios. De esta forma se desacoplan las responsabilidades, mejorando la claridad y transparencia en el diseño de la aplicaci\'on. No obstante esta aplicación es la responsable de gestionar el ciclo de vida de los diferentes objetos asociados a la componente Lógica de Negocios.
   
 \item Lógica de Negocios\\
 Como se ha mencionado esta componente es responsable del modelado de la realidad y la implementaci\'on de las principales funcionalidades del plano de control de RAUFlow. Se subdivide a su vez en diferentes m\'odulos que agrupan funcionalidades acorde a su naturaleza y responsabilidad. Vale la pena destacar a su vez que cada uno de estos m\'odulos se corresponde en la implementaci\'on realizada con un m\'odulo de Python. A continuaci\'on se explican las responsabilidades de cada uno de ellos:
@@ -247,14 +247,14 @@ Como se ha mencionado esta componente es responsable del modelado de la realidad
 
 \item \textbf{topology:} Agrupa las definiciones de objetos utilizados para representar la topolog\'ia como las clases Nodo, Interfaz y Link, así como otros conceptos de la realidad.
  
-\item \textbf{mpls:} Contiene las definiciones de los conceptos FTN, ILM, NHLFE, as\'i como los conceptos de conceptos de servicio de red y LSP(Label Switched Path).
+\item \textbf{mpls:} Contiene las definiciones de los conceptos FTN, ILM, NHLFE, as\'i como los conceptos de conceptos de servicio de red y LSP (Label Switched Path).
 
 \item \textbf{dataTypes:} Mantiene representaciones reducidas de los principales objetos definidos en todos los m\'odulos de la componente de negocios para el intercambio de datos por ejemplo con la capa de presentaci\'on. 
 
 \item \textbf{datapath:} Agrupa funcionalidades para el acceso al datapath de OpenFlow, como funciones para agregar y eliminar flujos en un switch, u obtener estad\'isticas de una tabla de flujos.
 \end{itemize} 
 
-Para acceder a la componente de Logica de Negocios se tiene una API REST de Servicios.
+Para acceder a la componente de Lógica de Negocios se tiene una API REST de Servicios.
 
 \item API REST de servicios\\
 Esta componente define m\'etodos para el acceso a los datos y funcionalidades de la componente Lógica de Negocios. Es utilizada por ejemplo por la capa de Presentaci\'on para acceder a diferente informaci\'on de la realidad o crear nuevos servicios por ejemplo. A su vez es utilizada por otras componentes de la capa de control como lo es el caso del m\'odulo LSDBSync para enviar inormaci\'on actualizada de la topolog\'ia de red al momento de ejecutar RAUFlow por primera vez y luego cuando la topolog\'ia cambia. 
@@ -276,12 +276,12 @@ Dentro de esta componente, actualmente existe un solo mo\'dulo denominado \textb
 El funcionamiento de este m\'odulo se ha explicado anteriormente a lo largo de este cap\'itulo.
 
 \subsubsection{LSDB Sync}
-Como se muestra en el diagrama de arquitectura, \'este m\'odulo interactua con la instancia de Quagga instalada en el controlador en dos formas distintas. Por un lado advierte cuando la topolog\'ia cambia observando los mensajes que se env\'ian a través del ptotocolo OSPF en la red, y por otro lado accede, procesa y envia la informaci\'on de la base de datos topol\'ogica LSDB local a la aplicaci\'on RAUFlowApp a trav\'es de un web service de la API Rest implementada en esta aplicaci\'on.
+Como se muestra en el diagrama de arquitectura, \'este m\'odulo interact\'ua con la instancia de Quagga instalada en el controlador en dos formas distintas. Por un lado advierte cuando la topolog\'ia cambia observando los mensajes que se env\'ian a través del protocolo OSPF en la red, y por otro lado accede, procesa y enviá la informaci\'on de la base de datos topol\'ogica LSDB local a la aplicaci\'on RAUFlowApp a trav\'es de un web service de la API Rest implementada en esta aplicaci\'on.
  
 \subsection{Capa de Dispositivos}
-En la capa de dispositivos se muestran las diferentes componentes de RAU-Switch que interactuan con la capa de control, indicando para cada una de ellas el protocolo de comunicaci\'on utilizado.\\
+En la capa de dispositivos se muestran las diferentes componentes de RAU-Switch que interact\'uan con la capa de control, indicando para cada una de ellas el protocolo de comunicaci\'on utilizado.\\
 
-Por un lado se tiene la herramienta Open vSwitch de la cual tanto su rol en la implementaci\'on del prototipo, como su funcionamiento ya se ha explicado anteriormente. Vale la pena mencionar simplemente, que las \'unicas componentes de la capa de control de RAUFlow que interactuan con la misma, adem\'as de las tres aplicaciones que vienen con Ryu, son la aplicaci\'on EventosOpenFlow y el m\'odulo datapath.\\
+Por un lado se tiene la herramienta Open vSwitch de la cual tanto su rol en la implementaci\'on del prototipo, como su funcionamiento ya se ha explicado anteriormente. Vale la pena mencionar simplemente, que las \'unicas componentes de la capa de control de RAUFlow que interact\'uan con la misma, adem\'as de las tres aplicaciones que vienen con Ryu, son la aplicaci\'on EventosOpenFlow y el m\'odulo datapath.\\
 
 Por otro lado, se tiene el agente SNMP consultado por el Administrador SNMP en la capa de control mediante el protocolo SNMP\\
 
@@ -294,7 +294,7 @@ Una vez presentada y explicada en detalle la arquitectura de RAUFlow, el lector 
 En esta secci\'on se presentan los aspectos m\'as importantes relacionados a la implementaci\'on de RauFlow. Entre ellos se destacan la estrategia utilizada para implementar clasificaci\'on de tr\'afico,  la implementaci\'on de la clase servicio, la implementaci\'on de los algoritmos de ruteo y distribución de etiquetas, entre otros.\\
 
 \subsection{Clasificación de tr\'afico}
-En la literatura de MPLS, tradicionalmente se utiliza el concepto de FEC(fordwarding equivalence class) para distinguir a un conjunto de paquetes a ser tratados en forma similar(por ejemplo para aplicar t\'ecnicas de QoS). Este concepto se define localmente a un dispositivo, determinando la forma en que un conjunto de paquetes son tratados solamente en el mismo.
+En la literatura de MPLS, tradicionalmente se utiliza el concepto de FEC (fordwarding equivalence class) para distinguir a un conjunto de paquetes a ser tratados en forma similar (por ejemplo para aplicar t\'ecnicas de QoS). Este concepto se define localmente a un dispositivo, determinando la forma en que un conjunto de paquetes son tratados solamente en el mismo.
 
 En RAUFlow se aprovecha la visi\'on global del plano de control SDN para definir una noci\'on de FEC global en una topolog\'ia de red. En esta redefinici\'on se clasifica tr\'afico solamente en el nodo de ingreso a la red del prototipo, determinándose all\'i el camino a seguir por un paquete hasta el nodo de egreso mediante el resultado obtenido en la ejecuci\'on del algoritmo de ruteo. 
 
@@ -304,7 +304,7 @@ Por otro lado se define un mapeo entre servicios de VPN y etiquetas mpls, permit
 
 %Cuando un nuevo servicio de VPN es instanciado en RAUFlow, se ejecutan el algoritmo de ruteo para obtener el mejor camino dentro de la red, y el algoritmo de distribución de etiquetas para hallar el mapeo a etiquetas MPLS a conmutar por cada nodo del camino(LSP). Por como esta definido el algoritmo de distribución de etiquetas, este LSP es \'unico y permite identificar al servicio en cada salto por la etiqueta que se esta conmutando. De esta forma no es necesario clasificar estrictamente hablando el tr\'afico en cada nodo intermedio de la red, puesto que su camino esta dado una vez que ingresa a la red y es clasificado.
 
-En relaci\'on a como se implementa clasificaci\'on de tr\'afico, en el prototipo se utilizan las tablas de flujos de Open vSwitch en conjunto con los campos del cabezal OpenFlow (matching fields) para la definici\'on de flujos. Con los matching fields de OpenFlow se define la regla de un flujo(recordar figura \ref{fig:OpenFlowArch2}) distinguiendo de este modo entre diferentes clases de tr\'afico para un procesamiento diferencial.
+En relaci\'on a como se implementa clasificaci\'on de tr\'afico, en el prototipo se utilizan las tablas de flujos de Open vSwitch en conjunto con los campos del cabezal OpenFlow (matching fields) para la definici\'on de flujos. Con los matching fields de OpenFlow se define la regla de un flujo (recordar figura \ref{fig:OpenFlowArch2}) distinguiendo de este modo entre diferentes clases de tr\'afico para un procesamiento diferencial.
 
 Dentro del cabezal OpenFlow, existen campos para la definici\'on de las reglas de un flujo, campos para la definici\'on de la acci\'on de un flujo y campos que pueden ser utilizados para la definici\'on de ambas componentes.  
 
@@ -314,7 +314,7 @@ En el prototipo, el concepto de clasificaci\'on de tr\'afico esta estrictamente 
  
 \subsection{Implementación de Servicio}
 
-La clase Servicio implementa en el prototipo el concepto de servicios de red privada virtual. Como se menciona anteriormente un servicio define una clase de tr\'afico; por tanto adem\'as de la informaci\'on b\'asica que define a un servicio se tienen asociados tambi\'en todos los campos utilizados para implementar clasificaci\'on de tr\'afico(matching fields de OpenFlow).
+La clase Servicio implementa en el prototipo el concepto de servicios de red privada virtual. Como se menciona anteriormente un servicio define una clase de tr\'afico; por tanto adem\'as de la informaci\'on b\'asica que define a un servicio se tienen asociados tambi\'en todos los campos utilizados para implementar clasificaci\'on de tr\'afico (matching fields de OpenFlow).
 
 En el prototipo se asume que por cada nodo de borde  se tiene una \'unica red privada directamente conectada a cada interfaz externa. Esto permite definir un servicio a partir de la clase de tr\'afico definida y los pares nodo-interfaz origen y nodo-interfaz destino.
 
@@ -343,12 +343,12 @@ De todos modos teniendo en cuenta el alcance del proyecto se decide dejar estas 
 De esta forma la clase servicio queda determinada de la siguiente forma:\\
 
 \begin{python}
-class Service(object):
+class Service (object):
 
 		# Atributos generales
-		ID 				    # str(uuid.uuid4()) ID unico  
+		ID 				    # str (uuid.uuid4()) ID único  
 		name 				# Nombre del servicio para 
-							# identificacion de usuarios 
+							# identificación de usuarios 
 							# en RAUFlow
 							
 		lsps				# Lista de LSPs para el servicio
@@ -398,7 +398,7 @@ En RAUFlow, cuando se crea un nuevo servicio se ejecutan los algoritmos de ruteo
 En la siguiente secci\'on se detalla el algoritmo de ruteo utilizado en RAUFlow.
 
 \subsection{Algoritmo de ruteo}
-El algoritmo de ruteo implementado parte de un algoritmo Shortest Path First(SPF) centralizado para el calculo del mejor camino entre un par de nodos en la topolog\'ia. Luego incorporando restricciones al mismo es posible llegar a un Constrained Shortest Path First(CSPF) con el cual se podr\'ia implementar funcionalidades de QoS.\\
+El algoritmo de ruteo implementado parte de un algoritmo Shortest Path First (SPF) centralizado para el calculo del mejor camino entre un par de nodos en la topolog\'ia. Luego incorporando restricciones al mismo es posible llegar a un Constrained Shortest Path First (CSPF) con el cual se podr\'ia implementar funcionalidades de QoS.\\
 
 En el desarrollo de este proyecto, por razones de tiempo solo fu\'e posible la implementaci\'on del algor\'iitmo SPF centralizado. De esta forma la implementaci\'on de un algoritmo de ruteo CSPF se identifica como una posible l\'inea de trabajo a futuro.\\
 
@@ -411,14 +411,14 @@ Puesto que en este trabajo se representa a una topolog\'ia de red mediante un mu
 
 Como los multigrafos dirigidos ofrecen un modelado de la realidad intuitivo y directo, se opta por la alternativa de extender el algoritmo Dijkstra.\\
 
-En \ref{fig:algoSPF1} se muestra el pseudo-codigo del algoritmo SPF centralizado para multigrafos dirigidos obtenido a partir de la extension del algoritmo Dijkstra. Este recibe como par\'ametros la topolog\'ia de red(G) y el par de nodos inicio y fin para el cual se quiere calcular el mejor camino posible. 
+En \ref{fig:algoSPF1} se muestra el pseudo-c\'odigo del algoritmo SPF centralizado para multigrafos dirigidos obtenido a partir de la extension del algoritmo Dijkstra. Este recibe como par\'ametros la topolog\'ia de red (G) y el par de nodos inicio y fin para el cual se quiere calcular el mejor camino posible. 
 
 Las operaciones \textit{ObtenerNodosMenorCostoLink} y \textit{ObtenerNodoAdyacenteMenorCosto} son funciones auxiliares que se explican a continuación:
 
 \begin{itemize}
-\item ObtenerNodosMenorCostoLink(w, v): Permite obtener el link <w, v> de menor costo asociado en la topolog\'ia entre los nodos w y v. Notar que para un par de nodos w, v pueden existir m\'ultiples enlaces que los conecten, eventualmente con costos diferentes. 
+\item ObtenerNodosMenorCostoLink (w, v): Permite obtener el link <w, v> de menor costo asociado en la topolog\'ia entre los nodos w y v. Notar que para un par de nodos w, v pueden existir m\'ultiples enlaces que los conecten, eventualmente con costos diferentes. 
 
-\item ObtenerNodoAdyacenteMenorCosto($G\setminus S$, D): Devuelve el nodo en $G\setminus S$ para el cual el costo de ir desde el nodo inicio a este es m\'inimo en la lista de costos D.
+\item ObtenerNodoAdyacenteMenorCosto ($G\setminus S$, D): Devuelve el nodo en $G\setminus S$ para el cual el costo de ir desde el nodo inicio a este es m\'inimo en la lista de costos D.
 \end{itemize}
 
 \begin{figure}[ht!] 
@@ -513,13 +513,13 @@ Las operaciones \textit{ObtenerNodosMenorCostoLink} y \textit{ObtenerNodoAdyacen
 \subsection{Algoritmo de distribución de etiquetas}
 \label{section5.5.4}
 
-Tradicionalmente se utilizan en \textbf{mpls} etiquetas para: (a) distinguir el tr\'afico de una VPN particular y (b) encaminar tr\'afico en la red(reenvío en base a etiquetas). De esta forma se tienen dos niveles de etiquetas usualmente denominadas inner label(para marcar el tr\'afico) y outer label(para encaminar tr\'afico - LSP).\\
+Tradicionalmente se utilizan en \textbf{mpls} etiquetas para: (a) distinguir el tr\'afico de una VPN particular y (b) encaminar tr\'afico en la red (reenvío en base a etiquetas). De esta forma se tienen dos niveles de etiquetas usualmente denominadas inner label (para marcar el tr\'afico) y outer label (para encaminar tr\'afico - LSP).\\
 
-Para la distribución de etiquetas(inner y outer label) existen diferentes protocolos entre los cuales puede destacarse el protocolo LDP(Label Distribution Protocol)~\citep{LDPRFC}. Este protocolo representa un buen modelo a seguir para el algoritmo de distribución de etiquetas, pero esta definido en base a la visión topol\'ogica local de un nodo, mientras que en RAUFlow es necesario definir un algor\'itmo basado en una visi\'on topol\'ogica global. Por ello es necesario implementar un algoritmo de distribución de etiquetas diferente.\\
+Para la distribución de etiquetas (inner y outer label) existen diferentes protocolos entre los cuales puede destacarse el protocolo LDP (Label Distribution Protocol)~\citep{LDPRFC}. Este protocolo representa un buen modelo a seguir para el algoritmo de distribución de etiquetas, pero esta definido en base a la visión topol\'ogica local de un nodo, mientras que en RAUFlow es necesario definir un algor\'itmo basado en una visi\'on topol\'ogica global. Por ello es necesario implementar un algoritmo de distribución de etiquetas diferente.\\
 
 A continuaci\'on se explican los algoritmos utilizados para la distribución de etiquetas de ambos niveles.
 
-\subsubsection{Etiquetas internas(Inner Labels)}
+\subsubsection{Etiquetas internas (Inner Labels)}
 Mapear etiquetas mpls a servicios de VPN para posteriormente poder identificar el tr\'afico asociado dentro del prototipo es una tarea bastante simple. Una soluci\'on posible es asignar secuencialmente etiquetas dentro de un espacio de etiquetas disponible.
 
 Esta estrategia es simple y permite crear en el sistema tantos servicios como etiquetas disponibles. Puesto que una etiqueta mpls se representa mediante 20bits $= 2^{20}$ posibles valores, descontando los  valores reservados por el protocolo se pueden crear m\'as que suficientes servicios utilizando esta estrategia.\\
@@ -530,12 +530,12 @@ Si bien esta estrategia es suficiente para la asignación de la etiqueta interna
 Asignar etiquetas a un camino mpls es un problema mas complejo. Aprovechando la visión global de la red puede redefinirse el algoritmo de distribución de etiquetas LDP de varias formas. Algunas de ellas pueden ser:
 
 \begin{enumerate}
-\item Asignar secuencialmente etiquetas a cada salto en un camino utilizando un espacio de etiquetas global para el LSP. De esta forma no existen dos LSPs en el sistema con etiquetas en com\'un. Esta solución tiene como ventajas su simplicidad y bajo costo en el computo del algoritmo. Por otro lado tiene como desventaja que consume el espacio de etiquetas disponibles m\'as r\'apido(hay que considerar la escala del prototipo).
+\item Asignar secuencialmente etiquetas a cada salto en un camino utilizando un espacio de etiquetas global para el LSP. De esta forma no existen dos LSPs en el sistema con etiquetas en com\'un. Esta solución tiene como ventajas su simplicidad y bajo costo en el computo del algoritmo. Por otro lado tiene como desventaja que consume el espacio de etiquetas disponibles m\'as r\'apido (hay que considerar la escala del prototipo).
 
 \item Asignar secuencialmente etiquetas a cada salto en un camino utilizando un espacio de etiquetas local a cada nodo y descartando para cada interfaz etiquetas ya utilizadas por otros LSPs. Esta estrategia tiene como ventaja que es m\'as austera en el consumo de etiquetas y no existen dos LSPs con iguales etiquetas para una misma interfaz de entrada en un mismo nodo.
 \end{enumerate}
 
-Notese en relación a la segunda alternativa, que debido a la forma en que se distribuyen etiquetas puede determinarse en un nodo a que servicio corresponde un paquete bas\'andse solamente en la etiqueta externa y la interfaz por la que entra. Esto permite prescindir de la etiqueta interna para determinar lo que en un esquema tradicional de mpls se denomina FEC y aplicar diferentes pol\'iticas de ingenier\'ia de tr\'afico. Esto a su vez repercute en un aumento del MTU del paquete.\\ 
+N\'otes en relación a la segunda alternativa, que debido a la forma en que se distribuyen etiquetas puede determinarse en un nodo a que servicio corresponde un paquete bas\'andose solamente en la etiqueta externa y la interfaz por la que entra. Esto permite prescindir de la etiqueta interna para determinar lo que en un esquema tradicional de mpls se denomina FEC y aplicar diferentes pol\'iticas de ingenier\'ia de tr\'afico. Esto a su vez repercute en un aumento del MTU del paquete.\\ 
 
 En RauFlow se implementa la segunda alternativa mencionada. En \ref{fig:AlgoritmoDE1} se muestra el pseudoc\'odigo de una posible implementaci\'on de dicho algor\'itmo:\\
 
@@ -620,11 +620,11 @@ En RauFlow se implementa la segunda alternativa mencionada. En \ref{fig:Algoritm
 \end{figure}
 
 \subsubsection{Stack de etiquetas MPLS}
-Se le denomina stack de etiquetas mpls a la pila de etiquetas que resulta de superponer una etiqueta sobre otra en un paquete. Al inicio de esta secci\'on se menciona la utilizaci\'on de dos niveles de etiquetas: una etiqueta interna para identificar el servicio y una etiqueta externa para marcar el camino dentro de la red del prototipo. Luego cuando se describe la implementaci\'on del algoritmo de distribución de etiquetas de segundo nivel(etiquetas externas), se muestra que es posible prescindir del primer nivel de etiquetas(etiquetas internas).\\
+Se le denomina stack de etiquetas mpls a la pila de etiquetas que resulta de superponer una etiqueta sobre otra en un paquete. Al inicio de esta secci\'on se menciona la utilizaci\'on de dos niveles de etiquetas: una etiqueta interna para identificar el servicio y una etiqueta externa para marcar el camino dentro de la red del prototipo. Luego cuando se describe la implementaci\'on del algoritmo de distribución de etiquetas de segundo nivel (etiquetas externas), se muestra que es posible prescindir del primer nivel de etiquetas (etiquetas internas).\\
 
 Por un lado puede implementarse el prototipo trabajando solamente con un nivel de etiquetas, garantizando reenvío en base a etiquetas y clasificaci\'on de tr\'afico. Sin embargo para poder identificar el servicio asociado a un paquete en el nodo de egreso en un LSP, es necesario que el paquete presente la etiqueta correspondiente, permitiendo de esta forma reenviarlo por la correcta interfaz de salida del prototipo. 
 
-Esto no es posible si se implementa Penultimate Hop Popping(PHP) dado que la etiqueta es removida en el pen\'ultimo hop, llegando al nodo de egreso sin etiquetas.
+Esto no es posible si se implementa Penultimate Hop Popping (PHP) dado que la etiqueta es removida en el pen\'ultimo hop, llegando al nodo de egreso sin etiquetas.
 
 Pensando en permitir en un futuro la conexi\'on de nodos al prototipo implementados en base a diferentes tecolog\'ias; es decir, nodos no implementados en base a RAU-Switch, es necesario mantener la implementaci\'on estándar del protocolo \textbf{mpls}. Esto quiere decir que se debe implementar PHP.
 
@@ -636,28 +636,30 @@ En una red MPLS cada vez que un paquete es manipulado para colocar un cabezal mp
 
 Este problema puede resolverse en una VPN de capa 3 obligando a indicar el ethertype de cada servicio definido. De esta forma se utiliza la informaci\'on del servicio para definir un flujo que coloque el ethertype apropiado en el nodo de egreso, para cada paquete. De esta forma no se deben realizar modificaciones sustanciales a la implementaci\'on del prototipo. No obstante para una VPN de capa 2 no se puede implementar una soluci\'on similar.
 
-De esta forma es necesario guardar en alg\'un lado el valor original de ethertype para cada paquete que ingresa al prototipo y colocarlo en el \'ultimo nodo del camino, si se quiere soportar la implementacion de VPNs de capa 2. Esto puede realizarse al menos de las siguientes dos formas:
+De esta forma es necesario guardar en alg\'un lado el valor original de ethertype para cada paquete que ingresa al prototipo y colocarlo en el \'ultimo nodo del camino, si se quiere soportar la implementaci\'on de VPNs de capa 2. Esto puede realizarse al menos de las siguientes dos formas:
 
 \begin{enumerate}
-\item Cada paquete que ingresa a la red del prototipo es enviado al Controlador en donde se extrae y guarda el valor original de ethertype. Luego se continua con el procesamiento del paquete acorde a las reglas ya definidas. Luego cuando el paquete arriba al ultimo nodo, tras procesarse acorde a las reglas ya definidas(extraer etiqueta interna por ejemplo) el paquete es enviado al Controlador donde se le coloca el valor original de ethertype. Finalmente se reenv\'ia el paquete por la interfaz de salida de la red.
+\item Cada paquete que ingresa a la red del prototipo es enviado al Controlador en donde se extrae y guarda el valor original de ethertype. Luego se continua con el procesamiento del paquete acorde a las reglas ya definidas. Luego cuando el paquete arriba al ultimo nodo, tras procesarse acorde a las reglas ya definidas (extraer etiqueta interna por ejemplo) el paquete es enviado al Controlador donde se le coloca el valor original de ethertype. Finalmente se reenv\'ia el paquete por la interfaz de salida de la red.
 
 Este soluci\'on se corresponde con un enfoque reactivo en una red SDN (recordar estado del arte en las redes definidas por software).
 
-\item Se utilizan etiquetas para indicar el ethertype de un paquete. Se puede definir un tercer nivel de etiquetas para esto, definiendo un mapeo entre ethertype y etiqueta. Luego el nodo de egreso utilzando esta informaci\'on puede localmente mapear etiquetas a ethertypes colocando en el paquete el valor original antes de reenviarlo por la interfaz de salida. 
+\item Se utilizan etiquetas para indicar el ethertype de un paquete. Se puede definir un tercer nivel de etiquetas para esto, definiendo un mapeo entre ethertype y etiqueta. Luego el nodo de egreso utilizando esta informaci\'on puede localmente mapear etiquetas a ethertypes colocando en el paquete el valor original antes de reenviarlo por la interfaz de salida. 
 
 Sin embargo utilizar un tercer nivel de etiqueta agregar\'ia complejidad al procesamiento del paquete, pudiendo perjudicar la performance del prototipo, adem\'as de que reduce el MTU de un paquete.\\ 
 
-Una alternativa, es utilizar el primer nivel de etiquetas para identificar el ethertype, definiendo para cada servicio de VPN en vez de una etiqueta un rango de etiquetas(una etiqueta para cada tipo de ethertype soportado). De esta forma se pueden definir flujos para cada servicio y cada ethertype en el nodo de egreso para colocar nuevamente el ethertype original dependiendo del valor en la etiqueta de primer nivel.
+Una alternativa, es utilizar el primer nivel de etiquetas para identificar el ethertype, definiendo para cada servicio de VPN en vez de una etiqueta un rango de etiquetas (una etiqueta para cada tipo de ethertype soportado). De esta forma se pueden definir flujos para cada servicio y cada ethertype en el nodo de egreso para colocar nuevamente el ethertype original dependiendo del valor en la etiqueta de primer nivel.
 
 En RAUFlow se implementa esta estrategia en la implementaci\'on de servicios de redes privadas de capa 2. 
 
 \end{enumerate} 
 
-\subsection{Actualizaci\'on de la topologia}
-Una vez que el m\'odulo LSDB Sync envía a la aplicaci\'on la informaci\'on topol\'ogica actualizada, se desencadena una secuencia acciones para la actualizaci\'on de la informaci\'on almacenada localmente (informaci\'on topolo\'ogica y de servicios). Este proceso puede resumirse de la siguiente forma:
+\subsection{Actualizaci\'on de la topolog\'ia}
+Una vez que el m\'odulo LSDB Sync envía a la aplicaci\'on la informaci\'on topol\'ogica actualizada, se desencadena una secuencia acciones para la actualizaci\'on de la informaci\'on almacenada localmente 
+ (informaci\'on topolo\'ogica y de servicios). Este proceso puede resumirse de la siguiente forma:
 
 \begin{enumerate}
-\item Se ejecuta el algoritmo \textbf{ActualizarTopologia} el cual mezcla la informaci\'on de la topolog\'ia mantenida en memoria(informaci\'on desactualizada) con la informaci\'on recibida (informaci\'on actual). Se actualiza cada instancia de Nodo, Interfaz y Link considerando los casos en que se deben crear nuevos objetos, actualizar existentes y eventualmente eliminarlos. Cabe destacar que la operaci\'on eliminar tanto para Nodos, Interfaces como Links no efectúa un borrado f\'isico de estos objetos, simplemente los marca como no operativos(atributo “state” en cada clase).  
+\item Se ejecuta el algoritmo \textbf{ActualizarTopologia} el cual mezcla la informaci\'on de la topolog\'ia mantenida en memoria (informaci\'on desactualizada) con la informaci\'on recibida  
+ (informaci\'on actual). Se actualiza cada instancia de Nodo, Interfaz y Link considerando los casos en que se deben crear nuevos objetos, actualizar existentes y eventualmente eliminarlos. Cabe destacar que la operaci\'on eliminar tanto para Nodos, Interfaces como Links no efectúa un borrado f\'isico de estos objetos, simplemente los marca como no operativos (atributo “state” en cada clase).  
 
 \item Se ejecuta el algoritmo \textbf{ActualizarServiciosLSPs} el cual recalcula para cada servicio en el sistema los LSPs asociados. El proceso de actualización de un LSP implica:
 
@@ -676,7 +678,7 @@ De ambos algoritmos se elige \textbf{ActualizarServiciosLSPs} para mostrar a con
 \clearpage
 \begin{figure}[ht!]
 \begin{algorithm}[H]
- Declare topologia \Comment{Representacion de la topologia}\\
+ Declare topolog\'ia \Comment{Representación de la topolog\'ia}\\
  Declare servicios \Comment{Servicios del sistema}\\
  \SetKwFunction{ActualizarServiciosLSPs}{ActualizarServiciosLSPs} 
  \SetKwProg{myalg}{Function}{}{}
@@ -739,7 +741,7 @@ De ambos algoritmos se elige \textbf{ActualizarServiciosLSPs} para mostrar a con
 \begin{algorithm}[H]
  \SetKwFunction{ActualizarLSP}{ActualizarLSP} 
  \SetKwProg{myalg}{Function}{}{}
- \myalg{\ActualizarLSP(servicio, lsp){}}{\Comment{Precondicion  largo camino mayor a 0}
+ \myalg{\ActualizarLSP(servicio, lsp){}}{\Comment{Precondici\'on  largo camino mayor a 0}
 		
 	\vspace{0.2cm}
 	
@@ -846,7 +848,7 @@ De ambos algoritmos se elige \textbf{ActualizarServiciosLSPs} para mostrar a con
 	\ForEach{ilm in ilm\_adds}{
 		\ForEach{nhlfe in ilm.nhlfes}{
 	
-			\uIf{next\_hop.i\_type == 1}{\Comment{Si el tipo de interaz es 1 entonces es un nodo de borde y el flujo OpenFlow es diferente}\\
+			\uIf{next\_hop.i\_type == 1}{\Comment{Si el tipo de interfaz es 1 entonces es un nodo de borde y el flujo OpenFlow es diferente}\\
     			install\_egress\_node\_flow\_for\_service(service, n, ilm, nhlfe)\\	
  			}
 
@@ -864,7 +866,7 @@ De ambos algoritmos se elige \textbf{ActualizarServiciosLSPs} para mostrar a con
 \end{figure}
 
 \subsection{Ciclo de vida de un Nodo}
-En el prototipo se obtiene informaci\'on de varias fuentes de datos para la construcci\'on de la topolog\'ia. Algunas de ellas son la base de datos topol\'ogica de Quagga(LSDB), el datapath OpenFlow y a través del ingreso manual de informaci\'on mediante la interfaz gr\'afica de RAUFlow.
+En el prototipo se obtiene informaci\'on de varias fuentes de datos para la construcci\'on de la topolog\'ia. Algunas de ellas son la base de datos topol\'ogica de Quagga (LSDB), el datapath OpenFlow y a través del ingreso manual de informaci\'on mediante la interfaz gr\'afica de RAUFlow.
 
 Estas fuentes aportan datos en forma independiente, lo cual incide directamente en la construcci\'on de la topolog\'ia y en decisiones que se toman dentro del prototipo como por ejemplo en el algoritmo de ruteo entre otros. Por ello a continuaci\'on se ejemplifica el proceso de construcci\'on de la topolog\'ia a partir de las fuentes de datos, tomando como ejemplo el ciclo de vida de un nodo en particular. Luego el ciclo de vida de interfaces y enlaces puede deducirse de forma análoga.\\
 
@@ -880,7 +882,7 @@ Como se muestra en la figura\ref{fig:CicloVidaNodo}, descartando el pseudo-estad
 El significado de cada uno de estos as\'i como las transiciones posibles se explican a continuación:
 
 \begin{itemize}
-\item \textit{Descubrimiento OpenFlow:} Cuando un switch se reporta mediante el canal OpenFlow por primera vez con RAUFlow, se guarda diferente informaci\'on del mismo entre la cual se encuentra la instancia de la clase Datapath en la implementaci\'on de Ryu(esta instancia es utilizada posteriormente para interactuar con el dispositivo). Si el switch OpenFlow no se encuentra instanciado en el sistema como Nodo, la informaci\'on recibida se almacena en una lista auxilar de nodos. No se crea una instancia de Nodo como tal a\'un, instanciandose solamente cuando se advierte la presencia de \'este en la Link State Database(LSDB). 
+\item \textit{Descubrimiento OpenFlow:} Cuando un switch se reporta mediante el canal OpenFlow por primera vez con RAUFlow, se guarda diferente informaci\'on del mismo entre la cual se encuentra la instancia de la clase Datapath en la implementaci\'on de Ryu (esta instancia es utilizada posteriormente para interactuar con el dispositivo). Si el switch OpenFlow no se encuentra instanciado en el sistema como Nodo, la informaci\'on recibida se almacena en una lista auxiliar de nodos. No se crea una instancia de Nodo como tal a\'un, instanci\'andose solamente cuando se advierte la presencia de \'este en la Link State Database (LSDB). 
 
 Esto se corresponde con una decisión de diseño, en la cual se busca reconocer a un Nodo tanto para las funcionalidades de la interfaz gr\'afica de RAUFlow como para el algoritmo de ruteo, solamente cuando se advierte la existencia del mismo en la inforamci\'on de la LSDB. 
 
@@ -896,20 +898,21 @@ En este estado el nodo es mostrado por la interfaz gr\'afica de RAUFlow y se tie
 
 En pocas palabras es un nodo completamente funcional a los efectos de la implementaci\'on de RAUFlow.
 
-Desde este estado se tienen tres transiciones posibles. Una primera posibilidad es que se produzca una actualización de la LSDB(evento LSDBSyncActualizarTopologia) y que en la topolog\'ia recibida se encuentre el Nodo en cuesti\'on. En este caso solamente se actualiza la informaci\'on asociada al nodo(acción ActualizarNodo), entre la cual se incluye la actualización de las Interfaces y Links, quedando en el estado actual. Una segunda posibilidad es que el switch asociado deje de reportarse por el canal OpenFlow(evento OpenFlowConexiónPerdida) en cuyo caso se modifica el atributo \textbf{of\_ready} del Nodo asignando el valor False y se cambia al estado \textit{Sin Conexión OpenFlow}. Por \'ultimo una tercera posibilidad es que se produzca una actualizaci\'on de la LSDB(evento LSDBSyncActualizarTopologia) y que el Nodo no este en la topolog\'ia recibida. En este caso se deshabilita el Nodo(NodoDOWN) asignando el valor DOWN al atributo \textbf{state} y se cambia al estado \textit{LSDB Eliminado OpenFlow Activo}.
+Desde este estado se tienen tres transiciones posibles. Una primera posibilidad es que se produzca una actualización de la LSDB (evento LSDBSyncActualizarTopologia) y que en la topolog\'ia recibida se encuentre el Nodo en cuesti\'on. En este caso solamente se actualiza la informaci\'on asociada al nodo (acción ActualizarNodo), entre la cual se incluye la actualización de las Interfaces y Links, quedando en el estado actual. Una segunda posibilidad es que el switch asociado deje de reportarse por el canal OpenFlow (evento OpenFlowConexiónPerdida) en cuyo caso se modifica el atributo \textbf{of\_ready} del Nodo asignando el valor False y se cambia al estado \textit{Sin Conexión OpenFlow}. Por \'ultimo una tercera posibilidad es que se produzca una actualizaci\'on de la LSDB (evento LSDBSyncActualizarTopologia) y que el Nodo no este en la topolog\'ia recibida. En este caso se deshabilita el Nodo (NodoDOWN) asignando el valor DOWN al atributo \textbf{state} y se cambia al estado \textit{LSDB Eliminado OpenFlow Activo}.
 
 \item \textit{LSDB Eliminado OpenFlow Activo:} Este estado contempla a un Nodo que no se encontraba en la LSDB recibida en la ultima actualizaci\'on topol\'ogica pero que a\'un se reportan por el canal de comunicaci\'on OpenFlow.
 
 Desde este estado se tienen solamente dos transiciones posibles. Una primera posibilidad es que se produzca nuevamente una actualización de la topolog\'ia 
-(LSDBSyncActualizarTopologia) y que el nodo se encuentre dentro de la información recibida. En este caso se actualiza el atributo \textbf{state} del nodo valor UP y se cambia al estado \textit{Operativo}. Una segunda posibilidad es que el nodo deje de reportarse por el canal OpenFlow(OpenFlowConexiónPerdida) en cuyo caso se actualiza el valor del atributo \textbf{of\_ready} al valor False y se cambia al estado \textit{LSDB Eliminado OpenFlow Inactivo}.
+ (LSDBSyncActualizarTopologia) y que el nodo se encuentre dentro de la información recibida. En este caso se actualiza el atributo \textbf{state} del nodo valor UP y se cambia al estado \textit{Operativo}. Una segunda posibilidad es que el nodo deje de reportarse por el canal OpenFlow (OpenFlowConexiónPerdida) en cuyo caso se actualiza el valor del atributo \textbf{of\_ready} al valor False y se cambia al estado \textit{LSDB Eliminado OpenFlow Inactivo}.
 
 \item \textit{Sin Conexión OpenFlow:} Este estado contempla a un Nodo que fue creado o rectificado en la \'ultima actualización de la LSDB pero que no se ha reportado por el canal OpenFlow, ya sea porque nunca lo hizo o porque dejo de hacerlo. En este estado el Nodo es mostrado a trav\'es de la interfaz gr\'afica de RAUFlow pero no es considerado ni para el el calculo de mejores caminos ni para la creaci\'on de nuevos servicios tanto como nodo de ingreso \'o como nodo de egreso. Adem\'as la informaci\'on asociada al datapath de OpenFlow como las tabla de flujos y estad\'isticas tampoco son accesibles.
 
-De este estado existen tres transiciones posibles. Por un lado el nodo puede estar presente en la LSDB al producirse una actualizaci\'on de la topolog\'ia\\ (LSDBSyncActualizarTopologia), actualizandose la informaci\'on del nodo \\ (ActualizarNodo) y manteniéndose en el mismo estado. Por otro lado tambi\'en al producirse una actualizaci\'on de la topolog\'ia, el nodo puede no estar en la LSDB, en cuyo caso se actualiza el atributo \textbf{state} al valor DOWN y se cambia al estado \textit{LSDB Eliminado OpenFlow Inactivo}. Finalmente el switch puede empezar a reportarse por el canal OpenFlow(OpenFlowReport) en cuyo caso se actualiza el valor del atributo \textbf{of\_ready} a True y se cambia al estado \textit{Operativo}.  
+De este estado existen tres transiciones posibles. Por un lado el nodo puede estar presente en la LSDB al producirse una actualizaci\'on de la topolog\'ia\\ (LSDBSyncActualizarTopologia), actualizándose la informaci\'on del nodo \\ (ActualizarNodo) y manteniéndose en el mismo estado. Por otro lado tambi\'en al producirse una actualizaci\'on de la topolog\'ia, el nodo puede no estar en la LSDB, en cuyo caso se actualiza el atributo \textbf{state} al valor DOWN y se cambia al estado \textit{LSDB Eliminado OpenFlow Inactivo}. Finalmente el switch puede empezar a reportarse por el canal OpenFlow (OpenFlowReport) en cuyo caso se actualiza el valor del atributo \textbf{of\_ready} a True y se cambia al estado \textit{Operativo}.  
 
 \item \textit{LSDB Eliminado OpenFlow Inactivo:} Este estado modela a un Nodo que nunca se reporto \'o dej\'o de reportarse por el canal OpenFlow, y que a su vez no se encuentra dentro de la LSDB en la \'ultima actualizaci\'on topol\'ogica realizada. De este estado existen tres transiciones posibles.
 
-Una primera alternativa es que el switch en cuesti\'on se reporte con la aplicaci\'on \\ (OpenFlowReporte), en cuyo caso se actualiza el valor del atributo \textbf{of\_ready} a True y se cambia el estado a \textit{LSDB Eliminado OpenFlow Activo}. Una segunda alternativa es que se produzca una actualizaci\'on de la topolog\'ia y el Nodo se encuentre dentro de la LSDB, en cuyo caso se cambia el valor del atributo \textbf{state} a UP y se cambia al estado \textit{Sin conexión OpenFlow}. Finalmente una tercera alternativa es que el nodo  sea eliminado del sistema. Si bien esta funcionalidad no se encuentra actualmente implementada, la idea es que un Nodo para el cual no se ha recibido reportes por el canal OpenFlow luego de un tiempo determinado, y que tampoco aparece en la LSDB tras una actualicaci\'on, pueda ser eliminado del sistema, eventualmente tras la intervenci\'on de un usuario administrador.
+Una primera alternativa es que el switch en cuesti\'on se reporte con la aplicaci\'on \\  
+ (OpenFlowReporte), en cuyo caso se actualiza el valor del atributo \textbf{of\_ready} a True y se cambia el estado a \textit{LSDB Eliminado OpenFlow Activo}. Una segunda alternativa es que se produzca una actualizaci\'on de la topolog\'ia y el Nodo se encuentre dentro de la LSDB, en cuyo caso se cambia el valor del atributo \textbf{state} a UP y se cambia al estado \textit{Sin conexión OpenFlow}. Finalmente una tercera alternativa es que el nodo  sea eliminado del sistema. Si bien esta funcionalidad no se encuentra actualmente implementada, la idea es que un Nodo para el cual no se ha recibido reportes por el canal OpenFlow luego de un tiempo determinado, y que tampoco aparece en la LSDB tras una actualicaci\'on, pueda ser eliminado del sistema, eventualmente tras la intervenci\'on de un usuario administrador.
   
 \end{itemize}
 
