@@ -28,25 +28,26 @@ De esta forma, el laboratorio de pruebas queda implementado con SFPs compatibles
 \section{Desprogramaci\'on del hardware NetFPGA}
 \label{apendiceB2}
 
-Para la programación del hardware NetFPGA, se utiliza inicialmente el procedimiento indicado en el manual de ejecuci\'on del Test de Producci\'on ~\citep{ProdTestManual}. Tras experimentarse un tiempo con este procedimiento y el hardware se constata que esta técnica de programación no es persistente. Esto significa que tras apagar y encender el equipo(ciclo completo de encendido) el mismo pierde la programación. 
+Para la programación del hardware NetFPGA, se utiliza inicialmente el procedimiento indicado en el manual de ejecuci\'on del Test de Producci\'on ~\citep{ProdTestManual}. Tras experimentarse un tiempo con este procedimiento y el hardware se constata que esta técnica de programación no es persistente. Esto significa que tras apagar y encender el equipo (ciclo completo de encendido) el mismo pierde la programación. 
 
 Utilizando la herramienta Impact, observando el comportamiento de LEDs en la placa y corroborando con el el manual de la misma, se constata que el contenido del chip CPLD no es borrado, no así el contenido del chip FPGA que si es borrado.\\
 
 Con esta información se consulta la documentación de la plataforma y se buscan experiencias similares  de otros usuarios. No se encuentran problemas o experiencias similares pero se encuentra dentro de los proyectos de la plataforma un desarrollo de nombre Reference Flash, cuya funcionalidad es habilitar la programación persistente del hardware.
 
-Este proyecto utiliza las dos unidades de memoria flash disponibles, para almacenar la programaci\'on del equipo. Mientras que en la Flash A se almacena un bitstream de configuración para el equipo (bootstrap bitstream), la  Flash B queda disponible para almacenar un bitstream a elección del programador. 
+Este proyecto utiliza las dos unidades de memoria flash disponibles, para almacenar la programaci\'on del equipo. Mientras que en la Flash A se almacena un bitstream de configuración para el equipo 
+ (bootstrap bitstream), la  Flash B queda disponible para almacenar un bitstream a elección del programador. 
 
 La configuración del equipo es siempre manejada por el chip CPLD, el cual en el tiempo de encendido programa al equipo con el contenido de la Flash A. Luego el equipo puede ser reprogramado desde la Flash B a través de la interfaz PCIe.
 
 Basándose en este proyecto, se prueba como solución al problema de la desprogramaci\'on del equipo dicha alternativa, utilizando como bitstream para la Flash B, el proyecto ReferenceNIC.\\
 
-Esta estrategia funciona  exitosamente en relación a la desprogramaci\'on del hardware, puesto que tal como su documentación lo indica se programa a partir del contenido de la Flash A; y luego utilizando la interfaz PCIe es existosamente reprogramada desde la Flash B. No obstante el comportamiento final del hardware no es el correspondiente al esperado por el proyecto ReerenceNIC. En particular tras reprogramar el equipo desde la Flash B no se puede insertar el driver para el ReferenceNIC en el kernel del sistema operativo(Linux).\\
+Esta estrategia funciona  exitosamente en relación a la desprogramaci\'on del hardware, puesto que tal como su documentación lo indica se programa a partir del contenido de la Flash A; y luego utilizando la interfaz PCIe es existosamente reprogramada desde la Flash B. No obstante el comportamiento final del hardware no es el correspondiente al esperado por el proyecto ReerenceNIC. En particular tras reprogramar el equipo desde la Flash B no se puede insertar el driver para el ReferenceNIC en el kernel del sistema operativo (Linux).\\
 
 Tras utilizar el foro oficial de la plataforma, sin obtener respuestas se accede finalmente a una lista de correos en la que tambi\'en participan usuarios y desarrolladores de la plataforma. Aquí se explica el problema de la desprogrmaci\'on del hardware, y las alternativas exploradas. 
 
 Afortunadamente se obtiene respuesta del equipo de desarrolladores de NetFPGA, el cual nos indica que este comportamiento se debe a una incorrecta programaci\'on del hardware. Si bien se entiende correctamente la funcionalidad del proyecto ReferenceFlash, el proyecto ReferenceNIC precisa de módulos adicionales en el diseño de la CPLD que el ReferenceFlash no tiene. 
 
-Sin embargo, el proyecto ReferenceNIC ya tiene incorporado el modulo de persistencia que se presenta en ReferenceFlash. Por lo tanto, para lograr una programaci\'on persistente ademas de programar el equipo con el ReferenceNIC, se debe utilizar la herramienta \textbf{pcieprog}(dentro del mismo proyecto) para cargar en la memoria Flash A, un archivo bitstream con el contenido del mismo proyecto. De esta forma al producirse el encendido del equipo, este se programa con el contenido de la memoria Flash A.\\ 
+Sin embargo, el proyecto ReferenceNIC ya tiene incorporado el modulo de persistencia que se presenta en ReferenceFlash. Por lo tanto, para lograr una programaci\'on persistente ademas de programar el equipo con el ReferenceNIC, se debe utilizar la herramienta \textbf{pcieprog} (dentro del mismo proyecto) para cargar en la memoria Flash A, un archivo bitstream con el contenido del mismo proyecto. De esta forma al producirse el encendido del equipo, este se programa con el contenido de la memoria Flash A.\\ 
 
 Esta es estrategia funciona correctamente, y es lo que en este trabajo se di\'o a conocer como programación persistente.
 
@@ -60,7 +61,7 @@ Cada herramienta particular de la suite Xilinx tiene una licencia particular y s
 
 Por otro lado cada licencia brinda soporte de la herramienta asociada, para una familia de chips en particular. Por ejemplo en el contexto de este proyecto se necesitan licencias compatibles con la familia de chips Virtex5 TX240T.\\
 
-Si bien Xilinx provee de un paquete de licencias gratuito para un conjunto de herramientas mínimas dentro de la suite (entre estas se encuentra la herramienta Impact), en el desarrollo de este proyecto y en especial en el proceso de programaci\'on persistente del hardware se necesitan licencias para herramientas que no estan incluidas en este paquete.
+Si bien Xilinx provee de un paquete de licencias gratuito para un conjunto de herramientas mínimas dentro de la suite (entre estas se encuentra la herramienta Impact), en el desarrollo de este proyecto y en especial en el proceso de programaci\'on persistente del hardware se necesitan licencias para herramientas que no están incluidas en este paquete.
 
 A su vez, Xilinx provee de un paquete de licencias de prueba de 30 días en el cual se incluyen las herramientas necesarias para el proceso de programaci\'on persistente. No obstante en la familia de chips para las cuales este paquete de licencias provee de compatibilidad no se incluye la arquitectura del chip del hardware NetFPGA (mientras que la familia del hardware NetFPGA es Virtex5 TX240T, este paquete soporta familias de la arquitectura Virtex7).\\
 
@@ -112,9 +113,9 @@ Para lograr que cada interfaz f\'isica de la tarjeta NetFPGA se comporte tanto c
 
 %Debido al comportamiento de un bridge en Linux, esta estrategia que parece natural e inmediata, no se comporta en la pr\'actica como se necesita en este proyecto. El comportamiento deseado de una interfaz h\'ibrida IP/OpenFlow en el prototipo ser\'ia el que se indica en la figura~\ref{fig:OVSInterfaces}.
 
-El comportamiento deseado por una interfaz h\'ibrida IP/OpenFlow en el prototipo ser\'ia el que se muestra en la figura ~\ref{fig:OVSInterfaces}(mitad izquierda).
+El comportamiento deseado por una interfaz h\'ibrida IP/OpenFlow en el prototipo ser\'ia el que se muestra en la figura ~\ref{fig:OVSInterfaces} (mitad izquierda).
 
-El paquete ingresa al router atrav\'es de la interfaz f\'isica \textbf{nf0} y de ah\'i en m\'as el procesamiento del mismo es delegado al m\'odulo de Open vSwitch en el kernel de Linux. Aqu\'i el paquete es procesado y tratado en consecuencia a lo que indica la tabla de flujos en Open vSwitch. En el prototipo, para este paquete existen dos alternativas: (1) se procesa el contenido del mismo y se reenv\'ia por otra interfaz acorde a la regla correspondiente, (2) es contemplado por una regla con la acci\'on \textit{NORMAL} y por tanto es procesado como lo har\'ia un switch legado(en este caso como lo procesar\'ia el kernel de linux).\\
+El paquete ingresa al router atrav\'es de la interfaz f\'isica \textbf{nf0} y de ah\'i en m\'as el procesamiento del mismo es delegado al m\'odulo de Open vSwitch en el kernel de Linux. Aqu\'i el paquete es procesado y tratado en consecuencia a lo que indica la tabla de flujos en Open vSwitch. En el prototipo, para este paquete existen dos alternativas: (1) se procesa el contenido del mismo y se reenv\'ia por otra interfaz acorde a la regla correspondiente, (2) es contemplado por una regla con la acci\'on \textit{NORMAL} y por tanto es procesado como lo har\'ia un switch legado (en este caso como lo procesar\'ia el kernel de linux).\\
 
 \begin{figure}[h!] 
 \centering    
@@ -132,9 +133,9 @@ Para solucionar este problema se utilizan interfaces virtuales de la siguiente f
 \begin{enumerate}
 \item Se crea una interfaz virtual por cada interfaz física y se conecta a través de dichas interfaces,  openvswitch con el kernel.
 
-\item La direccion IP que antes se asignaba a cada interfaz física ahora se le asigna a su correspondiente interfaz virtual.
+\item La dirección IP que antes se asignaba a cada interfaz física ahora se le asigna a su correspondiente interfaz virtual.
 
-\item Se deja la interfaz física sin direccion IP y de esta forma se asegura que ningún paquete que arribe a dicha interfaz será procesado por el kernel, ya que nunca coincidirá la direccion IP que contenga un paquete con la direccion de la interfaz.
+\item Se deja la interfaz física sin dirección IP y de esta forma se asegura que ningún paquete que arribe a dicha interfaz será procesado por el kernel, ya que nunca coincidirá la dirección IP que contenga un paquete con la dirección de la interfaz.
 
 \item Se crean entradas de prioridad mínima en la tabla de flujos de openvswitch que indiquen que todo lo que entre por la interfaz física se envíe a través su correspondiente interfaz virtual y viceversa.
 
@@ -155,14 +156,14 @@ Para solucionar este problema se utilizan interfaces virtuales de la siguiente f
 \section{MPLS Linux y Quagga LDP}
 \label{apendiceB6}
 
-MPLS Linux\cite{MplsLinux1} es un proyecto orientado a dotar de funcionalidades de MPLS al Kernek de Linux. 
+MPLS Linux\cite{MplsLinux1} es un proyecto orientado a dotar de funcionalidades de MPLS al Kernel de Linux. 
 Para esto se utiliza un parche con el cual se extiende el kernel original el cual tras recompilarse queda pronto para brindar soporte nativo al protocolo MPLS. Sin embargo es necesario instalar luego herramientas adicionales par por ejemplo acceder a las tablas de mpls (en particular existe una extension de la herramienta iproute denominada iproute2 para esto).\\
 
 El proyecto, cuyo desarrollo fue encabezado por James R. Leu, data de hace m\'as de 15 a\~nos y no se han hecho contribuciones importantes desde hace aproximadamente 9. Adem\'as de que la documentaci\'on existente es muy poca, las versiones de kernel de Linux para las cuales se pensó este parche rondan por la versi\'o 2.6.3.16 por ejemplo, cuando la \'ultima versi\'on de kernel es la 4.1.1.\\
 
 Durante la ejecuci\'on de este proyecto, se prueba de instalar este parche en dos kernel de Linux contemporáneos a este desarrollo de software; version 2.6.32.16 y 2.6.32.65; obteniendo resultados no satisfactorios. Concretamente estas versiones de kernel son tan antiguas que no soportaron diferentes características del hardware utilizado para la contrucci\'on de RAU-Switch, adem\'as de que tampoco soportaron completamente la herramienta Open vSwitch.
 
-Se prueba compilar este parche enla versi\'on de kernel con la que se estaba trabajando hasta el momento (3.11.0-15 generic) tampoco obteniendo resultados satisfactorios.\\
+Se prueba compilar este parche en la versi\'on de kernel con la que se estaba trabajando hasta el momento (3.11.0-15 generic) tampoco obteniendo resultados satisfactorios.\\
 
 Cabe desatacar por otro lado, para esta versi\'on de MPLS-Linux el mismo autor, James R. Leu desarroll\'o una extension de la suite Quagga para trabajar con MPLS-Linux y el protocolo LDP, lo cual se dio a llamar Quagga LDP\cite{QuaggaLDP1}.\\  
 

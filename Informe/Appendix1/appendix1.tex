@@ -11,9 +11,9 @@ A su vez estos errores fueron solucionados en la siguiente versi\'on del c\'odig
 \section{Problema con la herramienta pcieprog y ReferenceNIC}
 El primer error detectado se encuentra en la herramienta \textbf{pcieprog} dentro de la plataforma de NetFPGA. La misma se utiliza para transferir el archivo binario generado a partir del bitfile del proyecto (en este caso ReferenceNIC) a una de las memorias flash del hardware.
 
-Al ejecutarse esta herramienta con el binario generado para el proyecto ReferenceNIC, la misma se ejecutaba durante horas con un 100\% de utilizaci\'on de la CPU, sin indicios de terminar su ejecución en algún momento. Tras probar con varias ejecuciones, se realizo la misma prueba con dos proyectos adicionales(reference\_ switch y reference\_ router), compatibles también con la programaci\'on persistente. 
+Al ejecutarse esta herramienta con el binario generado para el proyecto ReferenceNIC, la misma se ejecutaba durante horas con un 100\% de utilizaci\'on de la CPU, sin indicios de terminar su ejecución en algún momento. Tras probar con varias ejecuciones, se realizo la misma prueba con dos proyectos adicionales (reference\_ switch y reference\_ router), compatibles también con la programaci\'on persistente. 
 
-Para estos proyectos la ejecucion del programa terminaba tras algunos minutos, por lo que se presumi\'o la presencia de algún error en el c\'odigo del proyecto ReferenceNIC. Por otro lado se realizo una inspecci\'on al c\'odigo de la herramienta \textbf{pcieprog}, para determinar en que momento el programa se estancaba. Se detecto que el programa quedaba trancado en un bucle infinito dado que no se cumplía nunca la condici\'on de salida.\\ 
+Para estos proyectos la ejecución del programa terminaba tras algunos minutos, por lo que se presumi\'o la presencia de algún error en el c\'odigo del proyecto ReferenceNIC. Por otro lado se realizo una inspecci\'on al c\'odigo de la herramienta \textbf{pcieprog}, para determinar en que momento el programa se estancaba. Se detecto que el programa quedaba trancado en un bucle infinito dado que no se cumplía nunca la condici\'on de salida.\\ 
 
 Tras reportarse este comportamiento a la lista en correos\citep{NetFPGABetaMailing}, se confirmo el error y se proporciono la siguiente solución transitoria:
 
@@ -41,7 +41,7 @@ por
 
 \item Recompilar el proyecto ReferenceNIC ejecutando el comando make en el directorio projects/reference\_ nic/
 
-\item Utilizar el nuevo bitfile generado para programar el hardware, generar un nuevo archivo binario y transerir a la memoria flash.
+\item Utilizar el nuevo bitfile generado para programar el hardware, generar un nuevo archivo binario y transferir a la memoria flash.
 \end{enumerate}
 
 Una vez realizados estos cambios la herramienta pcieprog funciono correctamente, transfiriendo el contenido del archivo binario a la memoria flash.
@@ -58,8 +58,8 @@ Al programarse el hardware con el proyecto ReferenceNIC desde la memoria flash u
 \item \textbf{Escenario:}
 \begin{itemize}
 \item Dos PCs cada una con una tarjeta NetFPGA instalada
-\item Las tarjetas estan conectadas por cuatro enlaces de fibra \'optica (nf0-nf0, nf1-nf1, nf2-nf2 y nf3-nf3)
-\item Ambas tarjetas estan programadas con el proyecto ReferenceNIC via programaci\'on pcie.
+\item Las tarjetas están conectadas por cuatro enlaces de fibra \'optica (nf0-nf0, nf1-nf1, nf2-nf2 y nf3-nf3)
+\item Ambas tarjetas están programadas con el proyecto ReferenceNIC vía programaci\'on pcie.
 \item Se utiliza la versi\'on 5.0.5 de c\'odigo fuente, con el parche mencionado en la sección anterior.
 \end{itemize}
 
@@ -81,7 +81,7 @@ Partiendo de ambas PCs apagadas
 \begin{enumerate}
 \item Apagar ambas PCs
 \item Desconectar todos los enlaces \'opticos
-\item Encender ambas PCs(cargar el driver y configurar cada interfaz con una direcci\'on IP apropiada)
+\item Encender ambas PCs (cargar el driver y configurar cada interfaz con una direcci\'on IP apropiada)
 \item Luego de que cada PC esta encendida y configurada conectar los enlaces \'opticos uno a uno.
 \end{enumerate}
 
@@ -99,7 +99,7 @@ La soluci\'on propuesta por el equipo de NetFPGA es la siguiente:
 \item Reiniciar la PC y cargar el nuevo driver
 \end{enumerate}
 
-Tras esta correcci\'on el proyecto ReferenceNIC funciona correctamente, comportandose el hardware como una tarjeta de red convencional. A su vez cada vez que la PC es encendida el hardware se reprograma desde la memoria flash apropiadamente.
+Tras esta correcci\'on el proyecto ReferenceNIC funciona correctamente, comportándose el hardware como una tarjeta de red convencional. A su vez cada vez que la PC es encendida el hardware se reprograma desde la memoria flash apropiadamente.
 
 %Cabe destacar que este procedimiento no funciona correctamente. El proyecto PCIPrograming presenta alg\'un tipo de BUG(al momento de grabar una memoria se queda en loop), y tras reportar este comportamiento en la comunidad de NetFPGA se nos suguiere utilizar el proyecto ReferenceNIC que presenta el diseno de la arquitectura similar al PCIPrograming. Siguiendo esta sugerencia se logra programar correctamente el hardware de forma persistente, constatandose que al realizar un ciclo de corriente completo el hardware no se desprograma. Por esta raz\'on la estrategia de programaci\'on utilizada en el hardware es la programaci\'on persistente aqu\'i detallada.\\
 
