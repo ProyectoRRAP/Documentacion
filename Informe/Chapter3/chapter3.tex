@@ -19,7 +19,7 @@ El presente cap\'itulo est\'a destinado al planteo de estos aspectos y los funda
 \section[Definición de requerimientos]{Definición de requerimientos}
 \label{3.1}
 
-Para identificar posibles requerimientos para el prototipo de la RAU2 a implementar en este proyecto, inicialmente se trabaja en la identificación de requerimientos sobre la RAU2 en general; contextualizando luego los resultados obtenidos en el alcance, los objetivos y resultados esperados.\\
+Para identificar posibles requerimientos a implementar en el prototipo para la RAU2 , se trabaja inicialmente en identificar requerimientos generales sobre esta red. Luego los resultados obtenidos ser\'an contextualizando en el alcance, los objetivos y resultados esperados de este trabajo, alcanzando as\'i los requerimientos para el prototipo.\\
 
 Basándose en un acuerdo de colaboración para el avance en el desarrollo de la nueva Red Académica, firmado entre ANTEL y la Universidad de la República, se infieren las siguientes funcionalidades para la RAU2:
 
@@ -61,7 +61,7 @@ Partiendo de la clasificación de tr\'afico como funcionalidad principal, se rel
 \hline
 \begin{itemize}
 
-\item Open Source: En la medida que sea posible interesa utilizar herramientas y componentes libres y abiertas como software libre y de código abierto, hardware libre, etc.
+\item Open Source: En la medida que sea posible interesa utilizar herramientas y componentes libres y abiertas como software libre y de código abierto, hardware libre.
 
 \end{itemize}\\
 \hline
@@ -76,7 +76,7 @@ Se tiene ya una noción básica del sistema que se pretende construir, interesa 
 El mecanismo estándar y transparente que propone SDN para manipular los diferentes dispositivos de red  
  (se han hecho grandes esfuerzos para estandarizar algunas de las implementaciones de la Interfaz Sur existentes, OpenFlow es un buen ejemplo de ellos) brinda flexibilidad y agilidad para el desarrollo de nuevos protocolos y servicios de redes en una infraestructura de dispositivos heterogénea, facilitando as\'i la innovaci\'on en el \'area. 
 
-A su vez, genera una independencia sobre la implementaci\'on del hardware propuesta por cierto fabricante. Actualmente utilizar productos de un determinado fabricante para la construcci\'on de servicios, muchas veces implica configurar equipos y desarrollar aplicaciones sobre la plataforma del mismo, la cual usualmente tiene su propia API de operaciones cerrada y propio lenguaje de desarrollo. Esto implica dificultades para la incorporaci\'on de nuevos dispositivos a una red existente, eventualmente de diferente fabricante, dificultades para la incorporaci\'on de nuevos servicios y m\'as dificultades para migrar servicios existentes, eventualmente a una plataforma diferente.\\
+A su vez, se gana independencia de la implementaci\'on propuesta por cada fabricante. Actualmente utilizar productos de un determinado fabricante para la construcci\'on de servicios, muchas veces implica configurar equipos y desarrollar aplicaciones sobre la plataforma del mismo, la cual usualmente tiene su propia API de operaciones generalmente propietaria. Esto implica dificultades para la incorporaci\'on de nuevos dispositivos a una red existente, eventualmente de diferente fabricante, dificultades para la incorporaci\'on de nuevos servicios y m\'as dificultades para migrar servicios existentes, eventualmente a una plataforma diferente.\\
 
 En pocas palabras, SDN facilita notablemente la investigaci\'on e innovaci\'on en el desarrollo de nuevos servicios y protocolos, eliminando barreras en la manipulaci\'on de los diferentes dispositivos de red, y ganando libertad de los fabricantes de hardware.\\
 
@@ -104,7 +104,7 @@ Se necesita para el desarrollo de este proyecto una plataforma tecnol\'ogica com
 
 NetFPGA en especial posibilita la construcci\'on de una plataforma de desarrollo y pruebas compatible con OpenFlow a un precio significativamente menor que el de un equipo comercial, con funcionalidades y capacidades suficientes para el desarrollo del prototipo. A su vez se quiere estudiar la aplicabilidad del enfoque OpenFlow/SDN para la construcción de la RAU2, para lo cual es necesario adem\'as de la construcción de un prototipo e implementar algunos casos de uso representativos sobre el mismo. 
 
-Es imperativo entonces la construcción de un laboratorio de pruebas, compuesto por un conjunto de nodos nodos; lo cual a partir del hardware comercial tendría un costo significativamente mayor que a partir del hardware NetFPGA.\\
+Es imperativo entonces la construcción de un laboratorio de pruebas, compuesto por un conjunto de nodos  lo cual a partir del hardware comercial tendría un costo significativamente mayor que a partir del hardware NetFPGA.\\
 
 Por otro lado utilizar hardware reconfigurable tiene la ventaja de poder prototipar diferentes dispositivos de red en un mismo equipo. Se puede entonces modificar dinamicamente el laboratorio de pruebas en función de los casos de uso que se quieran probar sin la necesidad de incorporar nuevo hardware. Ademas la capacidad para programar el hardware, permite sacar provecho de las características del mismo para la implementaci\'on de funcionalidades especificas para la RAU, que en hardware comercial solo se podrían implementar si el mismo ya tiene incorporadas dichas funcionalidades.\\
 
@@ -118,7 +118,7 @@ Finalmente la utilizaci\'on de hardware abierto, en conjunci\'on con software li
  
 Naturalmente, otra de las decisiones de dise\~no importantes a tomar es la elecci\'on de una de las arquitecturas existentes basadas en el enfoque SDN.\\
   
-Dentro de las alternativas existentes, OpenFlow se presenta como una opci\'on madura y probada~\citep{Ofelia}. Como se mencion\'o en el estado del arte OpenFlow  se ha caracterizado por un desarrollo sostenido y una amplia adopci\'on tanto por la academia como por la industria, adem\'as de ser compatible con una amplia variedad de tecnolog\'ias. Debido a esto cuenta con una amplia comunidad de usuarios, extensa documentaci\'on y es soportado en varios productos comerciales\citep{Pica8}\citep{HP}\citep{Centec}\citep{SDNProductlist}. Finalmente se puede agregar que OpenFlow est\'a íntegramente desarrollado bajo la filosof\'ia opensource. 
+Dentro de las alternativas existentes, OpenFlow se presenta como una opci\'on madura y probada~\citep{Ofelia}. Como se mencion\'o en el estado del arte OpenFlow  se ha caracterizado por un desarrollo sostenido y una amplia adopci\'on tanto por la academia como por la industria, adem\'as de ser compatible con una amplia variedad de tecnolog\'ias. Debido a esto cuenta con una amplia comunidad de usuarios, extensa documentaci\'on y es soportado en varios productos comerciales\citep{Pica8}\citep{HP}\citep{Centec}\citep{SDNProductlist}. Finalmente se puede agregar que OpenFlow est\'a íntegramente desarrollado bajo la filosof\'ia Open Source (c\'odigo abierto). 
 
 Por estas razones, se decide utilizar OpenFlow como la implementaci\'on de SDN en el desarrollo del prototipo.\\
 
@@ -131,7 +131,7 @@ Por estas razones, se decide utilizar OpenFlow como la implementaci\'on de SDN e
 
 %Por otro lado en las sucesivas versiones de OpenFlow, se han incorporado diferentes caracter\'isticas y funcionalidades que hacen en la actualidad a la versi\'on 1.5 de OpenFlow, una alternativa vers\'atil, flexible y completa.\\
 
-Como todo protocolo, OpenFlow cuenta con varias versiones en las que se incluyen, conforme el protocolo fue evolucionando funcionalidades nuevas. Se debe decidir entonces que versi\'on del protocolo utilizar.\\
+Como protocolo OpenFlow cuenta actualmente con cinco versiones estables. Se debe decidir entonces que versi\'on del protocolo utilizar.\\
 
 Al momento de culminar este trabajo la versi\'on m\'as reciente del protocolo era la 1.5, mientras que al momento de iniciarse este proyecto la versi\'on m\'as reciente era la 1.4. 
 
