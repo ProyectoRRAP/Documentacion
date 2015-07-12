@@ -7,7 +7,7 @@
     \graphicspath{{Chapter4/Figs/Vector/}{Chapter4/Figs/}}
 \fi
 
-Este cap\'itulo esta destinado a la comprensi\'on de los aspectos principales que hacen al dise\~no e implementaci\'on del prototipo para la RAU2. Cabe destacar que en el mismo se toman como punto de partida las decisiones asumidas en el cap\'itulo anterior.
+Este cap\'itulo esta destinado a la comprensi\'on de los aspectos principales que hacen al dise\~no e implementaci\'on del prototipo para la RAU2. %Cabe destacar que en el mismo se toman como punto de partida las decisiones asumidas en el cap\'itulo anterior.
 
 Por otro lado aspectos muy t\'ecnicos o problemas encontrados en cada componente de la arquitectura son tratados en profundidad en respectivos ap\'endices, citándose aquí las referencias en caso que corresponda para complementar su lectura.\\
 
@@ -53,13 +53,16 @@ Como Linux no ofrece nativamente soporte al protocolo MPLS, Quagga-LDP funciona 
 
 Utilizar Quagga-LDP y MPLS-Linux tiene dos ventajas principalmente: en primer lugar no se debe implementar un algoritmo propio con lo cual se ahorra tiempo de implementaci\'on y se tiene un algoritmo probado y confiable; en segundo lugar se disminuye la carga de computo en el controlador puesto que se ejecuta el algoritmo en cada nodo.
 
-Por ello en este trabajo se decide probar esta alternativa y experimentar con el algoritmo de distribución de etiquetas implementado por Quagga-LDP.\\
+%Por ello en este trabajo se decide probar esta alternativa y experimentar con el algoritmo de distribución de etiquetas implementado por Quagga-LDP.\\
 
-Se dedica un tiempo considerable a la instalaci\'on de las herramientas Quagga-LDP y MPLS-Linux para lo cual es necesario recompilar diferentes versiones de kernel de Linux intentando encontrar una versi\'on apropiada para la configuración de herramientas con la que se viene trabajando en la arquitectura del prototipo. Ademas existen dos versiones bien diferentes de la implementaci\'on MPLS-Linux: una versi\'on original del año 2005 de la cual existe poca documentación y una versi\'on m\'as nueva basada en la primera que data del año 2011, de la cual se cuenta con a\'un menos documentación. 
+Pese a dedicar un tiempo considerable a la instalaci\'on de las herramienats Quagga-LDP y MPLS-Linux, proceso el cual implica entre otras cosas recompilar diferentes versiones de kernels de Linux, no fu\'e posible contar con ambas herramientas funcionando correctamente. A su vez la documentaci\'on disponible sobre estas herramientas es escasa e inexacta. En el apéndice \ref{apendiceB6} se explica en detalle la experiencia generada trabajando con esta herramienta.
 
-Por un lado se prueba con ambas versiones, teniendo problemas para que el ambiente funcione correctamente (ver apéndice \ref{apendiceB6} por mayores detalles). Mientras que por otro lado se evidenci\'o dificultades para la integración entre la salida del protocolo LDP y el algoritmo de ruteo semidin\'amico definido en la sección anterior.
+%En este trabajo, se dedica un tiempo considerable a la instalaci\'on de las herramientas Quagga-LDP y MPLS-Linux para lo cual fu\'e necesario recompilar diferentes versiones de kernel de Linux .
+%intentando encontrar una versi\'on apropiada para la configuración de herramientas con la que se viene trabajando en la arquitectura del prototipo. Ademas existen dos versiones bien diferentes de la implementaci\'on MPLS-Linux: una versi\'on original del año 2005 de la cual existe poca documentación y una versi\'on m\'as nueva basada en la primera que data del año 2011, de la cual se cuenta con a\'un menos documentación. 
 
-Por ello se decide implementar desde cero un algoritmo de distribución de etiquetas centralizado en el controlador. Los detalles de implementaci\'on del mismo ser\'an explicados m\'as adelante en la sección \ref{section5.5.4}.\\
+%Por un lado se prueba con ambas versiones, teniendo problemas para que el ambiente funcione correctamente (ver apéndice \ref{apendiceB6} por mayores detalles). Mientras que por otro lado se evidenci\'o dificultades para la integración entre la salida del protocolo LDP y el algoritmo de ruteo semidin\'amico definido en la sección anterior.
+
+Debido a esto, en este trabajo se implementa un algoritmo de distribución de etiquetas centralizado en el controlador en vez de utilizar Quagga LDP. Los detalles de implementaci\'on del mismo ser\'an explicados m\'as adelante en la sección \ref{section5.5.4}.\\
 
 A continuación se explica la arquitectura general del prototipo. 
 
@@ -104,11 +107,17 @@ Se utiliza una PC de escritorio como plataforma inicial a la cual se le incorpor
 El switch esta constru\'ido sobre la plataforma de una PC de escritorio convencional. En particular se trabaja con un procesador Intel Core i7 de 64 bits, una Mother ASUS ROG Maximus Formula VI, 16GB de memoria DDR3, y un disco HDD de 1TB de capacidad. En el anexo \ref{annexI.1} pueden encontrarse estos detalles con mayor profundidad.
 
 \subsection{Sistema Operativo}
-En relación al sistema operativo, se decide trabajar con Ubuntu 12.04 sobre una arquitectura de 64 bits. Esta elecci\'on responde a dos criterios esencialmente: por un lado la premisa de trabajar con software libre y de c\'odigo abierto preferentemente sugiere la b\'usqueda de un sistema operativo entre alternativas basadas en GNU/Linux; por otro el hardware NetFPGA asi como los proyectos existentes para su programaci\'on fueron desarrollados trabajando sobre la plataforma Fedora14. 
+En relación al sistema operativo, se decide trabajar con Ubuntu 12.04 sobre una arquitectura de 64 bits. %Esta elecci\'on responde a dos criterios esencialmente: por un lado la premisa de trabajar con software libre y de c\'odigo abierto preferentemente sugiere la b\'usqueda de un sistema operativo entre alternativas basadas en GNU/Linux; por otro el hardware NetFPGA asi como los proyectos existentes para su programaci\'on fueron desarrollados trabajando sobre la plataforma Fedora14. 
 
-Teniendo presente esto, se intenta infructuosamente instalar y configurar el hardware sobre Fedora14. Se prueba con versiones m\'as recientes de la plataforma como Fedora17 y Fedora19 obteniendo los mismos resultados; detectándose entre las causas de error, incompatibilidades entre la placa madre de la PC y las versiones de sistema operativo mencionadas y falta de drivers apropiados para cable JTag utilizado para programar el hardware. 
+Puesto que la documentaci\'on de la plataforma NetFPGA recomienda el uso del sistema operativo Fedora 14 para trabajar con dicho hardware (la tarjeta NetFPGA 10G fu\'e desarrollada y verificada trabajando sobre esta plataforma), resulta natural trabajar con \'este sistema o al menos una versi\'on superior.\\
 
-Finalmente tras probar con otras alternativas, se logra instalar y configurar exitosamente el hardware sobre la plataforma Ubuntu 12.04.
+En este proyecto se prueban diferentes versiones de esta distribución como Fedora 17 y Fedora 19 adem\'as de la versi\'on ya mencionada, detectando problemas de compatibilidad entre la placa madre y dichas versiones adem\'as de falta de drivers para el cable JTAG.
+
+%Teniendo presente esto, se intenta infructuosamente instalar y configurar el hardware sobre Fedora14. Se prueba con versiones m\'as recientes de la plataforma como Fedora17 y Fedora19 obteniendo los mismos resultados; detectándose entre las causas de error, incompatibilidades entre la placa madre de la PC y las versiones de sistema operativo mencionadas y falta de drivers apropiados para cable JTag utilizado para programar el hardware. 
+
+Tambi\'en se prueban diferentes versiones de la distribuci\'on Ubuntu, logrando en particular instalar y configurar exitosamente el hardware sobre la plataforma Ubuntu 12.04. \\
+
+De esta forma y siguiendo siempre la premisa de trabajar con software libre y c\'odigo abierto se elige Ubuntu 12.04 como plataforma de trabajo.
 
 \subsection{Hardware NetFPGA}
 
@@ -142,34 +151,38 @@ Reprogramar el contenido del chip FPGA en tiempo de encendido, así como tambié
 
 En el procedimiento empleado, inicialmente se programa el hardware con el proyecto ReferenceNIC utilizando la Programaci\'on Simple. Luego es necesario transformar la implementaci\'on del proyecto (archivo bitfile) en un archivo con el formato apropiado para ser almacenado en una de las memorias flash (archivo binario). Esto \'ultimo se realiza utilizando herramientas inclu\'idas en la plataforma de NetFPGA. Finalmente utilizando la herramienta \textbf{pcieprog} también de la plataforma se transfiere el archivo generado a una de las memorias.\\
 
-Cabe destacar que durante la ejecuci\'on de este procedimiento se detectan algunos errores y comportamientos inesperados en el hardware. Esto es reportado al equipo de desarrollo de NetFPGA a través de la lista oficial de correos de soporte, reportándose en total dos errores. Luego de este di\'alogo se obtiene una soluci\'on a dichos errores los cuales cabe destacar que son contemplados y resueltos en la siguiente actualizaci\'on del repositorio de c\'odigo fuente. Por m\'as detalles acerca de estos errores y la forma en que son resueltos provisoriamente referirse al ap\'endice~\ref{apendiceA}.\\
+Cabe destacar que durante la ejecuci\'on de este procedimiento se detectaron algunos errores y comportamientos inesperados en el hardware. Esto fue reportado al equipo de desarrollo de NetFPGA a través de la lista oficial de correos de soporte, reportándose en total dos errores. Luego de este di\'alogo se obtiene una soluci\'on a dichos errores los cuales cabe destacar que son contemplados y resueltos en la siguiente actualizaci\'on del repositorio de c\'odigo fuente. Por m\'as detalles acerca de estos errores y la forma en que son resueltos provisoriamente referirse al ap\'endice~\ref{apendiceA}.\\
 
-Otro detalle a destacar de esta estrategia, es que la utilizaci\'on de herramientas de la suite de Xilinx requieren de licencias especiales pagas. En el marco de este proyecto se solicita apoyo en relaci\'on a este tema a docentes del Instituto de Ingeniería Eléctrica de la Facultad de Ingenieria 
- (IIE) y a través del programa de apoyo universitario de Xilinx, en busca de una soluci\'on a este problema.
+Otro detalle a destacar de esta estrategia, es la utilizaci\'on de herramientas de la suite de Xilinx que requieren de licencias especiales con un costo ecnon\'omico considerable. En relaci\'on a este aspecto en el marco de este proyecto se solicit\'o asesoramiento al Instituto de Ingeniería Eléctrica de la Facultad de Ingenieria (IIE) adem\'as de solicitar una donaci\'on a trav\'es del programa de apoyo universitario de Xilinx. Por mayores detalles acerca de este problema puede consultarse el apéndice ~\ref{apendiceB3}
 
-Si bien en el IIE no se trabaja con esta plataforma se obtiene de parte de este instituto asesoramiento sumamente \'util para la resoluci\'on de este obstáculo. Por otro lado a través del programa de apoyo a universidades de Xilinx se obtiene una interesante donaci\'on de licencias, posibilitando a una real explotaci\'on del hardware y de la plataforma. Por mayores detalles acerca de este problema puede consultarse el apéndice ~\ref{apendiceB3}.
+%En el marco de este proyecto se solicita apoyo en relaci\'on a este tema a docentes del Instituto de Ingeniería Eléctrica de la Facultad de Ingenieria 
+ %(IIE) y a través del programa de apoyo universitario de Xilinx, en busca de una soluci\'on a este problema.
+
+%Si bien en el IIE no se trabaja con esta plataforma se obtiene de parte de este instituto asesoramiento sumamente \'util para la resoluci\'on de este obstáculo. Por otro lado a través del programa de apoyo a universidades de Xilinx se obtiene una interesante donaci\'on de licencias, posibilitando a una real explotaci\'on del hardware y de la plataforma. Por mayores detalles acerca de este problema puede consultarse el apéndice ~\ref{apendiceB3}.
 
 \subsection{Open vSwitch}
-En la arquitectura del dispositivo, Open vSwitch es el encargado de implementar el plano de datos de OpenFlow. En otras palabras es la componente que convierte mediante una implementaci\'on en software a la PC construida en un switch OpenFlow.\\
+En la arquitectura del dispositivo, Open vSwitch es el encargado de implementar el plano de datos de OpenFlow. En otras palabras es la componente que convierte a la PC construida en un switch OpenFlow.\\
 
 Siguiendo la especificaci\'on de OpenFlow, Open vSwitch implementa el concepto de tabla de flujos. Estas tablas (Open vSwitch implementa 256 tablas) son utilizadas por la aplicaci\'on RAUFlow para construir caminos en la topolog\'ia, instalando en forma de flujos OpenFlow las reglas de reenvío que sean necesarias en cada nodo involucrado en un camino.
 
 Para implementar el plano de reenvío en base a la conmutaci\'on de etiquetas MPLS, se utilizan primitivas del protocolo OpenFlow, que permiten colocar y extraer etiquetas MPLS de un paquete (PUSH y POP), así como clasificar un paquete acorde al valor de la etiqueta MPLS contenida en \'el.\\
 
-En relaci\'on a este \'ultimo punto, vale la pena destacar que la compatibilidad con estas funcionalidades del protocolo OpenFlow, están acotadas naturalmente  por la implementaci\'on de Open vSwitch. En este trabajo inicialmente se utiliza la versi\'on oficial m\'as reciente de dicha herramienta (versi\'on 2.3.1), en la cual acorde a las notas de liberaci\'on y a la secci\'on de preguntas frecuentes se garantiza soporte para solo un subconjunto de funcionalidades de la versi\'on 1.3 del protocolo OpenFlow. Entre estas funcionalidades se destacan la capacidad para match, push y pop de una \'unica etiqueta MPLS, así como su posterior procesamiento en el pipe de OpenFlow. No obstante como se explica en el apéndice ~\ref{apendiceB5} junto a otras características a destacar de Open vSwitch, este comportamiento no es el que realmente manifiesta esta versi\'on de la herramienta. En particular la operación Pop de MPLS no funciona correctamente, así como el posterior procesamiento del paquete tras manipular etiquetas acorde al pipe de OpenFlow.\\ 
+Vale la pena destacar en relaci\'on a este \'ultimo punto, que la documentaci\'on de la herramienta presenta inconsistencias entre algunas de las funcionalidades declaradas y las realmente implementadas. En particular la manipulaci\'on de etiquetas MPLS no esta completamente soportada. Por mayores detalles en relaci\'on a estos aspectos y la resoluci\'on de otros problemas detectados al trabajar con esta herramienta referirse al ap\'endice ~\ref{apendiceB5}.
+ 
+%En relaci\'on a este \'ultimo punto, vale la pena destacar que la compatibilidad con estas funcionalidades del protocolo OpenFlow, están acotadas naturalmente  por la implementaci\'on de Open vSwitch. En este trabajo inicialmente se utiliza la versi\'on oficial m\'as reciente de dicha herramienta (versi\'on 2.3.1), en la cual acorde a las notas de liberaci\'on y a la secci\'on de preguntas frecuentes se garantiza soporte para solo un subconjunto de funcionalidades de la versi\'on 1.3 del protocolo OpenFlow. Entre estas funcionalidades se destacan la capacidad para match, push y pop de una \'unica etiqueta MPLS, así como su posterior procesamiento en el pipe de OpenFlow. No obstante como se explica en el apéndice ~\ref{apendiceB5} junto a otras características a destacar de Open vSwitch, este comportamiento no es el que realmente manifiesta esta versi\'on de la herramienta. En particular la operación Pop de MPLS no funciona correctamente, así como el posterior procesamiento del paquete tras manipular etiquetas acorde al pipe de OpenFlow.\\ 
 
-Afortunadamente esta falla se encuentra reportada como error y es resuelta en la versi\'on de desarrollo~\citep{OVSSourceCode}, la cual a su vez tras instalarse se comprueba que soporta match, push y pop de hasta tres etiquetas mpls, junto el posterior procesamiento del paquete. De esta forma la versi\'on de Open vSwitch utilizada es la de desarrollo.\\
+%Afortunadamente esta falla se encuentra reportada como error y es resuelta en la versi\'on de desarrollo~\citep{OVSSourceCode}, la cual a su vez tras instalarse se comprueba que soporta match, push y pop de hasta tres etiquetas mpls, junto el posterior procesamiento del paquete. De esta forma la versi\'on de Open vSwitch utilizada es la de desarrollo.\\
 
 Por otro lado, resulta interesante a tener en consideraci\'on que las operaciones de match, push y pop de MPLS son implementadas en modo usuario.
 
 %Por otro lado en relaci\'on a las componentes de software, el router se compone de un sistema operativo escritorio basado en linux, con las instalaciones de Open vSwitch, Quagga y el agente de gesti\'on SNMP. Nuevamente por mayores detalles acerca de las versiones de software utilizadas, sistema operativo entre otros detalles refierase al anexo [link al anexo].\\
 
 \subsection{Quagga}
-En cada nodo se ejecuta una instancia del software de enrutamiento Quagga, configurada para ejecutar el demonio ospf.\\ 
+En cada nodo se ejecuta una instancia del software de enrutamiento Quagga, configurada para ejecutar el protocolo OSPF.\\ 
 
-El demonio ospf implementa el protocolo de igual nombre y se utiliza para obtener información de cada nodo y sus adyacencias en la topolog\'ia, guardando dicha información en una base de datos local (Link-State-Database o \gloss{LSDB}). Entre los datos que se incluyen en esta base de datos topol\'ogica se destaca por ejemplo el costo asociado a cada adyacencia.\\ 
+En la arquitectura propuesta, \'este protocolo se utiliza para obtener información de cada nodo y sus adyacencias en la topolog\'ia, guardando dicha información en una base de datos local (Link-State-Database o \gloss{LSDB}). Entre los datos que se incluyen en esta base de datos topol\'ogica se destaca por ejemplo el costo asociado a cada adyacencia.\\ 
 
-Como se menciona anteriormente, el algoritmo OSPF utiliza solamente para la construcci\'on de la base de datos topol\'ogica. Si bien en un inicio se piensa en trabajar con la salida de dicho algoritmo, finalmente se decidió trabajar con el algoritmo de ruteo centralizado implementado en el controlador. Por ello en la versi\'on final del prototipo no se utiliza la salida de este algoritmo a pesar de que la arquitectura permite su utilización para alimentar la entrada de procesos que se ejecuten en el controlador.\\
+Como se menciona anteriormente, el algoritmo OSPF se utiliza solamente para la construcci\'on de la base de datos topol\'ogica. Si bien en un inicio se piensa en trabajar con la salida de dicho algoritmo, finalmente se decidió trabajar con el algoritmo de ruteo centralizado implementado en el controlador. Por ello en la versi\'on final del prototipo no se utiliza la salida de este algoritmo a pesar de que la arquitectura permite su utilización para alimentar la entrada de procesos que se ejecuten en el controlador.\\
 
 De esta forma cada switch del prototipo así como el propio controlador ejecuta una instancia de Quagga con el demonio ospf configurado como se muestra en el apéndice \ref{appendix4}. Cabe destacar de dicha configuración que la adyacencia entre un switch y el Controlador (enlace utilizado para el canal de comunicación OpenFlow) tiene asociado costo infinito para evitar que sea utilizado tanto por el algoritmo OSPF como por el algoritmo CSPF en la construcción de algún camino. En la implementaci\'on de Quagga el costo infinito es representado por el numero 65535 (16 bits).
 
@@ -193,7 +206,7 @@ En el prototipo se instala un agente SNMP en cada switch (dispositivo administra
 No es el objetivo de este trabajo entrar en detalle sobre el protocolo SNMP por lo que si el lector desea profundizar en estos conceptos se recomienda seguir las referencia mencionadas anteriormente.
 
 \section{Entidad Controlador}
-Como se muestra en \ref{fig:OpenSourceRArch0} cada nodo del prototipo responde a una entidad denominada Controlador. Esta entidad en la pr\'actica es una PC convencional con determinadas componentes de software (ver figura \ref{fig:OpenSourceRArch3}) entre las cuales se destaca el controlador SDN Ryu, pilar fundamental en la implemenatci\'on de la aplicaci\'on RAUFlow. A su vez se encuentran los módulos Administrador SNMP utilizado en la comunicaci\'on con los agentes SNMP instalados en cada nodo RAUSwitch del dispositivo y LSDBSync utilizado en el proceso de extracci\'on de informaci\'on de la base de datos topol\'ogica de Quagga. 
+Como se muestra en \ref{fig:OpenSourceRArch0} cada nodo del prototipo responde a una entidad denominada Controlador. Esta entidad en la pr\'actica es una PC convencional con determinadas componentes de software (ver figura \ref{fig:OpenSourceRArch3}) entre las cuales se destaca el controlador SDN Ryu, pilar fundamental en la implementaci\'on de la aplicaci\'on RAUFlow. A su vez se encuentran los módulos Administrador SNMP utilizado en la comunicaci\'on con los agentes SNMP instalados en cada nodo RAUSwitch del dispositivo y LSDBSync utilizado en el proceso de extracci\'on de informaci\'on de la base de datos topol\'ogica de Quagga. 
 
 Estas tres componentes se ejecutan en una PC de escritorio con Ubuntu 12.04 como sistema operativo. \\
 
@@ -234,7 +247,9 @@ El administrador SNMP es utilizado para consultar al agente SNMP instalado en un
 
 \end{subsection}
 
-En resumen, el prototipo se compone de nodos construidos en base al hardware NetFPGA y una PC convencional el la cual se instalan diferentes componentes de software de forma de implementar un switch MPLS/OpenFlow. Luego una PC normal en la que se instala el controlador Ryu m\'as un conjunto de m\'odulos adicionales. Como se muestra en la figura\ref{fig:OpenSourceRArch4}, luego la comunicación entre cada par de nodos es IP/MPLS, mientras que cada nodo es manipulado por el protocolo OpenFlow. Adicionalmente se tiene un canal IP entre cada nodo y el plano de control por donde se comunican cada agente SNMP con el administrador.
+En resumen, los nodos del prototipo son construidos en base al hardware NetFPGA y una PC convencional a la cual se le instalan diferentes componentes de software de forma de implementar un switch MPLS/OpenFlow. Luego el plano de control de la red se implementa en una PC con el software controlador Ryu instalado m\'as un conjunto de m\'odulos adicionales.
+
+%En resumen, el prototipo se compone de nodos construidos en base al hardware NetFPGA y una PC convencional el la cual se instalan diferentes componentes de software de forma de implementar un switch MPLS/OpenFlow. Luego una PC normal en la que se instala el controlador Ryu m\'as un conjunto de m\'odulos adicionales. Como se muestra en la figura\ref{fig:OpenSourceRArch4}, luego la comunicación entre cada par de nodos es IP/MPLS, mientras que cada nodo es manipulado por el protocolo OpenFlow. Adicionalmente se tiene un canal IP entre cada nodo y el plano de control por donde se comunican cada agente SNMP con el administrador.
 
 \newpage
 \begin{figure}[Ht!] 

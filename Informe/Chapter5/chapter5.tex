@@ -163,7 +163,7 @@ Conceptualmente RAUFlow es un conjunto de aplicaciones de control y gestión de 
 
 Teniendo en cuenta lo anterior, la arquitectura de la aplicaci\'on (ver figura \ref{fig:VistaComponentes2}), se caracteriza por un diseño en tres capas l\'ogicas: (1) capa de presentaci\'on, (2) capa de control y (3) capa de dispositivos.\\
 
-A continuaci\'ion se explica en detalle cada una de estas capas, as\'i como la interacci\'on entre ellas y los principales detalles de los m\'odulos que las componen.
+A continuac\'ion se explica en detalle cada una de estas capas, as\'i como la interacci\'on entre ellas y los principales detalles de los m\'odulos que las componen.
 
 \subsection{Capa de Presentación}
 Esta capa esta destinada a proveer de funcionalidades para el acceso y manipulaci\'on de datos de la aplicaci\'on (estado de la topolog\'ia e informaci\'on asociada a servicios de redes privadas principalmente), as\'i como todas las funcionalidades especificadas como requerimientos en la secci\'on 
@@ -175,7 +175,7 @@ Ryu incluye a modo de documentaci\'on un conjunto de aplicaciones muy sencillas 
 
 Esta aplicaci\'on se basa en tres aplicaciones Ryu de la capa de control (m\'as adelante se detalla el funcionamiento de ellas cuando se explique la capa de control), una pagina web desarrollada puramente sobre HTML y un m\'odulo de javascript encargado de la manipulaci\'on de informaci\'on entre las aplicaciones Ryu y esta p\'agina mediante websockets. Este m\'odulo javascript recibe el nombre de \textbf{ryu.topology}.
 
-En RAUFlow se combinan las componentes de la aplicaic\'on \textbf{gui\_topology} como el m\'odulo javascript \textbf{ryu.topology} y las tres aplicaciones Ryu con el resto de las componentes de la aplicaci\'on con el objetivo de mejorar la interfaz gr\'afica RAUFlowUI, brindando una representaci\'on gr\'afica del estado topol\'ogico de la red utilizando reutilizando las herramientas existentes.\\
+En RAUFlow se combinan las componentes de la aplicaci\'on \textbf{gui\_topology} como el m\'odulo javascript \textbf{ryu.topology} y las tres aplicaciones Ryu con el resto de las componentes de la aplicaci\'on con el objetivo de mejorar la interfaz gr\'afica RAUFlowUI, brindando una representaci\'on gr\'afica del estado topol\'ogico de la red utilizando reutilizando las herramientas existentes.\\
  
 A continuaci\'on se detalla la capa de control.
 
@@ -235,7 +235,7 @@ En relaci\'on al diseño de esta aplicaci\'on, como puede apreciarse en la figur
 \begin{enumerate}
 
 \item EventosOpenFlow\\
-EventosOpenFlow es una aplicaci\'on Ryu con el esquema b\'asico de este tipo de programas (las aplicaicones Ryu tienen un esquema particular). Se encarga de proveer m\'etodos para los principales eventos del protocolo OpenFlow; por ejemplo cuando un switch se reporta con el controlador por primera vez \'o deja de reportarse, cuando el controlador recibe un paquete (Packet IN), cuando se produce un cambio en la topolog\'ia como por ejemplo un puerto en un dispositivo que deja de funcionar, entre otros.\\
+EventosOpenFlow es una aplicaci\'on Ryu con el esquema b\'asico de este tipo de programas (las aplicaciones Ryu tienen un esquema particular). Se encarga de proveer m\'etodos para los principales eventos del protocolo OpenFlow; por ejemplo cuando un switch se reporta con el controlador por primera vez \'o deja de reportarse, cuando el controlador recibe un paquete (Packet IN), cuando se produce un cambio en la topolog\'ia como por ejemplo un puerto en un dispositivo que deja de funcionar, entre otros.\\
 
 A nivel de diseño el modelado de la realidad, la implementaci\'on de funcionalidades de acceso a la capa de dispositivos, estructuras de datos almacenadas en memoria, los algoritmos de ruteo y distribución de etiquetas son implementados en la componente Lógica de Negocios. De esta forma se desacoplan las responsabilidades, mejorando la claridad y transparencia en el diseño de la aplicaci\'on. No obstante esta aplicación es la responsable de gestionar el ciclo de vida de los diferentes objetos asociados a la componente Lógica de Negocios.
   
