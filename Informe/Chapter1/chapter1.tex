@@ -13,10 +13,10 @@
 
 \section{Motivación}
 
-En la actualidad, sobre la red de Internet conviven aplicaciones académicas, comerciales y particulares con iguales prioridades. Este escenario no es apropiado para actividades de experimentación, investigación y estudio de nuevas herramientas a gran escala. A su vez los proveedores de servicios sobre Internet, contando con que no todos sus clientes hacen uso de su infraestructura a la vez, venden m\'as servicios de los que su infraestructura realmente puede soportar, si se tienen por ejemplo que garantizar un ancho de banda para cada servicio. Esta situación en particular es comúnmente conocida como “sobreventa” del ancho de banda y se agrava en horas de mayor uso de Internet (horas pico), lo cual es crítico cuando se piensa en aplicaciones que requieren de niveles de calidad de servicio garantizados.
+En la actualidad, sobre la red Internet conviven aplicaciones académicas, comerciales y particulares con iguales prioridades. Este escenario no es apropiado para actividades de experimentación, investigación y estudio de nuevas herramientas a gran escala. A su vez los proveedores de servicios sobre Internet, contando con que no todos sus clientes hacen uso de su infraestructura a la vez, venden m\'as servicios de los que su infraestructura realmente puede soportar, lo que hace que no sea viable garantizar un ancho de banda para cada servicio. Esta situación es comúnmente conocida como “sobreventa” del ancho de banda y se agrava en horas de mayor uso de Internet (horas pico), lo cual es crítico cuando se piensa en aplicaciones que requieren de niveles de calidad de servicio garantizados.
 
 %Por otro lado, si bien Internet está avanzando en el uso de enlaces de alta velocidad, esta tecnología es aún demasiado costosa para su comercialización masiva.
-Por estas razones Internet no es la red más apropiada para su utilización en el contexto académico. Es necesaria otra red diferente, que permita proveer de conectividad y a su vez soportar actividades experimentales como desplegar nuevos servicios y protocolos.\\ 
+Por estas razones Internet no parece apropiada para su utilización en el contexto académico, ya que se necesita una red que permita proveer de conectividad y a su vez soportar actividades experimentales como desplegar nuevos servicios y protocolos, así como asegurar determinados parámetros de calidad de servicio.\\ 
 
 En este contexto y en todo el mundo se vienen desarrollando desde mediados de la década de los 90’s las redes académicas avanzadas de alta velocidad, con el objetivo de proveer de una red que posibilite a docentes e investigadores colaborar en aplicaciones altamente demandantes de ancho de banda   
  (educación a distancia, transferencia de grandes cantidades de información, acceso a equipos remotos, telemedicina, etc.), sin competir por este recurso con aplicaciones de naturaleza comercial.
@@ -38,19 +38,19 @@ La RAU brinda servicios a instituciones educativas y de investigación, as\'i co
 
 %Actualmente entre facultades, escuelas, institutos y servicios de la Universidad de la República, así como diversas instituciones educativas y de investigación, son 37 las instituciones que forman parte de la RAU, las cuales hacen uso de los 153 nodos que la conforman para brindar servicios a mas de 6.500 docentes, 1.000 técnicos y 60.000 estudiantes en diferentes partes del país.
 
-Por otro lado, hace un tiempo ya que se viene trabajando en un proyecto para remplazar la infraestructura actual de la RAU por una red avanzada de altas prestaciones, que pueda brindar de mayores y mejores servicios a las instituciones que forman parte de la misma, así como conectarse a las demás redes académicas de latinoam\'erica. Este proyecto se denomin\'o RAU2 \footnote{Datos extraídos de sitio oficial de la Red Académica Uruguaya\cite{RedRAU}}.  
+Por otro lado, se viene trabajando en un proyecto para remplazar la infraestructura actual de la RAU por una red avanzada de altas prestaciones, que pueda brindar de mayores y mejores servicios a las instituciones que forman parte de la misma, así como conectarse a las demás redes académicas de latinoam\'erica. Este proyecto se denomin\'o RAU2 \footnote{Datos extraídos de sitio oficial de la Red Académica Uruguaya\cite{RedRAU}}.  
 
 \section{Definición del Problema}
 
 El problema elegido como eje para el desarrollo de este trabajo es la 
-construcción de lo que se dio en llamar RAU2, la cual estaría dotada de funciones de virtualización de redes que permitan una gran flexibilidad en su definición y uso. Como red universitaria pretende no solo mejorar en el ancho de banda disponible para desarrollar las tareas comunes con cualquier otra red de esta magnitud, sino que además busca virtualizar la red como mecanismo de asignar recursos independientes a cada una de las instituciones que hacen uso de la misma y poder utilizarla al mismo tiempo como laboratorio de pruebas sin que esto interfiera con el funcionamiento normal de la red.\\
+construcción de lo que se dio en llamar RAU2, la cual estaría dotada de funciones de virtualización de redes que permitan una gran flexibilidad en su definición y uso. Como red universitaria pretende no solo mejorar en el ancho de banda disponible para desarrollar las tareas comunes con cualquier otra red de esta magnitud, sino que además busca virtualizar la red como mecanismo de asignar recursos independientes a cada una de las instituciones que hacen uso de la misma (por ejemplo universidades y centros de investigación) y poder utilizarla al mismo tiempo como laboratorio de pruebas sin que esto interfiera con el funcionamiento normal de la red.\\
 
 Interesa entonces trabajar en el desarrollo de un prototipo para la RAU2 utilizando como plataforma PCs con placas de red aceleradas en hardware reconfigurable, fruto de un desarrollo de la Universidad de Stanford denominado NetFPGA (Field Programmable Gate Arrays)\citep{NetFPGA} y el enfoque de las Redes Definidas por Software (\gloss{SDN})\citep{gude2008nox}\citep{SDNReadingList}.
 
 \section{Objetivos}
-El objetivo principal de este trabajo es la implementación de un prototipo RAU2 de altas prestaciones, utilizando como punto de partida el enfoque de SDN y el hardware NetFPGA, para luego ejecutar un conjunto de pruebas que permitan validar estas tecnologías para su utilización en  la posible construcción de la RAU2.\\
+El objetivo principal de este trabajo es la implementación de un prototipo de red de altas prestaciones para la RAU2, utilizando como punto de partida el enfoque de SDN y el hardware NetFPGA, para luego ejecutar un conjunto de pruebas que permitan validar estas tecnologías para su utilización en  la posible construcción de la RAU2.\\
 
-A su vez dado la ausencia de experiencias similares  trabajando con estas tecnologías a nivel local en la órbita de la academia, se buscaba conocer a fondo estas tecnologías y en particular la arquitectura de SDN y los lenguajes de programación relacionados, así como generar conocimiento y experiencias que puedan contribuir en trabajos a futuro. Por ello se hizo especial hincapié en la generación de exhaustivo material sobre el estado del arte de las redes definidas por software, y una buena documentación de la experiencia obtenida utilizando el hardware NetFPGA.
+A su vez dado la ausencia de experiencias similares  trabajando con estas tecnologías a nivel local en la órbita de la academia, se busca conocer a fondo estas tecnologías y en particular la arquitectura de SDN y los lenguajes de programación relacionados, así como generar conocimiento y experiencias que puedan contribuir en trabajos a futuro. Por ello se hizo especial hincapié en la generación de  material sobre el estado del arte de las redes definidas por software, y una detallada documentación de la experiencia obtenida utilizando el hardware NetFPGA.
 
 \section{Resultados Esperados}
 Los resultados esperados de este proyecto son:
@@ -76,11 +76,11 @@ A continuación se describe la forma en que esta estructurado este documento y l
 
 El cap\'itulo 2 presenta los resultados obtenidos en la investigación del estado del arte en SDN, NetFPGA y conceptos esenciales para el entendimiento de este trabajo. Se recomienda al lector fuertemente la lectura de las secciones \ref{section2.2}, \ref{section2.3}, \ref{section2.7}, \ref{section2.8} y \ref{section2.9} para una mejor comprensión de este trabajo.\\
 
-En el cap\'itulo 3 se presenta el análisis de la problemática realizado, donde se incluyen desde las principales ventajas en la utilización del enfoque SDN y hardware NetFPGA, los requerimientos relevados para el prototipo, el estudio de soluciones alternativas para la construcción del mismo y algunas de las decisiones de diseño m\'as importantes.\\
+En el cap\'itulo 3 se presenta el análisis del problema, donde se incluyen las principales ventajas en la utilización del enfoque SDN y hardware NetFPGA, los requerimientos relevados para el prototipo, el estudio de soluciones alternativas para la construcción del mismo y algunas de las decisiones de diseño m\'as importantes.\\
 
-En el cap\'itulo 4 se muestra el diseño general del prototipo, profundizándose en la arquitectura del plano de control, la arquitectura de un nodo del prototipo y la interacción entre ambas componentes.\\
+En el cap\'itulo 4 se muestra el diseño general del prototipo, profundo en la arquitectura del plano de control, la arquitectura de un nodo del prototipo y la interacción entre ambas componentes.\\
 
-En el cap\'itulo 5 se presenta el diseño de RAUFlow, la aplicaci\'on que implementa el plano de control. Aquí se presentan desde los requerimientos relevados para RAUFlow, los casos de uso implementados, el modelo de datos constru\'ido, detalles de la arquitectura e implementaci\'on de los algoritmos m\'as importantes.\\
+En el cap\'itulo 5 se presenta el diseño de RAUFlow, la aplicaci\'on que implementa el plano de control. Aquí se presentan los requerimientos para RAUFlow, los casos de uso implementados, el modelo de datos constru\'ido, detalles de la arquitectura e implementaci\'on de los algoritmos m\'as importantes.\\
 
 En el cap\'itulo 6 se presenta el laboratorio de pruebas diseñado para validar funcionalmente el prototipo as\'i como los casos de uso utilizados para ello y los resultados obtenidos.\\
 
@@ -90,8 +90,10 @@ En el cap\'itulo 8 se presentan las conclusiones obtenidas a partir del desarrol
 
 Luego se incorpora el cap\'itulo de referencias con la inormaci\'on bibliográfica del material utilizado en el desarrollo de este trabajo.\\
 
-Por \'ultimo se incluye un capitulo de ap\'endices con contenidos que por varias razones no se incluyeron en el documento principal y que fueron debidamente referenciados en el desarrollo del mismo para complementar la lectura en caso de que el lector así lo desee.\\
+Por \'ultimo se incluye un capitulo de ap\'endices y se anexa un manual para la construcci\'on de un nodo del prototipo, lo que se dio a llamar RAU-Switch, orientado a la reproducci\'on y posible mejora a futuro del trabajo realizado.
 
-Adicionalmente se anexa a este trabajo el manual generado para la construcci\'on de un nodo del prototipo, lo que se dio a llamar RAU-Switch, orientado a la reproducci\'on y posible mejora a futuro del trabajo realizado.
+%con contenidos que por varias razones no se incluyeron en el documento principal y que fueron debidamente referenciados en el desarrollo del mismo para complementar la lectura en caso de que el lector así lo desee.\\
+
+%Adicionalmente se anexa a este trabajo el manual generado para la construcci\'on de un nodo del prototipo, lo que se dio a llamar RAU-Switch, orientado a la reproducci\'on y posible mejora a futuro del trabajo realizado.
 
  
