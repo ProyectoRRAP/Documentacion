@@ -241,9 +241,11 @@ Una vez capturado el evento anterior, el segundo m\'odulo toma la información t
 Luego se produce un proceso de actualizaci\'on topol\'ogica, en el que eventualmente el controlador utilizando el m\'odulo Administrador SNMP obtiene informaci\'on adicional sobre los dispositivos del prototipo. 
 
 \begin{subsection}{Administrador SNMP}
-El administrador SNMP es utilizado para consultar al agente SNMP instalado en un nodo, por la correspondencia entre números de puerto OpenFlow y direcciones IP. Esta componente es utilizada por las aplicaciones en el Controlador cada vez que es preciso obtener esta información de mapeo para un nodo (por ejemplo en el proceso de actualización de la topolog\'ia).\\\\\
+El administrador SNMP es utilizado para consultar al agente SNMP instalado en un nodo, por la correspondencia entre números de puerto OpenFlow y direcciones IP. Esta componente es utilizada por las aplicaciones en el Controlador cada vez que es preciso obtener esta información de mapeo para un nodo (por ejemplo en el proceso de actualización de la topolog\'ia).
 
 \end{subsection}
+
+\subsection{Visi\'on general de la arquitectura}
 
 En resumen, los nodos del prototipo son construidos en base al hardware NetFPGA y una PC convencional a la cual se le instalan diferentes componentes de software de forma de implementar un switch MPLS/OpenFlow. Luego el plano de control de la red se implementa en una PC con el software controlador Ryu instalado m\'as un conjunto de m\'odulos adicionales.
 
