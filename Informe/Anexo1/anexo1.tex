@@ -16,9 +16,9 @@
 
 En este documento se ofrece una guía paso a paso para construir partiendo de una PC de escritorio, una tarjeta NetFPGA-10G y diferentes herramientas de software un switch OpenFlow 1.3 IP/MPLS híbrido; lo que denominamos RAUSwitch.\\
 
-En la misma no se asume ningún conocimiento previo acerca de la plataforma NetFPGA, Xilinx ISE y sobre el protocolo OpenFlow.\\
+En la misma no se asume ningún conocimiento previo acerca de la plataforma NetFPGA, Xilinx ISE ni sobre el protocolo OpenFlow.\\
 
-Cabe destacar que existen diferentes tutoriales y guías para algunas de las diferentes etapas de la construcción del switch. No obstante se pensó este documento como un resumen práctico de todos ellos, de forma de agilizar el proceso de construcción de tal dispositivo para una persona que recien se encuentra familiarizándose con los conceptos aquí tratados.\\
+Cabe destacar que existen tutoriales y guías para algunas etapas de la construcción del switch, pero se espera que este documento sea un resumen práctico de todos ellos, para agilizar el proceso de construcción para una persona que recién se encuentra familiarizándose con los conceptos aquí tratados.\\
 
 En caso de querer profundizar en alguna de las etapas, se puede recurrir al material (en caso de existir) utilizado para la construcci\'on de esta gu\'ia, siguiendo las referencias indicadas a lo largo de este documento.
 
@@ -28,7 +28,7 @@ En caso de querer profundizar en alguna de las etapas, se puede recurrir al mate
 \label{annexI.1}
 A continuación se especifican las caracter\'isticas del hardware utilizado en la construcci\'on de RAU-Switch, as\'i como la especificaci\'on de las herramientas de software con sus correspondientes versiones de producto.
  
-Se sugiere respetar en la medida que sea posible los mismos conforme a evitar comportamientos inesperados o no contenidos en el alcance de esta guía.\\
+Se sugiere respetar los mismos en la medida que sea posible para evitar comportamientos inesperados o no contenidos en el alcance de esta guía.\\
 
 \begin{table}[h]\centering
 \begin{tabularx}{\textwidth}{|>{\setlength\hsize{1.0\hsize}\setlength\linewidth{\hsize}}X|}
@@ -45,17 +45,20 @@ Se sugiere respetar en la medida que sea posible los mismos conforme a evitar co
 
 \begin{itemize}
 \item NetFPGA-10G: 10-Gigabit SFP+ (x4), x8 gen1 PCIe, Xilinx’s Virtex-5 TX240TFPGA
-\item Transiever Finisar FTLX8571D3BCL 850nm 13-50
+\item Transceiver Finisar FTLX8571D3BCL 850nm 13-50
 	  Class 1 21CFR1040.10 LN\#50 7\/01
 \item Patchcord multimodo OM3 50/125 duplex lc lc 10 metros pvc 2mm
 	  il $\leq$ 0.25dB RL $\geq$ 28dB
-\item TP-Link Gigabit PCI Express TG-3468\footnote{En el desarrollo del proyecto, para la construcci\'on del laboratorio de pruebas, se utiliza una tarjeta de red Ethernet adicional, en el diseño RAU-Switch. Esto se debe a la necesidad de conectarse al equipo mediante un cable Ethernet RJ45, puesto que no se contaba con otros equipos con tarjetas de red \'opticas para realizar las pruebas. Esto quiere decir entonces que esta componente es opcional.}
+\item TP-Link Gigabit PCI Express TG-3468 \footnote{}
+
 \end{itemize}\\
 \hline
 \end{tabularx}
 \caption{RAU-Switch, especificaciones de hardware}
 \label{table:RAUHSpecs}
 \end{table}
+
+\footnotetext{En el desarrollo del proyecto, para la construcci\'on del laboratorio de pruebas, se utiliza una tarjeta de red Ethernet adicional, en el diseño RAU-Switch. Esto se debe a la necesidad de conectarse al equipo mediante un cable Ethernet RJ45, puesto que no se contaba con otros equipos con tarjetas de red \'opticas para realizar las pruebas. Esto quiere decir entonces que esta componente es opcional.}
 
 
 \begin{table}[Htl]\centering
@@ -82,7 +85,7 @@ Se sugiere respetar en la medida que sea posible los mismos conforme a evitar co
 \section{Instalación y configuración}
 En esta sección se explica el proceso de instalación y configuración del software necesario para la construcción de RAUSwitch.\\
 
-En cuanto al orden de procedencia esta guía está organizada de la siguiente forma:
+En cuanto al orden de precedencia esta guía está organizada de la siguiente forma:
 
 \begin{enumerate}
 \item Instalación del sistema operativo
@@ -135,7 +138,7 @@ La instalación de la suite Xilinx ISE SDK la realizaremos desde el código fuen
 Xilinx\_ISE\_DS\_Lin\_13.4\_087xd.3.0.tar
 \end{center}
 
-Luego debemos ir al directorio en donde se tienen descargado dichos archivos y ejecutamos los siguientes comandos:
+Luego debemos ir al directorio en donde se descarg\'o el archivo y ejecutamos los siguientes comandos:
 
 \begin{bash}
 # tar -xvf Xilinx_ISE_DS_Lin_13.4_087xd.3.0.tar
@@ -145,13 +148,13 @@ Luego debemos ir al directorio en donde se tienen descargado dichos archivos y e
 
 De esta forma se ejecuta el asistente de instalación de la suite de Xillinx.\\
 
-Dejamos todas las opciones que marca por defecto con la excepción de la instalación de los drivers para el cable de programación. En este caso destildar el checkbox correspondiente para evitar que la instalación se finalice con errores.\\
+Dejamos todas las opciones que marca por defecto con la excepción de la instalación de los drivers para el cable de programación. En este caso destildar el checkbox correspondiente para evitar que la instalación finalice con errores.\\
 
-Una vez finalizada la instalación de la suite de Xilinx, debemos instalar los drivers para el cable de programación JTag. En particular trabajaremos con un driver proporcionado por terceras partes disponible en un repositorio github.\\
+Terminada la instalación de la suite de Xilinx, debemos instalar los drivers para el cable de programación JTag. Trabajaremos con un driver proporcionado por terceras partes disponible en un repositorio github.\\
 
 Por defecto la instalación de Xilinx se realizó en el directorio /opt/Xilinx, en caso contrario trabajar en lo que prosigue en el directorio correspondiente.\\
 
-Abrimos una consola y ejecutamos los siguiente:\footnote{Para la arquitectura de la máquina se debe compilar la versión de 64 bits del driver; lo cual se hace por defecto. En caso de trabajar con una arquitectura de 32bits se puede ejecutar el make para 32bits.}\\
+Abrimos una consola y ejecutamos lo siguiente:\footnote{Para la arquitectura de la máquina se debe compilar la versión de 64 bits del driver; lo cual se hace por defecto. En caso de trabajar con una arquitectura de 32bits se puede ejecutar el make para 32bits.}\\
 
 \begin{bash}
 # cd /opt/Xilinx/
@@ -218,7 +221,7 @@ Asumiendo que ya se tiene descargada una licencia full, para cargar la misma abr
 # /opt/Xilinx/13.4/ISE_DS/common/bin/lin64/xlcm
 \end{bash}
 
-Una vez que se ejecuta el comando anterior, se abrirá el programa  Xilinx Lincense Configuration Manager, que es el asistente de licencias de la suite de Xilinx. Una vez abierto el mismo ir a la pestaña de Manejo de Licencias (Manage Xilinx Licenses) e importar los archivos de licencias \emph{.lic} obtenidos (botón copy license).
+Una vez que se ejecuta el comando anterior, se abrirá el programa  Xilinx Lincense Configuration Manager, que es el asistente de licencias de la suite de Xilinx. Una vez abierto, ir a la pestaña de Manejo de Licencias (Manage Xilinx Licenses) e importar los archivos de licencias \emph{.lic} obtenidos (botón copy license).
 
 Una vez importada la licencia se podrán ver abajo las diferentes características que proveen las licencias cargadas. En caso de que no se actualice la pestañea apretar el botón \textbf{Refresh}.
 
@@ -226,7 +229,7 @@ Una vez importada la licencia se podrán ver abajo las diferentes característic
 \subsection{Configuración del entorno de desarrollo NetFPGA}
 A continuación se explica como acceder al código fuente de NetFPGA y como empezar a programar el hardware con el mismo.\\
 
-Naturalmente lo primero que debemos hacer es obtener el código fuente con las implementaciones de proyectos y herramientas, para lo cual es necesario crearse un usuario github y luego registrarse como desarrollador NetFPGA en el sitio oficial. Este último proceso puede llevar algunas horas dado que el proceso de aceptación se realiza manualmente.\\
+Lo primero que debemos hacer es obtener el código fuente con las implementaciones de proyectos y herramientas, para lo cual es necesario crearse un usuario github y luego registrarse como desarrollador NetFPGA en el sitio oficial. Este último proceso puede llevar algunas horas dado que el proceso de aceptación se realiza manualmente.\\
 
 Para registrarse como desarrollador NetFPGA completar el siguiente formulario:
 
@@ -280,7 +283,7 @@ EL primer paso para programar el test de producción es configurar la tarjeta Ne
 La tarjeta necesita un suministro de corriente mediante el conector ATX para poder funcionar. A continuación se describe como instalar el hardware:
 
 \begin{itemize}
-\item Asegurarse que el jumper J16 no esta activado. Este Jumper se encuentra en la esquina superior izquierda de la tarjeta, en la cercanía del conector RS232 DB-9 (figura~\ref{fig:Img1}.
+\item Asegurarse que el jumper J16 no esta activado. Este Jumper se encuentra en la esquina superior izquierda de la tarjeta, en la cercanía del conector RS232 DB-9 (figura~\ref{fig:Img1}).
 
 \begin{figure}[htbp!] 
 \centering    
@@ -298,7 +301,7 @@ La tarjeta necesita un suministro de corriente mediante el conector ATX para pod
 \label{fig:Img2}
 \end{figure}
 
-\item Asegurarse que los switches DIP SW1, SW2, SW6 y SW10 están correctamente seteados acorde al siguiente esquema (figura ~\ref{fig:Img3}):\\
+\item Asegurarse que los switches DIP SW1, SW2, SW6 y SW10 están correctamente ubicados acorde al siguiente esquema (figura ~\ref{fig:Img3}):\\
 
 \textbf{SW1:} SEL0, SEL1, M2, M1, M0, N2, N1, N0 son seteados en off, off, off, on, on, on, off, off\\
 \textbf{SW6:} SEL0, SEL1, M2, M1, M0, N2, N1, N0 son seteados en off, off, off, on, off on, off, on\\
@@ -388,8 +391,8 @@ Para ejecutar el Test de Producción seguir los siguientes pasos:
 \begin{itemize}
 \item Localizar la entrada particular para la distribución del kernel que se tenga
 \item Encontrar la línea que comienza con Kernel
-\item Concatenar \textbf{memmap=256M\$0x5f700000} al final de la línea (ver figura ~\ref{fig:Img11}).\\
-El parámetro memmap=256M\$0x5f700000 es pasado al kernel al momento de iniciar el sistema. El mismo reserva una región de 256MB de memoria disponible comenzando en la dirección 0x5f700000. Este bloque es utilizado posteriormente en el Test PCIe DMA.
+\item Concatenar \textbf{memmap=256M\textbackslash\$0x5f700000} al final de la línea (ver figura ~\ref{fig:Img11}).\\
+El parámetro memmap=256M\textbackslash\$0x5f700000 es pasado al kernel al momento de iniciar el sistema. El mismo reserva una región de 256MB de memoria disponible comenzando en la dirección 0x5f700000. Este bloque es utilizado posteriormente en el Test PCIe DMA.
 \item Guardar los cambios realizados al archivo
 
 \newpage
@@ -500,7 +503,7 @@ A continuación se describen los pasos necesarios para programar las tarjetas Ne
 \subsubsection{Configuración de la tarjeta}
 Antes de comenzar, es necesario realizar algunas modificaciones en el hardware NetFPGA para habilitar la programación pcie del mismo, utilizada en la programación persistente.\\ 
 
-Para habilitar la programación PCI, es necesario cambiar la posición del switch Disp SW3 desde la posición por defecto (M0:On, M1:On, M2:On) a la posición de programación PCIE (M0:Off, M1:On, M2:On). Esta configuración habilita tanto la programación de la tarjeta por el cable de programación JTAG como por la interfaz PCIe.\\
+Para habilitar la programación PCIe, es necesario cambiar la posición del switch Disp SW3 desde la posición por defecto (M0:On, M1:On, M2:On) a la posición de programación PCIE (M0:Off, M1:On, M2:On). Esta configuración habilita tanto la programación de la tarjeta por el cable de programación JTAG como por la interfaz PCIe.\\
 
 La siguiente figura muestra la posición del Dip SW3 en la configuración PCIe (ver figura ~\ref{fig:Img15}).
 
@@ -567,7 +570,7 @@ Finalmente se debe compilar el proyecto. Para ello en una consola ejecutamos
 
 Este proceso puede llevar de 10 a 20 minutos.\\
 
-Ahora programamos la tarjeta NetFPGA con el proyecto ReferenceNIC, para lo cual es necesario conectar el cable de programación JTag a la tarjeta y a la PC.\\
+Ahora programamos la tarjeta NetFPGA con el proyecto ReferenceNIC, para lo cual es necesario conectar el cable de programación JTAG a la tarjeta y a la PC.\\
 
 Luego en una consola se ejecuta lo siguiente:
 
@@ -582,7 +585,7 @@ Luego en una consola se ejecuta lo siguiente:
 (*) En caso de que aparezca el error “NF\_ROOT or NF\_DESIGN\_DIR variable is not defined”
 abrir el script impact\_run.sh y definir una variable de nombre NF\_ROOT con el valor del directorio donde esta instalado el código fuente de NetFPGA.\\
 
-Luego de finalizada la ejecución del comando reiniciar la máquina. Es sumamente importante que se reinicie y no que se apague, puesto que hasta el momento solo se ha programado el hardware en forma volátil. Esto quiere decir que producirse un corte de corriente el misma se desprogramaría.\\
+Luego de finalizada la ejecución del comando reiniciar la máquina. Es sumamente importante que se reinicie y no que se apague, puesto que hasta el momento solo se ha programado el hardware en forma volátil. Esto quiere decir que de producirse un corte de corriente el misma se desprogramaría.\\
 
 Una vez reiniciada la PC es necesario cargar el driver del ReferenceNIC en el kernel del sistema. Para ello posiblemente primero se deba compilar el driver. Para compilar el driver ejecutar en una consola:\\
 
@@ -592,7 +595,7 @@ Una vez reiniciada la PC es necesario cargar el driver del ReferenceNIC en el ke
 # insmod nf10.ko
 \end{bash}
 
-Ahora vamos a programar una de las memorias flashes de la tarjeta (en particular utilizaremos la unidad A con el proyecto ReferenceNIC, de forma de hacer persistente la programación de la tarjeta.
+Ahora vamos a programar una de las memorias flash de la tarjeta (en particular utilizaremos la unidad A con el proyecto ReferenceNIC, de forma de hacer persistente la programación de la tarjeta.
 
 Para ello en una consola ejecutamos:
 
@@ -625,7 +628,7 @@ insmod NF_ROOT/preojects/reference_nic/sw/host/driver/nf10.ko
 \end{bash}
 
 \subsection{Instalación de Open vSwitch}
-Open vSwitch (ovs) lo instalaremos también desde su código fuente, por ejemplo ejecutando lo siguiente en una consola:
+Open vSwitch (ovs) lo instalaremos también desde su código fuente, ejecutando lo siguiente en una consola:
 
 \begin{bash}
 # wget http://openvswitch.org/releases/openvswitch-2.3.0.tar.gz
@@ -728,7 +731,7 @@ Una vez descargado el código fuente descomprimimos el archivo quagga.public-mas
 \end{bash}
 
 \subsection{Instalaci\'on de agente SNMP}
-Para la instalaci\'on del agente SNMP se utiliza simplemente el gestor de paquetes de Ubuntu \textbf{apt-get} (en otras plataformas se podr\'ia utilizar por ejemplo opkg o yum).
+Para la instalaci\'on del agente SNMP se utiliza el gestor de paquetes de Ubuntu \textbf{apt-get} (en otras plataformas se podr\'ia utilizar por ejemplo opkg o yum).
 
 Por lo tanto para instalar el agente SNMP ejecutamos en una consola lo siguiente:
 
@@ -736,5 +739,5 @@ Por lo tanto para instalar el agente SNMP ejecutamos en una consola lo siguiente
 # apt-get install snmp snmpd
 \end{bash}
 
-\subsection{Extra}
+%\subsection{Extra}
 
