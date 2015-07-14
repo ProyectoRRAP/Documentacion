@@ -11,7 +11,7 @@ A su vez estos errores fueron solucionados en la siguiente versi\'on del c\'odig
 \section{Problema con la herramienta pcieprog y ReferenceNIC}
 El primer error detectado se encuentra en la herramienta \textbf{pcieprog} dentro de la plataforma de NetFPGA. La misma se utiliza para transferir el archivo binario generado a partir del bitfile del proyecto (en este caso ReferenceNIC) a una de las memorias flash del hardware.
 
-Al ejecutarse esta herramienta con el binario generado para el proyecto ReferenceNIC, la misma se ejecutaba durante horas con un 100\% de utilizaci\'on de la CPU, sin indicios de terminar su ejecución en algún momento. Tras probar con varias ejecuciones, se realizo la misma prueba con dos proyectos adicionales (reference\_ switch y reference\_ router), compatibles también con la programaci\'on persistente. 
+Al ejecutarse esta herramienta con el binario generado para el proyecto ReferenceNIC, la misma se ejecutaba durante horas con un 100\% de utilizaci\'on de la CPU, sin indicios de terminar su ejecución en. Tras probar con varias ejecuciones, se realizo la misma prueba con dos proyectos adicionales (reference\_ switch y reference\_ router), compatibles también con la programaci\'on persistente. 
 
 Para estos proyectos la ejecución del programa terminaba tras algunos minutos, por lo que se presumi\'o la presencia de algún error en el c\'odigo del proyecto ReferenceNIC. Por otro lado se realizo una inspecci\'on al c\'odigo de la herramienta \textbf{pcieprog}, para determinar en que momento el programa se estancaba. Se detecto que el programa quedaba trancado en un bucle infinito dado que no se cumplía nunca la condici\'on de salida.\\ 
 
@@ -69,11 +69,11 @@ Incapacidad parar ejecutar exitosamente el comando ping entre cualquier par de i
 \item \textbf{Reproducci\'on:}\\
 Partiendo de ambas PCs apagadas
 \begin{enumerate}
-\item Encender una de las PCs, teniendo conectados los enlaces \'opticos entre ambas equipos
+\item Encender una de las PCs, teniendo conectados los enlaces \'opticos entre ambos equipos
 \item Cargar el driver y configurar manualmente direcciones IP para cada interfaz (nf0 \dots nf3)
-\item Luego realizar el mismo procedimiento para la otra PC
+\item Realizar los pasos 1 y 2 para la otra PC
 \item LEDs asociados a cada puerto en una de las tarjetas NetFPGA son encendidos por completo, mientras que en la otra tarjeta solamente la mitad de los LEDs se encuentran encendidos.
-\item Si se apaga y enciendo la PC con la tarjeta NetFPGA cuyos LEDs se encuentran todos encendidos, luego la otra tarjeta enciende todos sus LEDs, mientras que la primera enciende solo la mitad.
+\item Si se apaga y enciende la PC con la tarjeta NetFPGA cuyos LEDs se encuentran todos encendidos, luego la otra tarjeta enciende todos sus LEDs, mientras que la primera enciende solo la mitad.
 \item El \'ultimo paso puede repetirse y el comportamiento observado se mantiene. En particular la tarjeta que es iniciada al final funciona correctamente mientras que la otra no.
 \end{enumerate} 
 
@@ -99,7 +99,7 @@ La soluci\'on propuesta por el equipo de NetFPGA es la siguiente:
 \item Reiniciar la PC y cargar el nuevo driver
 \end{enumerate}
 
-Tras esta correcci\'on el proyecto ReferenceNIC funciona correctamente, comportándose el hardware como una tarjeta de red convencional. A su vez cada vez que la PC es encendida el hardware se reprograma desde la memoria flash apropiadamente.
+Tras esta correcci\'on el proyecto ReferenceNIC funciona correctamente, comportándose el hardware como una tarjeta de red convencional. A su vez cuando la PC es encendida el hardware se reprograma desde la memoria flash apropiadamente.
 
 %Cabe destacar que este procedimiento no funciona correctamente. El proyecto PCIPrograming presenta alg\'un tipo de BUG(al momento de grabar una memoria se queda en loop), y tras reportar este comportamiento en la comunidad de NetFPGA se nos suguiere utilizar el proyecto ReferenceNIC que presenta el diseno de la arquitectura similar al PCIPrograming. Siguiendo esta sugerencia se logra programar correctamente el hardware de forma persistente, constatandose que al realizar un ciclo de corriente completo el hardware no se desprograma. Por esta raz\'on la estrategia de programaci\'on utilizada en el hardware es la programaci\'on persistente aqu\'i detallada.\\
 

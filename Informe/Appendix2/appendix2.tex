@@ -9,35 +9,35 @@
     \graphicspath{{Appendix2/Figs/Vector/}{Appendix2/Figs/}}
 \fi
 
-Durante toda la ejecuci\'on del proyecto, nos enfrentamos a desaf\'ios y en particular de carácter t\'ecnico. Dentro de estos desaf\'ios podemos encontrar algunos que se destacan por su complejidad y dificultad para resolverlos; y otros que se destacan por su severidad como riesgo tecnol\'ogico dentro del proyecto. Por ello consideramos apropiado incluir un ap\'endice para hacer menci\'on a los mismos y a sus respectivas resoluciones.
+Durante la ejecuci\'on del proyecto, nos enfrentamos a desaf\'ios y en particular de carácter t\'ecnico. Dentro de estos desaf\'ios podemos encontrar algunos que se destacan por su complejidad y dificultad para resolverlos; y otros que se destacan por su severidad como riesgo tecnol\'ogico dentro del proyecto. Por ello consideramos apropiado incluir un ap\'endice para hacer menci\'on a los mismos y a sus respectivas resoluciones.
 
 \section{Problemas con SFPs y Patchcoords}
 
-Los tranceptores SFP+ o transceivers SFP+, son una componente de hardware utilizados en cada puerto f\'isico de la tarjeta NetFPGA instalada en RAU-Switch. Básicamente se encargan de implementar el mecanismo de acceso a la capa f\'isica, en este caso enlace de fibra \'optica.\\ 
+Los transceivers SFP+, es una componente de hardware utilizados en cada puerto f\'isico de la tarjeta NetFPGA instalada en RAU-Switch. Básicamente se encargan de implementar el mecanismo de acceso a la capa f\'isica, en este caso enlace de fibra \'optica.\\ 
  
-Or\'iginalmente se trabaja con dos tranceptores SFP+ compatibles con fibra monomodo y multimodo, y patchords de f\'ibra \'optica monomodo, con los cuales se aprecia un correcto funcionamiento del hardware. 
+Originalmente se trabaja con dos transceivers SFP+ compatibles con fibra monomodo y multimodo, y patchords de f\'ibra \'optica monomodo, con los cuales se aprecia un correcto funcionamiento del hardware. 
 
-Posteriormente se incorporaron m\'as unidades de SFP+ con el objetivo de constru\'ir el laboratorio de pruebas descrito en el cap\'itulo \ref{chapter6}. En este caso se detectan problemas para establecer conexiones exitosas para cualquier par de nodos en que se utilizara al menos uno de los SFP nuevos.\\
+Posteriormente se incorporaron m\'as unidades de SFP+ con el objetivo de constru\'ir el laboratorio de pruebas descrito en el cap\'itulo \ref{chapter6}. En este caso se detectan problemas para establecer conexiones exitosas con cualquier nodo donde se utilice alguno de los SFP+ nuevos.\\
 
-La primera reacci\'on es de preocupación, ante la posibilidad de que la partida de SFP comprada estuviera fallada. Por ello se menciona el inconveniente en el grupo de trabajo generado GT-SDNUy, donde amablemente los integrantes del Centro de Desarrollo y Capacitacion de ANTEL comprueban el funcionamiento del hardware utilizando sus propios equipos.
+La primera reacci\'on es de preocupación, ante la posibilidad de que la partida de SFP+ comprada estuviera fallada. Por ello se menciona el inconveniente en el grupo de trabajo generado GT-SDNUy, donde amablemente los integrantes del Centro de Desarrollo y Capacitacion de ANTEL comprueban el funcionamiento del hardware utilizando sus propios equipos.
 
-Tras comprobar que el hardware no se encuentra dañado, advirtiendo la posibilidad de que los SFP no sean compatibles con patchcoords de fibra monomodo, el equipo de ANTEL nos facilita un par de patchcoords multimodo, con los cuales posteriormente se constata el correcto funcionamiento de los SFP.\\
+Tras comprobar que el hardware no se encuentra dañado, advirtiendo la posibilidad de que los SFP no sean compatibles con patch cords de fibra monomodo, el equipo de ANTEL nos facilita de patch cords multimodo, con los cuales posteriormente se constata el correcto funcionamiento de los SFP+.\\
 
 De esta forma, el laboratorio de pruebas queda implementado con SFPs compatibles solamente con fibra multimodo, y patchcoords de fibra multimodo.
 
 \section{Desprogramaci\'on del hardware NetFPGA}
 \label{apendiceB2}
 
-Para la programación del hardware NetFPGA, se utiliza inicialmente el procedimiento indicado en el manual de ejecuci\'on del Test de Producci\'on ~\citep{ProdTestManual}. Tras experimentarse un tiempo con este procedimiento y el hardware se constata que esta técnica de programación no es persistente. Esto significa que tras apagar y encender el equipo (ciclo completo de encendido) el mismo pierde la programación. 
+Para la programación del hardware NetFPGA, se utiliza inicialmente el procedimiento indicado en el manual de ejecuci\'on del Test de Producci\'on ~\citep{ProdTestManual}. Tras experimentarse un tiempo con este procedimiento se constata que esta técnica de programación no es persistente. Esto significa que tras apagar y encender el equipo (ciclo completo de encendido) el mismo pierde la programación. 
 
-Utilizando la herramienta Impact, observando el comportamiento de LEDs en la placa y corroborando con el el manual de la misma, se constata que el contenido del chip CPLD no es borrado, no así el contenido del chip FPGA que si es borrado.\\
+Utilizando la herramienta Impact, observando el comportamiento de LEDs en la placa y corroborando con el el manual de la misma, se constata que el contenido del chip CPLD se mantiene, pero el contenido del chip FPGA que si es eliminado.\\
 
 Con esta información se consulta la documentación de la plataforma y se buscan experiencias similares  de otros usuarios. No se encuentran problemas o experiencias similares pero se encuentra dentro de los proyectos de la plataforma un desarrollo de nombre Reference Flash, cuya funcionalidad es habilitar la programación persistente del hardware.
 
 Este proyecto utiliza las dos unidades de memoria flash disponibles, para almacenar la programaci\'on del equipo. Mientras que en la Flash A se almacena un bitstream de configuración para el equipo 
  (bootstrap bitstream), la  Flash B queda disponible para almacenar un bitstream a elección del programador. 
 
-La configuración del equipo es siempre manejada por el chip CPLD, el cual en el tiempo de encendido programa al equipo con el contenido de la Flash A. Luego el equipo puede ser reprogramado desde la Flash B a través de la interfaz PCIe.
+La configuración del equipo es siempre manejada por el chip CPLD, el cual en el tiempo de encendido programa el chip FPGA con el contenido de la Flash A. Luego el equipo puede ser reprogramado desde la Flash B a través de la interfaz PCIe.
 
 Basándose en este proyecto, se prueba como solución al problema de la desprogramaci\'on del equipo dicha alternativa, utilizando como bitstream para la Flash B, el proyecto ReferenceNIC.\\
 
@@ -55,7 +55,7 @@ Esta es estrategia funciona correctamente, y es lo que en este trabajo se di\'o 
 \label{apendiceB3}
 La suite de desarrollo Xilinx ISE SDK se compone por un conjunto extenso de herramientas para la progrmaci\'on y desarrollo de software utilizando los productos de este fabricante; entre los cuales se encuentra el chip Virtex 5 utilizado en el hardware NetFPGA.\\
 
-Estas herramientas de software son licenciadas lo que significa que para su use es necesario contar con una licencia de software apropiada.
+Estas herramientas de software son licenciadas lo que significa que para su uso es necesario contar con una licencia de software apropiada.
 
 Cada herramienta particular de la suite Xilinx tiene una licencia particular y se agrupan en diferentes paquetes de licencias. De esta forma dependiendo del uso que se vaya a hacer de esta plataforma el o los paquetes de licencias que se deben adquirir.
 
@@ -89,17 +89,17 @@ Finalmente luego de un esfuerzo mayor buscando una implementaci\'on de driver co
 Open vSwitch es uno de los pilares fundamentales de RAU-Switch puesto que es el encargado de implementar el plano de datos de OpenFlow. Durante el desarrollo de \'este proyecto, en el tiempo empleado a la experimentaci\'on con esta herramienta, se genera conocimiento en relaci\'on aspectos importantes sobre la herramienta; los cuales no son triviales y vale la pena mencionar en este apartado. A continuaci\'on se enumeran los siguientes:\\ 
 
 \begin{enumerate}
-\item Parte de las funcionalidades de Open vSwitch, est\'an implementadas en modo kernel y otra parte en modo usuario. Estas \'ultimas presentan un nivel de performance muy pobre en comparaci\'on a las primera; y en particular las funcionalidades de MPLS se encuentran solamente disponibles en modo usuario.
+\item Parte de las funcionalidades de Open vSwitch, est\'an implementadas en modo kernel y otra parte en modo usuario. Estas \'ultimas presentan un nivel de performance muy pobre en comparaci\'on a las primeras; y en particular las funcionalidades de MPLS se encuentran solamente disponibles en modo usuario.
 
-\item De acuerdo a la p\'agina de preguntas frecuentes, la \'ultima versi\'on de Open vSwitch al momento de realizarse este proyecto, garantiza soporte a las operaciones de Match, Push y Pop de hasta tres etiquetas mpls apiladas, as\'i como su posterior procesamiento acorde al pipe de OpenFlow. Todas estas funcionalidades adem\'as se implementan en modo usuario.\\
+\item De acuerdo a la p\'agina de preguntas frecuentes, la \'ultima versi\'on de Open vSwitch al momento de realizarse este proyecto, garantiza soporte a las operaciones de MATCH, PUSH y POP de hasta tres etiquetas MPLS apiladas, as\'i como su posterior procesamiento acorde al pipe de OpenFlow. Todas estas funcionalidades adem\'as se implementan en modo usuario.\\
 
-Por otro lado, de acuerdo  a las notas de libreaci\'on de la versi\'on 2.3.1, solamente se garantiza el soporte a las funciones de Match, Push y Pop de mpls para un \'unico nivel de etiquetas; esto es una sola etiqueta mpls. Luego se garantiza adem\'as el posterior procesamiento acorde al pipe OpenFlow.\\
+Por otro lado, de acuerdo  a las notas de libreaci\'on de la versi\'on 2.3.1, solamente se garantiza el soporte a las funciones de MATCH, PUSH y POP de MPLS para un \'unico nivel de etiquetas; esto es una sola etiqueta MPLS. Luego se garantiza adem\'as el posterior procesamiento acorde al pipe OpenFlow.\\
 
-Esta informaci\'on no solo es contradictoria, si no que adem\'as no se condice con la realidad. Experimentalmente se prueba que si bien la versi\'on 2.3.1 implementa correctamente las operaciones de Match y Push de una \'unica etiqueta mpls, la operaci\'on Pop no se encuentra implementada para esta versi\'on, rompiendo adem\'as el pipe de procesamiento OpenFlow. 
+Esta informaci\'on no solo es contradictoria, si no que adem\'as no se condice con la realidad. Experimentalmente se prueba que si bien la versi\'on 2.3.1 implementa correctamente las operaciones de MATCH y PUSH de una \'unica etiqueta MPLS, la operaci\'on POP no se encuentra implementada para esta versi\'on, rompiendo adem\'as el pipe de procesamiento OpenFlow. 
 
 Afortunadamente \'este comportamiento hab\'ia sido detectado y reportado por otros usuarios de Open vSwitch como un BUG, resolviéndose posteriormente en la versi\'on de desarrollo~\citep{OVSSourceCode}.
 
-\item Trabajando con la versi\'on m\'as del HEAD, en el repositorio de desarrollo de Open vSwitch~\citep{OVSSourceCode}, se comprueba experimentalmente el soporte para las operaciones de Match, Push y Pop de hasta 3 etiquetas, as\'i como el posterior procesamiento del paquete seg\'un el pipe de  OpenFlow.
+\item Trabajando con la versi\'on de desarrollo en el repositorio de c\'odigo fuente de Open vSwitch~\citep{OVSSourceCode} (rama master en el repositorio Git), se comprueba experimentalmente el soporte para las operaciones de Match, Push y Pop de hasta 3 etiquetas, as\'i como el posterior procesamiento del paquete seg\'un el pipe de  OpenFlow.
 
 \item Puertos OpenFlow con direcciones IP:
 %Una condici\'on necesaria en la arquitectura del prototipo es la capacidad de asignar direcciones IP a cada interaz del router opensource.
@@ -141,7 +141,7 @@ Para solucionar este problema se utilizan interfaces virtuales de la siguiente f
 
 \item De esta forma si no hay un flujo de mayor prioridad para procesar los paquetes que entran por determinada interfaz física, estos serán enviados al kernel mediante la interfaz virtual, procesados por este para luego ser enviado por la interfaz virtual a la física y seguir su camino.
 
-\item Estos pasos aseguran que todo el tráfico sea procesado por las tablas de openvswitch, y serán procesados por el kernel solo en caso de ser necesario.
+\item Estos pasos aseguran que todo el tráfico sea procesado por las tablas de Open vSwitch, y serán procesados por el kernel solo en caso de ser necesario.
 \end{enumerate}
 
 \begin{figure}[h] 
@@ -157,26 +157,26 @@ Para solucionar este problema se utilizan interfaces virtuales de la siguiente f
 \label{apendiceB6}
 
 MPLS Linux\cite{MplsLinux1} es un proyecto orientado a dotar de funcionalidades de MPLS al Kernel de Linux. 
-Para esto se utiliza un parche con el cual se extiende el kernel original el cual tras recompilarse queda pronto para brindar soporte nativo al protocolo MPLS. Sin embargo es necesario instalar luego herramientas adicionales par por ejemplo acceder a las tablas de mpls (en particular existe una extension de la herramienta iproute denominada iproute2 para esto).\\
+Para esto se utiliza un parche con el cual se extiende el kernel original el cual tras recompilarse queda pronto para brindar soporte nativo al protocolo MPLS. Sin embargo es necesario instalar luego herramientas adicionales para por ejemplo acceder a las tablas de MPLS (en particular existe una extension de la herramienta iproute denominada iproute2 para esto).\\
 
-El proyecto, cuyo desarrollo fue encabezado por James R. Leu, data de hace m\'as de 15 a\~nos y no se han hecho contribuciones importantes desde hace aproximadamente 9. Adem\'as de que la documentaci\'on existente es muy poca, las versiones de kernel de Linux para las cuales se pensó este parche rondan por la versi\'o 2.6.3.16 por ejemplo, cuando la \'ultima versi\'on de kernel es la 4.1.1.\\
+El proyecto, cuyo desarrollo fue encabezado por James R. Leu, data de hace m\'as de 15 a\~nos y no se han hecho contribuciones importantes desde hace aproximadamente 9. Adem\'as de que la documentaci\'on existente es muy poca, las versiones de kernel de Linux para las cuales se pensó este parche rondan por la versi\'on 2.6.3.16, cuando la \'ultima versi\'on de kernel es la 4.1.1.\\
 
-Durante la ejecuci\'on de este proyecto, se prueba de instalar este parche en dos kernel de Linux contemporáneos a este desarrollo de software; version 2.6.32.16 y 2.6.32.65; obteniendo resultados no satisfactorios. Concretamente estas versiones de kernel son tan antiguas que no soportaron diferentes características del hardware utilizado para la contrucci\'on de RAU-Switch, adem\'as de que tampoco soportaron completamente la herramienta Open vSwitch.
+Durante la ejecuci\'on de este proyecto, se prueba instalar este parche en dos kernel de Linux contemporáneos (versi\'on 2.6.32.16 y 2.6.32.65) obteniendo resultados no satisfactorios. Concretamente estas versiones de kernel son tan antiguas que no soportaron algunas características del hardware utilizado para la contrucci\'on de RAU-Switch, adem\'as de que tampoco soportan completamente la herramienta Open vSwitch.
 
-Se prueba compilar este parche en la versi\'on de kernel con la que se estaba trabajando hasta el momento (3.11.0-15 generic) tampoco obteniendo resultados satisfactorios.\\
+Se prueba compilar este parche en la versi\'on de kernel con la que se estaba trabajando hasta el momento (3.11.0-15 generic) pero sin resultados satisfactorios.\\
 
-Cabe desatacar por otro lado, para esta versi\'on de MPLS-Linux el mismo autor, James R. Leu desarroll\'o una extension de la suite Quagga para trabajar con MPLS-Linux y el protocolo LDP, lo cual se dio a llamar Quagga LDP\cite{QuaggaLDP1}.\\  
+Cabe desatacar que para esta versi\'on de MPLS-Linux el mismo autor, James R. Leu desarroll\'o una extension de la suite Quagga para trabajar con MPLS-Linux y el protocolo LDP, lo cual se dio a llamar Quagga LDP\cite{QuaggaLDP1}.\\  
 
 Por otro lado, Igor Maravick; quien trabajara junto a James R. Leu en el desarrollo de MPLS-Linux, decide retomar este proyecto y actualizarlo a una versi\'on de kernel de linux m\'as actual. 
 
-Lo que comenzó en el a\~no 2010 como un proyecto para portar MPLS-Linux termino en el a\~o 2013, en prácticamente una reimplementaci\'on del proyecto original utilizando un kernel version 3.9.0-rc3. 
+Lo que comenzó en el a\~no 2010 como un proyecto para portar MPLS-Linux termino en el a\~no 2013, en prácticamente una reimplementaci\'on del proyecto original utilizando un kernel versionn 3.9.0-rc3. 
 
 Como gran diferencia del proyecto original adem\'as, no se incluye MPLS-Linux como un parche si no que viene integrado en la propia distribución.\\
 
-En el contexto del proyecto, tras varias semanas de esfuerzo se logra configurar, compilar e instalar \'este kernel con la configuraci\'on del kernel con la que se ven\'ia trabajando al momento, garantizando as\'i el correcto funcionamiento del resto de las herramientas de software y hardware instaladas, entre las cuales se encuentran principalmente el hardware NetFPGA. Vale la pena resaltar sobre este aspecto que la documentaci\'on existente sobre este proyecto es prácticamente nula, adem\'as de que al cambiar la implementaci\'on del proyecto, la documentaci\'on del proyecto original no sirve.\\
+En el contexto del proyecto, tras varias semanas de esfuerzo se logra configurar, compilar e instalar \'este kernel con la configuraci\'on del kernel con la que se ven\'ia trabajando al momento, garantizando as\'i el correcto funcionamiento del resto de las herramientas de software y hardware instaladas, entre las cuales se encuentran principalmente el hardware NetFPGA. Conviene resaltar que la documentaci\'on existente sobre este proyecto es prácticamente nula, adem\'as de que al cambiar la implementaci\'on del proyecto, la documentaci\'on del proyecto original no sirve.\\
 
-Por otro lado, puesto que la implementaci\'on original de Quagga LDP realizada por James R. Leu no es compatible con esta versi\'ion m\'as nueva de MPLS-Linux, es necesario encontrar una versi\'on m\'as nueva. Afortunadamente, contemporáneo con el proyecto de Igor Maravic, se origina un proyecto\citep{QuaggaLDP2} para portar la versi\'on original de Quagga LDP a la implementaci\'on de MPLS-Linux m\'as reciente.\\
+Por otro lado, puesto que la implementaci\'on original de Quagga LDP realizada por James R. Leu no es compatible con esta versi\'ion de MPLS-Linux, es necesario encontrar una versi\'on que si lo sea. Afortunadamente, contemporáneo con el proyecto de Igor Maravic, se origina un proyecto\citep{QuaggaLDP2} para portar la versi\'on original de Quagga LDP a la implementaci\'on de MPLS-Linux m\'as reciente.\\
 
-En el contexto del proyecto se compila e instala esta implementaci\'on de Quagga y nuevamente tras largos esfuerzos puesto que de esta herramienta se tiene prácticamente nada de documentaci\'on se logra ejecutar correctamente. 
+En el contexto del proyecto se compila e instala esta implementaci\'on de Quagga y nuevamente tras largos esfuerzos (recordar que casi no existe documentación) se logra ejecutar correctamente. 
 
-No obstante al momento de integrar ambas herramientas surgieron problemas, concretamente en los logs del demonio zebra se detectaron errores al momento de insertar entradas en las tablas mpls del kernel de linux, y tras varias semanas de buscar informaci\'on en la web, analizar el error e inspeccionar el código fuente en busca de alguna pista, se descarta finalmente la alternativa de utilizar MPLS-Linux y Quagga LDP en el prototipo. 
+No obstante al momento de integrar ambas herramientas surgieron problemas, concretamente en los logs del demonio zebra se detectaron errores al momento de insertar entradas en las tablas MPLS del kernel de Linux, y tras varias semanas de buscar informaci\'on en la web, analizar el error e inspeccionar el código fuente en busca de alguna pista, se descarta la alternativa de utilizar MPLS-Linux y Quagga LDP en el prototipo. 
