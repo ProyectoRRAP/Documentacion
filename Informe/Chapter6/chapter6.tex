@@ -10,7 +10,7 @@
 
 Para validar funcionalmente el prototipo es preciso la construcción de un laboratorio de experimentación sobre el cual ejecutar un conjunto de pruebas e implementar algunos casos de uso representativos. Dentro de las pruebas funcionales se busca verificar aspectos importantes de la implementaci\'on como la clasificación de tr\'afico, el algoritmo de ruteo dinámico y el algoritmo de distribución de etiquetas.
 
-Por otro lado con la implementaci\'on de algunos casos de uso representativos se busca validar la utilización del enfoque OpenFlow/SDN en la construcci\'on a futuro de la RAU2.\\
+Por otro lado con la implementaci\'on de algunos casos de uso representativos se busca validar la utilización del enfoque OpenFlow/SDN en la construcci\'on de la RAU2.\\
 
 El siguiente capitulo esta destinado a la presentación del laboratorio de pruebas construido y a la descripción de las diferentes pruebas realizadas.
 
@@ -30,22 +30,20 @@ Teniendo en cuanta los requerimientos mencionados se construye un laboratorio de
 \label{fig:LaboratorioDePruebasTopo}
 \end{figure}
 
-El laboratorio se compone de cuatro nodos implementados en base al dispositivo RAU-Switch conectados entre si con enlaces de fibra \'optica multimodo. Cada nodo esta conectado a los otros tres nodos de la topolog\'ia implementando de esta forma una topolog\'ia full mesh de cuatro nodos.
-
-A su vez cada nodo esta conectado al controlador SDN del prototipo mediante una interfaz de red ethernet (interfaces \textbf{eth0}).\\
+El laboratorio se compone de cuatro nodos implementados en base al dispositivo RAU-Switch conectados entre si con enlaces de fibra \'optica multimodo. Cada nodo esta conectado a los otros tres nodos de la topolog\'ia implementando de esta forma una topolog\'ia full mesh de cuatro nodos. A su vez cada nodo esta conectado al controlador SDN del prototipo mediante una interfaz de red ethernet (interfaces \textbf{eth0}).\\
 
 Por la forma que tiene la topolog\'ia, los cuatro nodos nombrados \textit{Galois}, \textit{Poisson}, \textit{Oz} y \textit{Alice} son nodos de borde. Esto quiere decir que RAUFlow los considera como nodos habilitados para ser nodo de ingreso \'o nodo de egreso en la definici\'on de servicios de redes privadas.
 
 Por otro lado cada nodo cuenta con una interfaz de red de ethernet adicional (interfaz \textbf{eth1}) utilizada como interfaz externa para la conexi\'on con otras subredes. Estas interfaces son utilizadas por RAUFlow para la definici\'on de servicios de VPN como los puntos de entrada y salida de tr\'afico. Por tanto cada una de estas interfaces se encuentra directamente conectada a la subred de una VPN en particular.\\  
 
-Como se menciona anteriormente en el cap\'itulo 5, la representaci\'on utilizada para modelar una topolog\'ia de red es la de un multigrafo dirigido ponderado. En la figura \ref{fig:LaboratorioDePruebasCostos} se muestra esta representaci\'on para la topolog\'ia del prototipo. Como puede apreciarse en la im\'agen cada enlace tiene su respectivo costo asociado.
+Como se menciona anteriormente en el cap\'itulo 5, la representaci\'on utilizada para modelar una topolog\'ia de red es la de un multigrafo dirigido ponderado. En la figura \ref{fig:LaboratorioDePruebasCostos} se muestra esta representaci\'on para la topolog\'ia del prototipo. Como puede apreciarse en la im\'agen cada enlace tiene un costo asociado. Este costo se define mediante el archivo de configuraci\'on del demonio Unix OSPF en cada nodo de la red y es utilizado por el algoritmo SPF centralizado para el calculo de las mejores rutas.
 
-Por simplicidad en el diagrama se han obviado los enlaces existentes entre el Controlador y cada uno de los nodos. Como se menciona en el cap\'itulo 4 la instancia de Quagga ejecutada en el controlador tiene como \'unico objetivo contar con un acceso local a la LSDB. Por ello conceptualmente el costo asociado a cada uno de estos enlaces es infinito, lo cual en pr\'actica se realiza asignando el valor 65535.  
+Por simplicidad en el diagrama se han obviado los enlaces existentes entre el Controlador y cada uno de los nodos. Como se menciona en el cap\'itulo 4 la instancia de Quagga ejecutada en el controlador tiene como \'unico objetivo contar con un acceso local a la LSDB. Por ello conceptualmente el costo asociado a cada uno de estos enlaces es infinito, lo cual en la pr\'actica se realiza asignando el valor 65535.  
 
 \begin{figure}[ht!] 
 \centering    
 \includegraphics[width=0.85\textwidth]{TopologiaCostos}
-\caption[Laboratorio de pruebas - Costos de la topolog\'ia]{Laboratorio de pruebas - Costos de la topolog\'ia}
+\caption[Laboratorio de pruebas - Costos de enlaces en la topolog\'ia]{Laboratorio de pruebas - Costos de enlaces en la topolog\'ia}
 \label{fig:LaboratorioDePruebasCostos}
 \end{figure}
 
@@ -55,7 +53,7 @@ A continuaci\'on se describen los resultados obtenidos en la implementaci\'on de
 
 \section{VPN de capa 3}
 
-Las redes privadas virtuales de capa 3 son un tipo de servicio comúnmente brindado por un operador de red y es en particular uno de los servicios que se quiere implementar en la RAU2. En particular sobre este tipo de redes privadas puede implementarse clasificaci\'on de tr\'afico por tipo de aplicaci\'on o numeraci\'on de capa 3 por ejemplo.\\
+Las redes privadas virtuales de capa 3 son un tipo de servicio comúnmente brindado por un operador de red y es uno de los servicios que se quiere implementar en la RAU2. Sobre este tipo de redes privadas puede implementarse clasificaci\'on de tr\'afico por tipo de aplicaci\'on o numeraci\'on de capa 3 por citar algunos ejemplos.\\
 
 En este trabajo se implementan dos escenarios diferentes para este tipo de red privada: (a) red privada multipunto con una \'unica organizaci\'on y tres sucursales f\'isicamente separadas, (b) red privada punto a punto con dos organizaciones, cada una de ellas con dos sucursales f\'isicamente separadas.
 
