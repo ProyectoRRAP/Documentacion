@@ -58,14 +58,15 @@ Estos atributos fueron estudiados uno por uno y se llega a las dos listas presen
 \section{Sintaxis de un flujo en Open vSwitch}
 La sintaxis del comando ovs-ofctl, utilizado para agregar un flujo en la tabla de Open vSwitch es la siguiente:
 
+
 \begin{center}
-ovs-ofctl add-flow <bridge> <flow>
+\texttt{ovs-ofctl add-flow <bridge> <flow>}
 \end{center}
 
 Los parámetros de este comando son el nombre del brdige (<bridge>) y el flujo definido. La sintaxis de un flujo es la siguiente:
 
 \begin{center}
-attr1\_name=<value>,attr2\_name=<value>,.. actions=<action1>,<action2>,...
+\texttt{attr1\_name=<value>,attr2\_name=<value>,.. actions=<action1>,<action2>,...}
 \end{center}
 
 Primero tiene una lista de pares atributo valor separados por una “,” las cuales definen la regla de un flujo; es decir, los campos del cabezal OpenFlow utilizados para aparear tr\'afico. Un ejemplo común es es utilizar el numero de puerto OpenFlow de entrada, in\_port=1 por ejemplo.
@@ -85,93 +86,93 @@ A continuaci\'on se detallan los atributos soportados para la definici\'on de re
 \item \textbf{eth\_dst}: Permite a un flujo seleccionar tr\'afico distinguiendo por la direcci\'on destino de capa 2 (dirección MAC). El valor utilizado se compone de 6 pares de hexadecimales.
 
 \begin{center}
-ovs-ofctl add-flow <bridge> dl\_dst=<mac>,actions=<action>
+\texttt{ovs-ofctl add-flow <bridge> dl\_dst=<mac>,actions=<action>}
 \end{center}
 
 \item \textbf{eth\_src}: Permite a un flujo selecionar tr\'afico distinguiendo por direcci\'on origen de capa 2 (direcci\'on MAC). El valor utilizado se compone de 6 pares de hexadecimales.
 
 \begin{center}
-ovs-ofctl add-flow <bridge> dl\_src=<mac>,actions=<action>
+\texttt{ovs-ofctl add-flow <bridge> dl\_src=<mac>,actions=<action>}
 \end{center}
 
 \item \textbf{dl\_type}: Permite a un flujo selecionar tr\'afico distinguiendo por el tipo de ethertype de un paquete. Se utiliza como valor el c\'odigo hexadecimal de cada protocolo.
 
 \begin{center}
-ovs-ofctl add-flow <bridge> dl\_type=<ethernet type>,actions=<action>
+\texttt{ovs-ofctl add-flow <bridge> dl\_type=<ethernet type>, actions=<action>}
 \end{center}
 
 \item \textbf{vlan\_vID}: Permite a un flujo selecionar tr\'afico distinguiendo por el ID de VLAN. El valor de vlan\_id es un entero en el rango 0-4095.
 
 \begin{center}
-ovs-ofctl add-flow <bridge> dl\_vlan=<vlanid>,actions=<action>
+\texttt{ovs-ofctl add-flow <bridge> dl\_vlan=<vlanid>,actions=<action>}
 \end{center}
 
 \item \textbf{vlan\_PCP}: Permite a un flujo selecionar tr\'afico distinguiendo por el valor de prioridad de VLAN. El valor dl\_vlan\_pcp es un entero en el rango 0-7.
 
 \begin{center}
-ovs-ofctl add-flow <bridge> dl\_vlan\_pcp=<value>,actions=<action>
+\texttt{ovs-ofctl add-flow <bridge> dl\_vlan\_pcp=<value>,actions=<action>}
 \end{center}
 
 \item \textbf{IP\_dscp}: Permite a un flujo selecionar tr\'afico distinguiendo por los campos IP TOS/DHCP o Ipv6 traffic class field en un paquete IP, dependiendo del dl\_type utilizado. Se utiliza junto con los valores de dl\_type 0x0800 para IPv4 y 0x86DD para IPv6. Para otros valores de dl\_type el valor del campo nw\_tos es ignorado. El atributo nw\_tos toma valores en el rango 0-255.
 
 \begin{center}
-ovs-ofctl add-flow <bridge> dl\_type=<ethernet type>, nw\_tos=<tos>, actions=<action>
+\texttt{ovs-ofctl add-flow <bridge> dl\_type=<ethernet type>, nw\_tos=<tos>, actions=<action>}
 \end{center}
 
 \item \textbf{IP\_ecn}: Permite a un flujo selecionar tr\'afico distinguiendo por el valor de los bits ECN (Explicit Congestion) en un paquete IP. Cuando el valor del campo dl\_type es 0x0800 aparea los bits ecn en el campo IP TOS IPv4 mientras que cuando se utiliza el valor 0x86DD aparea los campos de clase de tr\'afico (trafic class fields) de IPv6. Si se utiliza otro valor de dl\_type estos bits son ignorados. El campo nw\_ecn toma valores en el rango 0-3.
 
 \begin{center}
-ovs-ofctl add-flow <bridge> dl\_type=<ethernet type>, nw\_ecn=<ecn>,actions=<action>
+\texttt{ovs-ofctl add-flow <bridge> dl\_type=<ethernet type>, nw\_ecn=<ecn>,actions=<action>}
 \end{center}
 
 \item \textbf{IP\_proto}: Se utiliza para indicar el protocolo IP utilizado en la deinici\'on de un flujo. Usualmente se utiliza en conjunto con otros atributos como tp\_src y tp\_dst. Cuando se utiliza el valor del campo dl\_type debe ser o 0x0800 en el caso de IPv4 o 0x86DD para el caso IPv6. El campo nw\_proto es el n\'umero de protocolo IP (valores en el rango 0-255).
 
 \begin{center}
-ovs-ofctl add-flow <bridge> dl\_type=<ethernet type>,nw\_proto=<proto>,actions=<action>
+\texttt{ovs-ofctl add-flow <bridge> dl\_type=<ethernet type>,nw\_proto=<proto>,actions=<action>}
 \end{center}
 
 \item \textbf{IPv4\_src}: Permite a un flujo seleccionar tr\'afico distinguiendo por la dirección origen IPv4. Se debe indicar para el campo dl\_type el valor 0x0800.  
 
 \begin{center}
-ovs-ofctl add-flow <bridge> dl\_type=<ethernet type>,nw\_src=ip[/netmask],actions=<action>
+\texttt{ovs-ofctl add-flow <bridge> dl\_type=<ethernet type>, nw\_src=ip[/netmask],actions=<action>}
 \end{center}
 
 \item \textbf{IPv4\_dst}: Permite a un flujo seleccionar tr\'afico distinguiendo por la dirección destino IPv4. Se debe indicar para el campo dl\_type el valor 0x0800.  
 
 \begin{center}
-ovs-ofctl add-flow <bridge> dl\_type=<ethernet type>,nw\_dst=ip[/netmask],actions=<action>
+\texttt{ovs-ofctl add-flow <bridge> dl\_type=<ethernet type>, nw\_dst=ip[/netmask],actions=<action>}
 \end{center}
  
 \item \textbf{TCP\_src}: Permite a un flujo seleccionar tr\'afico distinguiendo por el n\'umero de puerto TCP origen. Se debe indicar para el campo dl\_type el valor 0x0800 (IPv4) y para el campo nw\_proto el valor 6 (TCP). El campo tp\_src toma valores en el rango 0-65535.
 
 \begin{center}
-ovs-ofctl add-flow <bridge> dl\_type=0x0800,nw\_proto=6,tp\_src=<port>,actions=<action>
+\texttt{ovs-ofctl add-flow <bridge> dl\_type=0x0800, nw\_proto=6,tp\_src=<port>,actions=<action>}
 \end{center}
 
 De forma análoga se utilizan los campos UDP\_src y SCP\_src para clasificar tr\'afico por los puertos origen UDP y SCTP.
 
 \begin{center}
-ovs-ofctl add-flow <bridge> dl\_type=0x0800,nw\_proto=17,tp\_src=<port>,actions=<action>
+\texttt{ovs-ofctl add-flow <bridge> dl\_type=0x0800, nw\_proto=17,tp\_src=<port>,actions=<action>}
 \end{center}
 
 \begin{center}
-ovs-ofctl add-flow <bridge> dl\_type=0x0800,nw\_proto=132,tp\_src=<port>,actions=<action>
+\texttt{ovs-ofctl add-flow <bridge> dl\_type=0x0800, nw\_proto=132,tp\_src=<port>,actions=<action>}
 \end{center}
 
 \item \textbf{TCP\_dst}: Permite a un flujo seleccionar tr\'afico distinguiendo por el n\'umero de puerto TCP destino. Se debe indicar para el campo dl\_type el valor 0x0800 (IPv4) y para el campo nw\_proto el valor 6 (TCP). El campo tp\_dst toma valores en el rango 0-65535.
 
 \begin{center}
-ovs-ofctl add-flow <bridge> dl\_type=0x0800,nw\_proto=6,tp\_dst=<port>,actions=<action>
+\texttt{ovs-ofctl add-flow <bridge> dl\_type=0x0800, nw\_proto=6,tp\_dst=<port>,actions=<action>}
 \end{center}
 
 De forma análoga se utilizan los campos UDP\_dst y SCP\_dst para clasificar tr\'afico por los puertos destino UDP y SCTP.
 
 \begin{center}
-ovs-ofctl add-flow <bridge> dl\_type=0x0800,nw\_proto=17,tp\_dst=<port>,actions=<action>
+\texttt{ovs-ofctl add-flow <bridge> dl\_type=0x0800, nw\_proto=17,tp\_dst=<port>,actions=<action>}
 \end{center}
 
 \begin{center}
-ovs-ofctl add-flow <bridge> dl\_type=0x0800,nw\_proto=132,tp\_dst=<port>,actions=<action>
+\texttt{ovs-ofctl add-flow <bridge> dl\_type=0x0800, nw\_proto=132,tp\_dst=<port>,actions=<action>}
 \end{center}
 
 %\item \textbf{UDP\_src}: Permite a un flujo seleccionar tr\'afico distinguiendo por el n\'umero de puerto UDP origen. Se debe indicar para el campo dl\_type el valor 0x0800 (IPv4) y para el campo nw\_proto el valor 17 (UDP). El campo tp\_src toma valores en el rango 0 \dots 65535.
@@ -201,25 +202,25 @@ ovs-ofctl add-flow <bridge> dl\_type=0x0800,nw\_proto=132,tp\_dst=<port>,actions
 \item \textbf{ICMPv4\_type}: Permite a un flujo seleccionar tr\'afico distinguiendo por tipo de paquete ICMPv4. Open vSwitch utiliza el mismo campo para la definici\'on del tipo ICMPv4 o ICMPv6 en un flujo (icmp\_type). Se debe indicar en el campo dl\_type el valor 0x0800(IPv4) o 0x86DD (IPv6) y en el campo nw\_proto el valor 1 (ICMPv4) o 58 (ICMPv6). El campo icmp\_type toma valores en el rango 0-255.
 
 \begin{center}
-ovs-ofctl add-flow<bridge> dl\_type=<ethernettype>,nw\_proto=1,icmp\_type=<type>,actions=<action>
+\texttt{ovs-ofctl add-flow<bridge> dl\_type=<ethernettype>,nw\_proto=1, icmp\_type=<type>,actions=<action>}
 \end{center}
 
 \item \textbf{ICMPv4\_code}: Permite a un flujo seleccionar tr\'afico distinguiendo por código de paquete ICMPv4. Open vSwitch utiliza el mismo campo para la definici\'on del c\'odigo ICMPv4 o ICMPv6 en un flujo (icmp\_code). Se debe indicar en el campo dl\_type el valor 0x0800 para IPv4 o 0x86DD para IPv6 y en el campo nw\_proto el valor 1 para ICMPv4 o 58 para ICMPv6 respectivamente. El campo icmp\_code toma valores en el rango 0-255.
 
 \begin{center}
-ovs-ofctl add-flow<bridge> dl\_type=<ethernettype>,nw\_proto=[1|58],icmp\_code=<type>,actions=<action>
+\texttt{ovs-ofctl add-flow<bridge> dl\_type=<ethernet type>, nw\_proto=[1|58],icmp\_code=<type>,actions=<action>}
 \end{center}
 
 \item \textbf{IPv6\_src}: Permite a un flujo seleccionar tr\'afico distinguiendo por la dirección origen IPv6. Se debe indicar para el campo dl\_type el valor 0x86DD. 
 
 \begin{center}
-ovs-ofctl add-flow<bridge> dl\_type=0x86DD,ipv6\_src=<ipv6[/netmask]>,actions=<action>
+\texttt{ovs-ofctl add-flow<bridge> dl\_type=0x86DD, ipv6\_src=<ipv6[/netmask]>,actions=<action>}
 \end{center}
 
 \item \textbf{IPv6\_dst}: Permite a un flujo seleccionar tr\'afico distinguiendo por la dirección destino IPv6. Se debe indicar para el campo dl\_type el valor 0x86DD. 
 
 \begin{center}
-ovs-ofctl add-flow<bridge> dl\_type=0x86DD,ipv6\_dst=<ipv6[/netmask]>,actions=<action>
+\texttt{ovs-ofctl add-flow<bridge> dl\_type=0x86DD, ipv6\_dst=<ipv6[/netmask]>,actions=<action>}
 \end{center}
 
 \item \textbf{ICMPv6\_type}: Ver campo ICMP\_type por ejemplo acerca de la utilización de este campo. 
@@ -229,19 +230,19 @@ ovs-ofctl add-flow<bridge> dl\_type=0x86DD,ipv6\_dst=<ipv6[/netmask]>,actions=<a
 \item \textbf{MPLS\_label}:  Permite a un flujo seleccionar tr\'afico distinguiendo por el valor de etiqueta MPLS. Se debe indicar para el campo dl\_type el valor 0x8847 o 0x8848. El campo label toma valores en el rango 0-1048575.
 
 \begin{center}
-ovs-ofctl add-flow<bridge> dl\_type=[0x8847|0x8848]ovs-ofctl,mpls\_label=<label>,actions=<action>
+\texttt{ovs-ofctl add-flow<bridge> dl\_type=[0x8847|0x8848]ovs-ofctl, mpls\_label=<label>,actions=<action>}
 \end{center}
 
 \item \textbf{MPLS\_tc}: Permite a un flujo seleccionar tr\'afico distinguiendo por el valor del campo TC en el cabezal MPLS (para uso experimental). Se debe indicar para el campo dl\_type el valor 0x8847 o 0x8848. El campo mpls\_tc toma valores en el rango 0-7.
 
 \begin{center}
-ovs-ofctl add-flow<bridge> dl\_type=[0x8847|0x8848],mpls\_tc=<tc>,actions=<action>
+\texttt{ovs-ofctl add-flow<bridge> dl\_type=[0x8847|0x8848],mpls\_tc=<tc>,actions=<action>}
 \end{center}
 
 \item \textbf{MPLS\_bos}: Permite a un flujo seleccionar tr\'afico distinguiendo por el valor del campo BOS (Bottom of the stack) en el cabezal MPLS. Se debe indicar para el campo dl\_type el valor 0x8847 o 0x8848. El campo mpls\_bos toma valores 1 cuando el paquete contiene una única etiqueta MPLS y 0 cuando contiene m\'as de una etiqueta en el stack.
 
 \begin{center}
-ovs-ofctl add-flow<bridge> dl\_type=[0x8847|0x8848],mpls\_bos=<mpls\_bos>,actions=<action>
+\texttt{ovs-ofctl add-flow<bridge> dl\_type=[0x8847|0x8848], mpls\_bos=<mpls\_bos>,actions=<action>}
 \end{center}
 
 \end{itemize}
@@ -254,50 +255,50 @@ A continuaci\'on se detallan los atributos soportados para la definici\'on de ac
 \item \textbf{eth\_src}: Permite modificar el valor de direcci\'on origen de capa 2 (direcci\'on MAC).
 
 \begin{center}
-ovs-ofctl add-flow<bridge><match-field>actions=mod\_dl\_src:<mac>
+\texttt{ovs-ofctl add-flow<bridge><match-field>actions=mod\_dl\_src:<mac>}
 \end{center}
 
 \item \textbf{eth\_dst}: Permite modificar el valor de direcci\'on destino de capa 2 (direcci\'on MAC).
 
 \begin{center}
-ovs-ofctl add-flow<bridge><match-field>actions=mod\_dl\_dst:<mac>
+\texttt{ovs-ofctl add-flow<bridge><match-field>actions=mod\_dl\_dst:<mac>}
 \end{center}
 
 \item \textbf{vlan\_vID}: Permite modificar el valor del campo VLAN ID (identificador de VLAN).
                          
 \begin{center}
-ovs-ofctl add-flow <bridge> <match-field> actions=push\_vlan:<ethertype>,set\_field:<value>-\textbackslash >vlan\_vid,output:<port>
+\texttt{ovs-ofctl add-flow <bridge> <match-field> actions=push\_vlan:<ethertype>,set\_field:<value>-\textbackslash >vlan\_vid,output:<port>}
 \end{center}
 
 \item \textbf{vlan\_PCP}: Permite modificar el valor del campo VLAN PCP (prioridad de VLAN).
 
 \begin{center}
-ovs-ofctl add-flow<bridge><match-field>actions=mod\_vlan\_pcp:<vlan\_pcp>
+\texttt{ovs-ofctl add-flow<bridge><match-field>actions=mod\_vlan\_pcp:<vlan\_pcp>}
 \end{center}
 
 \item \textbf{IP\_dscp}: Permite modificar el valor de los bits TOS en el un cabezal IP. Esta acci\'on no modifica los 2 bits m\'as bajos del campo, los cuales representan los bits ECN.
 
 \begin{center}
-ovs-ofctl add-flow<bridge><match-field>actions=mod\_nw\_tos:<tos>
+\texttt{ovs-ofctl add-flow<bridge><match-field>actions=mod\_nw\_tos:<tos>}
 \end{center}
 
 \item \textbf{IPv4\_src}: Permite modificar el valor de direcci\'on origen de capa 3 (IP).
 
 \begin{center}
-ovs-ofctl add-flow<bridge><match-field>actions=mod\_nw\_src:<ip>
+\texttt{ovs-ofctl add-flow<bridge><match-field>actions=mod\_nw\_src:<ip>}
 \end{center}
 
 \item \textbf{IPv4\_dst}: Permite modificar el valor de direcci\'on destino de capa 3 (IP).
 
 \begin{center}
-ovs-ofctl add-flow<bridge><match-field>actions=mod\_nw\_dst:<ip>
+\texttt{ovs-ofctl add-flow<bridge><match-field>actions=mod\_nw\_dst:<ip>}
 \end{center}
 
 
 \item \textbf{TCP\_src}: Permite modificar el valor de puerto TCP origen de un paquete. Debe seleccionarse mediante la regla del flujo tr\'afico TCP para distinguirlo explicitamente de otro tipo de tr\'afico. 
 
 \begin{center}
-ovs-ofctl add-flow<bridge><match-field>actions=mod\_tp\_src:<port>
+\texttt{ovs-ofctl add-flow<bridge><match-field>actions=mod\_tp\_src:<port>}
 \end{center}
 
 De forma similar utilizando la misma primitiva y los campos \textbf{UDP\_src} y \textbf{SCTP\_src} se modifican puerto origen UDP y SCTP.
@@ -305,7 +306,7 @@ De forma similar utilizando la misma primitiva y los campos \textbf{UDP\_src} y 
 \item \textbf{TCP\_dst}: Permite modificar el valor de puerto TCP destino de un paquete. Debe seleccionarse mediante la regla del flujo tr\'afico TCP para distinguirlo explicitamente de otro tipo de tr\'afico. 
 
 \begin{center}
-ovs-ofctl add-flow<bridge><match-field>actions=mod\_tp\_dst:<port>
+\texttt{ovs-ofctl add-flow<bridge><match-field>actions=mod\_tp\_dst:<port>}
 \end{center}
             
 De forma similar utilizando la misma primitiva y los campos \textbf{UDP\_dst} y \textbf{SCTP\_dst} se modifica el puerto destino UDP y SCTP. 
@@ -313,21 +314,21 @@ De forma similar utilizando la misma primitiva y los campos \textbf{UDP\_dst} y 
 \item \textbf{MPLS\_label}: Permite manipular el valor de una etiqueta en un cabezal mpls. Las primitivas existentes son PUSH y POP.
 
 \begin{center}
-ovs-ofctl add-flow <bridge> <match-field> dl\_type=[0x8847 | 0x8848],actions=push\_mpls:<ethertype>,set\_field:<value>-\textbackslash >mpls\_label
+\texttt{ovs-ofctl add-flow <bridge> <match-field> dl\_type=[0x8847 | 0x8848],actions=push\_mpls:<ethertype>,set\_field:<value>-\textbackslash >mpls\_label}
 \end{center}
 
 \begin{center}
-ovs-ofctl add-flow<bridge><match-field>actions=set\_field:<label>-\textbackslash >mpls\_label
+\texttt{ovs-ofctl add-flow<bridge> <match-field> actions=set\_field:<label>-\textbackslash >mpls\_label}
 \end{center}
-
+ 
 \begin{center}
-ovs-ofctl add-flow<bridge><match-field>actions=pop\_mpls:<ethertype>
+\texttt{ovs-ofctl add-flow<bridge> <match-field> actions=pop\_mpls:<ethertype>}
 \end{center}
 
 \item \textbf{MPLS\_tc}: Permite modificar el valor de los bits experimentales en el cabezal mpls.
 
 \begin{center}
-ovs-ofctl add-flow<bridge><match-field>actions=set\_field:<label>-\textbackslash >mpls\_tc
+\texttt{ovs-ofctl add-flow<bridge> <match-field> actions=set\_field:<label>-\textbackslash >mpls\_tc}
 \end{center}
 
 \end{itemize}
