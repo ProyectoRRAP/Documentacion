@@ -143,7 +143,7 @@ Este conjunto de servicios establece el procesamiento de paquetes de capa 3 para
 
 %A continuaci\'on se detallan las pruebas realizadas para cada uno de los aspectos mencionados anteriormente.
 
-\subsubsection{Verificaci\'on de Algoritmo de ruteo}
+\subsubsection{Verificaci\'on del Algoritmo de ruteo}
 En esta secci\'on se eval\'ua el correcto funcionamiento del algoritmo de ruteo. Para ello se comparan los caminos computados por el algoritmo para cada servicio, con los respectivos mejores caminos te\'oricos (previamente calculados de forma manual). 
 
 Para cada camino se verifican dos cosas: (1) que el camino calculado se corresponde con el camino te\'orico y (2) que el camino es correctamente instalado en forma de reglas de reenvío (en base a conmutaci\'on de etiquetas) en las respectivas tablas de flujos OpenFlow de cada nodo en el camino.\\
@@ -200,7 +200,7 @@ Vale la pena mencionar que debido a las limitaciones impuestas por el hardware d
 
 Este escenario se traduce en dos servicios de VPN punto a punto. Sin embargo los aspectos de implementaci\'on que en esta secci\'on se pretenden verificar, son independientes de si el servicio de VPN es punto a punto o multipunto.
 
-\begin{figure}[h!] 
+\begin{figure}[h] 
 \centering    
 \includegraphics[width=1.0\textwidth]{CU1P2}
 \caption[VPN de capa 3 - Escenario 2]{VPN de capa 3 - Escenario 2}
@@ -237,58 +237,8 @@ Nombre & Ingreso & Egreso & Clasificación & Descripción \\ \hline
 
 Para todos estos servicios adem\'as se indica como valor de ethertype 0x0800, correspondiente al tipo de tr\'afico IPv4.\\
 
-Las tablas de flujos correspondientes a cada nodo en la red del prototipo se muestran a continuaci\'on.
 
 \newpage
-\begin{figure}[ht!] 
-\centering    
-\includegraphics[width=1.0\textwidth]{E2P1Gal}
-\caption[Tabla de flujos ovs - Galois]{Tabla de flujos ovs - Galois}
-\label{fig:CU1P1DumpFlows1}
-\end{figure}
-
-\begin{figure}[h!] 
-\centering    
-\includegraphics[width=1.0\textwidth]{E2P1Oz}
-\caption[Tabla de flujos ovs - Oz]{Tabla de flujos ovs - Oz}
-\label{fig:CU1P1DumpFlows2}
-\end{figure}
-
-\begin{figure}[h!] 
-\centering    
-\includegraphics[width=1.0\textwidth]{E2P1Poi}
-\caption[Tabla de flujos ovs - Poisson]{Tabla de flujos ovs - Poisson}
-\label{fig:CU1P1DumpFlows3}
-\end{figure}
-
-\newpage
-\begin{figure}[ht!] 
-\centering    
-\includegraphics[width=1.0\textwidth]{E2P1Al}
-\caption[Tabla de flujos ovs - Alice]{Tabla de flujos ovs - Alice}
-\label{fig:CU1P1DumpFlows4}
-\end{figure}
-
-Sobre este escenario se realizan pruebas de generar tr\'afico en una subred con destino a otra para ambas organizaciones, verificando adem\'as que el tr\'afico llega a la subred correcta sin importar que la numeraci\'on IP este solapada (aislamiento de espacio de direccionamiento).\\
-
-En la figura \ref{fig:CU1P1DumpFlows5} se muestran capturas realizadas con tcpdump para los nodos involucrados en el LSP del servicio S1, cuando el host H3 realiza un ping al host H1.\\
-\begin{figure}[h!] 
-\centering    
-\includegraphics[width=1.0\textwidth]{Escenario2/LabE2H2H1CapturasTCPDUMP}
-\caption[Ping Subred A H3 - Subred B H1, capturas tcpdump]{Ping Subred A H3 - Subred B H1, capturas tcpdump}
-\label{fig:CU1P1DumpFlows5}
-\end{figure}
-
-A continuaci\'on se muestra el comando ping ejecutado.
-
-\begin{figure}[h!] 
-\centering    
-\includegraphics[width=1.0\textwidth]{Escenario2/LabE2H3H1Ping}
-\caption[Ping Subred A H3 - Subred B H1]{Ping Subred A H3 - Subred B H1}
-\label{fig:CU1P1DumpFlows6}
-\end{figure}
-
-
 \section{VPN de capa 2}
 
 A diferencia de las VPN de capa 3, las cuales se definen para un protocolo o aplicaci\'on particular  
