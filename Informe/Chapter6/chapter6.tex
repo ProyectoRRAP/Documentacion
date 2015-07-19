@@ -194,18 +194,18 @@ En la siguiente seccci\'on se discute la verificación de otros aspectos importa
 
 \subsection{Escenario 2}
 
-Este escenario representa una red privada punto a punto de capa 3. Esta compuesto por dos organizaciones diferentes, cada una de ellas con dos sucursales f\'isicamente separadas. Adem\'as, ambas organizaciones utilizan el mismo espacio de direccionamiento IP para sus respectivas subredes.\\
+Este escenario (ver figura \ref{fig:CUP2}) representa una red privada punto a punto de capa 3. Esta compuesto por dos organizaciones diferentes, cada una de ellas con dos sucursales f\'isicamente separadas. Adem\'as, ambas organizaciones utilizan el mismo espacio de direccionamiento IP para sus respectivas subredes.\\
 
-Vale la pena mencionar que debido a las limitaciones impuestas por el hardware disponible; recordar que cada nodo en el prototipo cuenta con una \'unica interfaz f\'isica disponible para conectarse a la subred de un “cliente”, solo se pueden conectar cuatro subredes al prototipo. De esta forma, el \'unico  escenario para el cual se tienen al menos dos clientes diferentes con al menos dos oficinas físicamente separadas, es el caso m\'as simple en donde cada organización tiene dos subredes. 
-
-Este escenario se traduce en dos servicios de VPN punto a punto. Sin embargo los aspectos de implementaci\'on que en esta secci\'on se pretenden verificar, son independientes de si el servicio de VPN es punto a punto o multipunto.
-
-\begin{figure}[h] 
+\begin{figure}[h!] 
 \centering    
-\includegraphics[width=1.0\textwidth]{CU1P2}
+\includegraphics[width=1.0\textwidth]{CU1P2Caminos}
 \caption[VPN de capa 3 - Escenario 2]{VPN de capa 3 - Escenario 2}
 \label{fig:CUP2}
 \end{figure}
+
+%Vale la pena mencionar que debido a las limitaciones impuestas por el hardware disponible; recordar que cada nodo en el prototipo cuenta con una \'unica interfaz f\'isica disponible para conectarse a la subred de un “cliente”, solo se pueden conectar cuatro subredes al prototipo. De esta forma, el \'unico  escenario para el cual se tienen al menos dos clientes diferentes con al menos dos oficinas físicamente separadas, es el caso m\'as simple en donde cada organización tiene dos subredes. 
+
+Este escenario se traduce en dos servicios de VPN punto a punto. Sin embargo los aspectos de implementaci\'on que en esta secci\'on se pretenden verificar, son independientes de si el servicio de VPN es punto a punto o multipunto.
 
 Sobre este escenario se busca validar los siguientes aspectos en relaci\'on a la implementaci\'on:
 
