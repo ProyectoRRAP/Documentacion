@@ -207,92 +207,99 @@ Para comprobar que el algoritmo de ruteo recaclula correctamente las rutas, se i
 \newpage
 \begin{figure}[ht!] 
 \centering    
-\includegraphics[width=1.0\textwidth]{E1P2/LabE1P2Gal}
+\includegraphics[width=1.0\textwidth]{E1P2/E1P2Galois}
 \caption[Tabla de flujos ovs - Galois]{Tabla de flujos ovs - Galois}
+\label{fig:CU1P2DumpFlows1}
+\end{figure}
+
+\begin{figure}[h!] 
+\centering    
+\includegraphics[width=1.0\textwidth]{E1P2/E1P2Oz}
+\caption[Tabla de flujos ovs - Oz]{Tabla de flujos ovs - Oz}
 \label{fig:CU1P2DumpFlows2}
 \end{figure}
 
-\begin{figure}[h] 
+\begin{figure}[h!] 
 \centering    
-\includegraphics[width=1.0\textwidth]{E1P2/LabE1P2Poi}
+\includegraphics[width=1.0\textwidth]{E1P2/E1P2Poisson}
 \caption[Tabla de flujos ovs - Poisson]{Tabla de flujos ovs - Poisson}
 \label{fig:CU1P2DumpFlows3}
 \end{figure}
 
 \newpage
-\begin{figure}[h] 
+\begin{figure}[ht!] 
 \centering    
-\includegraphics[width=1.0\textwidth]{E1P2/LabE1P2Oz}
-\caption[Tabla de flujos ovs - Oz]{Tabla de flujos ovs - Oz}
-\label{fig:CU1P2DumpFlows4}
-\end{figure}
-
-\begin{figure}[h] 
-\centering    
-\includegraphics[width=1.0\textwidth]{E1P2/LabE1P2Al}
+\includegraphics[width=1.0\textwidth]{E1P2/E1P2Alice}
 \caption[Tabla de flujos ovs - Alice]{Tabla de flujos ovs - Alice}
-\label{fig:CU1P2DumpFlows1}
+\label{fig:CU1P2DumpFlows4}
 \end{figure}
 
 Tomando como ejemplo la actualizaci\'on del LSP asociado al servicio S3, mientras que en la topolog\'ia original el camino asociado es $<(Galois, nf2)>$, tras la actualizaci\'on de la topolog\'ia el camino correcto puede ser o bien $<(Galois, nf0),(Oz, nf1)>$ o bien \\ $<(Galois, nf0), (Oz, nf2), (Alice, nf0)>$.\\
 
 Al cambiar el camino, los flujos asociados a cada nodo en el camino tambi\'en deben cambiar. En particular como el camino nuevo no comparte ning\'un salto con el camino original, los flujos asociados al camino viejo deben ser eliminados de cada nodo.
 
-Recordando la tabla de flujos original del nodo \textit{Galois} (ver imagen \ref{fig:CU1P1DumpFlows1}), el flujo \ref{fig:Flujo1} es utilizado para procesar y reenviar paquetes al nodo Poisson. En la tabla de flujos actualizada, este flujo es remplazado por el siguiente flujo (ver imagen \ref{fig:CU1P2DumpFlows2}):
+Recordando la tabla de flujos original del nodo \textit{Galois} (ver imagen \ref{fig:CU1P1DumpFlows1}), el flujo \ref{fig:Flujo1} es utilizado para procesar y reenviar paquetes al nodo Poisson. En la tabla de flujos actualizada, este flujo es remplazado por el siguiente flujo (ver imagen \ref{fig:CU1P2DumpFlows1}):
 
 \begin{center}
-\texttt{cookie=0.0, duration=192.239s, table=0, n\_packets=197, n\_bytes=19306, \\
+\texttt{cookie=0.0, duration=282.718s, table=0, n\_packets=216, n\_bytes=21168, \\
 priority=5,ip,in\_port=1, nw\_src=20.20.20.128/26,nw\_dst=20.20.20.64/26 \\
 actions=dec\_ttl,push\_mpls:0x8847,set\_field:32->mpls\_label,set\_mpls\_ttl(128), goto\_table:1 \\
 \vspace{0.5cm}
-cookie=0.0, duration=197.238s, table=0, n\_packets=197, n\_bytes=19306, \\
+cookie=0.0, duration=282.718s, table=0, n\_packets=216, n\_bytes=21168, \\
 priority=5,mpls,in\_port=1,mpls\_label=32 \\
-actions=push\_mpls:0x8847,set\_fied:32->mpls\_label,set\_mpls\_ttl(128),output:2}
+actions=push\_mpls:0x8847,set\_fied:31->mpls\_label,set\_mpls\_ttl(128),output:2}
 \end{center}
 
-Mediante este par de flujos, se les colocan dos cabezales mpls a los paquetes asociados al servicio, para luego ser reenviados por el puerto numero 2 (interfaz nf0) al nodo \textit{Oz}.\\
+Mediante este par de flujos, se les colocan dos cabezales MPLS a los paquetes asociados al servicio, para luego ser reenviados por el puerto numero 2 (interfaz nf0) al nodo \textit{Oz}.\\
 
 Por otra parte en la tabla de flujos del nodo \textit{Oz}, se incorpora el siguiente flujo:
 
 \begin{center}
-\texttt{cookie=0.0, duration=280.155s, table=0, n\_packets=280, n\_bytes=29680, \\
-priority=5,mpls,in\_port=2,mpls\_label=32,mpls\_bos=0 \\
-actions=set\_field:30->mpls\_label,dec\_mpls\_ttl,output:4 }
+\texttt{cookie=0.0, duration=315.790s, table=0, n\_packets=249, n\_bytes=26394, \\
+priority=5,mpls,in\_port=2,mpls\_label=31,mpls\_bos=0 \\
+actions=set\_field:31->mpls\_label,dec\_mpls\_ttl,output:4 }
 \end{center}
 
-El mismo implementa el cambio de etiqueta mpls en el paquete, y su posterior reenvío por el puerto n\'umero 4 (interfaz nf2).\\
+El mismo implementa el cambio de etiqueta MPL en el paquete y su posterior reenvío por el puerto n\'umero 4 (interfaz nf2).\\
 
 Luego en la tabla de flujos del nodo \textit{Alice} se incorpora el siguiente flujo:
 
 \begin{center}
-\texttt{cookie=0.0, duration=48.510s, table=0, n\_packets=48, n\_bytes=5088, 
-priority=5,mpls,in\_port=2,mpls\_label=32,mpls\_bos=0 \\
+\texttt{cookie=0.0, duration=252.632s, table=0, n\_packets=186, \\
+n\_bytes=19716, priority=5,mpls,in\_port=4,mpls\_label=31,mpls\_bos=0 \\
 actions=pop\_mpls:0x8847,output:2 }
 \end{center}
 
-Este flujo implementa el pop de la etiqueta mpls externa en el penúltimo nodo del LSP (penultimate-pop-hoping). Tras realizar esta acci\'on reenvía el paquete por el puerto n\'umero 2 (interfaz nf0).\\
+Este flujo implementa el pop de la etiqueta MPLS externa en el penúltimo nodo del LSP (penultimate-pop-hoping). Tras realizar esta acci\'on reenvía el paquete por el puerto n\'umero 2 (interfaz nf0).\\
 
 Finalmente cuando el paquete arriba al nodo \textit{Poisson}, el procesamiento final del paquete, realizado con anterioridad por el flujo \ref{fig:Flujo2} ahora se realiza mediante el siguiente flujo: 
 
 \begin{center}
-\texttt{cookie=0.0, duration=320.758s, table=0, n\_packets=320, n\_bytes=32740, \\
-priority=5,mpls,in\_port=2,mpls\_label=32,mpls\_bos=1 \\
-actions=pop\_mpls:0x0800,output:1 }
+\texttt{cookie=0.0, duration=350.781s, table=0, n\_packets=284, \\
+n\_bytes=28968, priority=5,mpls,in\_port=2,mpls\_label=32,mpls\_bos=1 \\
+actions=pop\_mpls:0x0800,set\_field:00:00:00:aa:00:00->eth\_dst,output:1 }
 \end{center}
 
-En la figura \ref{fig:CU1P1DumpFlows1} se muestran capturas tcpdump de las interfaces por las cuales el tr\'afico asociado al servicio S3 atraviesa la red del laboratorio en el nuevo camino calculado.
-
-Enumerando las figuras de izquierda a derecha y de arriba hacia abajo, la primer imagen se corresponde con una captura sobre la interfaz eth1 del nodo Galois, la segunda con la interfaz nf0 del mismo nodo, la tercera con la interfaz nf2 del nodo Oz, la cuarta con la interfaz nf0 del nodo Alice y finalmente la quinta con la interfaz eth1 en el nodo Poisson.
+En la figura \ref{fig:LabE1P1CapsTraf3} se muestran capturas de tr\'afico en las interfaces por las que atraviesa el nuevo LSP asociado al servicio S3. Enumerando las figuras de izquierda a derecha y de arriba hacia abajo, la primer imagen se corresponde con una captura sobre la interfaz eth1 del nodo Galois, la segunda con la interfaz nf0 del mismo nodo, la tercera con la interfaz nf2 del nodo Oz, la cuarta con la interfaz nf0 del nodo Alice y finalmente la quinta con la interfaz eth1 en el nodo Poisson.
 
 \newpage
 \begin{figure}[ht!] 
 \centering    
-\includegraphics[width=1.0\textwidth]{E1P2/LabE1P2SnapshotTrafico1}
+\includegraphics[width=1.0\textwidth]{E1P2/E1P2CapturasTrafico1}
 \caption[Capturas de tr\'afico con tcpdump para el servicio S3 tras actualización topol\'ogica]{Capturas de tr\'afico con tcpdump para el servicio S3 tras actualización topol\'ogica}
 \label{fig:LabE1P1CapsTraf3}
 \end{figure}
 
+Adicionalmente en la figura \ref{fig:LabE1P2CapHost} se muestra le ejeuci\'on del comando ping en el host H1 de la subred A con destino al host H3 de la subred B durante la ejecuci\'on de la prueba. En la misma puede observarse como se envían y reciben paquetes antes del desperfecto en el enlace (paquetes ICMP con n\'umero de secuencia 1 al 5) y como luego se continua enviando y recibiendo paquetes tras el desperfecto en el enlace (paquetes ICMP con n\'umero de secuencia 11 al 16). Por otro lado los paquetes ICMP perdidos (secuencia entre el 6 y el 10) se corresponden a los paquetes ICMP perdidos mientras la base de datos topol\'ogica (LSDB) se actualiza, la aplicaci\'on RAUFlow es notificada, ejecuta el algoritmo de ruteo para los servicios en el sistema y actualiza las tablas de flujo correspondientes.   \\
+
 Análogamente se puede estudiar la correspondencia entre el camino te\'orico y el camino calculado para el servicio S6.\\
+
+\begin{figure}[h!] 
+\centering    
+\includegraphics[width=0.6\textwidth]{E1P2/E1P1202020130-2020266-ConCaidaDeLink}
+\caption[Capturas de tr\'afico con tcpdump para el servicio S3 tras actualización topol\'ogica]{Capturas de tr\'afico con tcpdump para el servicio S3 tras actualización topol\'ogica}
+\label{fig:LabE1P2CapHost}
+\end{figure}
 
 \section{Escenario 2}
 \label{appendix6.4}
