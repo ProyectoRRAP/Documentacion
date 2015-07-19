@@ -25,31 +25,32 @@ $$<(Galois, nf_2)>$$
 \newpage
 \begin{figure}[ht!] 
 \centering    
-\includegraphics[width=1.0\textwidth]{E1P1/LabE1P1Gal}
+\includegraphics[width=1.0\textwidth]{E1P1/E1P1Galois}
 \caption[Tabla de flujos ovs - Galois]{Tabla de flujos ovs - Galois}
 \label{fig:CU1P1DumpFlows1}
 \end{figure}
 
 \begin{figure}[h!] 
 \centering    
-\includegraphics[width=1.0\textwidth]{E1P1/LabE1P1Oz}
+\includegraphics[width=1.0\textwidth]{E1P1/E1P1Oz}
 \caption[Tabla de flujos ovs - Oz]{Tabla de flujos ovs - Oz}
 \label{fig:CU1P1DumpFlows2}
 \end{figure}
 
 \begin{figure}[h!] 
 \centering    
-\includegraphics[width=1.0\textwidth]{E1P1/LabE1P1Al}
-\caption[Tabla de flujos ovs - Alice]{Tabla de flujos ovs - Alice}
+\includegraphics[width=1.0\textwidth]{E1P1/E1P1Poisson}
+\caption[Tabla de flujos ovs - Poisson]{Tabla de flujos ovs - Poisson}
 \label{fig:CU1P1DumpFlows3}
 \end{figure}
 
 \begin{figure}[h!] 
 \centering    
-\includegraphics[width=1.0\textwidth]{E1P1/LabE1P1Poi}
-\caption[Tabla de flujos ovs - Poisson]{Tabla de flujos ovs - Poisson}
+\includegraphics[width=1.0\textwidth]{E1P1/E1P1Alice}
+\caption[Tabla de flujos ovs - Alice]{Tabla de flujos ovs - Alice}
 \label{fig:CU1P1DumpFlows4}
 \end{figure}
+
 
 \newpage
 En otras palabras todo tr\'afico IP con origen en la subred A y destino a la subred B, es encaminado a través de la interfaz $nf_2$ en el nodo de ingreso \textit{Galois}. Luego en el nodo de egreso \textit{Poisson} es reenviado por la interfaz externa asociada al servicio.\\
@@ -61,9 +62,10 @@ Por un lado en la tabla de flujos del nodo \textit{Galois} se tiene el siguiente
 %Por un lado, acorde a la definci\'on del servicio, Galois debería reenviar todo tr\'afico de tipo \textbf{ip} que ingresa por la interfaz eth1(la cual se corresponde con el n\'umero de puerto openflow 1), con origen en la subred 20.20.20.64/26 y destino 20.20.20.0/64 por la interfaz nf1(la cual se corresponde con el n\'umero de puerto openflow 3).
 
 \begin{figure}[h]
-\texttt{cookie=0.0, duration=531.354s, table=0, n\_packets=0, n\_bytes=0, \\ 
-priority=5, ip,in\_port=1, nw\_src=20.20.20.128/26,nw\_dst=20.20.20.0/26 \\
-actions=dec\_ttl,push\_mpls:0x8847,set\_field:30->mpls\_label, \\
+\texttt{cookie=0.0, duration=1022.644s, table=0, n\_packets=336, \\ 
+n\_bytes=193466, priority=5,ip,in\_port=1, \\
+nw\_src=20.20.20.128/26,nw\_dst=20.20.20.64/26 \\
+actions=dec\_ttl,push\_mpls:0x8847,set\_field:32->mpls\_label, \\
 set\_mpls\_ttl(128),output:4}
 \centering
 \caption{Flujo 1}
@@ -77,15 +79,15 @@ Este flujo toma todo paquete recibido por el puerto OpenFlow identificado con el
 El procesamiento de los paquetes asociados al servicio S3 en el nodo \textit{Poisson}, esta dado por el siguiente flujo:
 
 \begin{figure}[h]
-\texttt{cookie=0.0, duration=655.076s, table=0, n\_packets=0, n\_bytes=0, \\
-priority=5, mpls,in\_port=4,mpls\_label=32,mpls\_bos=1 \\
-actions=pop\_mpls:0x0800,output:1 }
+\texttt{cookie=0.0, duration=1090.776s, table=0, n\_packets=215, \\ 
+n\_bytes=24092, priority=5, mpls,in\_port=4,mpls\_label=32,mpls\_bos=1 \\
+actions=pop\_mpls:0x0800,set\_field:00:00:00:aa:00:00->eth\_dst,output:1 }
 \centering
 \caption{Flujo 2}
 \label{fig:Flujo2}
 \end{figure}
 
-Este flujo toma todo paquete recibido por el puerto OpenFlow n\'umero 4 (interfaz nf2), retira el cabezal MPLS y finalmente lo reenvía por el puerto n\'umero 1 (interfaz eth1).\\
+Este flujo toma todo paquete recibido por el puerto OpenFlow n\'umero 4 (interfaz nf2), retira el cabezal MPLS, modifica el valor del campo direcci\'on MAC destino de la trama ethernet y finalmente lo reenvía por el puerto n\'umero 1 (interfaz eth1).\\
 
 De esta forma todos los paquetes asociados al servicio S3 son transportados desde el nodo de ingreso \textit{Galois} al nodo de egreso \textit{Poisson} mediante un solo enlace, utilizando un solo nivel de etiquetas MPLS.\\
 
@@ -96,12 +98,13 @@ $$<(Poisson, nf_1), (Oz, nf_0)>$$
 Analizando primero la tabla de flujos del nodo \textit{Poisson}, el primer salto del camino es implementado por los siguientes flujos:
 
 \begin{center}
-\texttt{cookie=0.0, duration=655.065s, table=0, n\_packets=0, n\_bytes=0, \\ 
-priority=5, ip,in\_port=1, nw\_src=20.20.20.64/26,nw\_dst=20.20.20.128/26 \\
+\texttt{cookie=0.0, duration=1090.775s, table=0, n\_packets=299, \\
+n\_bytes=189800, priority=5, ip,in\_port=1,\\ 
+nw\_src=20.20.20.64/26,nw\_dst=20.20.20.128/26 \\
 actions=dec\_ttl,push\_mpls:0x8847,set\_field:33->mpls\_label,set\_mpls\_ttl (128), goto\_table:1 \\
 \vspace{0.5cm}
-cookie=0.0, duration=655.065s, table=0, n\_packets=0, n\_bytes=0, \\ 
-priority=5, mpls,in\_port=1,mpls\_label=33 \\
+cookie=0.0, duration=1090.775s, table=0, n\_packets=299, \\
+n\_bytes=189800, priority=5, mpls,in\_port=1,mpls\_label=33 \\
 actions=push\_mpls:0x8847,set\_fied:30->mpls\_label,set\_mpls\_ttl(128),output:3
 }
 \end{center}
@@ -114,20 +117,21 @@ Tras colocar el par de etiquetas MPLS sobre el paquete al ingreso, el mismo es r
 
 El siguiente salto en el camino, es implementado por el siguiente flujo en la tabla del nodo \textit{Oz}:
 
+\newpage
 \begin{center}
-\texttt{cookie=0.0, duration=610.380s, table=0, n\_packets=243, n\_bytes=25748, \\ 
-priority=5,mpls,in\_port=3,mpls\_label=30,mpls\_bos=0 \\
+\texttt{cookie=0.0, duration=1063.405s, table=0, n\_packets=186, \\
+n\_bytes=20206, priority=5,mpls,in\_port=3,mpls\_label=30,mpls\_bos=0 \\
 actions=pop\_mpls:0x8847,output:2 }
 \end{center}
 
-Tras ingresar un paquete, se cambia el valor de la etiqueta externa para luego reenviarse por el puerto n\'umero 4 (interfaz nf2).\\
+Como Oz representa el penúltimo salto en el LSP las acciones asociadas son retirar la etiqueta externa del paquete para luego reenviarse por el puerto n\'umero 4 (interfaz nf2) rumbo al \'ultimo nodo en el camino.\\
 
-Luego el tramo final del camino es implementado en el nodo \textit{Galois} mediante el siguiente flujo:
+El tramo final del camino es implementado en el nodo \textit{Galois} mediante el siguiente flujo:
 
 \begin{center}
-\texttt{cookie=0.0, duration=531.341s, table=0, n\_packets=234, n\_bytes=23868, \\
-priority=5,mpls,in\_port=2,mpls\_label=33,mpls\_bos=1 \\
-actions=pop\_mpls:0x0800,output:1 }
+\texttt{cookie=0.0, duration=1022.644s, table=0, n\_packets=186, \\
+n\_bytes=19462, priority=5,mpls,in\_port=2,mpls\_label=33,mpls\_bos=1 \\
+actions=pop\_mpls:0x0800,set\_field:00:00:00:aa:00:03->eth\_dst,output:1 }
 \end{center}
 
 Análogamente el lector puede completar el análisis de la correspondencia entre los caminos te\'oricos y calculados por el algoritmo de ruteo.
@@ -137,34 +141,34 @@ Análogamente el lector puede completar el análisis de la correspondencia entre
 
 En la figura \ref{fig:LabE1P1CapsTraf} se muestra el procesamiento de los paquetes asociados al servicio S3 en cada uno de los nodos que componen al LSP, cuando se genera tr\'afico desde un host en la sub red A con destino a otro host en la subred B.
 
-\begin{figure}[h] 
+Como puede observarse en el primer cuarto de la imagen (cuarto superior izquierdo), el cual se corresponde con una captura hecha con el comando \textbf{tcpdump} en la interfaz \textbf{eth1} del nodo \textit{Galois}, se reciben paquetes ICMP request con origen 20.20.20.130 y destino 20.20.20.66. Tambi\'en puede observarse en esta imagen paquetes ICMP reply a los paquetes request enviados.
+
+Luego, como se muestra en el segundo cuarto de la imagen (cuarto superior derecho), el cual se corresponde con una captura realizada en la interfaz nf2 de dicho nodo, a cada paquete ICMP request recibido por la interfaz eth1 se le coloca un cabezal MPLS con la etiqueta 31 y se reenvía por la interfaz en cuestión. Finalmente al arribar al nodo \textit{Poisson} por la interfaz \textbf{nf2} (cuarto inferior izquierdo de la imagen), el cabezal MPLS es retirado de cada paquete para luego ser reenviado por la interfaz \textbf{eth1} hacia la subred B (cuarto inferior derecho de la imagen).\\
+
+\newpage
+\begin{figure}[ht!] 
 \centering    
-\includegraphics[width=1.0\textwidth]{E1P1/LabE1P1CaputrasTrafico0}
-\caption[Capturas de tr\'afico con tcpdump - servicio S1]{Capturas de tr\'afico con tcpdump - servicio S1}
+\includegraphics[width=1.0\textwidth]{E1P1/E1P1CapturasTrafico}
+\caption[Capturas de tr\'afico con tcpdump - servicio S3]{Capturas de tr\'afico con tcpdump - servicio S3}
 \label{fig:LabE1P1CapsTraf}
 \end{figure}
 
-Como puede observarse en el primer cuarto de la imagen (cuarto superior izquierdo), el cual se corresponde con una captura hecha con el comando \textbf{tcpdump} en la interfaz \textbf{eth1} del nodo \textit{Galois}, se reciben paquetes ICMP request con origen 20.20.20.131 y destino 20.20.20.05. Tambi\'en puede observarse en esta imagen paquetes ICMP reply a los paquetes request enviados.
-
-Luego, como se muestra en el segundo cuarto de la imagen (cuarto superior derecho), el cual se corresponde con una captura realizada en la interfaz nf0 de dicho nodo, a cada paquete ICMP request recibido por la interfaz eth1 se le coloca un cabezal mpls con la etiqueta 31 y se reenvía por la interfaz en cuestión. Finalmente al arribar al nodo \textit{Oz} por la interfaz \textbf{nf0} (cuarto inferior izquierdo de la imagen), el cabezal mpls es retirado de cada paquete para luego ser reenviado por la interfaz \textbf{eth1} hacia la subred C (cuarto inferior derecho de la imagen).\\
-
-En la figura \ref{fig:LabE1P1CapHost} se muestra una captura de pantalla del comando ping utilizado para generar tr\'afico ICMP desde el host 20.20.20.130 en la subred A, al host 20.20.20.66 en la subred B.
+En la figura \ref{fig:LabE1P1CapHost} se muestra una captura de pantalla del comando ping utilizado para generar tr\'afico ICMP desde el host 20.20.20.130 en la subred A, al host 20.20.20.66 en la subred B.\\
 
 \begin{figure}[h!] 
 \centering    
-\includegraphics[width=0.6\textwidth]{E1P1/E1P1202020131-2020205}
-\caption[Capturas de comando ping H1-Subred A]{Capturas de comando ping H1-Subred A}
+\includegraphics[width=0.6\textwidth]{E1P1/E1P1202020130-2020266}
+\caption[Capturas de comando ping H1-Subred A]{Capturas de comando ping H1-Subred A a H1-Subred B}
 \label{fig:LabE1P1CapHost}
 \end{figure}
 
-Análogamente se procesan los paquetes asociados a los restantes servicios en el sistema. Para complementar el ejemplo anterior, en la figura \ref{fig:LabE1P1CapsTraf2} se muestra el procesamiento de los paquetes asociados al servicio S4, utilizando el comando ping para generar tr\'afico desde el host 20.20.20.66 en la subred B, al host 20.20.20.130 en la subred A. En la imagen se muestran las capturas de tr\'afico utilizando el comando tcpdump para las interfaces eth1 (cuarto superior izquierdo de la imagen) y nf2 (cuarto superior derecho de la imagen) en el nodo Galois, y las interfaces nf2  
- (cuarto inferior izquierdo) y eth1 (cuarto inferior derecho) en el nodo Poisson.\\
+Análogamente se procesan los paquetes asociados a los restantes servicios en el sistema. Para complementar el ejemplo anterior, en la figura \ref{fig:LabE1P1CapsTraf2} se muestra el procesamiento de los paquetes asociados al servicio S4, utilizando el comando ping para generar tr\'afico desde el host 20.20.20.66 en la subred B, al host 20.20.20.130 en la subred A. En la imagen se muestran las capturas de tr\'afico utilizando el comando tcpdump para las interfaces eth1 (cuarto superior izquierdo de la imagen) y nf1 (cuarto superior derecho de la imagen) en el nodo Poisson, la interfaz nf0 en el nodo Oz (cuarto inferior izquierdo) y la interfaz eth1 en el nodo Galois (cuarto inferior derecho).\\
 
 
-\begin{figure}[ht!] 
+\begin{figure}[h!] 
 \centering    
-\includegraphics[width=1.0\textwidth]{E1P1/LabE1P1CaputrasTrafico}
-\caption[Capturas de tr\'afico con tcpdump - servicio S3]{Capturas de tr\'afico con tcpdump - servicio S3}
+\includegraphics[width=1.0\textwidth]{E1P1/E1P1CapturasTrafico2}
+\caption[Capturas de tr\'afico con tcpdump - servicio S4]{Capturas de tr\'afico con tcpdump - servicio S4}
 \label{fig:LabE1P1CapsTraf2}
 \end{figure}
 
