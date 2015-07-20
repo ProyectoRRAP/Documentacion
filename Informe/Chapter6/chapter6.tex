@@ -242,13 +242,11 @@ Para todos estos servicios adem\'as se indica como valor de ethertype 0x0800, co
 \section{VPN de capa 2}
 
 A diferencia de las VPN de capa 3, las cuales se definen para un protocolo o aplicaci\'on particular  
- (por ejemplo IPv4), las redes privadas de capa 2 permiten definir servicios de forma agnóstica a los mismos, transportando tr\'afico entre dos subredes de cualquier protocolo de capa 3 o aplicación.
+ (por ejemplo IPv4), las redes privadas de capa 2 permiten definir servicios de forma agnóstica a los mismos, transportando tr\'afico entre dos subredes de cualquier protocolo de capa 3 o aplicación superior. Puede pensarse en un servicio de VPN de capa 2 entre dos subredes como un “cable” virtual que los conecta directamente.\\
 
-En cierta forma, puede pensarse en un servicio de VPN de capa 2 entre dos subredes por ejemplo, como un “cable” virtual que los conecta directamente.\\
+En este trabajo, a modo de ejemplo se implementan dos servicios de VPN de capa 2, sobre un escenario minimalista en el que se cuenta con una \'unica organización compuesta por dos sucursales físicamente separadas, sobre la red del laboratorio previamente definida.
 
-En este trabajo, a modo de ejemplo se implementan dos servicios de VPN de capa 2, sobre un escenario minimista en el que se cuenta con una \'unica organización compuesta por dos sucursales físicamente separadas, sobre la red del laboratorio previamente definida.
-
-De esta forma lo que se busca con este escenario es construir dos “cable” y verificar que se transporta correctamente tr\'afico desde una subred a otra, independientemente del protocolo de capa 3 por ejemplo.
+De esta forma lo que se busca con este escenario es construir dos “cables” y verificar que se transporta correctamente tr\'afico desde una subred a otra, independientemente del protocolo de capa 3 o superior.
 
 \subsection{Escenario}
 El escenario implementado para este caso de uso se muestra en la figura \ref{fig:CUP3}. El mismo se compone de una organización con dos sucursales físicamente separadas. Se instancia dos servicios (uno para cada sentido del tr\'afico), para los cuales a su vez se muestra en la figura los caminos calculados por el algoritmo de ruteo.
@@ -284,46 +282,9 @@ Para generar el tr\'afico se utiliza la herramienta PacketH\cite{PacketH}, la cu
 
 \begin{figure}[h!] 
 \centering    
-\includegraphics[width=0.75\textwidth]{Escenario3/Img1}
+\includegraphics[width=0.75\textwidth]{Escenario3/CapMensajes}
 \caption[Paquetes generados con PacketH]{Paquetes generados con PacketH}
 \label{fig:PaquetsSend}
 \end{figure}
-
-De acuerdo al camino calculado para el tr\'afico asociado al servicio S1, los paquetes ingresan a la red del laboratorio por el nodo Galois y dejan el mismo por a través del nodo Poisson. Capturando tr\'afico en las interfaces asociadas a esta camino, se observa el siguiente procesamiento de tr\'afico  
- (ver figura \ref{fig:CapturaTCP}):
-
-\begin{figure}[h!] 
-\centering    
-\includegraphics[width=1.0\textwidth]{Escenario3/Img2}
-\caption[Caso de Uso 2 capturas]{Caso de Uso 2 capturas}
-\label{fig:CapturaTCP}
-\end{figure}
-
-La imagen se corresponde con capturas de tr\'afico realizadas para las interfaces \textbf{eth1}, \textbf{nf2} del nodo \textit{Galois} y la interfaz \textbf{eth1} del nodo \textit{Poisson}. Por otro lado la primer fila de capturas se corresponde con capturas realizadas para paquetes IPv4, la segunda fila para paquetes IPv6 y finalmente la tercera fila para paquetes ARP.\\
-
-A continuaci\'on se muestran los paquetes recibidos en la subred B utilizando la herramienta Wireshark, en donde puede observarse que los paquetes entregados por la red del prototipo son exactamente iguales a los recibidos.
-
-\newpage
-\begin{figure}[h!] 
-\centering    
-\includegraphics[width=0.8\textwidth]{Escenario3/ipv4n}
-\caption[Captura de paquetes IPv4 recibidos con Wireshark]{Captura de paquetes IPv4 recibidos con Wireshark}
-\label{fig:CapturaTCP}
-\end{figure}
-
-\begin{figure}[h!] 
-\centering    
-\includegraphics[width=0.8\textwidth]{Escenario3/ipV6TagVLan48n}
-\caption[Captura de paquetes IPv6 recibidos con Wireshark]{Captura de paquetes IPv6 recibidos con Wireshark}
-\label{fig:CapturaTCP}
-\end{figure}
-
-\begin{figure}[h!] 
-\centering    
-\includegraphics[width=0.8\textwidth]{Escenario3/arpn}
-\caption[Captura de paquetes ARP recibidos con Wireshark]{Captura de paquetes ARP recibidos con Wireshark}
-\label{fig:CapturaTCP}
-\end{figure}
-
 
 De esta forma se verifica la capacidad de la implementaci\'on de VPN de capa 2 para procesar tr\'afico asociado a diferentes protocolos de capas superiores con la definici\'on de un solo servicio. De igual forma se puede verificar la capacidad para procesar paquetes de cualquier otro protocolo de capas superiores.\\ 

@@ -12,7 +12,7 @@
 
 En el presente anexo se incluyen detalles t\'ecnicos acerca de las pruebas realizadas sobre el Laboratorio de experimentaci\'on con el fin de validar el prototipo. El mismo esta dividido en secciones complementarias a diferentes secciones del cap\'itulo 6; por ello se recomienda leer primero la correspondiente secci\'on en el cap\'itulo 6 y luego complementar la lectura con este cap\'itulo.
 
-\section{Escenario 1 - Verificación del algoritmo de ruteo}
+\section{Verificación del algoritmo de ruteo en VPN de capa 3 escenario 1}
 \label{appendix6.1}
 En las figuras ~\ref{fig:CU1P1DumpFlows1}~-~\ref{fig:CU1P1DumpFlows4} se muestran las tablas de flujos asociadas a cada nodo del laboratorio, capturadas con el comando \textbf{dumpe-flows} de la herramienta Open vSwitch.\\
 
@@ -136,7 +136,7 @@ actions=pop\_mpls:0x0800,set\_field:00:00:00:aa:00:03->eth\_dst,output:1 }
 
 Análogamente el lector puede completar el análisis de la correspondencia entre los caminos te\'oricos y calculados por el algoritmo de ruteo.
 
-\section{Escenario 1 - Clasificación de tr\'afico}
+\section{Clasificación de tr\'afico en VPN de capa 3 escenario 1}
 \label{appendix6.2}
 
 En la figura \ref{fig:LabE1P1CapsTraf} se muestra el procesamiento de los paquetes asociados al servicio S3 en cada uno de los nodos que componen al LSP, cuando se genera tr\'afico desde un host en la sub red A con destino a otro host en la subred B.
@@ -199,7 +199,7 @@ Análogamente se procesan los paquetes asociados a los restantes servicios en el
 %\label{table:TablaFlujos2}
 %\end{table}
 
-\section{Escenario 1 - Actualización de Rutas}
+\section{Actualización de Rutas en VPN de capa 3 escenario 1}
 \label{appendix6.3}
 
 Para comprobar que el algoritmo de ruteo recaclula correctamente las rutas, se inspeccionan nuevamente las tablas de flujos de cada nodo en la red laboratorio y se comparan los caminos calculados con los caminos te\'oricos. En las figuras \ref{fig:CU1P2DumpFlows1}-\ref{fig:CU1P2DumpFlows4} se muestran las tablas de flujos de cada uno de los nodos.\\
@@ -301,7 +301,7 @@ Análogamente se puede estudiar la correspondencia entre el camino te\'orico y e
 \label{fig:LabE1P2CapHost}
 \end{figure}
 
-\section{Escenario 2}
+\section{Numeraciones IP solapadas en VPN de capa 3 escenario 2}
 \label{appendix6.4}
 
 Las tablas de flujos correspondientes a cada nodo en la red del prototipo se muestran a continuaci\'on.
@@ -353,4 +353,42 @@ A continuaci\'on se muestra el comando ping ejecutado.
 \includegraphics[width=1.0\textwidth]{E2P1/LabE2H3H1Ping}
 \caption[Ping Subred A H3 - Subred B H1]{Ping Subred A H3 - Subred B H1}
 \label{fig:CU1P1DumpFlows6}
+\end{figure}
+
+\section{Procesamiento del tr\'afico en VPN de Capa 2}
+
+De acuerdo al camino calculado para el tr\'afico asociado al servicio S1, los paquetes ingresan a la red del laboratorio por el nodo Galois y dejan el mismo por a través del nodo Poisson. Capturando tr\'afico en las interfaces asociadas a esta camino, se observa el siguiente procesamiento de tr\'afico  
+ (ver figura \ref{fig:CapturaTCP}):
+
+\begin{figure}[h!] 
+\centering    
+\includegraphics[width=1.0\textwidth]{E3/CapTodas}
+\caption[Caso de Uso 2 capturas]{Caso de Uso 2 capturas}
+\label{fig:CapturaTCP}
+\end{figure}
+
+La imagen se corresponde con capturas de tr\'afico realizadas para las interfaces \textbf{eth1}, \textbf{nf2} del nodo \textit{Galois} y la interfaz \textbf{eth1} del nodo \textit{Poisson}. Por otro lado la primer fila de capturas se corresponde con capturas realizadas para paquetes IPv4, la segunda fila para paquetes IPv6 y finalmente la tercera fila para paquetes ARP.\\
+
+A continuaci\'on se muestran los paquetes recibidos en la subred B utilizando la herramienta Wireshark, en donde puede observarse que los paquetes entregados por la red del prototipo son exactamente iguales a los recibidos.
+
+\newpage
+\begin{figure}[h!] 
+\centering    
+\includegraphics[width=0.8\textwidth]{E3/ipv4}
+\caption[Captura de paquetes IPv4 recibidos con Wireshark]{Captura de paquetes IPv4 recibidos con Wireshark}
+\label{fig:CapturaTCP}
+\end{figure}
+
+\begin{figure}[h!] 
+\centering    
+\includegraphics[width=0.8\textwidth]{E3/ipv6}
+\caption[Captura de paquetes IPv6 recibidos con Wireshark]{Captura de paquetes IPv6 recibidos con Wireshark}
+\label{fig:CapturaTCP}
+\end{figure}
+
+\begin{figure}[h!] 
+\centering    
+\includegraphics[width=0.8\textwidth]{E3/arp}
+\caption[Captura de paquetes ARP recibidos con Wireshark]{Captura de paquetes ARP recibidos con Wireshark}
+\label{fig:CapturaTCP}
 \end{figure}
