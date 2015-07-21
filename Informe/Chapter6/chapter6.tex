@@ -184,7 +184,7 @@ Acorde a los costos de la topolog\'ia (ver figura \ref{fig:LaboratorioDePruebasC
 \label{fig:CUP1Caminos2}
 \end{figure}
  
-N\'otese que los \'unicos caminos que cambian son los asociados a los servicios S3 y S6. Cabe destacar adem\'as que en la nueva topolog\'ia existe m\'as de un camino de m\'inimo costo para el servicio S3; los caminos $<(Galois, nf0), (Oz, nf1)>$ y $<(Galois, nf0), (Oz, nf2), (Alice, nf0)>$ presentan ambos el costo 4. Por tanto se tienen dos resultados v\'alidos posibles para la salida del algoritmo de ruteo para este servicio.\\
+N\'otese que los \'unicos caminos que cambian son los asociados a los servicios S3 y S6. Cabe destacar adem\'as que en la nueva topolog\'ia existe m\'as de un camino de m\'inimo costo para el servicio S3; los caminos $<(Galois, nf0), (Oz, nf1)>$ y \\ $<(Galois, nf0), (Oz, nf2), (Alice, nf0)>$ presentan ambos el costo 4. Por tanto se tienen dos resultados v\'alidos posibles para la salida del algoritmo de ruteo para este servicio.\\
 
 Analizando nuevamente las tablas de flujos de cada nodo en el laboratorio, se comparan los caminos computados por el algoritmo de ruteo con los caminos te\'oricos para cada servicio. Mediante este procedimiento se comprueba la correcta actualizaci\'on de caminos LSPs tras un cambio en la topolog\'ia. En el ap\'endice \ref{appendix6.3} se muestran los detalles t\'ecnicos asociados a este procedimiento para los LSPs asociados a los servicios S3 y S6.\\ 
  
@@ -205,7 +205,7 @@ Este escenario (ver figura \ref{fig:CUP2}) representa una red privada punto a pu
 
 %Vale la pena mencionar que debido a las limitaciones impuestas por el hardware disponible; recordar que cada nodo en el prototipo cuenta con una \'unica interfaz f\'isica disponible para conectarse a la subred de un “cliente”, solo se pueden conectar cuatro subredes al prototipo. De esta forma, el \'unico  escenario para el cual se tienen al menos dos clientes diferentes con al menos dos oficinas físicamente separadas, es el caso m\'as simple en donde cada organización tiene dos subredes. 
 
-Este escenario se traduce en dos servicios de VPN punto a punto. Sin embargo los aspectos de implementaci\'on que en esta secci\'on se pretenden verificar, son independientes de si el servicio de VPN es punto a punto o multipunto.
+Este escenario se traduce en dos servicios de VPN punto a punto, aunque los aspectos de implementaci\'on que en esta secci\'on se pretenden verificar son independientes de si el servicio de VPN es punto a punto o multipunto.
 
 Sobre este escenario se busca validar los siguientes aspectos en relaci\'on a la implementaci\'on:
 
@@ -216,7 +216,7 @@ Sobre este escenario se busca validar los siguientes aspectos en relaci\'on a la
 
 Para la construcci\'on de este escenario se instancia los siguientes servicios en el sistema (ver tabla \ref{table:TablaFlujos3}). Por cada red privada se instancia dos servicios (uno para cada sentido del tr\'afico).
 
-\begin{table}[h]
+\begin{table}[h!]
 \begin{tabular}{| l | l | l | p{4cm} | p{4cm} |}
 \hline
 Nombre & Ingreso & Egreso & Clasificación & Descripción \\ \hline
@@ -237,8 +237,12 @@ Nombre & Ingreso & Egreso & Clasificación & Descripción \\ \hline
 
 Para todos estos servicios adem\'as se indica como valor de ethertype 0x0800, correspondiente al tipo de tr\'afico IPv4.\\
 
+Sobre este escenario se prueban diferentes combinaciones para la generaci\'on de tr\'afico, variando tanto la subred origen y destino como el tipo de tr\'afico. Se prueba generar paquetes ICMP mediante el comando ping para ambas subredes, en especial el caso en que la numeraci\'on IP se repite (por ejemplo Ping de un host en subred A a otro host en subred B en simultaneo con un ping de un host en subred A' a otro host en subred B'). Para esta prueba se observa que el prototipo enruta correctamente el tr\'afico asociado a cada servicio, garantizando as\'i el aislamiento del espacio de direcciones. 
 
-\newpage
+Tambi\'en se logra de forma exitosa establecer conexiones SSH entre dos hosts en diferentes subredes para ambas organizaciones y generar requests HTTP, cargando desde un host en una subred una p\'agina web alojada en la otra subred. Esta prueba se realiza para ambas organizaciones utilizando paginas web con diferente contenido; de esta forma se puede determinar fácilmente para una organización si las solicitudes HTTP son correctamente enrutadas y aisladas del tr\'afico de la otra organizaci\'on. En el apéndice \ref{appendix6.4} se muestran los detalles t\'ecnicos asociados a estas pruebas como capturas de las tablas de flujos de cada nodo en la red, capturas del procesamiento de tr\'afico asociado a los servicios en los diferentes casos mencionados, entre otra informaci\'on.\\
+
+En la siguiente secci\'on se discute la configuraci\'on de un servicio de VPN de capa 2 utilizando la red prototipo y la aplicaci\'on RAUFlow.
+
 \section{VPN de capa 2}
 
 A diferencia de las VPN de capa 3, las cuales se definen para un protocolo o aplicaci\'on particular  

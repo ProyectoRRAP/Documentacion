@@ -294,7 +294,7 @@ Adicionalmente en la figura \ref{fig:LabE1P2CapHost} se muestra le ejeuci\'on de
 
 Análogamente se puede estudiar la correspondencia entre el camino te\'orico y el camino calculado para el servicio S6.\\
 
-\begin{figure}[h!] 
+\begin{figure}[ht!] 
 \centering    
 \includegraphics[width=0.6\textwidth]{E1P2/E1P1202020130-2020266-ConCaidaDeLink}
 \caption[Capturas de tr\'afico con tcpdump para el servicio S3 tras actualización topol\'ogica]{Capturas de tr\'afico con tcpdump para el servicio S3 tras actualización topol\'ogica}
@@ -303,60 +303,61 @@ Análogamente se puede estudiar la correspondencia entre el camino te\'orico y e
 
 \section{Numeraciones IP solapadas en VPN de capa 3 escenario 2}
 \label{appendix6.4}
+Para verificar que el tr\'afico asociado a un servicio es enrutado correctamente a la subred destino sin importar que la numeración IP este solapada (aislamiento del espacio de direcciones), se prueba generar tr\'afico IP desde la subred A hacia la subred B al mismo tiempo que se genera tr\'afico desde la subred A' hacia la subred B'; el caso inverso (tr\'afico desde la subred B hacia la subred A) es an\'alogo. Al mismo tiempo se observan las tablas de flujos Open vSwitch en cada uno de los nodos de la red para verificar los caminos calculados para cada servicio, y se observa el procesamiento de cada paquete mediante capturas de tr\'afico con la herramienta tcpdump en las interfaces asociadas a cada LSP.\\
 
-Las tablas de flujos correspondientes a cada nodo en la red del prototipo se muestran a continuaci\'on.
+En las figuras \ref{fig:CU2P1DumpFlows1}-\ref{fig:CU2P1DumpFlows4} se muestran capturas de la tabla de flujos asociada a cada nodo en la red prototipo.
 
-\newpage
 \begin{figure}[ht!] 
 \centering    
-\includegraphics[width=1.0\textwidth]{E2P1/E2P1Gal}
+\includegraphics[width=1.0\textwidth]{E2P1/E2P1Galois}
 \caption[Tabla de flujos ovs - Galois]{Tabla de flujos ovs - Galois}
-\label{fig:CU1P1DumpFlows1}
+\label{fig:CU2P1DumpFlows1}
 \end{figure}
 
 \begin{figure}[h!] 
 \centering    
 \includegraphics[width=1.0\textwidth]{E2P1/E2P1Oz}
 \caption[Tabla de flujos ovs - Oz]{Tabla de flujos ovs - Oz}
-\label{fig:CU1P1DumpFlows2}
+\label{fig:CU2P1DumpFlows2}
 \end{figure}
 
 \begin{figure}[h!] 
 \centering    
-\includegraphics[width=1.0\textwidth]{E2P1/E2P1Poi}
+\includegraphics[width=1.0\textwidth]{E2P1/E2P1Poisson}
 \caption[Tabla de flujos ovs - Poisson]{Tabla de flujos ovs - Poisson}
-\label{fig:CU1P1DumpFlows3}
+\label{fig:CU2P1DumpFlows3}
 \end{figure}
+
+\begin{figure}[h!] 
+\centering    
+\includegraphics[width=1.0\textwidth]{E2P1/E2P1Alice}
+\caption[Tabla de flujos ovs - Alice]{Tabla de flujos ovs - Alice}
+\label{fig:CU2P1DumpFlows4}
+\end{figure}
+
+\newpage
+Se prueba generar paquetes ICMP mediante el comando ping simultáneamente entre los host H3 y H1 (subred A a subred B) y los hosts H3' y H1' (subred A' a subred B'). Para verificar que el tr\'afico es correctamente enrutado se realizan capturas tcpdump en las interfaces atravesadas por los LSPs de los servicios S1 y S3.\\
+
+Por otro lado se prueba establecer conexiones SSH entre ambos pares de nodos, observando tambi\'en el procesamiento del tr\'afico asociado a cada servicio. En la figura \ref{fig:CapSSHSASB} se muestra la conexi\'on SSH establecida entre los hosts H3 (20.20.20.66) y H1 (20.20.20.2) en las subredes A y B respectivamente; n\'otese el hostanme y el usuario en la consol Linux.
+
+\begin{figure}[h!] 
+\centering    
+\includegraphics[width=0.7\textwidth]{E2P1/CapSSHSubredA20202066-20202002}
+\caption[SSH desde Subred A hacia Subred B]{SSH desde Subred A hacia Subred B}
+\label{fig:CapSSHSASB}
+\end{figure}
+
+Por otro lado en la figura \ref{fig:CapSSHSApSBp} se muestra la conexion SSH establecida entre los hosts H3 (20.20.20.66) y H1 (20.20.20.2) en las subredes A' y B' respectivamente. N\'otese el hostname y el nombre de usuario de la consola Linux diferente al de la conexi\'on SSH anterior. 
 
 \newpage
 \begin{figure}[ht!] 
 \centering    
-\includegraphics[width=1.0\textwidth]{E2P1/E2P1Al}
-\caption[Tabla de flujos ovs - Alice]{Tabla de flujos ovs - Alice}
-\label{fig:CU1P1DumpFlows4}
-\end{figure}
-
-Sobre este escenario se realizan pruebas de generar tr\'afico en una subred con destino a otra para ambas organizaciones, verificando adem\'as que el tr\'afico llega a la subred correcta sin importar que la numeraci\'on IP este solapada (aislamiento de espacio de direccionamiento).\\
-
-En la figura \ref{fig:CU1P1DumpFlows5} se muestran capturas realizadas con tcpdump para los nodos involucrados en el LSP del servicio S1, cuando el host H3 realiza un ping al host H1.\\
-\begin{figure}[h!] 
-\centering    
-\includegraphics[width=1.0\textwidth]{E2P1/LabE2H2H1CapturasTCPDUMP}
-\caption[Ping Subred A H3 - Subred B H1, capturas tcpdump]{Ping Subred A H3 - Subred B H1, capturas tcpdump}
-\label{fig:CU1P1DumpFlows5}
-\end{figure}
-
-A continuaci\'on se muestra el comando ping ejecutado.
-
-\begin{figure}[h!] 
-\centering    
-\includegraphics[width=1.0\textwidth]{E2P1/LabE2H3H1Ping}
-\caption[Ping Subred A H3 - Subred B H1]{Ping Subred A H3 - Subred B H1}
-\label{fig:CU1P1DumpFlows6}
+\includegraphics[width=0.7\textwidth]{E2P1/CapSSHSubredAp20202066-20202002}
+\caption[SSH desde Subred A' hacia Subred B']{SSH desde Subred A' hacia Subred B'}
+\label{fig:CapSSHSApSBp}
 \end{figure}
 
 \section{Procesamiento del tr\'afico en VPN de Capa 2}
-
 De acuerdo al camino calculado para el tr\'afico asociado al servicio S1, los paquetes ingresan a la red del laboratorio por el nodo Galois y dejan el mismo por a través del nodo Poisson. Capturando tr\'afico en las interfaces asociadas a esta camino, se observa el siguiente procesamiento de tr\'afico  
  (ver figura \ref{fig:CapturaTCP}):
 
