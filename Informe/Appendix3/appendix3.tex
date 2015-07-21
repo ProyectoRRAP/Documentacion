@@ -311,7 +311,7 @@ De forma similar utilizando la misma primitiva y los campos \textbf{UDP\_src} y 
             
 De forma similar utilizando la misma primitiva y los campos \textbf{UDP\_dst} y \textbf{SCTP\_dst} se modifica el puerto destino UDP y SCTP. 
                 
-\item \textbf{MPLS\_label}: Permite manipular el valor de una etiqueta en un cabezal mpls. Las primitivas existentes son PUSH y POP.
+\item \textbf{MPLS\_label}: Permite manipular el valor de una etiqueta en un cabezal MPLS. Las primitivas existentes son PUSH y POP.
 
 \begin{center}
 \texttt{ovs-ofctl add-flow <bridge> <match-field> dl\_type=[0x8847 | 0x8848],actions=push\_mpls:<ethertype>,set\_field:<value>-\textbackslash >mpls\_label}
@@ -325,7 +325,7 @@ De forma similar utilizando la misma primitiva y los campos \textbf{UDP\_dst} y 
 \texttt{ovs-ofctl add-flow<bridge> <match-field> actions=pop\_mpls:<ethertype>}
 \end{center}
 
-\item \textbf{MPLS\_tc}: Permite modificar el valor de los bits experimentales en el cabezal mpls.
+\item \textbf{MPLS\_tc}: Permite modificar el valor de los bits experimentales en el cabezal MPLS.
 
 \begin{center}
 \texttt{ovs-ofctl add-flow<bridge> <match-field> actions=set\_field:<label>-\textbackslash >mpls\_tc}

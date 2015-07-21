@@ -535,7 +535,7 @@ Asignar etiquetas a un camino MPLS es un problema mas complejo. Aprovechando la 
 \item Asignar secuencialmente etiquetas a cada salto en un camino utilizando un espacio de etiquetas local a cada nodo y descartando para cada interfaz etiquetas ya utilizadas por otros LSPs. Esta estrategia tiene como ventaja que es m\'as austera en el consumo de etiquetas y no existen dos LSPs con iguales etiquetas para una misma interfaz de entrada en un mismo nodo.
 \end{enumerate}
 
-N\'otes en relación a la segunda alternativa, que debido a la forma en que se distribuyen etiquetas puede determinarse en un nodo a que servicio corresponde un paquete bas\'andose solamente en la etiqueta externa y la interfaz por la que entra. Esto permite prescindir de la etiqueta interna para determinar lo que en un esquema tradicional de mpls se denomina FEC y aplicar diferentes pol\'iticas de ingenier\'ia de tr\'afico. Esto a su vez repercute en un aumento del MTU del paquete.\\ 
+N\'otes en relación a la segunda alternativa, que debido a la forma en que se distribuyen etiquetas puede determinarse en un nodo a que servicio corresponde un paquete bas\'andose solamente en la etiqueta externa y la interfaz por la que entra. Esto permite prescindir de la etiqueta interna para determinar lo que en un esquema tradicional de MPLS se denomina FEC y aplicar diferentes pol\'iticas de ingenier\'ia de tr\'afico. Esto a su vez repercute en un aumento del MTU del paquete.\\ 
 
 En RauFlow se implementa la segunda alternativa mencionada. En \ref{fig:AlgoritmoDE1} se muestra el pseudoc\'odigo de una posible implementaci\'on de dicho algor\'itmo:\\
 
@@ -626,11 +626,11 @@ Por un lado puede implementarse el prototipo trabajando solamente con un nivel d
 
 Esto no es posible si se implementa Penultimate Hop Popping (PHP) dado que la etiqueta es removida en el pen\'ultimo hop, llegando al nodo de egreso sin etiquetas. 
 
-Pensando en permitir en un futuro la conexi\'on de nodos al prototipo implementados en base a diferentes tecolog\'ias; es decir, nodos no implementados en base a RAU-Switch, es necesario mantener la implementaci\'on estándar del protocolo \textbf{mpls}. Esto quiere decir que se debe implementar PHP. Por ello en el prototipo se trabaja con dos niveles de etiquetas.\\
+Pensando en permitir en un futuro la conexi\'on de nodos al prototipo implementados en base a diferentes tecolog\'ias; es decir, nodos no implementados en base a RAU-Switch, es necesario mantener la implementaci\'on estándar del protocolo MPLS. Esto quiere decir que se debe implementar PHP. Por ello en el prototipo se trabaja con dos niveles de etiquetas.\\
 
 Anteriormente en esta secci\'on se mencion\'o la necesidad de modificar el algoritmo de distribución de etiquetas de primer nivel con el objetivo de poder implementar ciertos casos de uso. A continuaci\'on se explica el escenario que origina este problema y su soluci\'on.\\
 
-En una red MPLS cada vez que un paquete es manipulado para colocar un cabezal mpls, el \gloss{ethertype} del paquete original es sustituido por el del protocolo. A su vez en el nodo de egreso el ethertype original del paquete debe ser colocado nuevamente. 
+En una red MPLS cada vez que un paquete es manipulado para colocar un cabezal de dicho protocolo, el \gloss{ethertype} del paquete original es sustituido por el del protocolo. A su vez en el nodo de egreso el ethertype original del paquete debe ser colocado nuevamente. 
 
 Este problema puede resolverse en una VPN de capa 3 obligando a indicar el ethertype de cada servicio definido. De esta forma se utiliza la informaci\'on del servicio para definir un flujo que coloque el ethertype apropiado en el nodo de egreso, para cada paquete. De esta forma no se deben realizar modificaciones sustanciales a la implementaci\'on del prototipo. No obstante para una VPN de capa 2 no se puede implementar una soluci\'on similar, siendo necesario guardar el valor original de ethertype para cada paquete que ingresa y volver a colocarlo en el \'ultimo nodo del camino, si se quiere soportar la implementaci\'on de VPNs de capa 2. Esto puede realizarse al menos de las siguientes dos formas:
 
