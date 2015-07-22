@@ -270,12 +270,13 @@ La principal herramienta para el desarrollo de aplicaciones SDN/OpenFlow es el s
 \subsection{Controlador}
 Existe un cantidad interesante de propuestas para la implementaci\'on del plano de control. En este trabajo se ha mencionado algunos como OpenDaylight, NOX y POX, pero existen varias alternativas. Pueden encontrarse desde controladores comerciales y académicos, en código abierto y propietario, compatibles solamente con OpenFlow y compatibles con múltiples protocolos incluyendo OpenFlow, etc.\\   
 
-Estas características son utilizadas en este proyecto para la elección de la mejor alternativa de software de control, basándose en las necesidades y restricciones del prototipo. Por ello se cree conveniente incluir el siguiente cuadro comparativo, en el que se presentan las principales características utilizadas en la elecci\'on del controlador m\'as apropiado. Cabe destacar que esta tabla esta basada en una tabla m\'as reducida presentada en \cite{StateOfArt1}. 
+Estas características son utilizadas en este proyecto para la elección de la mejor alternativa de software de control, basándose en las necesidades y restricciones del prototipo. Por ello se cree conveniente incluir el siguiente cuadro comparativo, en el que se presentan las principales características utilizadas en la elecci\'on del controlador m\'as apropiado. Cabe destacar que esta tabla esta basada en una tabla m\'as reducida presentada en \cite{StateOfArt1}.\\
 
 \newpage
-\begin{table}[!htbp]
-\tiny
-\begin{tabular}{|l|l|l|p{2cm}|l|p{6cm}|}
+\clearpage
+\begin{table}[htbp!]
+\fontsize{7pt}{8pt}\selectfont
+\begin{tabular}{|l|l|l|p{2cm}|l|p{5cm}|}
 \hline   
 \textbf{Controlador} & \textbf{Implementación} & \textbf{Opensource} & \textbf{Desarrollador}         & \textbf{OpenFlow} & \textbf{Detalle}                                                                                                                                                                                                                                                                                                          \\
 \hline
@@ -289,9 +290,9 @@ Maestro\cite{ControllersMaestro}              & Java                    & Si    
 \hline
 Trema\cite{ControllersTrema}                & Ruby/C                  & Si                  & NEC                            & 1.0               & Framework full-stack para el desarrollo de Controladores OpenFlow en Ruby y C, compatible con Ubuntu 13.04 y Fedora 16-19 entre otras distribuciones Linux.                                                                                                                                                                \\
 \hline
-Beacon\cite{ControllersBeacon}           & Java                    & Si                  & Stanford                       & 1.0?              & Controlador multi-plataforma, rápido y modular basado en Openflow con soporte a programación orientada a eventos y concurrente (threads). Incorpora la plataforma web Jetty y un modulo GUI extensible.                                                                                                                   \\
+Beacon\cite{ControllersBeacon}           & Java                    & Si                  & Stanford                       & 1.0              & Controlador multi-plataforma, rápido y modular basado en Openflow con soporte a programación orientada a eventos y concurrente (threads). Incorpora la plataforma web Jetty y un modulo GUI extensible.                                                                                                                   \\
 \hline
-Jaxon\cite{ControllersJaxon}                & Java                    & Si                  & Desarrolladores independientes & 1.0?              & Controlador OpenFlow basado en NOX para desarrollo en  Java.                                                                                                                                                                                                                                                              \\
+Jaxon\cite{ControllersJaxon}                & Java                    & Si                  & Desarrolladores independientes & 1.0              & Controlador OpenFlow basado en NOX para desarrollo en  Java.                                                                                                                                                                                                                                                              \\
 \hline
 Helios\cite{ControllersHelios}               & C                       & No                  & NEC                            & -                 & Controlador basado en OpenFlow orientado a lenguaje C, extensible. Interfaz de comunicación Norte en formato Shell.                                                                                                                                                                                                       \\
 \hline
@@ -317,6 +318,7 @@ OpenDaylight\cite{ControllersOpendaylight}         & Java                   & Si
 \label{table:Controladores}
 \end{table}
 
+\newpage
 \subsection{Mininet y mini NExT}
 \textbf{Mininet}\cite{Mininet1} es un emulador de red, que habilita a crear hosts, switches, links y controladores, en un entorno virtual. Se encuentra disponible tanto para instalarse nativamente en un entorno Linux, como a través de una m\'aquina virtual configurada con todo el software de desarrollo necesario para iniciarse en el desarrollo de aplicaciones OpenFlow/SDN (Mininet Kit Starter). 
 
