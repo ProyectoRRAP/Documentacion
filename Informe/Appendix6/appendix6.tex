@@ -358,7 +358,9 @@ Por otro lado en la figura \ref{fig:CapSSHSApSBp} se muestra la conexion SSH est
 \end{figure}
 
 \section{Procesamiento del tr\'afico en VPN de Capa 2}
-De acuerdo al camino calculado para el tr\'afico asociado al servicio S1, los paquetes ingresan a la red del laboratorio por el nodo Galois y dejan el mismo por a través del nodo Poisson. Capturando tr\'afico en las interfaces asociadas a esta camino, se observa el siguiente procesamiento de tr\'afico  
+\label{appendix6.5}
+
+De acuerdo al camino calculado para el tr\'afico asociado al servicio S1, los paquetes ingresan a la red del laboratorio a través el nodo Galois y dejan la misma mediante nodo Poisson. Capturando tr\'afico en las interfaces asociadas a esta camino, se observa el siguiente procesamiento de tr\'afico  
  (ver figura \ref{fig:CapturaTCP}):
 
 \begin{figure}[h!] 
@@ -368,28 +370,30 @@ De acuerdo al camino calculado para el tr\'afico asociado al servicio S1, los pa
 \label{fig:CapturaTCP}
 \end{figure}
 
-La imagen se corresponde con capturas de tr\'afico realizadas para las interfaces \textbf{eth1}, \textbf{nf2} del nodo \textit{Galois} y la interfaz \textbf{eth1} del nodo \textit{Poisson}. Por otro lado la primer fila de capturas se corresponde con capturas realizadas para paquetes IPv4, la segunda fila para paquetes IPv6 y finalmente la tercera fila para paquetes ARP.\\
+En dicha figura se observan (de izquierda a derecha) capturas de tr\'afico realizadas en las interfaces \textbf{eth1}, \textbf{nf2} del nodo \textit{Galois} y la interfaz \textbf{eth1} del nodo \textit{Poisson}. Por otro lado la primer fila de capturas muestra el procesamiento de paquetes IPv4, la segunda fila paquetes IPv6 y finalmente la tercera fila paquetes ARP.\\
+
+Por simplicidad se omitieron capturas de las tablas de flujos Open vSwitch para los servicios creados dada la cantidad de entradas en la misma. Recordar que la implementaci\'on de RAUFlow crea una entrada en dicha tabla para cada ethertype soportado con el fin de rescribir el campo ethertype de un paquete en el nodo de egreso para un servicio, puesto que este valor es sobrescrito en el primer salto de un LSP por el del protocolo MPLS cuando se coloca la primera etiqueta.\\
 
 A continuaci\'on se muestran los paquetes recibidos en la subred B utilizando la herramienta Wireshark, en donde puede observarse que los paquetes entregados por la red del prototipo son exactamente iguales a los recibidos.
 
-\newpage
 \begin{figure}[h!] 
 \centering    
-\includegraphics[width=0.8\textwidth]{E3/ipv4}
+\includegraphics[width=0.7\textwidth]{E3/ipv4}
 \caption[Captura de paquetes IPv4 recibidos con Wireshark]{Captura de paquetes IPv4 recibidos con Wireshark}
 \label{fig:CapturaTCP}
 \end{figure}
 
-\begin{figure}[h!] 
+\newpage
+\begin{figure}[ht!] 
 \centering    
-\includegraphics[width=0.8\textwidth]{E3/ipv6}
+\includegraphics[width=0.7\textwidth]{E3/ipv6}
 \caption[Captura de paquetes IPv6 recibidos con Wireshark]{Captura de paquetes IPv6 recibidos con Wireshark}
 \label{fig:CapturaTCP}
 \end{figure}
 
 \begin{figure}[h!] 
 \centering    
-\includegraphics[width=0.8\textwidth]{E3/arp}
+\includegraphics[width=0.7\textwidth]{E3/arp}
 \caption[Captura de paquetes ARP recibidos con Wireshark]{Captura de paquetes ARP recibidos con Wireshark}
 \label{fig:CapturaTCP}
 \end{figure}
