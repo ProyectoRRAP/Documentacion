@@ -13,9 +13,9 @@
 En este capítulo se presentan los resultados obtenidos en el trabajo de investigación sobre el estado
 del arte de las Redes Definidas por Software (Software Defined Networking), lenguajes
 de programación y herramientas para el desarrollo sobre dicha arquitectura, hardware NetFPGA y otros conceptos esenciales para el desarrollo de este trabajo. En caso de que el lector desee profundizar en alguno de los conceptos presentados en este cap\'itulo o consultar enfoques alternativos
-y/o complementarios se recomiendan los siguientes trabajos~\citep{StateOfArt1}~\citep{StateOfArt2}. Para el caso particular en que el lector este familiarizándose con el enfoque de las Redes Definidas por Software, se sugiere también la lectura de \citep{SDNReadingList} y el libro\citep{SDNBook1}.\\
+y/o complementarios se recomiendan los siguientes trabajos~\citep{StateOfArt1}~\citep{StateOfArt2}. Para el caso particular en que el lector este familiarizándose con el enfoque de las Redes Definidas por Software, se sugiere también la lectura de \citep{SDNReadingList} y de \citep{SDNBook1}.\\
 
-En relación a como se estructura este cap\'itulo, primero se introduce el concepto de Software Defined Networking (SDN) analizando sus principales antecedentes y finalmente brindando una definición. Luego se presenta y analiza en profundidad una de las arquitecturas existentes basadas en este enfoque y en particular utilizada por este trabajo para la construcción del prototipo. Se contin\'ua con la introducción de algunos conceptos esenciales para el desarrollo de este trabajo como el concepto de Redes Privadas Virtuales y Multilabel Protocol Switch (\gloss{MPLS}) entre otros. Finalmente se presenta el relevamiento en el estado del arte realizado sobre la plataforma NetFPGA.  
+En relación a como se estructura este cap\'itulo, primero se introduce el concepto de Software Defined Networking (SDN) analizando sus principales antecedentes y finalmente brindando una definición. Luego se presenta y analiza en profundidad una de las arquitecturas existentes basadas en este enfoque y en particular utilizada en trabajo para la construcción del prototipo. Se contin\'ua con la introducción de algunos conceptos esenciales para el desarrollo de este trabajo como el concepto de Redes Privadas Virtuales y Multilabel Protocol Switch (\gloss{MPLS}) entre otros. Finalmente se presenta el relevamiento en el estado del arte realizado sobre la plataforma NetFPGA.  
 
 %********************************** %First Section  **************************************
 \section{Antecedentes de SDN} %Section - 1.1
@@ -47,7 +47,7 @@ Esta estrategia ten\'ia como ventajas que al utilizar protocolos existentes est�
 se encontraba limitado justamente a las capacidades de los protocolos de comunicación existentes.
 
 \subsection{ForCES Protocol}
-Otro grupo de trabajo dentro del IETF denominado ForCES (Forwarding and Control Element Separation) comenzó a trabajar a mediados del año 2007 en un protocolo que permita la separación entre los dispositivos de red y la inteligencia que los gobierna. Dicho protocolo fue especificado como una propuesta de estándar y publicado en el año 2010 bajo el nombre ForCES Protocol\citep{doria2010forwarding}.
+Otro grupo de trabajo dentro del IETF denominado ForCES (Forwarding and Control Element Separation) comenzó a trabajar a mediados del año 2007 en un protocolo que permitiera la separación entre los dispositivos de red y la inteligencia que los gobierna. Dicho protocolo fue especificado como una propuesta de estándar y publicado en el año 2010 bajo el nombre ForCES Protocol\citep{doria2010forwarding}.
 
 Este enfoque plantea dos entidades lógicas denominadas Elementos de Control (CE) y Elementos de Reenv\'io (FE), así como un protocolo de comunicación entre ambas entidades.
 
@@ -79,7 +79,7 @@ Los objetivos al nivel de un AS son especificados en el plano de decisiones y me
 
 En resumen, utilizando el plano de diseminación se recolecta diferente información acerca del estado de la red, sobre la cual luego el plano de decisión construye las \textit{Políticas de red}. También a través del plano de diseminación se distribuyen dichas políticas a los distintos dispositivos de red. Mientras tanto el plano de descubrimiento permite a dispositivos descubrir vecinos directamente conectados en la red. Finalmente el plano de datos se encarga de redirigir el tráfico de red.\\ \\
 
-Una vez introducidos a los principales antecedentes de las redes definidas por software, en la siguiente secci\'on se propone profundizar en dicho concepto.
+Una vez introducidos los principales antecedentes de las redes definidas por software, en la siguiente secci\'on se propone profundizar en dicho concepto.
 
 \section{Software Defined Networking}
 \label{section2.2}
@@ -113,11 +113,11 @@ Cada dispositivo implementa un conjunto de operaciones bien definidas mediante l
 
 En la capa de control se encuentra el software encargado de implementar el plano de control en dicho modelo, usualmente denominado Controlador.\\
 
-El Controlador expone un conjunto de operaciones a las aplicaciones SDN de la capa superior(capa de Aplicación) para la manipulación de los dispositivos de la capa inferior (capa de Infraestructura).  Esta API de operaciones es conocida en el modelo bajo el nombre de Interfaz Norte.\\
+El Controlador expone un conjunto de operaciones a las aplicaciones SDN de la capa de Aplicación para la manipulación de los dispositivos de la capa inferior (capa de Infraestructura).  Esta API de operaciones es conocida en el modelo bajo el nombre de Interfaz Norte.\\
 
-La capa de aplicaciones, contiene implementado en software (aplicaciones SDN) toda la inteligencia que originalmente se agregaba en un dispositivo de la capa de infraestructura, por ejemplo la implementaci\'on de protocolos de red. En dicha capa se pueden implementar desde protocolos de ruteo como OSPF y \gloss{RIP}, backbones sobre MPLS, políticas de seguridad y hasta aplicaciones de ingeniería de tráfico.
+La capa de aplicaciones, contiene implementado en software (aplicaciones SDN) toda la inteligencia que originalmente se agregaba en un dispositivo de la capa de infraestructura como por ejemplo la implementaci\'on de protocolos de red. En dicha capa se pueden implementar desde protocolos de ruteo como OSPF y \gloss{RIP}, backbones sobre MPLS, políticas de seguridad y hasta aplicaciones de ingeniería de tráfico.
 
-Notese aqu\'i la diferencia entra la capa de aplicaci\'on del modelo de capas OSI y la capa de aplicaci\'on  del modelo SDN. En el modelo SDN, una aplicaci\'on puede implementar protocolos y servicios de cualquier capa del modelo OSI.\\
+N\'otese aqu\'i la diferencia entra la capa de aplicaci\'on del modelo de capas OSI y la capa de aplicaci\'on  del modelo SDN. En el modelo SDN, una aplicaci\'on puede implementar protocolos y servicios de cualquier capa en el modelo OSI.\\
 
 De esta forma Software Defined Networking centraliza el control de la red en una aplicación de software  
  (Controlador) y transforma algoritmos, procesos de control, políticas de seguridad y toda la inteligencia antiguamente acoplados a los dispositivos de red, en aplicaciones de controlador.\\
@@ -125,13 +125,13 @@ De esta forma Software Defined Networking centraliza el control de la red en una
 \section{Arquitecturas basadas en SDN}
 \label{section2.3}
 
-Existen varias arquitecturas o implementaciones en las que de una forma u otra puede encontrarse argumentos para afirmar que siguen el enfoque de SDN. Si bien este trabajo se basa en la utilización de la arquitectura OpenFlow, existen otras arquitecturas basadas en este enfoque como el protocolo ForCES y alternativas m\'as comerciales como OpFlex.
+Existen varias arquitecturas o implementaciones en las que de una forma u otra puede encontrarse argumentos para afirmar que siguen el enfoque de SDN. Si bien este trabajo se basa en la utilización de la arquitectura OpenFlow, existen otras arquitecturas basadas en este enfoque como el protocolo ForCES y alternativas m\'as comerciales como OpFlex\cite{OpFlex}.
 
 A continuaci\'on se explican los principales conceptos relacionados a la arquitectura OpenFlow.
 
 \subsection{OpenFlow}
 
-Orientado por el enfoque en tres capas de SDN y bajo la misma premisa de desacoplar completamente los planos de datos y control, OpenFlow\cite{mckeown2008openflow} brinda una implementaci\'on estándar para el mecanismo de comunicación entre las capas de control e infraestructura (Interfaz Sur). En otras palabras, provee de un protocolo de comunicación estándar para manipular los distintos dispositivos de la red y así el plano de datos.\\ 
+Siguiendo el enfoque de tres capas de SDN y bajo la misma premisa de desacoplar completamente los planos de datos y control, OpenFlow\cite{mckeown2008openflow} brinda una implementaci\'on estándar para el mecanismo de comunicación entre las capas de control e infraestructura (Interfaz Sur). En otras palabras, provee de un protocolo de comunicación estándar para manipular los distintos dispositivos de la red y así el plano de datos.\\ 
 
 OpenFlow se basa en tres componentes (ver figura ~\ref{fig:OpenFlowArch}): (1) Controlador OpenFlow compatible, (2) Protocolo OpenFlow y (3) Switch OpenFlow compatible.
 
@@ -152,7 +152,7 @@ Desde la perspectiva de un Controlador OpenFlow, todos los dispositivos de red s
  
 Cada switch OpenFlow presenta una o m\'as tablas de flujos. Cada una de las entradas de estas tablas es denominada flujo y determina c\'omo una clase de paquetes deben ser procesados y reenviados.\\
 
-Cada entrada o flujo en esta tabla (ver figura ~\ref{fig:OpenFlowArch2}) se compone de: (1) campos de selección (matching fields), utilizados para identificar a un conjunto de paquetes a ser tratados de una forma en particular, basándose en información relacionada a campos en los cabezales del paquete para esto; (2) contadores para la recolección de información estadística en relación al flujo (n\'umero de paquetes recibidos, cantidad de bytes, duración de un flujo, etc.) y (3) un conjunto de instrucciones y acciones que son aplicadas a cada paquete que coincide con el flujo descrito. Estos campos establecen la forma en que un paquete es procesado y reenviado.
+Cada entrada o flujo en esta tabla (ver figura ~\ref{fig:OpenFlowArch2}) se compone de: (1) campos de selección (matching fields), utilizados en la definici\'on de reglas de selección con las cuales identificar a un conjunto de paquetes a ser tratados de una forma en particular, basándose en información relacionada a campos en los cabezales del paquete para esto; (2) contadores para la recolección de información estadística en relación al flujo (n\'umero de paquetes recibidos, cantidad de bytes, duración de un flujo, etc.) y (3) un conjunto de instrucciones y acciones que son aplicadas a cada paquete que coincide con el flujo descrito. Estos campos establecen la forma en que un paquete es procesado y reenviado.
  
 \begin{figure}[htbp!] 
 \centering    
@@ -161,7 +161,7 @@ Cada entrada o flujo en esta tabla (ver figura ~\ref{fig:OpenFlowArch2}) se comp
 \label{fig:OpenFlowArch2}
 \end{figure}
 
-Cuando un paquete arriba a un switch (ver figura ~\ref{fig:OFPacketProcessing}), se extraen y comparan cabezales del paquete acorde a las reglas definidas en el matching field del flujo, comparando los campos utilizados. En caso que el paquete coincida con las reglas definidas, se aplican el conjunto de instrucciones y acciones asociadas a dicho flujo. En caso que el paquete no coincida con ningún flujo, el accionar a desempeñar dependerá del conjunto de instrucciones y acciones definidas por una entrada especial en la tabla de flujos, denominada Table-miss Flow Entry.\\ 
+Cuando un paquete arriba a un switch (ver figura ~\ref{fig:OFPacketProcessing}), se extraen y comparan cabezales del paquete acorde a las reglas definidas en el flujo, comparando los campos utilizados. En caso que el paquete coincida con las reglas definidas, se aplican el conjunto de instrucciones y acciones asociadas a dicho flujo. En caso que el paquete no coincida con ningún flujo, el accionar a desempeñar dependerá del conjunto de instrucciones y acciones definidas por una entrada especial en la tabla de flujos, denominada Table-miss Flow Entry.\\ 
 
 \begin{figure}[htbp!] 
 \centering    
@@ -171,11 +171,11 @@ Cuando un paquete arriba a un switch (ver figura ~\ref{fig:OFPacketProcessing}),
 \end{figure}
 
 
-La Table-miss Flow Entry esta pensada para contemplar el tr\'afico que no es definido por ningún otro flujo, por ello en esencia es el ultimo flujo a ser considerado (menor prioridad) al momento de procesar un paquete. Generalmente tiene asociada la acción de eliminar el paquete (Drop), procesar el paquete en la siguiente tabla de flujos (GoTo Table) \'o reenviar el paquete al Controlador.\\
+La Table-miss Flow Entry esta pensada para contemplar el tipo de tr\'afico que no es definido por ningún otro flujo, por ello en esencia es el ultimo flujo a ser considerado (menor prioridad) al momento de procesar un paquete. Generalmente tiene asociada la acción de eliminar el paquete (Drop), procesar el paquete en la siguiente tabla de flujos (GoTo Table) \'o reenviar el paquete al Controlador.\\
 
 Otra caracter\'istica importante de un switch OpenFlow, es la capacidad para procesar paquetes utilizando protocolos tradicionales de red adem\'as del procesamiento normal de OpenFlow. Esta característica a su vez da lugar a la clasificaci\'on en switches OpenFlow puros y switches OpenFlow h\'ibridos. Mientras que los switches OpenFlow puros son aquellos que solamente soportan el protocolo de igual nombre, los switches OpenFlow h\'ibridos son aquellos que adicionalmente permiten procesar paquetes de la misma forma en que lo har\'ia un hardware de red legado.
 
-Aprovechando las capacidades de un switch OpenFlow h\'ibrido, se puede definir por ejemplo la Table-Flow-Entry de forma que se procese todo paquete contemplado por esta entrada como un hardware de red tradicional, aplicando por ejemplo esquemas de reenvío IP. 
+Aprovechando las capacidades de un switch OpenFlow h\'ibrido, se puede definir por ejemplo la Table-miss-Flow-Entry de forma que se procese todo paquete contemplado por esta entrada como un hardware de red tradicional, aplicando por ejemplo esquemas de reenvío IP. 
 
 \subsection{Reglas OpenFlow}
 Cada entrada en la tabla de flujos, distingue un tipo de tr\'afico en particular y la forma en que se procesa (acciones e instrucciones). Es uno de los pilares del protocolo la expresividad disponible para escribir las reglas de cada flujo; es decir, la capacidad de agrupar tipos de tr\'afico acorde a diferentes propiedades en el mismo.\\
@@ -211,25 +211,26 @@ Como se menciona anteriormente la acci\'on de un flujo OpenFlow determina la for
 \end{enumerate}
 
 \subsection{Controlador OpenFlow}
-Un controlador SDN brinda implementaciones a las Interfaces Sur y Norte. Un controlador OpenFlow/SDN requiere adem\'as de esto la compatibilidad con el protocolo OpenFlow en la interfaz sur. 
+Un controlador SDN brinda implementaciones a las interfaces Sur y Norte. Un controlador OpenFlow/SDN requiere adem\'as de esto la compatibilidad con el protocolo OpenFlow en la interfaz Sur. 
 
 Basándose solamente en estos principios, las implementaciones de controladores OpenFlow pueden ser muy variadas. Desde controladores muy simples como NOX\cite{ControllersNOX} y POX\cite{ControllersPOX} que siguen estrictamente el enfoque de SDN/OpenFlow, hasta controladores m\'as elaborados como OpenDaylight\cite{ControllersOpendaylight} (ver imagen ~\ref{fig:OpenDayLightHydrogen}) que implementan OpenFlow como una característica mas de su implementaci\'on de interfaz Sur.
 
 Sin embargo existen aspectos relacionados a la entidad Controlador dentro del enfoque SDN/OpenFlow que son afines a cualquier implementaci\'on y arquitectura. A continuaci\'on se mencionan los principales:
   
-\begin{figure}[ht!] 
+\begin{figure}[h!] 
 \centering    
-\includegraphics[width=1\textwidth]{opendaylight-hydrogen}
+\includegraphics[width=0.8\textwidth]{opendaylight-hydrogen}
 \caption[Arquitectura de OpenDaylight Hydrogen]{Arquitectura de OpenDaylight Hydrogen. Imagen extraída de \cite{OpenDaylightArch}}
 \label{fig:OpenDayLightHydrogen}
 \end{figure}
 
+\newpage
 \subsubsection{Granularidad en el control}
-Tradicionalmente, la unidad básica de tráfico en una red es el paquete. Cada paquete contiene información de direccionamiento necesaria para la toma de decisiones dentro del switch a nivel de reenvío. Sin embargo muchas aplicaciones de red envían datos como un flujo de muchos paquetes individuales, mientras que las redes que desean proveer de calidad de servicios (\gloss{QoS}) se benefician utilizando flujos. Por ello resulta beneficioso adoptar un nivel de abstracción superior en el control del plano de datos, distinguiendo tr\'afico por flujos y a través de paquetes individuales.\\
+Tradicionalmente, la unidad básica de tráfico en una red es el paquete. Cada paquete contiene información de direccionamiento necesaria para la toma de decisiones dentro del switch a nivel de reenvío. Sin embargo muchas aplicaciones de red envían datos como un flujo de muchos paquetes individuales, mientras que las redes que desean proveer de calidad de servicios (\gloss{QoS}) se benefician utilizando flujos. Por ello resulta beneficioso adoptar un nivel de abstracción superior en el control del plano de datos, distinguiendo tr\'afico por flujos y no a través de paquetes individuales.\\
  
 Por otro lado uno de los puntos vulnerables del enfoque SDN, es la comunicación entre switch y Controlador. Sobrecargar este canal de comunicación, pensando en redes a gran escala en la cantidad de dispositivos, supone una debilidad importante. Basar la granularidad de control en paquetes individuales, profundiza esta debilidad; mientras que el enfoque basado en flujos atenúa esta debilidad. 
 
-Para fijar ideas, en el enfoque de flujos, cuando un paquete recibido no es contemplado por ning\'un flujo particular puede ser reenviado al Controlador para decidir su procesamiento. \'Este tras analizar dicho paquete puede resolver adem\'as del procesamiento instalar un nuevo flujo para contemplar m\'as adelante paquetes similares (incluyendo al mismo paquete). De esta forma cualquier otro paquete contemplado por el nuevo flujo no es m\'as reenviado al Controlador, mientras que en el enfoque de paquetes individuales la regla instalada contemplar\'ia solamente al paquete inicial.
+Para fijar ideas, en el enfoque de flujos, cuando un paquete recibido no es contemplado por ning\'un flujo particular puede ser reenviado al Controlador para decidir su procesamiento. Este tras analizar dicho paquete puede resolver adem\'as del procesamiento instalar un nuevo flujo para contemplar m\'as adelante paquetes similares (incluyendo al mismo paquete). De esta forma cualquier otro paquete contemplado por el nuevo flujo no es m\'as reenviado al Controlador, mientras que en el enfoque de paquetes individuales la regla instalada contemplar\'ia solamente al paquete inicial.
 
 A su vez se pueden utilizar las mismas prácticas que con el control a nivel
 de paquetes individuales, como agrupar flujos relacionados al tráfico entre dos hosts, tomando
@@ -240,11 +241,11 @@ SDN no establece ninguna restricción en cuanto a si el plano de control debe se
 
 En relación a OpenFlow, si bien el protocolo no establece mecanismos para la comunicación entre controladores, habilita a un switch a conectarse a múltiples controladores.\\
 
-Algunos proyectos como Onix\cite{koponen2014distributed} e HyperFlow\cite{tootoonchian2010hyperflow} toman la idea de mantener un plano de control lógicamente centralizado, pero físicamente distribuido. Este enfoque tiene como principal beneficio disminuir la sobrecarga en el proceso de búsqueda sobre una tabla de flujos, permitiendo la comunicación con controladores locales.\\
+Algunos proyectos como Onix\cite{koponen2014distributed} e HyperFlow\cite{tootoonchian2010hyperflow} toman la idea de mantener un plano de control lógicamente centralizado pero físicamente distribuido. Este enfoque tiene como principal beneficio disminuir la sobrecarga en el proceso de búsqueda sobre una tabla de flujos, permitiendo la comunicación con controladores locales.\\
 
 Kandoo\cite{hassas2012kandoo}, proponen utilizar controladores locales para el manejo de aplicaciones y redirigir hacia un Controlador global flujos que requieran de una visión global del estado de la red, bastante similar a lo anterior. Esto tiene como principal beneficio la reducción de la carga sobre el Controlador global, debido al filtrado de solicitudes de flujo que realizan los controladores locales, y a la vez proveen al plano de datos de una rápida respuesta para las solicitudes que pueden ser manejadas por los controladores locales.\\
 
-Concluyendo con este apartado, otro de los enfoques que buscan generar una distribución del plano de control en SDN es el asumido por FlowVisor\cite{sherwood2010carving}. Este enfoque propone la virtualización de una red de switches OpenFlow con múltiples controladores, construyendo lo que denominan Slices de la red. De esta forma brindan a cada controlador una visión local a su slice; mientras que un controlador especial actuá de \gloss{Proxy}, manteniendo una visión global de toda la red.
+Concluyendo con este apartado, otro de los enfoques que buscan generar una distribución del plano de control en SDN es el asumido por FlowVisor\cite{sherwood2010carving}. Este enfoque propone la virtualización de una red de switches OpenFlow con múltiples controladores, construyendo lo que denominan Slices de la red. De esta forma brindan a cada controlador una visión local a su Slice, mientras que un controlador especial actuá de \gloss{Proxy} manteniendo una visión global de toda la red.
 
 \subsubsection{Políticas reactivas vs proactivas}
 Existen dos enfoques para la intervención del controlador en el plano de datos: (1) reactivo y (2) proactivo.
@@ -270,7 +271,7 @@ La principal herramienta para el desarrollo de aplicaciones SDN/OpenFlow es el s
 \subsection{Controlador}
 Existe un cantidad interesante de propuestas para la implementaci\'on del plano de control. En este trabajo se ha mencionado algunos como OpenDaylight, NOX y POX, pero existen varias alternativas. Pueden encontrarse desde controladores comerciales y académicos, en código abierto y propietario, compatibles solamente con OpenFlow y compatibles con múltiples protocolos incluyendo OpenFlow, etc.\\   
 
-Estas características son utilizadas en este proyecto para la elección de la mejor alternativa de software de control, basándose en las necesidades y restricciones del prototipo. Por ello se cree conveniente incluir el siguiente cuadro comparativo, en el que se presentan las principales características utilizadas en la elecci\'on del controlador m\'as apropiado. Cabe destacar que esta tabla esta basada en una tabla m\'as reducida presentada en \cite{StateOfArt1}.\\
+Estas características son utilizadas en este proyecto para la elección de la mejor alternativa de software de control, basándose en las necesidades y restricciones del prototipo. Por ello se cree conveniente incluir el siguiente cuadro comparativo (ver tabla \ref{table:Controladores}), en el que se presentan las principales características utilizadas en la elecci\'on del controlador m\'as apropiado. Cabe destacar que esta tabla esta basada en una tabla m\'as reducida presentada en \cite{StateOfArt1}.\\
 
 \newpage
 \clearpage
@@ -282,7 +283,7 @@ Estas características son utilizadas en este proyecto para la elección de la m
 \hline
 POX\cite{ControllersPOX}                  & Python                  & Si                  & Nicira                         & 1.0               & Controlador de propósito general implementado en Python, compatible con Linux, Mac OS, y Windows.                                                                                                                                                                                                                         \\
 \hline
-NOX\cite{ControllersNOX}                  & C++                     & Si                  & Nicira                         & 1.0               & Uno de los primeros controladores ampliamente utilizado. Implementa funcionalidades para descubrimiento de topologías, learning switch, y Network-wide switch.                                                                                                                    \\
+NOX\cite{ControllersNOX}                  & C++                     & Si                  & Nicira                         & 1.0               & Uno de los primeros controladores ampliamente utilizado. Implementa funcionalidades para descubrimiento de topologías, learning switch y Network-wide switch.                                                                                                                    \\
 \hline
 OpenMUL\cite{ControllersOpenMUL}          & C                       & Si                  & Kulcloud                       & 1.4               & Controlador basado en OpenFlow con compatibilidad hacia atrás (OpenFow v1.0, v1.2, etc) con soporte multi-thread basado en lenguaje C, soporte SSL, soporte a múltiples interfaces norte, API REST                                                                                                                        \\
 \hline
@@ -290,7 +291,7 @@ Maestro\cite{ControllersMaestro}              & Java                    & Si    
 \hline
 Trema\cite{ControllersTrema}                & Ruby/C                  & Si                  & NEC                            & 1.0               & Framework full-stack para el desarrollo de Controladores OpenFlow en Ruby y C, compatible con Ubuntu 13.04 y Fedora 16-19 entre otras distribuciones Linux.                                                                                                                                                                \\
 \hline
-Beacon\cite{ControllersBeacon}           & Java                    & Si                  & Stanford                       & 1.0              & Controlador multi-plataforma, rápido y modular basado en Openflow con soporte a programación orientada a eventos y concurrente (threads). Incorpora la plataforma web Jetty y un modulo GUI extensible.                                                                                                                   \\
+Beacon\cite{ControllersBeacon}           & Java                    & Si                  & Stanford                       & 1.0              & Controlador multi-plataforma, rápido y modular basado en OpenFlow con soporte a programación orientada a eventos y concurrente (threads). Incorpora la plataforma web Jetty y un modulo GUI extensible.                                                                                                                   \\
 \hline
 Jaxon\cite{ControllersJaxon}                & Java                    & Si                  & Desarrolladores independientes & 1.0              & Controlador OpenFlow basado en NOX para desarrollo en  Java.                                                                                                                                                                                                                                                              \\
 \hline
@@ -301,15 +302,15 @@ Floodlight\cite{ControllersFloodlight}           & Java                    & Si 
 SNAC\cite{ControllersSNAC}                 & C++                     & No                  & Nicira                         & -                 & Controlador basado en OpenFlow para redes LAN con GUI y un lenguaje definido para declarar reglas. Esta basado en el controlador NOX más un módulo para un lenguaje de modelado formal  
  (FML).                                                                                                                             \\
 \hline
-\gloss{Ryu}\cite{ControllersRyu}                  & Python                  & Si                  & NTT, OSRG group                & 1.4               & Framework de programación para SDN, provee Controladores basados en OpenFlow, Netconf, Of-config entre otros. Brinda soporte para OpenFlow v1.0 v1.2 v1.3 y v1.4 y extensiones propuestas por le empresa Nicira.                                                                                                                                    \\
+\gloss{Ryu}\cite{ControllersRyu}                  & Python                  & Si                  & NTT, OSRG group                & 1.4               & Framework de programación para SDN, provee controladores basados en OpenFlow, Netconf, Of-config entre otros. Brinda soporte para OpenFlow v1.0 v1.2 v1.3 y v1.4 y extensiones propuestas por le empresa Nicira.                                                                                                                                    \\
 \hline
 Nodeflow\cite{ControllersNodeFlow}             & Javascript              & Si                  & NTT, OSRG group                &                   & Controlador basado en OpenFlow orientado a programación en Javascript, basado en el framework Node.js.                                                                                                                                                                                                                    \\
 \hline
-OVS-Controller\cite{OVSController}       & C                       & Si                  & Desarrolladores independientes & -                 & Controlador basado en OpenFlow de referencia con soporte a Open vSwitch y gran parte de otros tipos de switches. Como resultado los switches funcionan como un Switch de capa 2 MAC-learning.                                                                                                                             \\
+OVS-Controller\cite{OVSController}       & C                       & Si                  & Desarrolladores independientes & -                 & Controlador basado en OpenFlow de referencia con soporte a Open vSwitch y gran parte de otros tipos de switches. \\
 \hline
-FlowVisor\cite{ControllersFlowvisor}            & C                       & Si                  & Stanford/Nicira                & -                 & Controlador de propósitos particulares, que actúa como proxy de forma transparente entre una red OpenFLow y múltiples Controladores OpenFlow.                                                                                                                                                                             \\
+FlowVisor\cite{ControllersFlowvisor}            & C                       & Si                  & Stanford/Nicira                & -                 & Controlador de propósitos particulares, que actúa como proxy de forma transparente entre una red OpenFlow y múltiples Controladores OpenFlow.                                                                                                                                                                             \\
 \hline
-RouteFlow\cite{ControllersRouteflow}            & C++                     & Si                  & CPqD                           & 1.3               & Proyecto opensource que provee de servicios de routing virtualizados sobre hardware OpenFlow. Un escenario de uso común puede ser su utilización en conjunto con otro Controlador como Ryu.                                                                                                                                \\
+RouteFlow\cite{ControllersRouteflow}            & C++                     & Si                  & CPqD                           & 1.3               & Proyecto Open Source que provee de servicios de routing virtualizados sobre hardware OpenFlow. Un escenario de uso común puede ser su utilización en conjunto con otro Controlador como Ryu.                                                                                                                                \\
 \hline
 OpenDaylight\cite{ControllersOpendaylight}         & Java                   & Si                  & Linux Foundation               & 1.3               & Open Daylight es un framework abierto a la comunidad y apoyado por fabricantes, orientado a mejorar y agilizar la adopción de nuevos protocolos y aplicaciones así como e innovación. Este controlador esta desarrollado en java y provee diferentes m\'odulos de conexión para la interfaz Sur, entre los cuales se encuentra el protocolo OpenFlow. Brinda soporte al protocolo OpenFlow hasta versión 1.3 actualmente.\\
 \hline   
@@ -320,16 +321,16 @@ OpenDaylight\cite{ControllersOpendaylight}         & Java                   & Si
 
 \newpage
 \subsection{Mininet y mini NExT}
-\textbf{Mininet}\cite{Mininet1} es un emulador de red, que habilita a crear hosts, switches, links y controladores, en un entorno virtual. Se encuentra disponible tanto para instalarse nativamente en un entorno Linux, como a través de una m\'aquina virtual configurada con todo el software de desarrollo necesario para iniciarse en el desarrollo de aplicaciones OpenFlow/SDN (Mininet Kit Starter). 
+Mininet\cite{Mininet1} es un emulador de red, que habilita a crear hosts, switches, links y controladores, en un entorno virtual. Se encuentra disponible tanto para instalarse nativamente en un entorno Linux, como a través de una m\'aquina virtual configurada con todo el software de desarrollo necesario para iniciarse en el desarrollo de aplicaciones OpenFlow/SDN (Mininet Kit Starter). 
 
-Soporta diferentes versiones del protocolo OpenFlow y es una de las herramientas m\'as utilizadas para la prototipaci\'on y experimentación de aplicaciones desarrolladas en dicha arquitectura; puesto que habilita a investigadores y desarrolladores, aprender, prototipar, probar y depurar aplicaciones rápidamente utilizando una computadora convencional.\\
+Soporta diferentes versiones del protocolo OpenFlow y es una de las herramientas m\'as utilizadas para la prototipaci\'on y experimentación de aplicaciones desarrolladas en dicha arquitectura, puesto que habilita a investigadores y desarrolladores aprender, prototipar, probar y depurar aplicaciones rápidamente utilizando una computadora convencional.\\
 
-\textbf{mini NExT} es una extension de Mininet que permite entre otras cosas asignar a cada host su propio sistema de ficheros, permitiendo as\'i modificar la configuraci\'on por defecto de cada nodo virtual e instalar diferentes herramientas en ellos. Esta orientado al despliegue virtual de arquitecturas m\'as complejas que las posibles con Mininet.\\   
+La herramienta mini NExT es una extension de Mininet que permite entre otras cosas asignar a cada host su propio sistema de ficheros, permitiendo as\'i modificar la configuraci\'on por defecto de cada nodo virtual e instalar diferentes herramientas en ellos. Esta orientado al despliegue virtual de arquitecturas m\'as complejas que las soportadas por Mininet.\\   
 
 En este trabajo Mininet es utilizado para realizar pruebas de experimentaci\'on y benchmark con las alternativas de controladores disponibles, con el objetivo de determinar el controlador OpenFlow a ser utilizado en la arquitectura del prototipo.\\
 
 \section{Aplicaciones de SDN}
-SDN presenta un campo de aplicación bastante extenso, y es posible que a medida que el concepto siga evolucionando y asentándose se irán descubriendo nuevos casos de uso y campos de aplicación. A continuación se muestran algunos casos de uso:
+SDN presenta un campo de aplicación bastante extenso y es posible que a medida que el concepto siga evolucionando y asentándose se irán descubriendo nuevos casos de uso y campos de aplicación. A continuación se muestran algunos casos de uso:
 
 \begin{itemize}
 
@@ -354,12 +355,12 @@ Además desde que el control de los dispositivos intermediarios puede realizarse
 Contar con una visión global de los dispositivos del plano de datos, habilita al Controlador a implementar diferentes políticas de balanceo de carga en función del estado de la red y permite un uso óptimo de todos los recursos disponibles. A su vez se pueden priorizar diferentes tipos de tráfico, encaminar tráfico dependiendo de un tipo de servicio o contenido y otras técnicas de QoS.
 
 \item \textbf{Herramientas para mitigación de ataques DoS:}
-Herramientas para la mitigación de ataques de negación de servicios (DoS) pueden beneficiarse de las estadísticas provistas por un switch OpenFlow por ejemplo para detectar anomalías. Además utilizando la acción de redirección de un flujo al Controlador, se puede analizar y detectar tráfico sospechoso de ataques DoS, permitiendo a posteriori insertar un flujo en el switch de ingreso específico para bloquear el tipo de ataque o tráfico malicioso detectado. 
+Herramientas para la mitigación de ataques de negación de servicios (DoS) pueden beneficiarse de las estadísticas provistas por un switch OpenFlow por ejemplo para detectar anomalías. Además utilizando la acción de redirección de un flujo al Controlador se puede analizar y detectar tráfico sospechoso de ataques DoS, permitiendo a posteriori insertar un flujo en el switch de ingreso específico para bloquear el tipo de ataque o tráfico malicioso detectado. 
 
 De todos modos vale la pena recordar la inconveniencia de sobrecargar el canal de comunicaci\'on entre un dispositivo y el controlador. 
 
 \item \textbf{Implementaci\'on de Servicios de red:}
-Con una arquitectura basada en SDN como openFlow, resulta sumamente sencillo la incorporación de servicios al plano de datos de una infraestructura de red dada. Independientemente de la marca del hardware utilizado, sus características y funcionalidades, siempre que sean compatibles con OpenFlow puede incorporarse nuevos servicios como autenticación, firewall, almacenamiento secundario, etc., simplemente programando una nueva aplicación en el Controlador que implemente dichos servicios.
+Con una arquitectura basada en SDN como OpenFlow, resulta sumamente sencillo la incorporación de servicios al plano de datos de una infraestructura de red dada. Independientemente de la marca del hardware utilizado, sus características y funcionalidades, siempre que sean compatibles con OpenFlow puede incorporarse nuevos servicios como autenticación, firewall, almacenamiento secundario, etc., simplemente programando una nueva aplicación en el Controlador que implemente dichos servicios.
 
 \item \textbf{Experimentación:}
 El desarrollo, verificación y puesta en producción de nuevos servicios y protocolos resulta sumamente sencillo puesto que consta simplemente de desplegar una nueva aplicación en un entorno de software 
@@ -367,7 +368,7 @@ El desarrollo, verificación y puesta en producción de nuevos servicios y proto
 
 \end{itemize}
 
-Por estas razones soluciones basadas en el enfoque SDN con OpenFlow por ejemplo, u otras arquitecturas basadas en SDN resultan de gran utilidad en escenarios como:
+Por estas razones soluciones basadas en el enfoque SDN con OpenFlow por ejemplo u otras arquitecturas basadas en SDN resultan de gran utilidad en escenarios como:
 
 \begin{enumerate}
 \item Redes empresariales
@@ -375,10 +376,10 @@ Por estas razones soluciones basadas en el enfoque SDN con OpenFlow por ejemplo,
 \item Academia
 \end{enumerate}
 
-\section{Casos de éxito de SDN}
+\section{Casos de éxito de SDN/OpenFlow}
 OpenFlow en particular se ha hecho con un cierto protagonismo recientemente. Tal es el hecho que se pueden nombrar casos de éxito en la migración de servicios sobre esquemas tradicionales de redes a SDN/OpenFlow.\\
 
-La Open Networking Foundation en particular elabor\'o un articulo\cite{ONFSuccessCase} en donde se recomiendan métodos y se proveen guías para la migración de servicios desde un esquema tradicional a SDN, nombrando en particular tres casos de éxito en este tipo de migraciones, en escenarios reales: (1) Google InterDatacenter WAN, (2) NTT Provider Edge y (3) Stanford Campus Network.
+La Open Networking Foundation en particular elabor\'o un articulo\cite{ONFSuccessCase} en donde se recomiendan métodos y se proveen guías para la migración de servicios desde un esquema tradicional a SDN nombrando en particular tres casos de éxito en este tipo de migraciones, en escenarios reales: (1) Google InterDatacenter WAN, (2) NTT Provider Edge y (3) Stanford Campus Network.
 
 Por mayores detalles en relación a estos casos de \'exitos se recomienda continuar con la lectura en dicho articulo.
 
@@ -427,7 +428,7 @@ Algunas implementaciones proveen adem\'as la capacidad de priorizar tipos de tr\
 
 %Pensando en el contexto de la RAU, alguna de estas funcionalidades como la clasificaci\'on de tr\'afico, priorizaci\'on de tr\'afico por aplicaciones y balanceo de carga se adaptan muy bien a los requerimientos existentes para la nueva versi\'on de la misma(RAU2).\\  
 
-En relaci\'on a la implementaci\'on de redes privadas, a lo largo de los años han surgido diferentes alternativas; diferenciándose por las funcionalidades que implementan y tambi\'en por las capas en el stack OSI en la cual operan. Algunos ejemplos son: 
+En relaci\'on a la implementaci\'on de redes privadas, a lo largo de los años han surgido diferentes alternativas diferenciándose por las funcionalidades que implementan y tambi\'en por las capas en el stack OSI en la cual operan. Algunos ejemplos son: 
 
 \begin{itemize}
 \item VPN tradicionales
@@ -438,7 +439,7 @@ En relaci\'on a la implementaci\'on de redes privadas, a lo largo de los años h
 	
 \item VPNs basadas en \gloss{CPE}
 	\begin{itemize}
-	\item L2TP (Capa 2)
+	\item \gloss{L2}TP (Capa 2)
 	\item IPSec (Capa 2)
 	\end{itemize}
 	
@@ -462,7 +463,7 @@ Las redes privadas punto a punto son un tipo de implementaci\'on orientada a con
 \label{fig:VPNPuntoAPunto}
 \end{figure}
 
-En este enfoque el tr\'afico de la subred A al llegar al nodo de borde, es encapsulado y enviado a trav\'es de un túnel sobre la red p\'ublica. Al llegar al otro extremo del túnel el tr\'afico es desencapsulado y entregado al nodo de borde en la subred B, tomando luego el camino correspondiente dentro de esta subred en forma normal. Esto genera la percepci\'on desde ambas subredes que se tiene un “cable” entre ambos nodos de borde, conectando ambas subredes como si fuesen una sola red privada.
+En este enfoque el tr\'afico de la subred A al llegar al router VPN, es encapsulado y enviado a trav\'es de un túnel sobre la red p\'ublica. Al llegar al otro extremo del túnel el tr\'afico es desencapsulado en el router VPN y entregado a la subred B, tomando luego el camino correspondiente dentro de la misma en forma normal. Esto genera la percepci\'on desde ambas subredes que se tiene un “cable” entre ambos routers VPN, conectando ambas subredes como si fuesen una sola red privada.
  
 \subsubsection{Redes Privadas Multipunto}
 
@@ -475,22 +476,22 @@ Virtual Private LAN Service (VPLS), es una implementaci\'on de red privada multi
 \begin{figure}[htbp!] 
 \centering    
 \includegraphics[width=0.7\textwidth]{VPNMultipunto}
-\caption[Esquema de una VPN Multipunto]{Esquema de una VPN Multipunto}
+\caption[Esquema de una VPN Multipunto \gloss{L3}]{Esquema de una VPN Multipunto L3}
 \label{fig:VPNMulipunto}
 \end{figure}
  
-En una red privada multipunto VPLS como la de la figura \ref{fig:VPNMulipunto}, compuesta por las subredes A, B y C, cuando se origina un paquete en un equipo de la subred A con destino a otro equipo en la subred B sucede lo siguiente: (1) primero el paquete es encaminado al nodo de borde de la subred A (Router VPN), (2) luego se resuelve din\'amicamente a que punto de la VPN debe ser enviado el paquete (subred B \'o subred C), para lo cual se utiliza un protocolo de ruteo de borde como BGP, después (3) el paquete es encapsulado dentro de MPLS y encaminado mediante conmutaci\'on de etiquetas hasta el nodo de borde en la subred B, finalmente (4) el paquete es desencapsulado y entregado a la subred B para su encaminamiento normal hacia el equipo destino.
+En una red privada multipunto de capa 3 como la de la figura \ref{fig:VPNMulipunto}, compuesta por las subredes A, B y C, cuando se origina un paquete en un equipo de la subred A con destino a otro equipo en la subred B sucede lo siguiente: (1) primero el paquete es encaminado al nodo de borde de la subred A (Router VPN), (2) luego se resuelve din\'amicamente a que punto de la VPN debe ser enviado el paquete (subred B \'o subred C), para lo cual se utiliza un protocolo de ruteo de borde como BGP, después (3) el paquete es encapsulado dentro de MPLS y encaminado mediante conmutaci\'on de etiquetas hasta el nodo de borde en la subred B, finalmente (4) el paquete es desencapsulado y entregado a la subred B para su encaminamiento normal hacia el equipo destino.
 
 \subsection{Redes Privadas en Uruguay y proyecciones para la RAU}
-En Uruguay ANTEL (el principal proveedor de servicios de telecomunicaciones del país) ofrece servicios de redes privadas basados en tres tecnolog\'ias principalmente\footnote{Informaci\'on extraida en base a los servicios comerciales ofrecidos por ANTEL en su sitio oficial \cite{ANTELVPN}}: 
+En Uruguay ANTEL (el principal proveedor de servicios de telecomunicaciones del país) ofrece servicios de redes privadas basados en tres tecnolog\'ias principalmente\footnote{Informaci\'on extraida en base a los servicios comerciales ofrecidos por ANTEL en su sitio oficial \cite{ANTELVPN}.}: 
 
 \begin{itemize}
 \item Lan to Lan con conexiones Ethernet punto a punto
 \item VLAN Hub con conexiones Ethernet 
-\item VPN IP/MPLS multipunto con QoS opcionalmente.\\
+\item VPN IP/MPLS multipunto con QoS opcionalmente
 \end{itemize} 
 
-Dentro de las proyecciones existentes para la RAU2, se encuentran funcionalidades como calidad de servicios, clasificaci\'on de tr\'afico y priorizaci\'on del mismo de acuerdo a pol\'iticas definidas. A su vez se busca conectar m\'ultiples oficinas y organizaciones dispersas geogr\'aficamente en todo el país, manteniendo las pol\'iticas de seguridad de la red privada de cada organizaci\'on. 
+Dentro de las proyecciones existentes para la RAU2, se encuentran funcionalidades como calidad de servicios, clasificaci\'on de tr\'afico y priorizaci\'on del mismo de acuerdo a pol\'iticas definidas. A su vez se busca conectar m\'ultiples oficinas y organizaciones dispersas geográficamente en todo el país, manteniendo las pol\'iticas de seguridad de la red privada de cada organizaci\'on. 
 
 De acuerdo a las implementaciones mencionadas anteriormente, la soluci\'on que m\'as se adapta a los requerimientos de la RAU2 es una VPN IP/MPLS multipunto con funcionalidades de QoS, en donde el rol de proveedor de servicios lo asume la propia red académica o la organizaci\'on encargada de su mantenimiento (SeCIU).\\ 
 
@@ -509,7 +510,7 @@ MPLS sustituy\'o a los servicios de Frame Relay y ATM en la construcci\'on de se
  
 MPLS incluye una gran cantidad de características entre las cuales se distinguen soporte para VPNs, Ingeniería de Tráfico, calidad de servicios (QoS), clases de servicios (CoS), a la vez que es independiente del protocolo de capa de enlace pudiendo operar por ejemplo sobre ATM ó Ethernet.\\
 
-En una red MPLS, cuando un paquete ingresa se le coloca un cabezal MPLS. Este cabezal esta compuesto por cuatro campos: Label, Exp, S, TTL. De ellos se destacan el valor de la etiqueta MPLS, utilizada para encaminar paquetes a través de la red hacia su nodo destino, y eventualmente realizar clasificación de tr\'afico.
+En una red MPLS, cuando un paquete ingresa se le coloca un cabezal MPLS. Este cabezal esta compuesto por cuatro campos: Label, Exp, S, TTL. De ellos se destacan el valor de la etiqueta MPLS, utilizada para encaminar paquetes a través de la red hacia su nodo destino y eventualmente realizar clasificación de tr\'afico.
 
 En cada nodo de la red, el cabezal MPLS es extraído y analizado para determinar el próximo nodo al que se debe enviar dicho paquete. Luego del procesamiento un nuevo cabezal MPLS con otra etiqueta es colocado en el paquete y se reenvía hacia el siguiente nodo en la red.
 
@@ -542,7 +543,7 @@ NetFPGA\cite{NetFPGA1} es una plataforma de hardware reconfigurable y software d
 
 El hardware esta basado en un chip FPGA (Field Programmable Gate Array), el cual se programa con lenguajes de descripci\'on de hardware (\gloss{HDL}) como por ejemplo \gloss{VeriLog}. Cuenta con una amplia variedad de proyectos desarrollados tanto por el equipo de NetFPGA (proyectos de referencia), como por instituciones académicas y comerciales involucradas (proyectos comunitarios) que permiten programar el comportamiento del hardware  de diferentes formas. Se pueden encontrar desde proyectos que programan el hardware con una implementación de referencia de una tarjeta de red (Reference NIC), como un Learning Switch, Simple Router, Router OpenFlow, hasta un generador de tr\'afico entre otros (por mayor informaci\'on ver \citep{NetFPGA2}).\\ 
 
-Surge en el año 2007 como un proyecto de investigación en la Universidad de Stanford, bajo el nombre de NetFPGA-1G, con la consigna de construir una plataforma de desarrollo e investigación basada en un chip FPGA.
+Surge en el año 2007 como un proyecto de investigación en la Universidad de Stanford bajo el nombre de NetFPGA-1G, con la consigna de construir una plataforma de desarrollo e investigación basada en un chip FPGA.
  
 La plataforma alcanz\'o una versi\'on comercial consistente en una placa PCI con un chip Xilinx Virtex-II proFPGA y cuatro interfaces Ethernet de 1Gigabit, m\'as un repositorio de código fuente descargable y abierto a la comunidad, conteniendo librerías IP y unos pocos ejemplos de diseño.\\
 
@@ -555,5 +556,5 @@ A la fecha, NetFPGA cuenta con cuatro versiones de plataformas comerciales, la N
 
 En resumen NetFPGA es una plataforma robusta que propicia a investigadores, docentes y estudiantes en el área de redes de computadoras a la construcción de prototipos sobre sistemas de redes de alta velocidad y acelerados por hardware, en poco tiempo y con un costo inferior a otras alternativas de prototipaci\'on.\\
 
-En este trabajo, se utiliza la plataforma NetFPGA-10G para la prototipaci\'on de un dispositivo compatible con OpenFlow, a partir del cual a su vez implementar una red prototipo basada en el enfoque OpenFlow/SDN. 
+En este trabajo, se utiliza la plataforma NetFPGA-10G para la prototipaci\'on de un dispositivo compatible con OpenFlow a partir del cual a su vez implementar una red prototipo basada en el enfoque OpenFlow/SDN. 
 

@@ -47,7 +47,7 @@ Partiendo de la clasificación de tr\'afico como funcionalidad principal, se lle
 \multicolumn{1}{|c|}{Requerimientos Funcionales}\\ 
 \hline
 \begin{itemize}
-\item Dada una organización o aplicación, el Sistema debe tener la capacidad de clasificar y distinguir el tráfico asociada a la misma de cualquier otro tipo de tráfico. Esto se conoce como clasificación de trafico.
+\item Dada una organización o aplicación, el Sistema debe tener la capacidad de clasificar y distinguir el tráfico asociada a la misma de cualquier otro tipo de tráfico. Esto se conoce como clasificación de tráfico.
 
 %\item Dado el tipo de tr\'afico asociado a una organización, el Sistema debe poder asignar un porcentaje de los recursos disponibles de la red para el procesamiento del mismo.
 
@@ -112,9 +112,9 @@ Es imperativo la construcción de un laboratorio de pruebas compuesto por un con
 
 Por otro lado utilizar hardware reconfigurable tiene la ventaja de poder prototipar diferentes dispositivos de red en un mismo equipo. Se puede entonces modificar dinamicamente el laboratorio de pruebas en función de los casos de uso que se quieran probar sin la necesidad de incorporar nuevo hardware. Ademas la capacidad para programar el hardware, permite sacar provecho de las características del mismo para la implementaci\'on de funcionalidades especificas para la RAU, que en hardware comercial solo se podrían implementar si el mismo ya tiene incorporadas dichas funcionalidades.\\
 
-Finalmente la utilizaci\'on de hardware abierto, en conjunci\'on con software libre y de código abierto posibilitan la construcci\'on de lo que se podría llamar “router open source”, un nodo para la nueva red académica basado en tecnologías abiertas. Esto otorgaría una mayor flexibilidad y capacidades de reutilizaci\'on del hardware disponible en la red académica avanzada.
+Finalmente la utilizaci\'on de hardware abierto, en conjunci\'on con software libre y de código abierto posibilitan la construcci\'on de lo que se podría llamar “Router Open Source”, un nodo para la nueva red académica basado en tecnologías abiertas. Esto otorgaría una mayor flexibilidad y capacidades de reutilizaci\'on del hardware disponible en la red académica avanzada.
 
-\section[Qu\'e arquitectura basada en SDN utilizar]{Qu\'e arquitectura basada en SDN utilizar}
+\section[¿Qu\'e arquitectura basada en SDN utilizar?]{¿Qu\'e arquitectura basada en SDN utilizar?}
 
 %En el cap\'itulo dedicado al estado del arte de las redes definidas por software, se explica en profundidad la arquitectura de SDN, y a partir del mismo queda completamente sanjada la diferencia entre los conceptos de SDN y OpenFlow por ejemplo.\\
 
@@ -146,7 +146,7 @@ Por otro lado la versi\'on de OpenFlow elegida debe garantizar ciertos requerimi
 
 A partir de la versión 1.3.1 OpenFlow brinda tanto soporte completo para MPLS, así como también incorpora el concepto de métricas por flujo, orientado a implementar funcionalidades de QoS. 
 
-De esta forma, se decide utilizar la versión 1.3.1 para la construcción del prototipo.
+De esta forma, se decide utilizar la versión 1.3.1 para la construcción del prototipo.\\
 
 %Sobre la primer restricci\'on, OpenFlow brinda soporte completo para MPLS a partir de la versi\'on 1.3.1, mientras que en relaci\'on a QoS OpenFlow incorpora el concepto de métricas por flujo a partir de la version 1.3.1, orientado a implementar funcionalidades de QoS.\\
 
@@ -232,7 +232,7 @@ Teniendo presente el alcance del proyecto y el tiempo disponible para su ejecuci
 Con esta estrategia se logra obtener en forma rápida un prototipo de switch OpenFlow con el cual trabajar en la implementaci\'on del plano de control, desarrollando estrategias para construir servicios en una red h\'ibrida IP/MPLS, as\'i como dise\~nar casos de uso y un laboratorio de pruebas que permitan validar tecnol\'ogicamente la soluci\'on propuesta.\\ 
 
 
-\section[¿Qu\'e implementaci\'on de Controlador OpenFlow utilizar?]{¿Qu\'e implementaci\'on de Controlador OpenFlow utilizar?}
+\section[¿Qu\'e implementaci\'on de Controlador OpenFlow utilizar?]{¿Qu\'e implementaci\'on de Controlador OpenFlow \\ utilizar?}
 En el desarrollo de este proyecto, basándose en el estudio del estado del arte de las redes definidas por software realizado y en particular en el estudio sobre los controladores OpenFlow disponibles, se plantean dos alternativas que se ajustan bien a los requerimientos de este proyecto.
 
 Estas alternativas surgen de analizar todas las propuestas estudiadas y comparadas en la tabla \ref{table:Controladores}. De todas ellas se eligen las propuestas OpenDaylight y Ryu puesto que est\'an desarrolladas bajo la filosofía de software libre y de código abierto, cuentan con soporte, tienen una buena comunidad de usuarios, soportan el protocolo OpenFlow en su versi\'on 1.3.1 y son las dos propuestas m\'as utilizadas en la comunidad SDN/OpenFlow en la actualidad.\\
@@ -246,5 +246,5 @@ Para elegir la alternativa de controlador a utilizar en el prototipo, se instala
 
 \item El controlador Ryu esta completamente implementado en el lenguaje Python y as\'i lo debe ser también las aplicaciones que se ejecutan sobre el. Al ser Python un lenguaje interpretado, se gana agilidad en el proceso de desarrollo, verificaci\'on y despliegue de las aplicaciones en comparaci\'on a un lenguaje compilado como el utilizado por OpenDaylight (Java).
 
-\item El enfoque de Ryu es m\'as minimalista y académico que el enfoque de OpenDaylight. Mientras que este \'ultimo esta enfocado a la industria y cuenta con un extenso conjunto de módulos para la compatibilidad de diferentes protocolos, mientras que Ryu ofrece una implementaci\'on m\'as liviana enfocada en el protocolo OpenFlow en exclusividad. 
+\item El enfoque de Ryu es m\'as minimalista y académico que el enfoque de OpenDaylight. Mientras que este \'ultimo esta enfocado a la industria y cuenta con un extenso conjunto de módulos para la compatibilidad de diferentes protocolos, Ryu ofrece una implementaci\'on m\'as liviana enfocada en el protocolo OpenFlow en exclusividad. 
 \end{itemize}  
