@@ -12,20 +12,20 @@ Para validar funcionalmente el prototipo es preciso la construcción de un labor
 
 Por otro lado con la implementaci\'on de algunos casos de uso representativos se busca validar la utilización del enfoque OpenFlow/SDN en la construcci\'on de la RAU2.\\
 
-El siguiente capitulo esta destinado a la presentación del laboratorio de pruebas construido y a la descripción de las diferentes pruebas realizadas.
+El siguiente cap\'itulo esta destinado a la presentación del laboratorio de pruebas construido y a la descripción de las diferentes pruebas realizadas.
 
 % **************************** Construccion del TestBed ************************** 
 \section{Definición del Laboratorio}
 
-Como se menciona anteriormente uno de los objetivos de este laboratorio de experimentaci\'on es verificar el correcto funcionamiento de la implementaci\'on realizada, en particular en los aspectos críticos de la misma como la capacidad para clasificar tr\'afico y los diferentes algoritmos de ruteo, distribución de etiquetas, actualización topol\'ogica, etc. 
+Como se menciona anteriormente uno de los objetivos de este laboratorio de experimentaci\'on es verificar el correcto funcionamiento de la implementaci\'on realizada, en particular en los aspectos críticos de la misma como la capacidad para clasificar tr\'afico y los diferentes algoritmos de ruteo, distribución de etiquetas, actualización topol\'ogica. 
 
-Para esto es necesario construir un prototipo con suficientes nodos y enlaces como para poder definir varios servicios de redes privadas. Tambi\'en interesa la existencia de caminos alternativos entre un par de nodos origen y destino para poder comprobar el funcionamiento del algoritmo de ruteo y evaluar el comportamiento del prototipo cuando la topolog\'ia cambia, desconectando enlaces, apagando nodos, etc.\\
+Para esto es necesario construir un prototipo con suficientes nodos y enlaces como para poder definir varios servicios de redes privadas. Tambi\'en interesa la existencia de caminos alternativos entre un par de nodos origen y destino para poder comprobar el funcionamiento del algoritmo de ruteo y evaluar el comportamiento del prototipo ante cambios en la topolog\'ia (desconexi\'on de nodos o fallas en enlaces por mencionar algunos ejemplos).
 
 Teniendo en cuanta los requerimientos mencionados se construye un laboratorio de pruebas con la siguiente topolog\'ia (ver figura \ref{fig:LaboratorioDePruebasTopo}).
   
 \begin{figure}[ht!] 
 \centering    
-\includegraphics[width=0.85\textwidth]{Topologia}
+\includegraphics[width=0.7\textwidth]{Topologia}
 \caption[Laboratorio de pruebas - Topolog\'ia]{Laboratorio de pruebas - Topolog\'ia}
 \label{fig:LaboratorioDePruebasTopo}
 \end{figure}
@@ -42,7 +42,7 @@ Por simplicidad en el diagrama se han obviado los enlaces existentes entre el Co
 
 \begin{figure}[ht!] 
 \centering    
-\includegraphics[width=0.85\textwidth]{TopologiaCostos}
+\includegraphics[width=0.70\textwidth]{TopologiaCostos}
 \caption[Laboratorio de pruebas - Costos de enlaces en la topolog\'ia]{Laboratorio de pruebas - Costos de enlaces en la topolog\'ia}
 \label{fig:LaboratorioDePruebasCostos}
 \end{figure}
@@ -146,27 +146,27 @@ Este conjunto de servicios establece el procesamiento de paquetes de capa 3 para
 \subsubsection{Verificaci\'on del Algoritmo de ruteo}
 En esta secci\'on se eval\'ua el correcto funcionamiento del algoritmo de ruteo. Para ello se comparan los caminos computados por el algoritmo para cada servicio, con los respectivos mejores caminos te\'oricos (previamente calculados de forma manual). 
 
-Para cada camino se verifican dos cosas: (1) que el camino calculado se corresponde con el camino te\'orico y (2) que el camino es correctamente instalado en forma de reglas de reenvío (en base a conmutaci\'on de etiquetas) en las respectivas tablas de flujos OpenFlow de cada nodo en el camino.\\
+Para cada camino se verifican dos cosas: (1) que el camino calculado se corresponde con el camino te\'orico y (2) que el camino es correctamente instalado en forma de reglas de reenvío (en base a conmutaci\'on de etiquetas) en las respectivas tablas de flujos OpenFlow de cada nodo del camino.\\
 
 Como se ha mencionado, los caminos te\'oricos son calculados manualmente observando los costos de la topolog\'ia (figura \ref{fig:LaboratorioDePruebasCostos}). Los resultados de este procedimiento se muestran en la figura \ref{fig:CUP1Caminos}, identificado cada camino mediante el código de colores utilizado en la tabla de servicios.\\
 
 \begin{figure}[ht!] 
 \centering    
 \includegraphics[width=1.0\textwidth]{CU1P1Caminos}
-\caption[Escenario 1 - Caminos para servicios]{Escenario 1 - Caminos para servicios}
+\caption[Escenario 1 - LSPs]{Escenario 1 - LSPs}
 \label{fig:CUP1Caminos}
 \end{figure}
 
 Para obtener los caminos calculados por el algoritmo de ruteo se analizan las tablas de flujos de Open vSwitch en cada uno de los nodos de la red prototipo utilizando el comando \textbf{dump-flows} de esta herramienta; de esta forma a partir de la informaci\'on en las mismas se construye cada uno de los caminos. Cabe destacar que tambi\'en puede obtenerse la informaci\'on de las tablas de flujos mediante la interfaz gráfica de RAUFlow.\\
 
-Aplicando este procedimiento para cada uno de los servicios en la tabla \ref{table:TablaFlujos} se comprueba la correspondencia entre los caminos computados por el algoritmo de ruteo y los caminos te\'oricos, a la ves que se comprueba que son correctamente instalados como flujos en las tablas de cada nodo en el prototipo. En el apéndice \ref{appendix6.1} se incluye a modo de ejemplo el análisis realizado para los LSPs asociados a los servicios S3 y S4.\\ 
+Aplicando este procedimiento para cada uno de los servicios en la tabla \ref{table:TablaFlujos} se comprueba la correspondencia entre los caminos computados por el algoritmo de ruteo y los caminos te\'oricos, a la vez que se comprueba que son correctamente instalados como flujos en las tablas de cada nodo en el prototipo. En el apéndice \ref{appendix6.1} se incluye a modo de ejemplo el análisis realizado para los LSPs asociados a los servicios S3 y S4.\\ 
  
 \subsubsection{Clasificaci\'on de tr\'afico}
-Para cada servicio, se implementa clasificaci\'on de tr\'afico en el prototipo solamente en el nodo ingreso, implementándose para el escenario definido en base a la numeraci\'on IP origen y destino de un paquete. Luego en cada nodo intermedio los paquetes son procesados acorde a las reglas de reenvío basadas en la conmutación de etiquetas MPLS.
+Para cada servicio se implementa clasificaci\'on de tr\'afico en el prototipo solamente en el nodo ingreso, implementándose para el escenario definido en base a la numeraci\'on IP origen y destino de un paquete. Luego en cada nodo intermedio los paquetes son procesados acorde a las reglas de reenvío basadas en la conmutación de etiquetas MPLS.
 
 Para verificar que realmente se implementa clasificaci\'on de tr\'afico se observa el comportamiento de cada flujo OpenFlow involucrado en el procesamiento del tr\'afico asociado a un servicio (flujos que clasifican tr\'afico en el nodo de ingreso y flujos que construyen un LSP). Para ello se genera tr\'afico para los servicios definidos (ver tabla \ref{table:TablaFlujos}) y mediante la herramienta de Linux \textbf{tcpdump} se captura tr\'afico por las diferentes interfaces en cada nodo involucrado en los LSPs correspondientes. 
 
-Mediante este procedimiento se genera tr\'afico para todos los servicios definidos, constatando que el mismo es correctamente enrutado a trav\'es de la red laboratorio mediante los flujos OpenFlow en cada una de las tablas de flujos, siendo entregado a la respectiva subred destino. Por simplicidad los detalles t\'ecnicos de este procedimiento se han omitido de este cap\'itulo, aunque si el lector desea profundizar en ellos se incluye en el ap\'endice \ref{appendix6.2} una descripci\'on de este procedimiento y los resultados obtenidos para los servicios S1 y S3.\\
+Mediante este procedimiento se genera tr\'afico para todos los servicios definidos, constatando que el mismo es correctamente enrutado a trav\'es de la red laboratorio mediante flujos OpenFlow y siendo entregado a la respectiva subred destino. Por simplicidad los detalles t\'ecnicos de este procedimiento se han omitido de este cap\'itulo, aunque si el lector desea profundizar en ellos se incluye en el ap\'endice \ref{appendix6.2} una descripci\'on de este procedimiento y los resultados obtenidos para los servicios S1 y S3.\\
 
 En la siguiente secci\'on se discute el comportamiento del prototipo, cuando la topolog\'ia cambia por ejemplo por una falla t\'ecnica en un enlace, utilizando el escenario y los servicios definidos anteriormente.
 
@@ -240,9 +240,9 @@ Para todos estos servicios adem\'as se indica como valor de ethertype 0x0800, co
 
 Sobre este escenario se prueban diferentes combinaciones para la generaci\'on de tr\'afico, variando tanto la subred origen y destino como el tipo de tr\'afico. 
 
-Se prueba generar paquetes ICMP mediante el comando ping para ambas subredes, en especial el caso en que la numeraci\'on IP se repite (por ejemplo Ping de un host en subred A a otro host en subred B en simultaneo con un ping de un host en subred A' a otro host en subred B'); observando que el prototipo enruta correctamente el tr\'afico asociado a cada servicio, garantizando as\'i el aislamiento del espacio de direcciones. 
+Se prueba generar paquetes ICMP mediante el comando \textbf{Ping} para ambas subredes, en especial el caso en que la numeraci\'on IP se repite (por ejemplo ping de un host en subred A a otro host en subred B en simultaneo con un ping de un host en subred A' a otro host en subred B'); observando que el prototipo enruta correctamente el tr\'afico asociado a cada servicio, garantizando as\'i el aislamiento del espacio de direcciones. 
 
-Tambi\'en se logra de forma exitosa establecer conexiones SSH entre dos hosts en diferentes subredes para ambas organizaciones y generar requests HTTP, cargando desde un host en una subred una p\'agina web alojada en la otra subred. Esta prueba se realiza para ambas organizaciones utilizando paginas web con diferente contenido; de esta forma se puede determinar fácilmente para una organización si las solicitudes HTTP son correctamente enrutadas y aisladas del tr\'afico de la otra organizaci\'on. En el apéndice \ref{appendix6.4} se muestran los detalles t\'ecnicos asociados a estas pruebas como capturas de las tablas de flujos de cada nodo en la red, capturas del procesamiento de tr\'afico asociado a los servicios en los diferentes casos mencionados, entre otra informaci\'on.\\
+Tambi\'en se logra de forma exitosa establecer conexiones \textbf{SSH} entre dos hosts en diferentes subredes para ambas organizaciones y generar requests \textbf{HTTP}, cargando desde un host en una subred una p\'agina web alojada en la otra subred. Esta prueba se realiza para ambas organizaciones utilizando paginas web con diferente contenido; de esta forma se determina fácilmente para una organización si las solicitudes HTTP son correctamente enrutadas y aisladas del tr\'afico de la otra organizaci\'on. En el apéndice \ref{appendix6.4} se muestran los detalles t\'ecnicos asociados a estas pruebas como capturas de las tablas de flujos de cada nodo en la red, capturas del procesamiento de tr\'afico asociado a los servicios en los diferentes casos mencionados, entre otra informaci\'on.\\
 
 En la siguiente secci\'on se discute la configuraci\'on de un servicio de VPN de capa 2 utilizando la red prototipo y la aplicaci\'on RAUFlow.
 

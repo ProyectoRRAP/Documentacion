@@ -14,7 +14,7 @@
 
 \section{Resumen}
 
-En este documento se ofrece una guía paso a paso para construir partiendo de una PC de escritorio, una tarjeta NetFPGA-10G y diferentes herramientas de software un switch OpenFlow 1.3 IP/MPLS híbrido; lo que denominamos RAUSwitch.\\
+En este documento se ofrece una guía paso a paso para construir partiendo de una PC de escritorio, una tarjeta NetFPGA-10G y diferentes herramientas de software, un switch OpenFlow 1.3 IP/MPLS híbrido; lo que denominamos RAUSwitch.\\
 
 En la misma no se asume ningún conocimiento previo acerca de la plataforma NetFPGA, Xilinx ISE ni sobre el protocolo OpenFlow.\\
 
@@ -58,7 +58,7 @@ Se sugiere respetar los mismos en la medida que sea posible para evitar comporta
 \label{table:RAUHSpecs}
 \end{table}
 
-\footnotetext{En el desarrollo del proyecto, para la construcci\'on del laboratorio de pruebas, se utiliza una tarjeta de red Ethernet adicional, en el diseño RAU-Switch. Esto se debe a la necesidad de conectarse al equipo mediante un cable Ethernet RJ45, puesto que no se contaba con otros equipos con tarjetas de red \'opticas para realizar las pruebas. Esto quiere decir entonces que esta componente es opcional.}
+\footnotetext{En el desarrollo del proyecto, para la construcci\'on del laboratorio de pruebas se utiliza una tarjeta de red Ethernet adicional en el diseño RAU-Switch, para ser utilizada como interfaz para el ingreso de tr\'afico a la red prototipo. Dicho de otro modo esta interfaz se utiliza para conectarse a un Customer Edge router (CE) de una red privada.}
 
 
 \begin{table}[Htl]\centering
@@ -150,7 +150,7 @@ De esta forma se ejecuta el asistente de instalación de la suite de Xillinx.\\
 
 Dejamos todas las opciones que marca por defecto con la excepción de la instalación de los drivers para el cable de programación. En este caso destildar el checkbox correspondiente para evitar que la instalación finalice con errores.\\
 
-Terminada la instalación de la suite de Xilinx, debemos instalar los drivers para el cable de programación JTag. Trabajaremos con un driver proporcionado por terceras partes disponible en un repositorio github.\\
+Terminada la instalación de la suite de Xilinx debemos instalar los drivers para el cable de programación JTag. Trabajaremos con un driver proporcionado por terceras partes disponible en un repositorio github.\\
 
 Por defecto la instalación de Xilinx se realizó en el directorio /opt/Xilinx, en caso contrario trabajar en lo que prosigue en el directorio correspondiente.\\
 
@@ -211,7 +211,7 @@ Luego se puede ejecutar cualquier herramienta de la suite Xilinx, como por ejemp
 \end{bash}
 
 \subsubsection{Instalación de licencias de usuario}
-Para trabajar con las herramientas de Xilinx es necesario contar con licencias correspondientes para cada una de ellas y en particular dependiendo del tipo de hardware con el que se trabaje dependerá el tipo de licencia necesaria. En nuestro caso se necesita una licencia completa (full license), y vale la pena destacar que con una licencia de prueba no se cuentan con las licencias apropiadas para compilar los proyectos de NetFPGA con los que se trabajar\'a.\\
+Para trabajar con las herramientas de Xilinx es necesario contar con licencias correspondientes para cada una de ellas y en particular dependiendo del tipo de hardware con el que se trabaje dependerá el tipo de licencia necesaria. En nuestro caso se necesita una licencia completa (full license) y vale la pena destacar que con una licencia de prueba no se cuentan con las licencias apropiadas para compilar los proyectos de NetFPGA con los que se trabajar\'a.\\
 
 Para obtener una licencia full se debe ir al sitio de Xilinx de gestión de licencias, registrarse y comprar una licencia full.\\
 
@@ -221,7 +221,7 @@ Asumiendo que ya se tiene descargada una licencia full, para cargar la misma abr
 # /opt/Xilinx/13.4/ISE_DS/common/bin/lin64/xlcm
 \end{bash}
 
-Una vez que se ejecuta el comando anterior, se abrirá el programa  Xilinx Lincense Configuration Manager, que es el asistente de licencias de la suite de Xilinx. Una vez abierto, ir a la pestaña de Manejo de Licencias (Manage Xilinx Licenses) e importar los archivos de licencias \emph{.lic} obtenidos (botón copy license).
+Una vez que se ejecuta el comando anterior, se abrirá el programa  Xilinx Lincense Configuration Manager que es el asistente de licencias de la suite de Xilinx. Una vez abierto, ir a la pestaña de Manejo de Licencias (Manage Xilinx Licenses) e importar los archivos de licencias \emph{.lic} obtenidos (botón copy license).
 
 Una vez importada la licencia se podrán ver abajo las diferentes características que proveen las licencias cargadas. En caso de que no se actualice la pestañea apretar el botón \textbf{Refresh}.
 
@@ -251,10 +251,10 @@ En particular trabajaremos con la release 5.0.5 la cual se encuentra accesible m
 https://github.com/NetFPGA/NetFPGA-10G-live/releases/tag/release\_5.0.5
 \end{center}
 
-Una vez descargado el código fuente descomprimimos el archivo .zip en un directorio a elección (en nuestro caso utilizaremos el directorio /home/mina). Luego abrimos una consola en el directorio y ejecutamos lo siguiente:
+Una vez descargado el código fuente, descomprimimos el archivo .zip en un directorio a elección (en nuestro caso utilizaremos el directorio /home/mina). Luego abrimos una consola en el directorio y ejecutamos lo siguiente:
 
 \begin{bash}
-# cd /home/mina/NetFPGA-10G-live-release\_5.0.5/
+# cd /home/mina/NetFPGA-10G-live-release_5.0.5/
 # make cores
 \end{bash}
 
@@ -268,7 +268,7 @@ Antes de empezar a trabajar con el hardware NetFPGA y en especial a programarlo 
 \item Production Test\citep{NetFPGA7}
 \end{itemize}
 
-Estos tests son proyectos de referencia; es decir fueron desarrollados por NetFPGA y la universidad de Stanford. Con los mismos se programan las tarjetas, de igual forma que se programaría cualquier otro proyecto, y luego se ejecutan una serie de scripts que realizan pruebas y verificaciones en el hardware. En pocas palabras, además de verificar el correcto funcionamiento de las tarjetas, al ejecutar los test se tiene una primera experiencia programando el hardware.\\
+Estos tests son proyectos de referencia; es decir fueron desarrollados por NetFPGA y la universidad de Stanford. Con los mismos se programan las tarjetas de igual forma que se programaría cualquier otro proyecto y luego se ejecutan una serie de scripts que realizan pruebas de verificación del hardware. En pocas palabras, además de verificar el correcto funcionamiento de las tarjetas, al ejecutar los test se tiene una primera experiencia programando el hardware.\\
 
 Es importante tener en cuenta que las tarjetas NetFPGA pueden funcionar tanto conectadas a una PC 
  (escenario elegido) denominado server mode como conectadas solamente a una fuente de poder denominado standalone mode.\\
@@ -628,7 +628,7 @@ insmod NF_ROOT/preojects/reference_nic/sw/host/driver/nf10.ko
 \end{bash}
 
 \subsection{Instalación de Open vSwitch}
-Open vSwitch (ovs) lo instalaremos también desde su código fuente, ejecutando lo siguiente en una consola:
+Open vSwitch (ovs) lo instalaremos también desde su código fuente ejecutando lo siguiente en una consola:
 
 \begin{bash}
 # wget http://openvswitch.org/releases/openvswitch-2.3.0.tar.gz
@@ -644,7 +644,7 @@ Luego se compila el código fuente:
 # make && make install
 \end{bash}
 
-Se inserta en el kernel de linux el módulo de ovs
+Se inserta en el kernel de linux el módulo de ovs:
 
 \begin{bash}
 # cd datapath/linux
@@ -723,7 +723,7 @@ o desde el siguiente link:
 http://www.nongnu.org/quagga/docs/docs-info.html\#OSPFv2
 \end{center}
 
-Una vez descargado el código fuente descomprimimos el archivo quagga.public-master.zip en el directorio deseado. En este caso utilizaremos el directorio /home/mina como venimos haciendo para el resto del software instalado. Luego abrimos una consola y ejecutamos los siguientes comandos para compilar el código fuente:
+Una vez descargado el código fuente descomprimimos el archivo \textit{quagga.public-master.zip} en el directorio deseado. En este caso utilizaremos el directorio /home/mina como venimos haciendo para el resto del software instalado. Luego abrimos una consola y ejecutamos los siguientes comandos para compilar el código fuente:
 
 \begin{bash}
 # ./configure
