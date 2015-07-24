@@ -3,7 +3,7 @@
 \chapter{Clasificaci\'on de tr\'afico utilizando cabezales OpenFlow}
 \label{appendix3}
 
-En este ap\'endice se detallan de los atributos presentes en el cabezal OpenFlow versi\'on 1.3 que pueden ser utilizados para la definici\'on de reglas y acciones de un flujo. Esta informaci\'on es de carácter experimental y esta acotada a la compatibilidad de Open vSwitch; es decir, aquellos atributos no soportados por Open vSwitch o que no se consiguió documentaci\'on para entender su utilizaci\'on, no son considerados.
+En este ap\'endice se detallan de los atributos presentes en el cabezal OpenFlow versi\'on 1.3.1 cuales pueden ser utilizados para la definici\'on de reglas y acciones de un flujo. Esta informaci\'on es de carácter experimental y esta acotada a la compatibilidad de Open vSwitch; es decir, aquellos atributos no soportados por Open vSwitch o que no se consiguió documentaci\'on para entender su utilizaci\'on, no son considerados.
 
 \section{Cabezal OpenFlow versi\'on 1.3} 
 
@@ -56,7 +56,7 @@ of_v13_match_fields:
 Estos atributos fueron estudiados uno por uno y se llega a las dos listas presentadas en las siguientes secciones.\\
 
 \section{Sintaxis de un flujo en Open vSwitch}
-La sintaxis del comando ovs-ofctl, utilizado para agregar un flujo en la tabla de Open vSwitch es la siguiente:
+La sintaxis del comando ovs-ofctl utilizado para agregar un flujo en la tabla de Open vSwitch es la siguiente:
 
 
 \begin{center}
@@ -104,7 +104,7 @@ A continuaci\'on se detallan los atributos soportados para la definici\'on de re
 \item \textbf{vlan\_vID}: Permite a un flujo selecionar tr\'afico distinguiendo por el ID de VLAN. El valor de vlan\_id es un entero en el rango 0-4095.
 
 \begin{center}
-\texttt{ovs-ofctl add-flow <bridge> dl\_vlan=<vlanid>,actions=<action>}
+\texttt{ovs-ofctl add-flow <bridge> dl\_vlan=<vlan\_id>,actions=<action>}
 \end{center}
 
 \item \textbf{vlan\_PCP}: Permite a un flujo selecionar tr\'afico distinguiendo por el valor de prioridad de VLAN. El valor dl\_vlan\_pcp es un entero en el rango 0-7.
@@ -113,7 +113,7 @@ A continuaci\'on se detallan los atributos soportados para la definici\'on de re
 \texttt{ovs-ofctl add-flow <bridge> dl\_vlan\_pcp=<value>,actions=<action>}
 \end{center}
 
-\item \textbf{IP\_dscp}: Permite a un flujo selecionar tr\'afico distinguiendo por los campos IP TOS/DHCP o Ipv6 traffic class field en un paquete IP, dependiendo del dl\_type utilizado. Se utiliza junto con los valores de dl\_type 0x0800 para IPv4 y 0x86DD para IPv6. Para otros valores de dl\_type el valor del campo nw\_tos es ignorado. El atributo nw\_tos toma valores en el rango 0-255.
+\item \textbf{IP\_dscp}: Permite a un flujo selecionar tr\'afico distinguiendo por los campos IP TOS/DHCP o IPv6 traffic class field en un paquete IP, dependiendo del dl\_type utilizado. Se utiliza junto con los valores de dl\_type 0x0800 para IPv4 y 0x86DD para IPv6. Para otros valores de dl\_type el valor del campo nw\_tos es ignorado. El atributo nw\_tos toma valores en el rango 0-255.
 
 \begin{center}
 \texttt{ovs-ofctl add-flow <bridge> dl\_type=<ethernet type>, nw\_tos=<tos>, actions=<action>}
@@ -125,7 +125,7 @@ A continuaci\'on se detallan los atributos soportados para la definici\'on de re
 \texttt{ovs-ofctl add-flow <bridge> dl\_type=<ethernet type>, nw\_ecn=<ecn>,actions=<action>}
 \end{center}
 
-\item \textbf{IP\_proto}: Se utiliza para indicar el protocolo IP utilizado en la deinici\'on de un flujo. Usualmente se utiliza en conjunto con otros atributos como tp\_src y tp\_dst. Cuando se utiliza el valor del campo dl\_type debe ser o 0x0800 en el caso de IPv4 o 0x86DD para el caso IPv6. El campo nw\_proto es el n\'umero de protocolo IP (valores en el rango 0-255).
+\item \textbf{IP\_proto}: Se utiliza para indicar el protocolo IP utilizado en la definici\'on de un flujo. Usualmente se utiliza en conjunto con otros atributos como tp\_src y tp\_dst. Cuando se utiliza el valor del campo dl\_type debe ser o 0x0800 en el caso de IPv4 o 0x86DD para el caso IPv6. El campo nw\_proto es el n\'umero de protocolo IP (valores en el rango 0-255).
 
 \begin{center}
 \texttt{ovs-ofctl add-flow <bridge> dl\_type=<ethernet type>,nw\_proto=<proto>,actions=<action>}
@@ -239,7 +239,7 @@ De forma análoga se utilizan los campos UDP\_dst y SCP\_dst para clasificar tr\
 \texttt{ovs-ofctl add-flow<bridge> dl\_type=[0x8847|0x8848],mpls\_tc=<tc>,actions=<action>}
 \end{center}
 
-\item \textbf{MPLS\_bos}: Permite a un flujo seleccionar tr\'afico distinguiendo por el valor del campo BOS (Bottom of the stack) en el cabezal MPLS. Se debe indicar para el campo dl\_type el valor 0x8847 o 0x8848. El campo mpls\_bos toma valores 1 cuando el paquete contiene una única etiqueta MPLS y 0 cuando contiene m\'as de una etiqueta en el stack.
+\item \textbf{MPLS\_bos}: Permite a un flujo seleccionar tr\'afico distinguiendo por el valor del campo BOS (Bottom of the stack) en el cabezal MPLS. Se debe indicar para el campo dl\_type el valor 0x8847 o 0x8848. El campo mpls\_bos toma el valor 1 cuando el paquete contiene una única etiqueta MPLS y 0 cuando contiene m\'as de una etiqueta en el stack.
 
 \begin{center}
 \texttt{ovs-ofctl add-flow<bridge> dl\_type=[0x8847|0x8848], mpls\_bos=<mpls\_bos>,actions=<action>}
@@ -247,7 +247,7 @@ De forma análoga se utilizan los campos UDP\_dst y SCP\_dst para clasificar tr\
 
 \end{itemize}
 
-\section{OpenFlow v1.3 atributos soportados para definir acciones}
+\section{OpenFlow v1.3 atributos soportados para definir \\ acciones}
 A continuaci\'on se detallan los atributos soportados para la definici\'on de acciones en un flujo lo cual permite la manipulaci\'on de tr\'afico.
 
 \begin{itemize}
@@ -273,7 +273,8 @@ A continuaci\'on se detallan los atributos soportados para la definici\'on de ac
 \item \textbf{vlan\_PCP}: Permite modificar el valor del campo VLAN PCP (prioridad de VLAN).
 
 \begin{center}
-\texttt{ovs-ofctl add-flow<bridge><match-field>actions=mod\_vlan\_pcp:<vlan\_pcp>}
+\texttt{ovs-ofctl add-flow<bridge><match-field> \\ 
+actions=mod\_vlan\_pcp:<vlan\_pcp>}
 \end{center}
 
 \item \textbf{IP\_dscp}: Permite modificar el valor de los bits TOS en el un cabezal IP. Esta acci\'on no modifica los 2 bits m\'as bajos del campo, los cuales representan los bits ECN.

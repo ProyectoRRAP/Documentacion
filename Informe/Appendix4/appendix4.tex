@@ -54,9 +54,6 @@ debug zebra kernel
 interface eth0
  ipv6 nd suppress-ra
 !
-interface veth1
- ipv6 nd suppress-ra
-!
 interface lo
 !
 interface mpls0
@@ -97,9 +94,6 @@ interface l0
 interface eth0
   ip ospf cost 65535
 !
-interface veth1
- ip ospf cost 1
-!
 interface vnf0
   ip ospf cost 1
 !
@@ -119,7 +113,6 @@ router ospf
  network 10.10.4.0/24 area 0.0.0.0
  network 10.10.5.0/24 area 0.0.0.0
  network 192.168.1.0/24 area 0.0.0.0
- network 192.168.2.0/24 area 0.0.0.0
 !
 log stdout
 !
@@ -186,9 +179,9 @@ ovs-vsctl show
 Script de instalaci\'on de flujos para bridging entre interfaces f\'isicas y virtuales:
 \begin{bash}
 ovs-ofctl -O openflow13 add-flow bral table=0,priority=0,
-hard_timeout=0,idle_timeout=0, in_port=1,actions=output:5
+hard_timeout=0,idle_timeout=0, arp,in_port=1,actions=output:5
 ovs-ofctl -O openflow13 add-flow bral table=0,priority=0,
-hard_timeout=0,idle_timeout=0,in_port=5,actions=output:1
+hard_timeout=0,idle_timeout=0, arp,in_port=5,actions=output:1
 
 ovs-ofctl -O openflow13 add-flow bral table=0,priority=0,
 hard_timeout=0,idle_timeout=0,in_port=2,actions=output:6
@@ -230,7 +223,7 @@ ifconfig nf2 0.0.0.0 up
 Configuraci\'on de interfaces virtuales:
 \begin{bash}
 # Interfaces virtuales Galois 
-ifconfig veth1 192.168.2.11 netmask 255.255.255.0 up
+ifconfig veth1 192.168.11.1 netmask 255.255.255.0 up
 ifconfig vnf0 10.10.1.1 netmask 255.255.255.0 up
 ifconfig vnf1 10.10.5.1 netmask 255.255.255.0 up
 ifconfig vnf2 10.10.4.1 netmask 255.255.255.0 up

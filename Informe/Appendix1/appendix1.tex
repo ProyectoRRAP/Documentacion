@@ -39,32 +39,32 @@ por
 "-t *5*"
 \end{center}
 
-\item Recompilar el proyecto ReferenceNIC ejecutando el comando make en el directorio projects/reference\_ nic/
+\item Recompilar el proyecto ReferenceNIC ejecutando el comando \textbf{make} en el directorio projects/reference\_ nic/
 
-\item Utilizar el nuevo bitfile generado para programar el hardware, generar un nuevo archivo binario y transferir a la memoria flash.
+\item Utilizar el nuevo \gloss{bitfile} generado para programar el hardware, generar un nuevo archivo binario y transferir a la memoria flash.
 \end{enumerate}
 
-Una vez realizados estos cambios la herramienta pcieprog funciono correctamente, transfiriendo el contenido del archivo binario a la memoria flash.
+Una vez realizados estos cambios la herramienta \textbf{pcieprog} funciono correctamente, transfiriendo el contenido del archivo binario a la memoria flash.
  
 \section{Error en el driver para el proyecto ReferenceNIC}
 El segundo error detectado trabajando con este proyecto en la modalidad de programaci\'on persistente  se encuentra relacionado al driver del proyecto, utilizado en la interacción entre el hardware y el sistema operativo anfitrión.\\
 
-Este error fue detectado experimentalmente al realizar pruebas de funcionamiento entre varios nodos utilizando el hardware programado con el proyecto ReferenceNIC, y se detalla a continuaci\'on:
+Este error fue detectado experimentalmente al realizar pruebas funcionales con varios nodos y el hardware programado con el proyecto ReferenceNIC. A continuación se detalla dicho error:
 
 \begin{itemize}
 \item \textbf{Descripci\'on:}\\
-Al programarse el hardware con el proyecto ReferenceNIC desde la memoria flash utilizando la programaci\'on pcie (programación persistente), si el equipo es encendido con los enlaces de fibra óptica conectados en cada uno de los puertos físicos, el hardware deja de funcionar correctamente. Por otro lado si el equipo es encendido sin enlaces conectados a algún puerto, y luego son conectados manualmente una vez que el encendido ha terminado, el hardware funciona correctamente.
+Al programarse el hardware con el proyecto ReferenceNIC desde la memoria flash utilizando la programaci\'on pcie (programación persistente), si el equipo es encendido con los enlaces de fibra óptica conectados en cada uno de los puertos físicos, el hardware deja de funcionar correctamente. Por otro lado si el equipo es encendido sin enlaces conectados a algún puerto y luego son conectados manualmente una vez que el encendido ha terminado, el hardware funciona correctamente.
 
 \item \textbf{Escenario:}
 \begin{itemize}
 \item Dos PCs cada una con una tarjeta NetFPGA instalada
 \item Las tarjetas están conectadas por cuatro enlaces de fibra \'optica (nf0-nf0, nf1-nf1, nf2-nf2 y nf3-nf3)
-\item Ambas tarjetas están programadas con el proyecto ReferenceNIC vía programaci\'on pcie.
-\item Se utiliza la versi\'on 5.0.5 de c\'odigo fuente, con el parche mencionado en la sección anterior.
+\item Ambas tarjetas están programadas con el proyecto ReferenceNIC vía programaci\'on pcie
+\item Se utiliza la versi\'on 5.0.5 de c\'odigo fuente con el parche mencionado en la sección anterior
 \end{itemize}
 
 \item \textbf{Efecto:}\\
-Incapacidad parar ejecutar exitosamente el comando ping entre cualquier par de interfaces conectadas
+Incapacidad parar ejecutar exitosamente el comando ping entre cualquier par de interfaces conectadas.
 
 \item \textbf{Reproducci\'on:}\\
 Partiendo de ambas PCs apagadas
@@ -72,9 +72,9 @@ Partiendo de ambas PCs apagadas
 \item Encender una de las PCs, teniendo conectados los enlaces \'opticos entre ambos equipos
 \item Cargar el driver y configurar manualmente direcciones IP para cada interfaz (nf0 \dots nf3)
 \item Realizar los pasos 1 y 2 para la otra PC
-\item LEDs asociados a cada puerto en una de las tarjetas NetFPGA son encendidos por completo, mientras que en la otra tarjeta solamente la mitad de los LEDs se encuentran encendidos.
-\item Si se apaga y enciende la PC con la tarjeta NetFPGA cuyos LEDs se encuentran todos encendidos, luego la otra tarjeta enciende todos sus LEDs, mientras que la primera enciende solo la mitad.
-\item El \'ultimo paso puede repetirse y el comportamiento observado se mantiene. En particular la tarjeta que es iniciada al final funciona correctamente mientras que la otra no.
+\item LEDs asociados a cada puerto en una de las tarjetas NetFPGA son encendidos por completo mientras que en la otra tarjeta solamente la mitad de los LEDs se encuentran encendidos
+\item Si se apaga y enciende la PC con la tarjeta NetFPGA cuyos LEDs se encuentran todos encendidos luego la otra tarjeta enciende todos sus LEDs mientras que la primera enciende solo la mitad
+\item El \'ultimo paso puede repetirse y el comportamiento observado se mantiene, en particular la tarjeta que es iniciada al final funciona correctamente mientras que la otra no
 \end{enumerate} 
 
 \item \textbf{Soluci\'on:}
@@ -87,14 +87,14 @@ Partiendo de ambas PCs apagadas
 
 \end{itemize}
 
-Este reporte fue enviado a la comunidad NetFPGA, en donde se constata nuevamente la presencia de un error, esta vez en la configuraci\'on de los chips PHY de la tarjeta.\\ 
+Este reporte fue enviado a la comunidad NetFPGA en donde se constata nuevamente la presencia de un error, esta vez en la configuraci\'on de los chips PHY de la tarjeta.\\ 
 
 La soluci\'on propuesta por el equipo de NetFPGA es la siguiente:
 
 \begin{enumerate}
 \item Dentro del directorio donde se encuentra el c\'odigo fuente de la plataforma, posicionarse en 
-	  projects/reference\_ nic/sw/host/driver/. Abrir el archivo nf10\_ phy\_ conf.c .
-\item Comentar las lineas 217,219 y 240.
+	  projects/reference\_ nic/sw/host/driver/. Abrir el archivo nf10\_ phy\_ conf.c 
+\item Comentar las lineas 217,219 y 240
 \item Recompilar el driver nf10
 \item Reiniciar la PC y cargar el nuevo driver
 \end{enumerate}

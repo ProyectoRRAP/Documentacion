@@ -9,13 +9,13 @@
     \graphicspath{{Appendix2/Figs/Vector/}{Appendix2/Figs/}}
 \fi
 
-Durante la ejecuci\'on del proyecto, nos enfrentamos a desaf\'ios y en particular de carácter t\'ecnico. Dentro de estos desaf\'ios podemos encontrar algunos que se destacan por su complejidad y dificultad para resolverlos; y otros que se destacan por su severidad como riesgo tecnol\'ogico dentro del proyecto. Por ello consideramos apropiado incluir un ap\'endice para hacer menci\'on a los mismos y a sus respectivas resoluciones.
+Durante la ejecuci\'on del proyecto, nos enfrentamos a desaf\'ios y en particular de carácter t\'ecnico. Dentro de estos desaf\'ios podemos encontrar algunos que se destacan por su complejidad y dificultad para resolverlos;= y otros que se destacan por su severidad como riesgo tecnol\'ogico dentro del proyecto. Por ello consideramos apropiado incluir un ap\'endice en donde se hace menci\'on a los mismos y a sus respectivas soluciones.
 
 \section{Problemas con SFPs y Patchcoords}
 
-Los transceivers SFP+, es una componente de hardware utilizados en cada puerto f\'isico de la tarjeta NetFPGA instalada en RAU-Switch. Básicamente se encargan de implementar el mecanismo de acceso a la capa f\'isica, en este caso enlace de fibra \'optica.\\ 
+Los transceivers SFP+ son una componente de hardware utilizada en cada puerto f\'isico de la tarjeta NetFPGA instalada en RAU-Switch. Básicamente se encargan de implementar el mecanismo de acceso a la capa f\'isica, en este caso enlace de fibra \'optica.\\ 
  
-Originalmente se trabaja con dos transceivers SFP+ compatibles con fibra monomodo y multimodo, y patchords de f\'ibra \'optica monomodo, con los cuales se aprecia un correcto funcionamiento del hardware. 
+Originalmente se trabaja con dos transceivers SFP+ compatibles con fibra monomodo y multimodo y patchords de f\'ibra \'optica monomodo, con los cuales se aprecia un correcto funcionamiento del hardware. 
 
 Posteriormente se incorporaron m\'as unidades de SFP+ con el objetivo de constru\'ir el laboratorio de pruebas descrito en el cap\'itulo \ref{chapter6}. En este caso se detectan problemas para establecer conexiones exitosas con cualquier nodo donde se utilice alguno de los SFP+ nuevos.\\
 
@@ -23,7 +23,7 @@ La primera reacci\'on es de preocupación, ante la posibilidad de que la partida
 
 Tras comprobar que el hardware no se encuentra dañado, advirtiendo la posibilidad de que los SFP no sean compatibles con patch cords de fibra monomodo, el equipo de ANTEL nos facilita de patch cords multimodo, con los cuales posteriormente se constata el correcto funcionamiento de los SFP+.\\
 
-De esta forma, el laboratorio de pruebas queda implementado con SFPs compatibles solamente con fibra multimodo, y patchcoords de fibra multimodo.
+De esta forma, el laboratorio de pruebas queda implementado con SFPs compatibles solamente con fibra multimodo y patchcoords de fibra multimodo.
 
 \section{Desprogramaci\'on del hardware NetFPGA}
 \label{apendiceB2}
