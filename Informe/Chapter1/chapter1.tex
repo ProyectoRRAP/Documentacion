@@ -13,7 +13,7 @@
 
 \section{Motivación}
 
-En la actualidad, sobre la red Internet conviven aplicaciones académicas, comerciales y particulares con iguales prioridades. Este escenario no es apropiado para actividades de experimentación, investigación y estudio de nuevas herramientas a gran escala. A su vez los proveedores de servicios sobre Internet, contando con que no todos sus clientes hacen uso de su infraestructura a la vez, venden m\'as servicios de los que su infraestructura realmente puede soportar, lo que hace que no sea viable garantizar un ancho de banda para cada servicio. Esta situación es comúnmente conocida como “sobreventa” del ancho de banda y se agrava en horas de mayor uso de Internet (horas pico), lo cual es crítico cuando se piensa en aplicaciones que requieren de niveles de calidad de servicio garantizados.
+En la actualidad, sobre la red Internet conviven aplicaciones académicas, comerciales y particulares con iguales prioridades. Este escenario no es apropiado para actividades de experimentación, investigación y estudio de nuevas herramientas a gran escala. A su vez los proveedores de servicios sobre Internet, contando con que no todos sus clientes hacen uso de su infraestructura a la vez, venden m\'as servicios de los que realmente puede soportar, lo que hace que no sea viable garantizar un ancho de banda para cada servicio. Esta situación es comúnmente conocida como “sobreventa” del ancho de banda y se agrava en horas de mayor uso de Internet (horas pico), lo cual es crítico cuando se piensa en aplicaciones que requieren de niveles de \gloss{cdeser} garantizados.
 
 %Por otro lado, si bien Internet está avanzando en el uso de enlaces de alta velocidad, esta tecnología es aún demasiado costosa para su comercialización masiva.
 Por estas razones Internet no parece apropiada para su utilización en el contexto académico, ya que se necesita una red que permita proveer de conectividad y a su vez soportar actividades experimentales como desplegar nuevos servicios y protocolos, así como asegurar determinados parámetros de calidad de servicio.\\ 
@@ -21,7 +21,7 @@ Por estas razones Internet no parece apropiada para su utilización en el contex
 En este contexto y en todo el mundo se vienen desarrollando desde mediados de la década de los 90’s las redes académicas avanzadas de alta velocidad, con el objetivo de proveer de una red que posibilite a docentes e investigadores colaborar en aplicaciones altamente demandantes de ancho de banda   
  (educación a distancia, transferencia de grandes cantidades de información, acceso a equipos remotos, telemedicina, etc.), sin competir por este recurso con aplicaciones de naturaleza comercial.
 
-En Estados Unidos por ejemplo, el proyecto que lidera este desarrollo es Internet2\citep{Internet2}, en Canadá es el proyecto CA*net4\citep{Canarie}, en Europa el proyectos GÉANT\citep{GEANT} y en Asia el proyecto APAN\citep{APAN}. Todas estas redes se encuentran a su vez conectadas entre sí, formando una gran red avanzada de alta velocidad de alcance mundial. En Latinoamérica, las redes académicas de Argentina, Brasil y Chile se encuentran integradas a Internet2.\\
+En Estados Unidos por ejemplo, el proyecto que lidera este desarrollo es Internet2\citep{Internet2}, en Canadá es el proyecto CA*net4\citep{Canarie2}, en Europa el proyectos GÉANT\citep{GEANT} y en Asia el proyecto APAN\citep{APAN}. Todas estas redes se encuentran a su vez conectadas entre sí, formando una gran red avanzada de alta velocidad de alcance mundial. En Latinoamérica, las redes académicas de Argentina, Brasil y Chile se encuentran integradas a Internet2.\\
 
 En las \'ultimas dos d\'ecadas no solo se han hecho esfuerzos para desarrollar las redes académicas nacionales, sino que también se ha trabajado arduamente en la construcción de acuerdos que permitan interconectar cada una de estas redes en una gran red académica de alcance global. Una de las iniciativas que encaus\'o estos esfuerzos fue la denominada CAESAR (Connecting All European and South (Latin) American Researchers), reconociendo la necesidad de crear una red troncal regional en América Latina que eventualmente se pueda conectar a GÉANT y tras la cual se llega a la conocida “Declaración de Toledo”. Poco tiempo después las redes latinoamericanas se unen bajo su propia agrupación denominada CLARA (Cooperación Latino Americana de Redes Avanzadas) y adscriben a dicha declaración\footnote{Datos históricos extraídos de sitio oficial de Red Clara \cite{RedClara}.}.\\
 
@@ -50,13 +50,14 @@ Interesa entonces trabajar en el desarrollo de un prototipo para la RAU2 utiliza
 \section{Objetivos}
 El objetivo principal de este trabajo es la implementación de un prototipo de red de altas prestaciones para la RAU2, utilizando como punto de partida el enfoque de SDN y el hardware NetFPGA, para luego ejecutar un conjunto de pruebas que permitan validar estas tecnologías para su utilización en  la posible construcción de la RAU2.\\
 
-A su vez dado la ausencia de experiencias similares  trabajando con estas tecnologías a nivel local en la órbita de la academia, se busca conocer a fondo estas tecnologías y en particular la arquitectura de SDN y los lenguajes de programación relacionados, así como generar conocimiento y experiencias que puedan contribuir en trabajos a futuro. Por ello se hizo especial hincapié en la generación de  material sobre el estado del arte de las redes definidas por software, y una detallada documentación de la experiencia obtenida utilizando el hardware NetFPGA.
+A su vez dado la ausencia de experiencias similares trabajando con estas tecnologías a nivel local y en la órbita de la academia, se busca conocer a fondo estas tecnologías, en particular la arquitectura de SDN y los lenguajes de programación relacionados, así como generar conocimiento y experiencias que puedan contribuir en trabajos a futuro. Por ello se hizo especial hincapié en la generación de  material sobre el estado del arte de las redes definidas por software y una detallada documentación de la experiencia obtenida utilizando el hardware NetFPGA.
 
 \section{Resultados Esperados}
 Los resultados esperados de este proyecto son:
 
 \begin{enumerate}
-\item El estado del arte en el enfoque de las Redes Definidas por Software (SDN) y el hardware reconfigurable NetFPGA. En particular interesa conocer en profundidad ambas tecnologías, relevando el nivel de madurez y desarrollo de ellas, y reunir suficiente información para evaluar su utilización en la construcción de un prototipo que sea equiparable en prestaciones y rendimiento a un producto comercial sustituto.
+\item El estado del arte en el enfoque de las Redes Definidas por Software (SDN) y el hardware reconfigurable NetFPGA. En particular interesa conocer en profundidad ambas tecnologías, relevando el nivel de madurez y desarrollo de ellas y reunir suficiente información para evaluar su utilización en la construcción de un prototipo m\'as complejo en funcionalidades y superior en rendimiento.
+%que sea equiparable en prestaciones y rendimiento a un producto comercial sustituto.
 
 \item Una implementaci\'on de un prototipo de gesti\'on y control de red utilizando estrategias de SDN, en particular enfocado en las funcionalidades y capacidades que se pretenden de la RAU2.
 
@@ -72,7 +73,7 @@ Los resultados esperados de este proyecto son:
 
 \section{Estructura del documento}
 
-A continuación se describe la forma en que esta estructurado este documento y las temáticas asociadas a cada capitulo.\\
+A continuación se describe la forma en que esta estructurado este documento y las temáticas asociadas a cada cap\'itulo.\\
 
 El cap\'itulo 2 presenta los resultados obtenidos en la investigación del estado del arte en SDN, NetFPGA y conceptos esenciales para el entendimiento de este trabajo. Se recomienda al lector fuertemente la lectura de las secciones \ref{section2.2}, \ref{section2.3}, \ref{section2.4},\ref{section2.7}, \ref{section2.8} y \ref{section2.9} para una mejor comprensión de este trabajo.\\
 
@@ -80,7 +81,7 @@ En el cap\'itulo 3 se presenta el análisis del problema, donde se incluyen las 
 
 En el cap\'itulo 4 se muestra el diseño general del prototipo, profundizando en la arquitectura del plano de control, la arquitectura de un nodo del prototipo y la interacción entre ambas componentes.\\
 
-En el cap\'itulo 5 se presenta el diseño de RAUFlow, la aplicaci\'on que implementa el plano de control. Aquí se presentan los requerimientos para RAUFlow, los casos de uso implementados, el modelo de datos constru\'ido, detalles de la arquitectura e implementaci\'on de los algoritmos m\'as importantes.\\
+En el cap\'itulo 5 se presenta el diseño de RAUFlow, la aplicaci\'on que implementa el plano de control. Aquí se presentan los requerimientos para RAUFlow, los casos de uso implementados, el modelo de datos diseñado, detalles de la arquitectura e implementaci\'on de los algoritmos m\'as importantes.\\
 
 En el cap\'itulo 6 se presenta el laboratorio de pruebas diseñado para validar funcionalmente el prototipo as\'i como los casos de uso utilizados para ello y los resultados obtenidos.\\
 
@@ -88,7 +89,7 @@ En el cap\'itulo 7 se ofrece una evaluación de los resultados m\'as importantes
 
 En el cap\'itulo 8 se presentan las conclusiones obtenidas a partir del desarrollo de este trabajo y las principales l\'ineas de trabajo e investigaci\'on identificadas como trabajo a futuro, dentro de las cuales se encuentran algunas de las mejoras que pueden incorporarse al prototipo.\\
 
-Luego se incorpora el cap\'itulo de referencias con la inormaci\'on bibliográfica del material utilizado en el desarrollo de este trabajo.\\
+Luego se incorpora el cap\'itulo de referencias con la informaci\'on bibliográfica del material utilizado en el desarrollo de este trabajo.\\
 
 Por \'ultimo se incluye un cap\'itulo de ap\'endices y se anexa un manual para la construcci\'on de un nodo del prototipo, lo que se dio a llamar RAU-Switch, orientado a la reproducci\'on y posible mejora a futuro del trabajo realizado.
 

@@ -5,7 +5,7 @@
 
 En este ap\'endice se detallan de los atributos presentes en el cabezal OpenFlow versi\'on 1.3.1 cuales pueden ser utilizados para la definici\'on de reglas y acciones de un flujo. Esta informaci\'on es de carácter experimental y esta acotada a la compatibilidad de Open vSwitch; es decir, aquellos atributos no soportados por Open vSwitch o que no se consiguió documentaci\'on para entender su utilizaci\'on, no son considerados.
 
-\section{Cabezal OpenFlow versi\'on 1.3} 
+\section{Cabezal OpenFlow versi\'on 1.3.1} 
 
 \begin{python}
 of_v13_match_fields:
@@ -73,7 +73,7 @@ Primero tiene una lista de pares atributo valor separados por una “,” las cu
 
 La segunda parte de un flujo es la lista de acciones precedida por la palabra \textbf{actions}. Un ejemplo común es reenviar paquetes por un puerto particular, por ejemplo out\_port:2. 
  
-\section{OpenFlow v1.3 atributos soportados para la definici\'on de reglas}
+\section{OpenFlow v1.3.1 atributos soportados para la definici\'on de reglas}
 
 A continuaci\'on se detallan los atributos soportados para la definici\'on de reglas en un flujo, lo cual permite la construcci\'on de una FEC para clasificar tr\'afico.
 
@@ -247,7 +247,7 @@ De forma análoga se utilizan los campos UDP\_dst y SCP\_dst para clasificar tr\
 
 \end{itemize}
 
-\section{OpenFlow v1.3 atributos soportados para definir \\ acciones}
+\section{OpenFlow v1.3.1 atributos soportados para definir \\ acciones}
 A continuaci\'on se detallan los atributos soportados para la definici\'on de acciones en un flujo lo cual permite la manipulaci\'on de tr\'afico.
 
 \begin{itemize}

@@ -28,7 +28,7 @@ La RAU definió las funcionalidades esperadas para su evolución hacia RAU2, con
 \begin{enumerate}
 \item \textbf{Clasificación y separación del tráfico:} Una de las necesidades y objetivos de la futura actualizaci\'on de la RAU, es la facilidad para clasificar y aislar tráfico. Alineado con las actuales necesidades, en particular se precisa al menos diferenciar las siguientes 3 categorías, as\'i como aislar el tr\'afico de cada categoría y para cada organizaci\'on: (a) público, (b) académico y (c) servicios de contenido.
 
-\item \textbf{Manejo de grandes volúmenes de datos (BIG Data):} En la RAU intervienen instituciones como el Instituto Pasteur, Centro Uruguayo de Imagenología Molecular (CUDIM) entre otros, en donde la generación e intercambio de grandes volúmenes de datos como lo son los exámenes PET del Pasteur o una secuenciación de ADN del CUDIM entre otros es una de los servicios que la RAU2 deber\'a soportar.
+\item \textbf{Manejo de grandes volúmenes de datos:} En la RAU intervienen instituciones como el Instituto Pasteur, Centro Uruguayo de Imagenología Molecular (CUDIM) entre otros, en donde la generación e intercambio de grandes volúmenes de datos como lo son los exámenes PET del Pasteur o una secuenciación de ADN del CUDIM entre otros es una de los servicios que la RAU2 deber\'a soportar.
 
 \item \textbf{Escalabilidad:} Se espera alcanzar en un mediano plazo un total de 11.000 docentes, 7.000 funcionarios y 140.000 estudiantes, por lo que el prototipo para la RAU2 debe ser escalable en la cantidad de usuarios soportados por la infraestructura.
 
@@ -158,7 +158,7 @@ En la siguiente secci\'on veremos porque es de inter\'es trabajar con la versi\'
 
 Como se menciona en el cap\'itulo 1, una de las premisas para la construcción del prototipo es la utilizaci\'on del hardware NetFPGA. El mismo es utilizado en la construcción de cada nodo del prototipo; por lo que asumiendo el uso de OpenFlow en la arquitectura, es necesario partiendo del mismo obtener nodos compatibles con OpenFlow.\\ 
 
-Existen dos estrategias bien definidas para la construcci\'on un switch OpenFlow partiendo del hardware NetFPGA y utilizando los diferentes proyectos de la plataforma. Una de ellas es programar el hardware para que se comporte como un switch compatible con el protocolo OpenFlow y la otra alternativa es programar el hardware para que se comporte como una tarjeta de red estándar, e implementar todo el comportamiento de un switch OpenFlow en software.\\
+Existen dos estrategias bien definidas para la construcci\'on un switch OpenFlow partiendo del hardware NetFPGA y utilizando los diferentes proyectos de la plataforma. Una de ellas es programar el hardware para que se comporte como un switch compatible con el protocolo OpenFlow y la otra es programar el hardware para que se comporte como una tarjeta de red estándar, e implementar todo el comportamiento de un switch OpenFlow en software.\\
 
 Para la primer estrategia se cuenta con un proyecto de la plataforma y disponible libremente en el repositorio de c\'odigo fuente. No obstante este proyecto presenta una dificultad y es que a pesar de haber sido dise\~nado para soportar en un futuro cualquier versi\'on disponible del protocolo OpenFlow, en su versi\'on actual solo soporta un conjunto reducido de funcionalidades de la versi\'on 1.0 de dicho protocolo. 
 
@@ -237,7 +237,7 @@ En el desarrollo de este proyecto, basándose en el estudio del estado del arte 
 
 Estas alternativas surgen de analizar todas las propuestas estudiadas y comparadas en la tabla \ref{table:Controladores}. De todas ellas se eligen las propuestas OpenDaylight y Ryu puesto que est\'an desarrolladas bajo la filosofía de software libre y de código abierto, cuentan con soporte, tienen una buena comunidad de usuarios, soportan el protocolo OpenFlow en su versi\'on 1.3.1 y son las dos propuestas m\'as utilizadas en la comunidad SDN/OpenFlow en la actualidad.\\
 
-Para elegir la alternativa de controlador a utilizar en el prototipo, se instalan ambas implementaciones y utilizando el entorno de emulación Mininet se desarrollan pequeñas aplicaciones para cada alternativa. Comparando los resultados obtenidos y evaluando principalmente la expresividad y facilidad para el desarrollo de aplicaciones en cada entorno se resuelve utilizar el controlador Ryu para la implementaci\'on del prototipo de acuerdo a las siguientes razones:
+Para elegir el controlador a utilizar en el prototipo, se instalan ambas implementaciones y utilizando el entorno de emulación Mininet se desarrollan pequeñas aplicaciones para cada alternativa. Comparando los resultados obtenidos y evaluando principalmente la expresividad y facilidad para el desarrollo de aplicaciones en cada entorno se resuelve utilizar el controlador Ryu para la implementaci\'on del prototipo de acuerdo a las siguientes razones:
 
 \begin{itemize}
 \item El ambiente de desarrollo de OpenDaylight hace un uso intensivo de los recursos CPU y Memoria de un equipo, impidiendo ejecutarlo en un equipo de capacidades limitadas. A su vez la instalaci\'on del mismo es compleja y requiere de m\'odulos adicionales en gran medida.

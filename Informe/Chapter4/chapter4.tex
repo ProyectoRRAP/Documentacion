@@ -7,7 +7,7 @@
     \graphicspath{{Chapter4/Figs/Vector/}{Chapter4/Figs/}}
 \fi
 
-Este cap\'itulo esta destinado a la comprensi\'on de los aspectos principales que hacen al dise\~no e implementaci\'on del prototipo para la RAU2,tomando como punto de partida las decisiones reseñadas en el cap\'itulo anterior.
+Este cap\'itulo esta destinado a la comprensi\'on de los aspectos principales que hacen al dise\~no e implementaci\'on del prototipo para la RAU2, tomando como punto de partida las decisiones reseñadas en el cap\'itulo anterior.
 
 %Cabe destacar que en el mismo se toman como punto de partida las decisiones asumidas en el cap\'itulo anterior.
 
@@ -141,7 +141,7 @@ El hardware puede programarse al menos de dos formas diferentes; una de ellas es
 Como principales ventajas de esta estrategia se destacan su simplicidad, no requiere de licencias pagas 
  (puede descargarse una licencia gratuita para la herramienta Impact) y adem\'as es el procedimiento que se describe en la documentaci\'on de la plataforma NetFPGA.
 
-No obstante presenta una desventaja importante y es que al producirse un corte de corriente el hardware pierde su programación . Concretamente el contenido del chip FPGA se borrada y solo perdura el contenido del chip CPLD.\\
+No obstante presenta una desventaja importante y es que al producirse un corte de corriente el hardware pierde su programación . Concretamente el contenido del chip FPGA es borrado y solo perdura el contenido del chip CPLD.\\
 
 Tras constatarse este comportamiento, luego de revisar la documentaci\'on de la plataforma y recurrir al foro de la comunidad NetFPGA, se accede a una lista de correos mediante la cual se establece una comunicaci\'on con el equipo de desarrollo de NetFPGA (ver ap\'endice ~\ref{apendiceB2}). Este di\'alogo adem\'as de ayudar en la comprensión del funcionamiento de la plataforma, desemboca en la segunda estrategia de programaci\'on.
 
@@ -183,7 +183,7 @@ En cada nodo se ejecuta una instancia del software de enrutamiento Quagga, confi
 
 Este demonio Unix ejecuta el protocolo de igual nombre, utilizado en la arquitectura propuesta para obtener información de cada nodo y sus adyacencias en la topolog\'ia, guardando dicha información en una base de datos local (Link-State-Database o \gloss{LSDB}). Entre los datos que se incluyen en esta base de datos topol\'ogica se destaca el costo asociado a cada adyacencia.\\ 
 
-Como se menciona anteriormente, el algoritmo OSPF se utiliza solamente para la construcci\'on de la base de datos topol\'ogica. Si bien en un inicio se pensó en trabajar con la salida de dicho algoritmo, finalmente se decidió trabajar con el algoritmo de ruteo centralizado implementado en el controlador. Por ello en la versi\'on final del prototipo no se utiliza la salida de este algoritmo a pesar de que la arquitectura permite su utilización para alimentar la entrada de procesos que se ejecuten en el controlador.\\
+Como se menciona anteriormente, OSPF se utiliza solamente para la construcci\'on de la base de datos topol\'ogica. Si bien en un inicio se pensó en trabajar con la salida de dicho algoritmo, finalmente se decidió trabajar con el algoritmo de ruteo centralizado implementado en el controlador. Por ello en la versi\'on final del prototipo no se utiliza la salida de este algoritmo a pesar de que la arquitectura permite su utilización para alimentar la entrada de procesos que se ejecuten en el controlador.\\
 
 De esta forma cada switch del prototipo así como el propio controlador ejecuta una instancia de Quagga con el demonio Unix OSPF configurado como se muestra en el apéndice \ref{appendix4}. Cabe destacar de dicha configuración que la adyacencia entre un switch y el Controlador (enlace utilizado para el canal de comunicación OpenFlow) tiene asociado costo infinito para evitar que sea utilizado tanto por el algoritmo OSPF como por el algoritmo SPF en la construcción de algún camino. En la implementaci\'on de Quagga el costo infinito es representado por el numero 65535 (16 bits).
 
@@ -223,7 +223,7 @@ A continuación se explica en detalle cada una de las tres componentes mencionad
 \subsection{Controlador Ryu}
 Ryu es la alternativa de software elegido para implementar el controlador SDN compatible con el protocolo OpenFlow. 
 
-Utilizando esta herramienta para la construcci\'on y ejecuci\'on de una o m\'as aplicaciones SDN, se implementa prácticamente la totalidad del plano de control del prototipo. Esto es en otras palabras el modelado de la realidad, la implementaci\'on de funcionalidades para la creaci\'on de servicios de redes privadas, implementaci\'on de cliasficiaci\'on de tr\'afico y eventualmente la implementaci\'on de pol\'iticas de ingenieria de tr\'afico y calidad de servicios (QoS).\\ 
+Utilizando esta herramienta para la construcci\'on y ejecuci\'on de una o m\'as aplicaciones SDN, se implementa prácticamente la totalidad del plano de control del prototipo. Esto es en otras palabras el modelado de la realidad, la implementaci\'on de funcionalidades para la creaci\'on de servicios de redes privadas, implementaci\'on de clasificaci\'on de tr\'afico y eventualmente la implementaci\'on de pol\'iticas de ingenieria de tr\'afico y calidad de servicios (QoS).\\ 
 
 Dada la complejidad en el diseño y arquitectura de esta componente, se destina el próximo cap\'itulo a la explicaci\'on de las diferentes características e implementaci\'on de las aplicaciones Ryu que constituyen el plano de control del prototipo, as\'i como la interacci\'on de las otras componentes mencionadas dentro del plano de control como los m\'odulos LSDBSync y Administrador SNMP. 
 

@@ -15,7 +15,7 @@ del arte de las Redes Definidas por Software (Software Defined Networking), leng
 de programación y herramientas para el desarrollo sobre dicha arquitectura, hardware NetFPGA y otros conceptos esenciales para el desarrollo de este trabajo. En caso de que el lector desee profundizar en alguno de los conceptos presentados en este cap\'itulo o consultar enfoques alternativos
 y/o complementarios se recomiendan los siguientes trabajos~\citep{StateOfArt1}~\citep{StateOfArt2}. Para el caso particular en que el lector este familiarizándose con el enfoque de las Redes Definidas por Software, se sugiere también la lectura de \citep{SDNReadingList} y de \citep{SDNBook1}.\\
 
-En relación a como se estructura este cap\'itulo, primero se introduce el concepto de Software Defined Networking (SDN) analizando sus principales antecedentes y finalmente brindando una definición. Luego se presenta y analiza en profundidad una de las arquitecturas existentes basadas en este enfoque y en particular utilizada en trabajo para la construcción del prototipo. Se contin\'ua con la introducción de algunos conceptos esenciales para el desarrollo de este trabajo como el concepto de Redes Privadas Virtuales y Multilabel Protocol Switch (\gloss{MPLS}) entre otros. Finalmente se presenta el relevamiento en el estado del arte realizado sobre la plataforma NetFPGA.  
+En relación a como se estructura este cap\'itulo, primero se introduce el concepto de Software Defined Networking (SDN) analizando sus principales antecedentes para luego presentar una definición del concepto. Luego se presenta y analiza en profundidad una de las arquitecturas existentes basadas en este enfoque y en particular utilizada en trabajo para la construcción de un prototipo. Se contin\'ua con la introducción de algunos conceptos esenciales para el desarrollo de este trabajo como el concepto de Redes Privadas Virtuales y Multilabel Protocol Switch (\gloss{MPLS}) entre otros. Finalmente se presenta el relevamiento en el estado del arte realizado sobre la plataforma NetFPGA.  
 
 %********************************** %First Section  **************************************
 \section{Antecedentes de SDN} %Section - 1.1
@@ -51,7 +51,7 @@ Otro grupo de trabajo dentro del IETF denominado ForCES (Forwarding and Control 
 
 Este enfoque plantea dos entidades lógicas denominadas Elementos de Control (CE) y Elementos de Reenv\'io (FE), así como un protocolo de comunicación entre ambas entidades.
 
-\subsection{4D Project}
+\subsection{Proyecto 4D}
 En el año 2004 el proyecto 4D \citep{rexford2004network}\citep{greenberg2005clean} propone una re-estructuración arquitectónica de una red basada en tres principios claves: 
 
 \begin{itemize}
@@ -77,7 +77,7 @@ Los objetivos al nivel de un AS son especificados en el plano de decisiones y me
 
 %En otras palabras el plano de decisión es responsable de crear la configuración de la red, mientras que el plano de diseminación se encarga de recolectar información sobre el estado de la red para el plano de decisión y distribuir la salida del plano de decisión. 
 
-En resumen, utilizando el plano de diseminación se recolecta diferente información acerca del estado de la red, sobre la cual luego el plano de decisión construye las \textit{Políticas de red}. También a través del plano de diseminación se distribuyen dichas políticas a los distintos dispositivos de red. Mientras tanto el plano de descubrimiento permite a dispositivos descubrir vecinos directamente conectados en la red. Finalmente el plano de datos se encarga de redirigir el tráfico de red.\\ \\
+En resumen, utilizando el plano de diseminación se recolecta diferente información acerca del estado de la red, sobre la cual luego el plano de decisión construye las \textit{Políticas de red}. También a través del plano de diseminación se distribuyen dichas políticas a los distintos dispositivos de red. Mientras tanto el plano de descubrimiento permite a dispositivos descubrir vecinos directamente conectados en la red. Finalmente el plano de datos se encarga de redirigir el tráfico en la red.\\ \\
 
 Una vez introducidos los principales antecedentes de las redes definidas por software, en la siguiente secci\'on se propone profundizar en dicho concepto.
 
@@ -117,7 +117,7 @@ El Controlador expone un conjunto de operaciones a las aplicaciones SDN de la ca
 
 La capa de aplicaciones, contiene implementado en software (aplicaciones SDN) toda la inteligencia que originalmente se agregaba en un dispositivo de la capa de infraestructura como por ejemplo la implementaci\'on de protocolos de red. En dicha capa se pueden implementar desde protocolos de ruteo como OSPF y \gloss{RIP}, backbones sobre MPLS, políticas de seguridad y hasta aplicaciones de ingeniería de tráfico.
 
-N\'otese aqu\'i la diferencia entra la capa de aplicaci\'on del modelo de capas OSI y la capa de aplicaci\'on  del modelo SDN. En el modelo SDN, una aplicaci\'on puede implementar protocolos y servicios de cualquier capa en el modelo OSI.\\
+N\'otese aqu\'i la diferencia entra la capa de aplicaci\'on del modelo de capas OSI y la capa de aplicaci\'on  del modelo SDN. En el modelo SDN, una aplicaci\'on puede implementar protocolos y servicios de capa de enlace, capa de red y capas superiores en el modelo OSI.\\
 
 De esta forma Software Defined Networking centraliza el control de la red en una aplicación de software  
  (Controlador) y transforma algoritmos, procesos de control, políticas de seguridad y toda la inteligencia antiguamente acoplados a los dispositivos de red, en aplicaciones de controlador.\\
@@ -320,12 +320,12 @@ OpenDaylight\cite{ControllersOpendaylight}         & Java                   & Si
 \end{table}
 
 \newpage
-\subsection{Mininet y mini NExT}
+\subsection{Mininet y miniNExT}
 Mininet\cite{Mininet1} es un emulador de red, que habilita a crear hosts, switches, links y controladores, en un entorno virtual. Se encuentra disponible tanto para instalarse nativamente en un entorno Linux, como a través de una m\'aquina virtual configurada con todo el software de desarrollo necesario para iniciarse en el desarrollo de aplicaciones OpenFlow/SDN (Mininet Kit Starter). 
 
 Soporta diferentes versiones del protocolo OpenFlow y es una de las herramientas m\'as utilizadas para la prototipaci\'on y experimentación de aplicaciones desarrolladas en dicha arquitectura, puesto que habilita a investigadores y desarrolladores aprender, prototipar, probar y depurar aplicaciones rápidamente utilizando una computadora convencional.\\
 
-La herramienta mini NExT es una extension de Mininet que permite entre otras cosas asignar a cada host su propio sistema de ficheros, permitiendo as\'i modificar la configuraci\'on por defecto de cada nodo virtual e instalar diferentes herramientas en ellos. Esta orientado al despliegue virtual de arquitecturas m\'as complejas que las soportadas por Mininet.\\   
+La herramienta miniNExT\cite{MiniNext} es una extension de Mininet que permite entre otras cosas asignar a cada host su propio sistema de ficheros, permitiendo as\'i modificar la configuraci\'on por defecto de cada nodo virtual e instalar diferentes herramientas en ellos. Esta orientado al despliegue virtual de arquitecturas m\'as complejas que las soportadas por Mininet.\\   
 
 En este trabajo Mininet es utilizado para realizar pruebas de experimentaci\'on y benchmark con las alternativas de controladores disponibles, con el objetivo de determinar el controlador OpenFlow a ser utilizado en la arquitectura del prototipo.\\
 
@@ -516,11 +516,11 @@ En cada nodo de la red, el cabezal MPLS es extraído y analizado para determinar
 
 De esta forma el paquete es encaminado dentro de la red MPLS mediante la conmutaci\'on de etiquetas, hasta que el paquete arriba a un nodo de salida de la red, en donde el paquete ya no contiene etiquetas.\\
 
-Por otro lado, un paquete MPLS puede presentar más de un cabezal MPLS solapados. Esta superposición de etiquetas se conoce bajo el nombre de pila o stack MPLS. De esta forma se pueden agregar más variables al servicio que simplemente encaminar paquetes en la red, como puede ser distinguir entre diferentes tipos de tráfico.\\
+Por otro lado, un paquete MPLS puede presentar más de un cabezal MPLS solapado. Esta superposición de etiquetas se conoce bajo el nombre de pila o stack MPLS. De esta forma se pueden agregar más variables al servicio que simplemente encaminar paquetes en la red, como puede ser distinguir entre diferentes tipos de tráfico.\\
 
 Otro punto a destacar de este protocolo es la configuración del plano de reenvío. El plano de control de las redes MPLS se componen de un algoritmo de ruteo y un algoritmo de distribución de etiquetas. Mientras que con el primero se calculan los mejores caminos que un paquete debe tomar para atravesar la red, el segundo se encarga de la asignación y distribución de etiquetas para que cada switch conmute correctamente el paquete hasta su destino.\\
 
-Algunos de los principales términos en la definici\'on del protocolo MPLS son:
+Algunos de los principales términos en la arquitectura MPLS son:
 
 \begin{itemize}
 \item LER (Label Edge Router): Elemento de la red MPLS por la cual ingresa o egresa tráfico hacia o desde la misma.
