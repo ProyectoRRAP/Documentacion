@@ -200,7 +200,7 @@ Las tres aplicaciones utilizadas son:
 
 \item ws\_topology: Mantiene en memoria informaci\'on de cada switch de la capa de dispositivos registrado con el controlador. A su vez gestiona eventos OpenFlow generados cuando un switch se reporta o deja de reportarse, cuando cambia el estado de un puerto, cuando llega un paquete, entre otros eventos del protocolo.
 
-\item ofctl\_rest: Mediante una API REST de servicios expone un conjunto de m\'etodos para el acceso a la informaci\'on del plan de datos OpenFlow (datapath OpenFlow) y as\'i obtener todo tipo de informaci\'on relacionada a un switch en particular. Implementa desde m\'etodos para obtener la tabla de flujos de un dispositivo, estadísticas agregadas por flujo, puerto, grupo de puertos, colas. Esta aplicaci\'on es utilizada por la p\'agina web original de \textbf{gui\_topology} y por RAUFlowUI en la arquitectura de RAUFlow para el acceso a informaci\'on estad\'istica de la tabla de flujos de un switch.
+\item ofctl\_rest: Mediante una API REST de servicios expone un conjunto de m\'etodos para acceder a informaci\'on del plano de datos OpenFlow (datapath OpenFlow) y as\'i obtener todo tipo de informaci\'on relacionada a un switch en particular. Implementa desde m\'etodos para obtener la tabla de flujos de un dispositivo, estadísticas agregadas por flujo, puerto, grupo de puertos y colas entre otros. Esta aplicaci\'on es utilizada por la p\'agina web original de \textbf{gui\_topology} y por RAUFlowUI en la arquitectura de RAUFlow para el acceso a informaci\'on estad\'istica de la tabla de flujos de un switch.
 
 \end{enumerate}
 
@@ -318,7 +318,7 @@ La clase Servicio implementa el concepto de servicios de red privada virtual. Co
 
 En el prototipo se asume que por cada nodo de borde  se tiene una \'unica red privada directamente conectada a cada interfaz externa. Esto permite definir un servicio a partir de la clase de tr\'afico definida y los pares nodo-interfaz origen y nodo-interfaz destino.
 
-Por otro lado se podr\'ia refinar la definici\'on de servicio agregando m\'as dimensiones; una dimensi\'on bastante \'util podr\'ia ser por ejemplo tiempo. Utilizando esta dimensi\'on se podr\'ia por ejemplo definir un servicio de red privada para un rango horario determinado.
+Por otro lado se podr\'ia refinar la definici\'on de servicio agregando m\'as dimensiones; una dimensi\'on bastante \'util podr\'ia ser por ejemplo el tiempo, donde se podr\'ia por ejemplo definir un servicio de red privada para un rango horario determinado.
 
 De igual forma se pueden incorporar m\'as dimensiones orientado a brindar una mayor flexibilidad en la definici\'on de servicios, de cara a lo que podr\'ian ser diferentes requerimientos de la RAU2. 
 
