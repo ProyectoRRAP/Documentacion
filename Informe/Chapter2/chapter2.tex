@@ -31,7 +31,7 @@ El principal desafío con el que tuvo que lidiar esta iniciativa fue la estricta
 Los esfuerzos de esta iniciativa desembocaron en la especificación del General Switch Managment Protocol (GSMP); un protocolo de propósito general para control de etiquetas en switches.
 GSMP permitía a un controlador establecer y liberar conexiones en un dispositivo conmutador de tramas (mejor conocido como switch), agregar, eliminar y dejar una conexión multicast, manejar los puertos de un switch, obtener información acerca de la configuración, obtener y eliminar recursos reservados en un switch y obtener información estadística.\\
 
-Tras años de trabajo, el grupo considero concluido su labor, siendo su último trabajo publicado la especificación de GSMPv3 en Junio del 2002\cite{doria2002general}.
+Tras años de trabajo, el grupo consider\'o concluido su labor, siendo su último trabajo publicado la especificación de GSMPv3 en Junio del 2002\cite{doria2002general}.
 
 \subsection{Active Networking}
 Active Networking\citep{tennenhouse1997survey}\citep{tennenhouse2002towards}\citep{moore2001towards} \'o Redes Activas en español es otra iniciativa que surge en la década de los 90's con la propuesta de una red programable que posibilitara la configuración de servicios sobre la misma. Fue propulsada por la USA Defense Advanced Research Projects Agency (DARPA), con el principal objetivo de acelerar la innovación en una área de redes marcada por la lentitud en incorporar nuevas tecnologías y servicios.\\
@@ -52,12 +52,12 @@ Otro grupo de trabajo dentro del IETF denominado ForCES (Forwarding and Control 
 Este enfoque plantea dos entidades lógicas denominadas Elementos de Control (CE) y Elementos de Reenv\'io (FE), así como un protocolo de comunicación entre ambas entidades.
 
 \subsection{Proyecto 4D}
-En el año 2004 el proyecto 4D \citep{rexford2004network}\citep{greenberg2005clean} propone una re-estructuración arquitectónica de una red basada en tres principios claves: 
+En el año 2004 el proyecto 4D \citep{rexford2004network}\citep{greenberg2005clean} propone una re-estructuración arquitectónica de una red basada en tres principios: 
 
 \begin{itemize}
-\item Políticas de red (network-level objectives): conjunto de objetivos o requerimientos sobre una red tales como performance, confiabilidad entre otras.
+\item Políticas de red (network-level objectives): conjunto de objetivos o requerimientos sobre una red tales como performance, confiabilidad entre otras políticas.
 
-\item Vistas de la red (network-wide views): vistas globales sobre la topolog\'ia de red, tr\'afico y eventos, con ciertos niveles de frescura y exactitud en los datos.
+\item Vistas de la red (network-wide views): vistas globales sobre la topolog\'ia de red, tr\'afico y eventos, con ciertos niveles de \gloss{frescura} y exactitud en los datos.
 
 \item Control directo: se debe proveer de una interfaz directa para el control de los dispositivos de red
 \end{itemize}
@@ -71,7 +71,7 @@ Los objetivos al nivel de un AS son especificados en el plano de decisiones y me
 \begin{figure}[htbp!] 
 \centering    
 \includegraphics[width=0.8\textwidth]{4DProject3}
-\caption[Capas de la arquitectura]{Capas de la arquitectura, imagen extraída de \cite{greenberg2005clean}}
+\caption[Capas de la arquitectura]{Capas de la arquitectura. Imagen extraída de \cite{greenberg2005clean}}
 \label{fig:4DProject}
 \end{figure}
 
@@ -84,7 +84,7 @@ Una vez introducidos los principales antecedentes de las redes definidas por sof
 \section{Software Defined Networking}
 \label{section2.2}
 
-Definir el concepto de Software Defined Networking no es una tarea simple, puesto que no existe una definici\'on \'unica entre las distintas organizaciones que se encuentran trabajando en la temática. En particular se pueden destacar el grupo de trabajo Software-Defined Networking Research Group (SDNRG) del \gloss{IRTF}, quien se encuentra trabajando en la redacción de las definiciones y estándares para este concepto, y la organización Open Networking Foundation (ONF)\cite{ONF} que concentra gran cantidad de material y documentación sobre SDN y adem\'as se encuentra trabajando en el desarrollo del protocolo \gloss{OpenFlow} el cual se explica mas adelante en este trabajo.\\
+Definir el concepto de Software Defined Networking no es una tarea simple, puesto que no existe una definici\'on \'unica entre las distintas organizaciones que se encuentran trabajando en la temática. En particular se pueden destacar el grupo de trabajo Software-Defined Networking Research Group (SDNRG) del \gloss{IRTF}, quien se encuentra trabajando en la redacción de las definiciones y estándares para este concepto y la organización Open Networking Foundation (ONF)\cite{ONF} que concentra gran cantidad de material y documentación sobre SDN y adem\'as se encuentra trabajando en el desarrollo del protocolo \gloss{OpenFlow} el cual se explica mas adelante en este trabajo.\\
 
 Acorde a la Open Networking Foundation, SDN puede resumirse como:
 
@@ -104,7 +104,7 @@ La ONF presenta a SDN como una arquitectura emergente, dinámica, escalable, ren
 \end{figure}
 
 El enfoque de SDN propone tres capas lógicas (ver imagen ~\ref{fig:SDNArchitecture}): (1) capa de aplicaciones (Application Layer), (2) capa de control (Control Layer) y (3) capa de infraestructura  
- (Infraestructure Layer).\\
+ (Infrastructure Layer).\\
 
 La capa de infraestructura se compone por los dispositivos de red tradicionales como switches y routers, en particular compatibles con la arquitectura SDN. La inteligencia de dichos dispositivos a diferencia de switches y routers convencionales es retirada de los mismos para ser trasladada a la capa de control.
 
@@ -152,7 +152,7 @@ Desde la perspectiva de un Controlador OpenFlow, todos los dispositivos de red s
  
 Cada switch OpenFlow presenta una o m\'as tablas de flujos. Cada una de las entradas de estas tablas es denominada flujo y determina c\'omo una clase de paquetes deben ser procesados y reenviados.\\
 
-Cada entrada o flujo en esta tabla (ver figura ~\ref{fig:OpenFlowArch2}) se compone de: (1) campos de selección (matching fields), utilizados en la definici\'on de reglas de selección con las cuales identificar a un conjunto de paquetes a ser tratados de una forma en particular, basándose en información relacionada a campos en los cabezales del paquete para esto; (2) contadores para la recolección de información estadística en relación al flujo (n\'umero de paquetes recibidos, cantidad de bytes, duración de un flujo, etc.) y (3) un conjunto de instrucciones y acciones que son aplicadas a cada paquete que coincide con el flujo descrito. Estos campos establecen la forma en que un paquete es procesado y reenviado.
+Cada entrada o flujo en esta tabla (ver figura ~\ref{fig:OpenFlowArch2}) se compone de: (1) campos de selección (matching fields), utilizados en la definici\'on de reglas de selección con las cuales identificar a un conjunto de paquetes a ser tratados de una forma en particular, basándose en información relacionada a campos en los cabezales del paquete para esto; (2) contadores para la recolección de información estadística en relación al flujo (n\'umero de paquetes recibidos, cantidad de bytes, duración de un flujo, etc.) y (3) un conjunto de instrucciones y acciones que son aplicadas a cada paquete que coincide con la regla del flujo. Estos campos establecen la forma en que un paquete es procesado y reenviado.
  
 \begin{figure}[htbp!] 
 \centering    
@@ -205,7 +205,7 @@ Como se menciona anteriormente la acci\'on de un flujo OpenFlow determina la for
 \begin{enumerate}
 \item \textbf{[Output:Puerto]:} Reenviar un paquete hacia un puerto determinado (o conjunto de puertos). Esto permite encaminar paquetes a través de la red.
 
-\item \textbf{[Output:Controller]:} Encapsular y reenviar un paquete hacia el Controlador. Utilizando el canal de comunicación con el Controlador y el protocolo OpenFlow, se reenvía el paquete al plano de Control. Esto permite procesar un paquete no identificado en ningún flujo en cualquier momento o en una etapa de configuración de la red. Luego el Controlador decide si descartar el paquete o instalar un nuevo flujo que lo contemple.
+\item \textbf{[Output:Controller]:} Encapsular y reenviar un paquete hacia el Controlador. Utilizando el canal de comunicación con el Controlador y el protocolo OpenFlow, se reenvía el paquete al plano de Control. Esto permite procesar un paquete no identificado en ningún flujo en cualquier momento como por ejemplo en una etapa de configuración de la red. Luego el Controlador decide si descartar el paquete o instalar un nuevo flujo que lo contemple.
 
 \item \textbf{[Drop]:} Descartar un paquete. Puede ser utilizado por razones de seguridad, para prevenir ataques de negación de servicios (\gloss{DoS}), eliminar paquetes sospechosos, disminuir el impacto de paquetes de descubrimiento en redes de difusión (broadcast), o simplemente descartar paquetes no contemplados.
 \end{enumerate}
@@ -215,7 +215,7 @@ Un controlador SDN brinda implementaciones a las interfaces Sur y Norte. Un cont
 
 Basándose solamente en estos principios, las implementaciones de controladores OpenFlow pueden ser muy variadas. Desde controladores muy simples como NOX\cite{ControllersNOX} y POX\cite{ControllersPOX} que siguen estrictamente el enfoque de SDN/OpenFlow, hasta controladores m\'as elaborados como OpenDaylight\cite{ControllersOpendaylight} (ver imagen ~\ref{fig:OpenDayLightHydrogen}) que implementan OpenFlow como una característica mas de su implementaci\'on de interfaz Sur.
 
-Sin embargo existen aspectos relacionados a la entidad Controlador dentro del enfoque SDN/OpenFlow que son afines a cualquier implementaci\'on y arquitectura. A continuaci\'on se mencionan los principales:
+Sin embargo existen aspectos relacionados a la entidad Controlador dentro del enfoque OpenFlow/SDN que son afines a cualquier implementaci\'on y arquitectura. A continuaci\'on se mencionan los principales:
   
 \begin{figure}[h!] 
 \centering    
@@ -327,7 +327,7 @@ Soporta diferentes versiones del protocolo OpenFlow y es una de las herramientas
 
 La herramienta miniNExT\cite{MiniNext} es una extension de Mininet que permite entre otras cosas asignar a cada host su propio sistema de ficheros, permitiendo as\'i modificar la configuraci\'on por defecto de cada nodo virtual e instalar diferentes herramientas en ellos. Esta orientado al despliegue virtual de arquitecturas m\'as complejas que las soportadas por Mininet.\\   
 
-En este trabajo Mininet es utilizado para realizar pruebas de experimentaci\'on y benchmark con las alternativas de controladores disponibles, con el objetivo de determinar el controlador OpenFlow a ser utilizado en la arquitectura del prototipo.\\
+En este trabajo Mininet es utilizado para realizar pruebas de experimentaci\'on y comparación entre las alternativas de controladores disponibles, con el objetivo de determinar el controlador OpenFlow a ser utilizado en la arquitectura del prototipo.\\
 
 \section{Aplicaciones de SDN}
 SDN presenta un campo de aplicación bastante extenso y es posible que a medida que el concepto siga evolucionando y asentándose se irán descubriendo nuevos casos de uso y campos de aplicación. A continuación se muestran algunos casos de uso:

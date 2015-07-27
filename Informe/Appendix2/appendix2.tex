@@ -9,47 +9,60 @@
     \graphicspath{{Appendix2/Figs/Vector/}{Appendix2/Figs/}}
 \fi
 
-Durante la ejecuci\'on del proyecto, nos enfrentamos a desaf\'ios y en particular de carácter t\'ecnico. Dentro de estos desaf\'ios podemos encontrar algunos que se destacan por su complejidad y dificultad para resolverlos;= y otros que se destacan por su severidad como riesgo tecnol\'ogico dentro del proyecto. Por ello consideramos apropiado incluir un ap\'endice en donde se hace menci\'on a los mismos y a sus respectivas soluciones.
+Durante la ejecuci\'on del proyecto, nos enfrentamos a desaf\'ios y en particular de carácter t\'ecnico. Dentro de estos desaf\'ios podemos encontrar algunos que se destacan por su complejidad y dificultad para resolverlos y otros que se destacan por su severidad como riesgo tecnol\'ogico dentro del proyecto. Por ello consideramos apropiado incluir un ap\'endice en donde se hace menci\'on a los mismos y a sus respectivas soluciones.
 
 \section{Problemas con SFPs y Patchcoords}
 
-Los transceivers SFP+ son una componente de hardware utilizada en cada puerto f\'isico de la tarjeta NetFPGA instalada en RAU-Switch. Básicamente se encargan de implementar el mecanismo de acceso a la capa f\'isica, en este caso enlace de fibra \'optica.\\ 
- 
-Originalmente se trabaja con dos transceivers SFP+ compatibles con fibra monomodo y multimodo y patchords de f\'ibra \'optica monomodo, con los cuales se aprecia un correcto funcionamiento del hardware. 
+Los transceivers SFP+ son una componente de hardware utilizada en cada puerto f\'isico de la tarjeta NetFPGA en la construcci\'on del dispositivo RAU-Switch. Básicamente se encargan de implementar el mecanismo de acceso a la capa f\'isica, en este caso fibra \'optica.
 
-Posteriormente se incorporaron m\'as unidades de SFP+ con el objetivo de constru\'ir el laboratorio de pruebas descrito en el cap\'itulo \ref{chapter6}. En este caso se detectan problemas para establecer conexiones exitosas con cualquier nodo donde se utilice alguno de los SFP+ nuevos.\\
+Pueden encontrarse transceivers compatibles con patch cords de fibra \'optica monomodo, multimodo y compatibles con ambos tipos.\\
 
-La primera reacci\'on es de preocupación, ante la posibilidad de que la partida de SFP+ comprada estuviera fallada. Por ello se menciona el inconveniente en el grupo de trabajo generado GT-SDNUy, donde amablemente los integrantes del Centro de Desarrollo y Capacitacion de ANTEL comprueban el funcionamiento del hardware utilizando sus propios equipos.
+En el desarrollo de este proyecto se trabajo con transceivers SFP+ compatibles con ambos tipos de patch cords, aunque para la construcci\'on de la red prototipo por razones econ\'omicas se utilizaron transceivers SFP+ compatibles solamente con patch cords de fibra multimodo.
 
-Tras comprobar que el hardware no se encuentra dañado, advirtiendo la posibilidad de que los SFP no sean compatibles con patch cords de fibra monomodo, el equipo de ANTEL nos facilita de patch cords multimodo, con los cuales posteriormente se constata el correcto funcionamiento de los SFP+.\\
 
-De esta forma, el laboratorio de pruebas queda implementado con SFPs compatibles solamente con fibra multimodo y patchcoords de fibra multimodo.
+%Originalmente se trabaja con dos transceivers SFP+ compatibles con fibra monomodo y multimodo y patchords de f\'ibra \'optica monomodo, con los cuales se aprecia un correcto funcionamiento del hardware. 
+
+%Posteriormente se incorporaron m\'as unidades de SFP+ con el objetivo de constru\'ir el laboratorio de pruebas descrito en el cap\'itulo \ref{chapter6}. En este caso se detectan problemas para establecer conexiones exitosas con cualquier nodo donde se utilice alguno de los SFP+ nuevos.\\
+
+%La primera reacci\'on es de preocupación, ante la posibilidad de que la partida de SFP+ comprada estuviera fallada. Por ello se menciona el inconveniente en el grupo de trabajo generado GT-SDNUy, donde amablemente los integrantes del Centro de Desarrollo y Capacitacion de ANTEL comprueban el funcionamiento del hardware utilizando sus propios equipos.
+
+%Tras comprobar que el hardware no se encuentra dañado, advirtiendo la posibilidad de que los SFP no sean compatibles con patch cords de fibra monomodo, el equipo de ANTEL nos facilita de patch cords multimodo, con los cuales posteriormente se constata el correcto funcionamiento de los SFP+.\\
+
+%De esta forma, el laboratorio de pruebas queda implementado con SFPs compatibles solamente con fibra multimodo y patchcoords de fibra multimodo.
 
 \section{Desprogramaci\'on del hardware NetFPGA}
 \label{apendiceB2}
 
-Para la programación del hardware NetFPGA, se utiliza inicialmente el procedimiento indicado en el manual de ejecuci\'on del Test de Producci\'on ~\citep{ProdTestManual}. Tras experimentarse un tiempo con este procedimiento se constata que esta técnica de programación no es persistente. Esto significa que tras apagar y encender el equipo (ciclo completo de encendido) el mismo pierde la programación. 
+En el desarrollo de este proyecto se utilizan dos estrategias diferentes para programar el hardware NetFPGA. La primera estrategia, detallada en la guía de ejecución del Test de Producción\citep{ProdTestManual}, permite de forma sencilla programar el hardware utilizando la herramienta Impact de la suite Xilinx ISE SDK. Sin embargo este procedimiento no persiste la programaci\'on del hardware, por lo que al producirse un corte de corriente en el circuito (apagado de la PC por ejemplo) el mismo pierde la programaci\'on.
 
-Utilizando la herramienta Impact, observando el comportamiento de LEDs en la placa y corroborando con el el manual de la misma, se constata que el contenido del chip CPLD se mantiene, pero el contenido del chip FPGA que si es eliminado.\\
+Este efecto puede comprobarse fácilmente utilizando la herramienta Impact para leer el valor de diferentes registros del hardware, los cuales indican el estado del mismo.\\
 
-Con esta información se consulta la documentación de la plataforma y se buscan experiencias similares  de otros usuarios. No se encuentran problemas o experiencias similares pero se encuentra dentro de los proyectos de la plataforma un desarrollo de nombre Reference Flash, cuya funcionalidad es habilitar la programación persistente del hardware.
+%Para la programación del hardware NetFPGA, se utiliza inicialmente el procedimiento indicado en el manual de ejecuci\'on del Test de Producci\'on ~\citep{ProdTestManual}. Tras experimentarse un tiempo con este procedimiento se constata que esta técnica de programación no es persistente. Esto significa que tras apagar y encender el equipo (ciclo completo de encendido) el mismo pierde la programación. 
 
-Este proyecto utiliza las dos unidades de memoria flash disponibles, para almacenar la programaci\'on del equipo. Mientras que en la Flash A se almacena un bitstream de configuración para el equipo 
- (bootstrap bitstream), la  Flash B queda disponible para almacenar un bitstream a elección del programador. 
+%Utilizando la herramienta Impact, observando el comportamiento de LEDs en la placa y corroborando con el el manual de la misma, se constata que el contenido del chip CPLD se mantiene, pero el contenido del chip FPGA que si es eliminado.\\
 
-La configuración del equipo es siempre manejada por el chip CPLD, el cual en el tiempo de encendido programa el chip FPGA con el contenido de la Flash A. Luego el equipo puede ser reprogramado desde la Flash B a través de la interfaz PCIe.
+La segunda estrategia es la programación PCIe denominada en este trabajo como programación persistente, la cual utiliza la herramienta \textbf{pcieprog} de la plataforma NetFPGA para almacenar la programaci\'on del hardware en una de las unidades de memoria Flash del equipo. Concretamente este procedimiento implica programar el hardware con un proyecto compatible con la programaci\'on PCIe (es necesario que el proyecto implemente un m\'odulo para la configuraci\'on del chip FPGA desde una de las memorias Flash) utilizando la herramienta Impact. Luego se almacena en una de las unidades de memoria Flash un archivo binario con la implementaci\'on del proyecto con el cual se quiere programar el hardware. Luego al momento del encendido del equipo, el chip FPGA es programado desde el contenido almacenado en una de las memorias Flash.
 
-Basándose en este proyecto, se prueba como solución al problema de la desprogramaci\'on del equipo dicha alternativa, utilizando como bitstream para la Flash B, el proyecto ReferenceNIC.\\
+De esta forma la progrmaci\'on del equipo se almacena de forma persistente, perdurando incluso cuando el equipo es apagado.\\ 
 
-Esta estrategia funciona  exitosamente en relación a la desprogramaci\'on del hardware, puesto que tal como su documentación lo indica se programa a partir del contenido de la Flash A; y luego utilizando la interfaz PCIe es existosamente reprogramada desde la Flash B. No obstante el comportamiento final del hardware no es el correspondiente al esperado por el proyecto ReerenceNIC. En particular tras reprogramar el equipo desde la Flash B no se puede insertar el driver para el ReferenceNIC en el kernel del sistema operativo (Linux).\\
+%Con esta información se consulta la documentación de la plataforma y se buscan experiencias similares  de otros usuarios. No se encuentran problemas o experiencias similares pero se encuentra dentro de los proyectos de la plataforma un desarrollo de nombre Reference Flash, cuya funcionalidad es habilitar la programación persistente del hardware.
 
-Tras utilizar el foro oficial de la plataforma, sin obtener respuestas se accede finalmente a una lista de correos en la que tambi\'en participan usuarios y desarrolladores de la plataforma. Aquí se explica el problema de la desprogrmaci\'on del hardware, y las alternativas exploradas. 
+%Este proyecto utiliza las dos unidades de memoria flash disponibles, para almacenar la programaci\'on del equipo. Mientras que en la Flash A se almacena un bitstream de configuración para el equipo 
+% (bootstrap bitstream), la  Flash B queda disponible para almacenar un bitstream a elección del programador. 
 
-Afortunadamente se obtiene respuesta del equipo de desarrolladores de NetFPGA, el cual nos indica que este comportamiento se debe a una incorrecta programaci\'on del hardware. Si bien se entiende correctamente la funcionalidad del proyecto ReferenceFlash, el proyecto ReferenceNIC precisa de módulos adicionales en el diseño de la CPLD que el ReferenceFlash no tiene. 
+%La configuración del equipo es siempre manejada por el chip CPLD, el cual en el tiempo de encendido programa el chip FPGA con el contenido de la Flash A. Luego el equipo puede ser reprogramado desde la Flash B a través de la interfaz PCIe.
 
-Sin embargo, el proyecto ReferenceNIC ya tiene incorporado el modulo de persistencia que se presenta en ReferenceFlash. Por lo tanto, para lograr una programaci\'on persistente ademas de programar el equipo con el ReferenceNIC, se debe utilizar la herramienta \textbf{pcieprog} (dentro del mismo proyecto) para cargar en la memoria Flash A, un archivo bitstream con el contenido del mismo proyecto. De esta forma al producirse el encendido del equipo, este se programa con el contenido de la memoria Flash A.\\ 
+%Basándose en este proyecto, se prueba como solución al problema de la desprogramaci\'on del equipo dicha alternativa, utilizando como bitstream para la Flash B, el proyecto ReferenceNIC.\\
 
-Esta es estrategia funciona correctamente, y es lo que en este trabajo se di\'o a conocer como programación persistente.
+%Esta estrategia funciona  exitosamente en relación a la desprogramaci\'on del hardware, puesto que tal como su documentación lo indica se programa a partir del contenido de la Flash A; y luego utilizando la interfaz PCIe es existosamente reprogramada desde la Flash B. No obstante el comportamiento final del hardware no es el correspondiente al esperado por el proyecto ReerenceNIC. En particular tras reprogramar el equipo desde la Flash B no se puede insertar el driver para el ReferenceNIC en el kernel del sistema operativo (Linux).\\
+
+%Tras utilizar el foro oficial de la plataforma, sin obtener respuestas se accede finalmente a una lista de correos en la que tambi\'en participan usuarios y desarrolladores de la plataforma. Aquí se explica el problema de la desprogrmaci\'on del hardware, y las alternativas exploradas. 
+
+%Afortunadamente se obtiene respuesta del equipo de desarrolladores de NetFPGA, el cual nos indica que este comportamiento se debe a una incorrecta programaci\'on del hardware. Si bien se entiende correctamente la funcionalidad del proyecto ReferenceFlash, el proyecto ReferenceNIC precisa de módulos adicionales en el diseño de la CPLD que el ReferenceFlash no tiene. 
+
+%Sin embargo, el proyecto ReferenceNIC ya tiene incorporado el modulo de persistencia que se presenta en ReferenceFlash. Por lo tanto, para lograr una programaci\'on persistente ademas de programar el equipo con el ReferenceNIC, se debe utilizar la herramienta \textbf{pcieprog} (dentro del mismo proyecto) para cargar en la memoria Flash A, un archivo bitstream con el contenido del mismo proyecto. De esta forma al producirse el encendido del equipo, este se programa con el contenido de la memoria Flash A.\\ 
+
+%Esta es estrategia funciona correctamente, y es lo que en este trabajo se di\'o a conocer como programación persistente.
 
 \section{Falta de licencias para suite de Xilinx ISE SDK}
 \label{apendiceB3}
