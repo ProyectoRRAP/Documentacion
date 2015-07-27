@@ -66,37 +66,41 @@ De esta forma la progrmaci\'on del equipo se almacena de forma persistente, perd
 
 \section{Falta de licencias para suite de Xilinx ISE SDK}
 \label{apendiceB3}
-La suite de desarrollo Xilinx ISE SDK se compone por un conjunto extenso de herramientas para la progrmaci\'on y desarrollo de software utilizando los productos de este fabricante; entre los cuales se encuentra el chip Virtex 5 utilizado en el hardware NetFPGA.\\
+La suite de desarrollo Xilinx ISE SDK se compone por un conjunto extenso de herramientas para la progrmaci\'on y desarrollo de software utilizando los productos de este fabricante; entre los cuales se encuentra el chip Virtex 5 utilizado en el hardware NetFPGA.
 
 Estas herramientas de software son licenciadas lo que significa que para su uso es necesario contar con una licencia de software apropiada.
 
-Cada herramienta particular de la suite Xilinx tiene una licencia particular y se agrupan en diferentes paquetes de licencias. De esta forma dependiendo del uso que se vaya a hacer de esta plataforma el o los paquetes de licencias que se deben adquirir.
+Cada herramienta particular de la suite Xilinx tiene una licencia particular y se agrupan en diferentes paquetes de licencias. De esta forma dependiendo del uso que se vaya a hacer de esta plataforma, el o los paquetes de licencias que se deben adquirir. Adem\'as cada licencia se corresponde con una herramienta para una familia de chips en particular. Por ejemplo para trabajar con las tarjetas NetFPGA-10G se necesitan licencias para el chip Virtex5 TX240T.\\
 
-Por otro lado cada licencia brinda soporte de la herramienta asociada, para una familia de chips en particular. Por ejemplo en el contexto de este proyecto se necesitan licencias compatibles con la familia de chips Virtex5 TX240T.\\
+Xilinx ofrece un paquete de licencias gratuitas para trabajar con un conjunto reducido de herramientas (entre ellas se incluye el programa Impact) y un paquete de licencias completo de prueba por un tiempo de 30 d\'ias compatible con los \'ultimos modelos de chips (Virtex6 y Virtex7). Como dentro de estos paquetes no se incluyen las licencias necesarias para la programaci\'on PCIe (programaci\'on persistente) una alternativa es adquirir un paquete de licencias con un valor aproximado de USD500 por PC (costo en dolares americanos al mes de Setiembre del año 2014).\\
 
-Si bien Xilinx provee de un paquete de licencias gratuito para un conjunto de herramientas mínimas dentro de la suite (entre estas se encuentra la herramienta Impact), en el desarrollo de este proyecto y en especial en el proceso de programaci\'on persistente del hardware se necesitan licencias para herramientas que no están incluidas en este paquete.
+%Si bien Xilinx provee de un paquete de licencias gratuito para un conjunto de herramientas mínimas dentro de la suite (entre estas se encuentra la herramienta Impact), en el desarrollo de este proyecto y en especial en el proceso de programaci\'on persistente del hardware se necesitan licencias para herramientas que no están incluidas en este paquete.
 
-A su vez, Xilinx provee de un paquete de licencias de prueba de 30 días en el cual se incluyen las herramientas necesarias para el proceso de programaci\'on persistente. No obstante en la familia de chips para las cuales este paquete de licencias provee de compatibilidad no se incluye la arquitectura del chip del hardware NetFPGA (mientras que la familia del hardware NetFPGA es Virtex5 TX240T, este paquete soporta familias de la arquitectura Virtex7).\\
+%A su vez, Xilinx provee de un paquete de licencias de prueba de 30 días en el cual se incluyen las herramientas necesarias para el proceso de programaci\'on persistente. No obstante en la familia de chips para las cuales este paquete de licencias provee de compatibilidad no se incluye la arquitectura del chip del hardware NetFPGA (mientras que la familia del hardware NetFPGA es Virtex5 TX240T, este paquete soporta familias de la arquitectura Virtex7).\\
 
-Entonces, el conjunto de licencias necesarias para la ejecuci\'on de este proyecto se incluyen en un paquete de licencias el cual no es gratuito (al mes de Setiembre del año 2014 rondaba los USD500 aproximadamente por PC) y no hay paquete de licencias gratuitas o de prueba que posibiliten la configuraci\'on del hardware NetFPGA de la manera pretendida en este proyecto.\\
+%El conjunto de licencias necesarias para la ejecuci\'on de este proyecto se incluye en un paquete de licencias con un costo bastante elevado (al mes de Setiembre del año 2014 rondaba los USD500 aproximadamente por PC) y no hay un paquete de licencias gratuitas o de prueba que posibiliten la configuraci\'on del hardware NetFPGA de la manera pretendida en este proyecto.\\
 
-Identificado este problema, se solicita por medio del programa de soporte a Universidades de Xilinx el paquete de licencias necesario, a la vez que se inicia un contacto con el Instituto de Ingeniería Eléctrica de la Facultad de Ingeniería (IIE) solicitando orientación en relación a este problema.
+En este proyecto, por razones econ\'omicas primero se solicit\'o mediante el programa de soporte a Universidades de Xilinx el paquete de licencias necesario, a la vez que se inici\'o un contacto con el Instituto de Ingeniería Eléctrica de la Facultad de Ingeniería (IIE) solicitando orientación en relación a este problema. 
 
-Tras este contacto se toma conocimiento que en el IIE no se trabaja actualmente con esta plataforma aunque en alg\'un momento si lo hicieron y gracias a ello se obtiene de parte de este instituto
-el asesoramiento y apoyo necesario para la resolución de este obstáculo. 
+Finalmente se recibi\'o a través de dicho programa de apoyo a universidades una interesante donación de licencias, posibilitando una real explotación del hardware y la plataforma en su conjunto, aunque esta espera represent\'o un contratiempo en el cronograma inicial del proyecto. 
 
-Por otro lado, a través del programa de apoyo a universidades de Xilinx se obtiene una interesante donación de licencias, posibilitando a una real explotación del hardware y de la plataforma a futuro. Sin embargo, vale la pena destacar que esta donaci\'on se recibe bastante tiempo después de enviada la solicitud en dicho programa, y que estas licencias fueron un insumo necesario para continuar con la ejecuci\'on de este proyecto.  
+%Tras este contacto se toma conocimiento que en el IIE no se trabaja actualmente con esta plataforma aunque en alg\'un momento si lo hicieron y gracias a ello se obtiene de parte de este instituto
+%el asesoramiento y apoyo necesario para la resolución de este obstáculo. 
+
+%Por otro lado, a través del programa de apoyo a universidades de Xilinx se obtiene una interesante donación de licencias, posibilitando a una real explotación del hardware y de la plataforma a futuro. Sin embargo, vale la pena destacar que esta donaci\'on se recibe bastante tiempo después de enviada la solicitud en dicho programa, y que estas licencias fueron un insumo necesario para continuar con la ejecuci\'on de este proyecto.  
 
 \section{Falta de driver para cable JTAG Xilinx}
-Para la programación del hardware NetFPGA se utiliza un cable programador especial con una interfaz de conexi\'on JTAG. 
+Para la programación del hardware NetFPGA se utiliza un cable programador especial con una interfaz de conexi\'on JTAG.  Este cable presenta el inconveniente de que sus fabricantes no desarrollaron drivers para la distribución de Linux con la que se trabaja en este proyecto, existiendo drivers oficiales para entornos Windows y una versi\'on no oficial para la distribución Fedora.\\
 
-Por un lado, para utilizar este cable es necesario instalar un driver especifico para el mismo. Para la marca de cable JTAG utilizado en este proyecto (Xilinx) el driver oficial provisto por el fabricante tiene soporte solamente para sistemas Windows.
+Si bien inicialmente esto oblig\'o a programar el hardware en un ambiente Windows para realizar las pruebas de verificaci\'on del mismo (Producction Test y RLDRAM Test) finalmente se consigue un driver no oficial\cite{JtagD} tambi\'en compatible con Ubuntu 12.04, habilitando de esta forma a programar el hardware en la misma PC.
 
-A pesar de que existe una implementaci\'on de este driver para sistemas basados en GNU/Linux (la cual no guarda relación con el fabricante), se prueba en este proyecto que funciona solamente en Fedora.\\
+%Por un lado, para utilizar este cable es necesario instalar un driver especifico para el mismo. Para la marca de cable JTAG utilizado en este proyecto (Xilinx) el driver oficial provisto por el fabricante tiene soporte solamente para sistemas Windows.
 
-Finalmente luego de un esfuerzo mayor buscando una implementaci\'on de driver compatible con Ubuntu 12.04 se encuentra la implementaci\'on \cite{JtagD}, la cual tras bajar el codigo fuente y compilarlo apropiadamente, se puede utilizar el cable de programaci\'on JTAG exitosamente.
+%A pesar de que existe una implementaci\'on de este driver para sistemas basados en GNU/Linux (la cual no guarda relación con el fabricante), se prueba en este proyecto que funciona solamente en Fedora.\\
 
-\section{Desaf\'ios con Open vSwitch}
+%Finalmente luego de un esfuerzo mayor buscando una implementaci\'on de driver compatible con Ubuntu 12.04 se encuentra la implementaci\'on \cite{JtagD}, la cual tras bajar el codigo fuente y compilarlo apropiadamente, se puede utilizar el cable de programaci\'on JTAG exitosamente.
+
+\section{Problemas t\'ecnicos con Open vSwitch}
 \label{apendiceB5}
 
 Open vSwitch es uno de los pilares fundamentales de RAU-Switch puesto que es el encargado de implementar el plano de datos de OpenFlow. Durante el desarrollo de \'este proyecto, en el tiempo empleado a la experimentaci\'on con esta herramienta, se genera conocimiento en relaci\'on aspectos importantes sobre la herramienta; los cuales no son triviales y vale la pena mencionar en este apartado. A continuaci\'on se enumeran los siguientes:\\ 
@@ -132,7 +136,7 @@ El paquete ingresa al router atrav\'es de la interfaz f\'isica \textbf{nf0} y de
 
 \begin{figure}[h!] 
 \centering    
-\includegraphics[width=0.75\textwidth]{ovs_figure3}
+\includegraphics[width=0.65\textwidth]{ovs_figure3}
 \caption[Funcionamiento de puertos Open vSwitch]{Funcionamiento de puertos Open vSwitch}
 \label{fig:OVSInterfaces}
 \end{figure}
@@ -157,39 +161,54 @@ Para solucionar este problema se utilizan interfaces virtuales de la siguiente f
 \item Estos pasos aseguran que todo el tráfico sea procesado por las tablas de Open vSwitch, y serán procesados por el kernel solo en caso de ser necesario.
 \end{enumerate}
 
-\begin{figure}[h] 
+\begin{figure}[h!] 
 \centering    
-\includegraphics[width=0.40\textwidth]{ovs_figure4}
+\includegraphics[width=0.35\textwidth]{ovs_figure4}
 \caption[Puertos Open vSwitch - Soluci\'on propuesta]{Puertos Open vSwitch - Soluci\'on propuesta}
 \label{fig:OVSInterfaces2}
 \end{figure}
 
 \end{enumerate}
 
+\newpage
 \section{MPLS Linux y Quagga LDP}
 \label{apendiceB6}
 
-MPLS Linux\cite{MplsLinux1} es un proyecto orientado a dotar de funcionalidades de MPLS al Kernel de Linux. 
-Para esto se utiliza un parche con el cual se extiende el kernel original el cual tras recompilarse queda pronto para brindar soporte nativo al protocolo MPLS. Sin embargo es necesario instalar luego herramientas adicionales para por ejemplo acceder a las tablas de MPLS (en particular existe una extension de la herramienta iproute denominada iproute2 para esto).\\
+MPLS Linux es un proyecto orientado a dotar de funcionalidades de MPLS al Kernel de Linux, mediante un parche con el cual se extiende al mismo y el cual tras recompilarse queda pronto para brindar soporte nativo al protocolo MPLS. %Adicionalmente es necesario instalar herramientas para por ejemplo acceder a las tablas de MPLS (en particular existe una extension de la herramienta iproute denominada iproute2 para esto).\\
 
-El proyecto, cuyo desarrollo fue encabezado por James R. Leu, data de hace m\'as de 15 a\~nos y no se han hecho contribuciones importantes desde hace aproximadamente 9. Adem\'as de que la documentaci\'on existente es muy poca, las versiones de kernel de Linux para las cuales se pensó este parche rondan por la versi\'on 2.6.3.16, cuando la \'ultima versi\'on de kernel es la 4.1.1.\\
+Existen principalmente dos versiones: el proyecto original\cite{MplsLinux1} encabezado por James R. Leu el cual data de hace m\'as de 15 a\~nos y no cuenta con contribuciones importantes desde hace aproximadamente 9 y otro proyecto\cite{MplsLinux2} encabezado por Igor Maravick (quien trabaj\'o en el proyecto anterior) que data del a\~no 2010 y surge como una actualizaci\'on del proyecto original.\\
 
-Durante la ejecuci\'on de este proyecto, se prueba instalar este parche en dos kernel de Linux contemporáneos (versi\'on 2.6.32.16 y 2.6.32.65) obteniendo resultados no satisfactorios. Concretamente estas versiones de kernel son tan antiguas que no soportaron algunas características del hardware utilizado para la contrucci\'on de RAU-Switch, adem\'as de que tampoco soportan completamente la herramienta Open vSwitch.
+El primer proyecto fue pensado como un parche para el kernel de Linux versi\'on 2.6.3.16 (tener en cuenta que la versi\'on actual es la 4.1.1). Adicionalmente se desarroll\'o una extensión de la suite Quagga\cite{QuaggaLDP1} que implementa el algoritmo LDP para la construcci\'on de redes IP/MPLS.
 
-Se prueba compilar este parche en la versi\'on de kernel con la que se estaba trabajando hasta el momento (3.11.0-15 generic) pero sin resultados satisfactorios.\\
+Por otro lado, el proyecto de Igor Maravick es un kernel de Linux versi\'on 3.9.0-rc3 con las modificaciones necesarias para soportar el protocolo MPLS ya incorporadas. Adicionalmente existe una nueva extension de la suite Quagga que implementa el protocolo LDP \cite{QuaggaLDP2} y es compatible con esta versi\'on de MPLS-Linux.\\
 
-Cabe desatacar que para esta versi\'on de MPLS-Linux el mismo autor, James R. Leu desarroll\'o una extension de la suite Quagga para trabajar con MPLS-Linux y el protocolo LDP, lo cual se dio a llamar Quagga LDP\cite{QuaggaLDP1}.\\  
+En el contexto de este proyecto se trabaj\'o con ambas versiones de MPLS-Linux y las respectivas versiones de Quagga-LDP. 
 
-Por otro lado, Igor Maravick; quien trabajara junto a James R. Leu en el desarrollo de MPLS-Linux, decide retomar este proyecto y actualizarlo a una versi\'on de kernel de linux m\'as actual. 
+Para la versi\'on original de MPLS-Linux se prob\'o compilar el parche con diferentes versiones de kernel, entre ellas las versiones 2.6.32.16 y 2.6.32.65 no pudiendo as\'i configurar correctamente el ambiente de trabajo. En particular estas versiones son tan antiguas que gran parte de las herramientas utilizadas para la construcci\'on de RAU-Switch no son compatibles. Adicionalmente se prueba compilar el parche para la versi\'on de kernel 3.11.0-15 generic (versi\'on que trae Ubuntu 12.01) pero tampoco se obtienen buenos resultados.\\
 
-Lo que comenzó en el a\~no 2010 como un proyecto para portar MPLS-Linux termino en el a\~no 2013, en prácticamente una reimplementaci\'on del proyecto original utilizando un kernel versionn 3.9.0-rc3. 
+En relaci\'on a la versi\'on de Igor Maravik se logr\'o configurarla correctamente, as\'i como la extensi\'on Quagga-LDP. No obstante al momento de ejecutar dichas herramientas se detectaron problemas en la interacci\'on entre las mismas; mediante los logs de la herramienta Quagga se detectaron errores al momento de insertar entradas en las tablas MPLS del kernel.
 
-Como gran diferencia del proyecto original adem\'as, no se incluye MPLS-Linux como un parche si no que viene integrado en la propia distribución.\\
+Finalmente por la falta de información en relación a estas componentes, ya que sobre el proyecto original existe muy poca documentaci\'on mientras que para el proyecto de Igor Maravik no existe la misma, se decidi\'o descartar esta alternativa para implementar el algoritmo LDP. 
 
-En el contexto del proyecto, tras varias semanas de esfuerzo se logra configurar, compilar e instalar \'este kernel con la configuraci\'on del kernel con la que se ven\'ia trabajando al momento, garantizando as\'i el correcto funcionamiento del resto de las herramientas de software y hardware instaladas, entre las cuales se encuentran principalmente el hardware NetFPGA. Conviene resaltar que la documentaci\'on existente sobre este proyecto es prácticamente nula, adem\'as de que al cambiar la implementaci\'on del proyecto, la documentaci\'on del proyecto original no sirve.\\
 
-Por otro lado, puesto que la implementaci\'on original de Quagga LDP realizada por James R. Leu no es compatible con esta versi\'ion de MPLS-Linux, es necesario encontrar una versi\'on que si lo sea. Afortunadamente, contemporáneo con el proyecto de Igor Maravic, se origina un proyecto\citep{QuaggaLDP2} para portar la versi\'on original de Quagga LDP a la implementaci\'on de MPLS-Linux m\'as reciente.\\
+%El proyecto, cuyo desarrollo fue encabezado por James R. Leu, data de hace m\'as de 15 a\~nos y no se han hecho contribuciones importantes desde hace aproximadamente 9. Adem\'as de que la documentaci\'on existente es muy poca, las versiones de kernel de Linux para las cuales se pensó este parche rondan por la versi\'on 2.6.3.16, cuando la \'ultima versi\'on de kernel es la 4.1.1.\\
 
-En el contexto del proyecto se compila e instala esta implementaci\'on de Quagga y nuevamente tras largos esfuerzos (recordar que casi no existe documentación) se logra ejecutar correctamente. 
+%Durante la ejecuci\'on de este proyecto, se prueba instalar este parche en dos kernel de Linux contemporáneos (versi\'on 2.6.32.16 y 2.6.32.65) obteniendo resultados no satisfactorios. Concretamente estas versiones de kernel son tan antiguas que no soportaron algunas características del hardware utilizado para la contrucci\'on de RAU-Switch, adem\'as de que tampoco soportan completamente la herramienta Open vSwitch.
 
-No obstante al momento de integrar ambas herramientas surgieron problemas, concretamente en los logs del demonio zebra se detectaron errores al momento de insertar entradas en las tablas MPLS del kernel de Linux, y tras varias semanas de buscar informaci\'on en la web, analizar el error e inspeccionar el código fuente en busca de alguna pista, se descarta la alternativa de utilizar MPLS-Linux y Quagga LDP en el prototipo. 
+%Se prueba compilar este parche en la versi\'on de kernel con la que se estaba trabajando hasta el momento (3.11.0-15 generic) pero sin resultados satisfactorios.\\
+
+%Cabe desatacar que para esta versi\'on de MPLS-Linux el mismo autor, James R. Leu desarroll\'o una extension de la suite Quagga para trabajar con MPLS-Linux y el protocolo LDP, lo cual se dio a llamar Quagga LDP\cite{QuaggaLDP1}.\\  
+
+%Por otro lado, Igor Maravick; quien trabajara junto a James R. Leu en el desarrollo de MPLS-Linux, decide retomar este proyecto y actualizarlo a una versi\'on de kernel de linux m\'as actual. 
+
+%Lo que comenzó en el a\~no 2010 como un proyecto para portar MPLS-Linux termino en el a\~no 2013, en prácticamente una reimplementaci\'on del proyecto original utilizando un kernel versionn 3.9.0-rc3. 
+
+%Como gran diferencia del proyecto original adem\'as, no se incluye MPLS-Linux como un parche si no que viene integrado en la propia distribución.\\
+
+%En el contexto del proyecto, tras varias semanas de esfuerzo se logra configurar, compilar e instalar \'este kernel con la configuraci\'on del kernel con la que se ven\'ia trabajando al momento, garantizando as\'i el correcto funcionamiento del resto de las herramientas de software y hardware instaladas, entre las cuales se encuentran principalmente el hardware NetFPGA. Conviene resaltar que la documentaci\'on existente sobre este proyecto es prácticamente nula, adem\'as de que al cambiar la implementaci\'on del proyecto, la documentaci\'on del proyecto original no sirve.\\
+
+%Por otro lado, puesto que la implementaci\'on original de Quagga LDP realizada por James R. Leu no es compatible con esta versi\'ion de MPLS-Linux, es necesario encontrar una versi\'on que si lo sea. Afortunadamente, contemporáneo con el proyecto de Igor Maravic, se origina un proyecto\citep{QuaggaLDP2} para portar la versi\'on original de Quagga LDP a la implementaci\'on de MPLS-Linux m\'as reciente.\\
+
+%En el contexto del proyecto se compila e instala esta implementaci\'on de Quagga y nuevamente tras largos esfuerzos (recordar que casi no existe documentación) se logra ejecutar correctamente. 
+
+%No obstante al momento de integrar ambas herramientas surgieron problemas, concretamente en los logs del demonio zebra se detectaron errores al momento de insertar entradas en las tablas MPLS del kernel de Linux, y tras varias semanas de buscar informaci\'on en la web, analizar el error e inspeccionar el código fuente en busca de alguna pista, se descarta la alternativa de utilizar MPLS-Linux y Quagga LDP en el prototipo. 
