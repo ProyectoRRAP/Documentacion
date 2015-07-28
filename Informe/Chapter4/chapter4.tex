@@ -26,7 +26,7 @@ A continuaci\'on se explica de que forma el prototipo implementa cada uno de los
 
 Una alternativa para el c\'alculo de rutas en el prototipo es utilizar protocolos de ruteo en base a IP, sacando provecho as\'i de algoritmos existentes, robustos y ampliamente probados tanto en la academia como en la industria.\\
 
-Hist\'oricamente se han utilizado algoritmos distribuidos para el computo de rutas, siendo algunos de los m\'as renombrados en la literatura \gloss{OSPF}\cite{moy1998rfc}, RIP\cite{malkin1994rip} y \gloss{IS-IS}\cite{routingprotocol}. Por otro lado también puede sacarse provecho de la visi\'on global del plano de control de SDN para implementar un algoritmo de ruteo centralizado, sencillo y transparente.
+Hist\'oricamente se han utilizado algoritmos distribuidos para el c\'omputo de rutas, siendo algunos de los m\'as renombrados en la literatura \gloss{OSPF}\cite{moy1998rfc}, RIP\cite{malkin1994rip} y \gloss{IS-IS}\cite{routingprotocol}. Por otro lado también puede sacarse provecho de la visi\'on global del plano de control de SDN para implementar un algoritmo de ruteo centralizado, sencillo y transparente.
 
 En este trabajo se combinan ambos enfoques, utilizando el protocolo de ruteo OSPF en conjunto con un algoritmo centralizado en el controlador.\\
 
@@ -38,7 +38,7 @@ Sin embargo, para la definición de políticas en ingeniería de tr\'afico que p
 
 Esto es equivalente a extender OSPF para implementar un algoritmo de ruteo con restricciones, lo que en algunas implementaciones se denomina CSPF (Constrained Shortest Path First). Adem\'as interesa que estas restricciones puedan definirse dinamicamente en función de la alta y baja de servicios en el prototipo.\\
 
-En el prototipo se ejecuta el protocolo OSPF en cada nodo y el controlador para construir y mantener una base de datos topol\'ogica de la red. Luego esta información es utilizada por el algoritmo de ruteo centralizado en el controlador (eventualmente CSPF) para el computo de las mejores rutas asociadas al tr\'afico de cada servicio de VPN.\\
+En el prototipo se ejecuta el protocolo OSPF en cada nodo y el controlador para construir y mantener una base de datos topol\'ogica de la red. Luego esta información es utilizada por el algoritmo de ruteo centralizado en el controlador (eventualmente CSPF) para el c\'omputo de las mejores rutas asociadas al tr\'afico de cada servicio de VPN.\\
 
 La clasificaci\'on de tr\'afico, creación de m\'ultiples caminos y balanceo de carga son implementados en el controlador a través de una aplicaci\'on SDN, por lo que ser\'an explicados en el capitulo 5.
 
@@ -54,7 +54,7 @@ Quagga-LDP toma como entrada el resultado de la ejecuci\'on del protocolo OSPF, 
 
 Como Linux no ofrece nativamente soporte al protocolo MPLS, Quagga-LDP funciona en conjunto con MPLS-Linux; un kernel de Linux modificado para ofrecer una implementaci\'on de MPLS a nivel de kernel.\\
 
-Utilizar Quagga-LDP y MPLS-Linux tiene dos ventajas: en primer lugar no se debe implementar un algoritmo propio con lo cual se ahorra tiempo de implementaci\'on y se tiene un algoritmo probado y confiable; en segundo lugar se disminuye la carga de computo en el controlador puesto que se ejecuta el algoritmo en cada nodo.
+Utilizar Quagga-LDP y MPLS-Linux tiene dos ventajas: en primer lugar no se debe implementar un algoritmo propio con lo cual se ahorra tiempo de implementaci\'on y se tiene un algoritmo probado y confiable; en segundo lugar se disminuye la carga de c\'omputo en el controlador puesto que se ejecuta el algoritmo en cada nodo.
 
 %Por ello en este trabajo se decide probar esta alternativa y experimentar con el algoritmo de distribución de etiquetas implementado por Quagga-LDP.\\
 
