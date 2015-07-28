@@ -919,6 +919,27 @@ De esta forma queda explicada la implementaci\'on de la aplicaci\'on de gesti\'o
 
 El siguiente cap\'itulo esta destinado al diseño y construcción de un laboratorio de pruebas, para la validaci\'on de las componentes desarrolladas y la implementaci\'on de algunos casos de uso representativos. 
 
+\subsection{QoS en RAUFlow}
+Por razones de tiempo no se implementaron en RAUFlow funcionalidades de QoS como balanceo de carga y asignaci\'on de prioridades por tipo de tr\'afico. Sin embargo, a continuaci\'on se describen las alternativas a explorar en caso de seguir con el desarrollo de esta aplicaci\'on.\\
+
+Dentro de las funcionalidades de calidad de servicio (QoS) que se podrían implementar en RAUFlow interesan dos principalmente: (1) la capacidad para construir caminos alternativos para un servicio y  de esta forma hacer balanceo de carga entre todos los LSPs construidos y (2) asignar prioridades por servicio para el procesamiento de tr\'afico en cada uno de los nodos de la red.\\
+
+Para la construcci\'on caminos alternativos para un mismo servicio existen dos soluciones: (1) una soluci\'on simple la cual permite a un administrador definir manualmente caminos y (2) una soluci\'on m\'as compleja en la que se mejora el algoritmo de ruteo centralizado para implementar un CSPF que permita calcular diferentes caminos para un mismo par nodo-interfaz de ingreso y egreso, en funci\'on del ajuste de diferentes par\'ametros de QoS (ancho de banda por ejemplo).\\
+
+Para implementar (1) en el prototipo es necesario modificar levemente la implementaci\'on de la clase Servicio para distinguir entre los servicios en que el LSP se calcula con el algoritmo de ruteo y los que se definen de forma manual, a la vez que es necesario extender la interfaz gr\'afica para implementar este nuevo caso de uso.
+
+Para implementar (2) se requiere de un tiempo de desarrollo considerablemente mayor que en la alternativa (1) puesto que es necesario modificar el algoritmo de ruteo e implementar un CSPF.\\ 
+
+Asumiendo que se soportan m\'ultiples caminos para un mismo servicio, puede implementarse balanceo de carga de dos formas: (1) “partir” la definici\'on de un servicio de VPN en varios subservicios diferenciando por el tipo de tr\'afico mediante el cabezal OpenFlow y as\'i hacer balanceo de carga por ejemplo por tipo de aplicaci\'on, (2) implementar balanceo de carga basándose en las estadísticas de los flujos OpenFlow y así balancear din\'amicamente el tr\'afico de un servicio de VPN entre diferentes caminos.\\
+
+Para implementar (1) solo es necesario que RAUFlow implemente alguno de los mecanismos mencionados para la definición de múltiples caminos para un servicio. 
+
+Por otro lado para implementar (2) se puede utilizar el concepto de “Meters” o m\'etricas de OpenFlow que permiten analizar la cantidad de paquetes procesados por un mismo flujo y en funci\'on de esto aplicar una acci\'on o conjunto de acciones. Sin embargo Open vSwitch no implementa esta característica del protocolo, por lo que no es posible implementarlo en RAUFlow; de hecho Open vSwitch ofrece otras funcionalidades de QoS que delega al kernel de Linux en vez de implementar los mecanismos contemplados por el protocolo OpenFlow. 
+
+Dentro de las funcionalidades de QoS que implementa Open vSwitch se encuentran la definci\'on de “colas” a las que se les puede definir tasas de transferencia mínima y máxima. Mediante esta funcionalidad es posible implementar prioridades por tipo de tr\'afico y asi por servicio, aunque como es una implementaci\'on propia de la herramienta no puede ser manipulada din\'amicamente desde el controlador mediante el protocolo OpenFlow.
+
+%Aprovechando la arquitectura OpenFlow se puede implementar balanceo de carga de dos formas diferentes. La forma m\'as sencilla es balancear el tr\'afico de una red privada   
+
 
 
 
