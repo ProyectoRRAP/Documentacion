@@ -36,7 +36,7 @@ OSPF basa su algoritmo para el c\'alculo de rutas en el algoritmo Dijkstra (ampl
 
 Sin embargo, para la definición de políticas en ingeniería de tr\'afico que permitan hacer balanceo de carga y construcción de caminos alternativos, es necesario incorporar m\'as informaci\'on en el algoritmo de ruteo, como la saturaci\'on de enlaces entre otras restricciones.
 
-Esto es equivalente a extender OSPF para implementar un algoritmo de ruteo con restricciones, lo que en algunas implementaciones se denomina CSPF (Constrained Shortest Path First). Adem\'as interesa que estas restricciones puedan definirse dinamicamente en función de la alta y baja de servicios en el prototipo.\\
+Esto es equivalente a extender OSPF para implementar un algoritmo de ruteo con restricciones, lo que en algunas implementaciones se denomina CSPF (Constrained Shortest Path First). Adem\'as interesa que estas restricciones puedan definirse din\'amicamente en función de la alta y baja de servicios en el prototipo.\\
 
 En el prototipo se ejecuta el protocolo OSPF en cada nodo y el controlador para construir y mantener una base de datos topol\'ogica de la red. Luego esta información es utilizada por el algoritmo de ruteo centralizado en el controlador (eventualmente CSPF) para el c\'omputo de las mejores rutas asociadas al tr\'afico de cada servicio de VPN.\\
 
@@ -226,7 +226,7 @@ A continuación se explica en detalle cada una de las tres componentes mencionad
 \subsection{Controlador Ryu}
 Ryu es la alternativa de software elegido para implementar el controlador SDN compatible con el protocolo OpenFlow. 
 
-Utilizando esta herramienta para la construcci\'on y ejecuci\'on de una o m\'as aplicaciones SDN, se implementa prácticamente la totalidad del plano de control del prototipo. Esto es en otras palabras el modelado de la realidad, la implementaci\'on de funcionalidades para la creaci\'on de servicios de redes privadas, implementaci\'on de clasificaci\'on de tr\'afico y eventualmente la implementaci\'on de pol\'iticas de ingenieria de tr\'afico y calidad de servicios (QoS).\\ 
+Utilizando esta herramienta para la construcci\'on y ejecuci\'on de una o m\'as aplicaciones SDN, se implementa prácticamente la totalidad del plano de control del prototipo. Esto es en otras palabras el modelado de la realidad, la implementaci\'on de funcionalidades para la creaci\'on de servicios de redes privadas, implementaci\'on de clasificaci\'on de tr\'afico y eventualmente la implementaci\'on de pol\'iticas de ingeniería de tr\'afico y calidad de servicios (QoS).\\ 
 
 Dada la complejidad en el diseño y arquitectura de esta componente, se destina el próximo cap\'itulo a la explicaci\'on de las diferentes características e implementaci\'on de las aplicaciones Ryu que constituyen el plano de control del prototipo, as\'i como la interacci\'on de las otras componentes mencionadas dentro del plano de control como los m\'odulos LSDBSync y Administrador SNMP. 
 
