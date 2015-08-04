@@ -32,7 +32,7 @@ Teniendo en cuenta los requerimientos mencionados se construye un laboratorio de
 
 El laboratorio se compone de cuatro nodos implementados en base al dispositivo RAU-Switch conectados entre si con enlaces de fibra \'optica multimodo. Cada nodo est\'a conectado a los otros tres nodos de la topolog\'ia implementando de esta forma una topolog\'ia full mesh de cuatro nodos. A su vez cada nodo est\'a conectado al controlador SDN del prototipo mediante una interfaz de red ethernet (interfaces \textbf{eth0}).\\
 
-Por la forma que tiene la topolog\'ia, los cuatro nodos nombrados \textit{Galois}, \textit{Poisson}, \textit{Oz} y \textit{Alice} son nodos de borde. Esto quiere decir que RAUFlow los considera como nodos habilitados para ser nodo de ingreso \'o nodo de egreso en la definici\'on de servicios de redes privadas.
+Por la forma que tiene la topolog\'ia, los cuatro nodos nombrados \textit{Galois}, \textit{Poisson}, \textit{Oz} y \textit{Alice} son nodos de borde. Esto quiere decir que RAUFlow los considera como nodos habilitados para ser nodo de ingreso o egreso en la definici\'on de servicios de redes privadas.
 
 Por otro lado cada nodo cuenta con una interfaz de red de ethernet adicional (interfaz \textbf{eth1}) utilizada como interfaz externa para la conexi\'on con otras subredes. Estas interfaces son utilizadas por RAUFlow para la definici\'on de servicios de VPN como los puntos de entrada y salida de tr\'afico. Por tanto cada una de estas interfaces se encuentra directamente conectada a la subred de una VPN en particular.\\  
 
@@ -242,7 +242,7 @@ Para todos estos servicios adem\'as se indica como valor de ethertype 0x0800, co
 
 Sobre este escenario se prueban diferentes combinaciones para la generaci\'on de tr\'afico, variando tanto la subred origen y destino como el tipo de tr\'afico. 
 
-Se prueba generar paquetes ICMP mediante el comando \textbf{Ping} para ambas subredes, en especial el caso en que la numeraci\'on IP se repite (por ejemplo ping de un host en subred A a otro host en subred B en simultaneo con un ping de un host en subred A' a otro host en subred B'); observando que el prototipo enruta correctamente el tr\'afico asociado a cada servicio, garantizando as\'i el aislamiento del espacio de direcciones. 
+Se prueba generar paquetes ICMP mediante el comando \textbf{Ping} para ambas subredes, en especial el caso en que la numeraci\'on IP se repite (por ejemplo ping de un host en subred A a otro host en subred B en simult\'aneo con un ping de un host en subred A' a otro host en subred B'); observando que el prototipo enruta correctamente el tr\'afico asociado a cada servicio, garantizando as\'i el aislamiento del espacio de direcciones. 
 
 Tambi\'en se logra de forma exitosa establecer conexiones \textbf{SSH} entre dos hosts en diferentes subredes para ambas organizaciones y generar requests \textbf{HTTP}, cargando desde un host en una subred una p\'agina web alojada en la otra subred. Esta prueba se realiza para ambas organizaciones utilizando p\'aginas web con diferente contenido; de esta forma se determina fácilmente para una organización si las solicitudes HTTP son correctamente enrutadas y aisladas del tr\'afico de la otra organizaci\'on. En el apéndice \ref{appendix6.4} se muestran los detalles t\'ecnicos asociados a estas pruebas como capturas de las tablas de flujos de cada nodo en la red, capturas del procesamiento de tr\'afico asociado a los servicios en los diferentes casos mencionados, entre otra informaci\'on.\\
 
@@ -260,7 +260,7 @@ De esta forma lo que se busca con este escenario es construir dos “cables” y
 \subsection{Escenario}
 El escenario configurado para este caso de uso, as\'i como los caminos asociados a cada servicio (LSP) se muestra en la figura \ref{fig:CUP3}. Como puede apreciarse el mismo se compone de una organización con dos sucursales físicamente separadas, para las cuales se instancia dos servicios (ver tabla \ref{table:TablaFlujos4}). 
 
-Notar como no se define una clasificaci\'on de tr\'afico para ambos servicios creados. Esto se debe justamente a la naturaleza del servicio de VPN creado. Al ser un servicio de VPN de capa 2 las \'unicos par\'ametros utilizados para su construcci\'on son las nodos de ingreso y egreso del servicio; en otras palabras, los extremos del “cable” virtual que se est\'a creando.\\
+Notar c\'omo no se define una clasificaci\'on de tr\'afico para ambos servicios creados. Esto se debe justamente a la naturaleza del servicio de VPN creado. Al ser un servicio de VPN capa 2 las \'unicos par\'ametros utilizados para su construcci\'on son los nodos de ingreso y egreso del servicio; en otras palabras, los extremos del “cable” virtual que se est\'a creando.\\
 
 Teniendo este escenario configurado, se genera tr\'afico desde la subred A a la subred B (servicio S1), probando con diferentes protocolos de capa 3, buscando verificar si el mismo atraviesa la red del laboratorio independientemente del protocolo. \\
 

@@ -19,7 +19,7 @@ El presente cap\'itulo est\'a destinado al planteo de estos aspectos y los funda
 \section[Definición de requerimientos]{Definición de requerimientos}
 \label{3.1}
 
-Para identificar posibles requerimientos a implementar en el prototipo para la RAU2 , se trabaja inicialmente en identificar requerimientos generales sobre esta red. Luego los resultados obtenidos ser\'an contextualizando en el alcance, los objetivos y resultados esperados de este trabajo, alcanzando as\'i los requerimientos para el prototipo.\\
+Para identificar posibles requerimientos a implementar en el prototipo para la RAU2 , se trabaja inicialmente en identificar requerimientos generales sobre esta red. Luego los resultados obtenidos ser\'an contextualizados en el alcance, los objetivos y resultados esperados de este trabajo, alcanzando as\'i los requerimientos para el prototipo.\\
 
 La RAU definió las funcionalidades esperadas para su evolución hacia RAU2, considerando a ANTEL como el proveedor de la infraestructura de red necesaria para el despliegue. Las principales características que se desean implementar son las siguientes:
 
@@ -36,7 +36,7 @@ La RAU definió las funcionalidades esperadas para su evolución hacia RAU2, con
  
 \end{enumerate}
 
-Este conjunto de funcionalidades o requerimientos representa un problema de dimensiones mayores al que se pretende resolver en este trabajo, por ello pensando en resolver un problema acorde a las dimensiones de un proyecto de fin de carrera, se decide enfocarse en el primer requerimiento, la Clasificación de Tr\'afico.
+Este conjunto de funcionalidades o requerimientos representa un problema de dimensiones mayores al que se pretende resolver en este trabajo, por ello pensando en resolver un problema acorde a las dimensiones de un proyecto de fin de carrera, se decide hacer foco en el primer requerimiento, la Clasificación de Tr\'afico.
 
 Partiendo de la clasificación de tr\'afico como funcionalidad principal, se llega a los siguientes requerimientos:
 
@@ -47,7 +47,7 @@ Partiendo de la clasificación de tr\'afico como funcionalidad principal, se lle
 \multicolumn{1}{|c|}{Requerimientos Funcionales}\\ 
 \hline
 \begin{itemize}
-\item Dada una organización o aplicación, el Sistema debe tener la capacidad de clasificar y distinguir el tráfico asociada a la misma de cualquier otro tipo de tráfico. Esto se conoce como clasificación de tráfico.
+\item Dada una organización o aplicación, el Sistema debe tener la capacidad de clasificar y distinguir el tráfico asociado a la misma de cualquier otro tipo de tráfico. Esto se conoce como clasificación de tráfico.
 
 %\item Dado el tipo de tr\'afico asociado a una organización, el Sistema debe poder asignar un porcentaje de los recursos disponibles de la red para el procesamiento del mismo.
 
@@ -110,7 +110,7 @@ NetFPGA posibilita la construcci\'on de una plataforma de desarrollo y pruebas c
 
 Es imperativo la construcción de un laboratorio de pruebas compuesto por un conjunto de nodos que de ser hardware comercial tendría un costo significativamente mayor que el hardware NetFPGA.\\
 
-Por otro lado utilizar hardware reconfigurable tiene la ventaja de poder prototipar diferentes dispositivos de red en un mismo equipo. Se puede entonces modificar din\'amicamente el laboratorio de pruebas en función de los casos de uso que se quieran probar sin la necesidad de incorporar nuevo hardware. Adem\'as la capacidad para programar el hardware, permite sacar provecho de las características del mismo para la implementaci\'on de funcionalidades espec\'ificas para la RAU, que en hardware comercial solo se podrían implementar si el mismo ya tiene incorporadas dichas funcionalidades.\\
+Por otro lado utilizar hardware reconfigurable tiene la ventaja de poder prototipar diferentes dispositivos de red en un mismo equipo. Se puede entonces modificar din\'amicamente el laboratorio de pruebas en función de los casos de uso que se quieran probar sin la necesidad de incorporar nuevo hardware. Adem\'as la capacidad para programar el hardware, permite sacar provecho de las características del mismo para la implementaci\'on de funcionalidades espec\'ificas para la RAU, que en hardware comercial solo se podrían implementar si el mismo ya tuviera incorporadas dichas funcionalidades.\\
 
 Finalmente la utilizaci\'on de hardware abierto, en conjunci\'on con software libre y de código abierto posibilitan la construcci\'on de lo que se podría llamar “Router Open Source”, un nodo para la nueva red académica basado en tecnologías abiertas. Esto otorgaría una mayor flexibilidad y capacidades de reutilizaci\'on del hardware disponible en la red académica avanzada.
 
@@ -135,7 +135,7 @@ Por estas razones, se decide utilizar OpenFlow como la implementaci\'on de SDN e
 
 %Por otro lado en las sucesivas versiones de OpenFlow, se han incorporado diferentes caracter\'isticas y funcionalidades que hacen en la actualidad a la versi\'on 1.5 de OpenFlow, una alternativa vers\'atil, flexible y completa.\\
 
-OpenFlow ha ido incorporando nuevas funcionalidades a medida que evolucionaron las versiones del protocolo. Actualmente con cinco versiones estables entre las cuales se pueden destacar la versi\'on 1.4 (versi\'on disponible m\'as reciente al momento de iniciar este trabajo) y versi\'on 1.5 (versi\'on m\'as reciente al momento de culminar este trabajo). Se debe decidir entonces que versi\'on del protocolo utilizar.\\
+OpenFlow ha ido incorporando nuevas funcionalidades a medida que evolucionaron las versiones del protocolo. Actualmente con cinco versiones estables entre las cuales se pueden destacar la versi\'on 1.4 (versi\'on disponible m\'as reciente al momento de iniciar este trabajo) y versi\'on 1.5 (versi\'on m\'as reciente al momento de culminar este trabajo). Se debe decidir entonces cu\'al es la versi\'on del protocolo a utilizar.\\
 
 Por otro lado la versi\'on de OpenFlow elegida debe garantizar ciertos requerimientos de dise\~no a los que el prototipo est\'a sujeto. En particular interesa que garantice:
 
@@ -146,13 +146,13 @@ Por otro lado la versi\'on de OpenFlow elegida debe garantizar ciertos requerimi
 
 A partir de la versión 1.3.1 OpenFlow brinda tanto soporte completo para MPLS, así como también incorpora el concepto de métricas por flujo, orientado a implementar funcionalidades de QoS. 
 
-De esta forma, se decide utilizar la versión 1.3.1 para la construcción del prototipo.\\
+De esta forma, se decide utilizar la versión 1.3.1 pese a no ser la m\'as nueva para la construcción del prototipo. En la siguiente secci\'on veremos por qu\'e es de inter\'es trabajar con la versi\'on de OpenFlow m\'as sencilla y minimalista posible que d\'e soporte a todas las funcionalidades y restricciones impuestas sobre el prototipo.\\ 
 
 %Sobre la primer restricci\'on, OpenFlow brinda soporte completo para MPLS a partir de la versi\'on 1.3.1, mientras que en relaci\'on a QoS OpenFlow incorpora el concepto de métricas por flujo a partir de la version 1.3.1, orientado a implementar funcionalidades de QoS.\\
 
 %e esta forma la versi\'on m\'as b\'asica de OpenFlow que cumple con las restricciones de dise\~no %mencionadas es la versi\'on 1.3.1.\\
 
-En la siguiente secci\'on veremos porque es de inter\'es trabajar con la versi\'on de OpenFlow m\'as sencilla y minimalista posible que d\'e soporte a todas las funcionalidades y restricciones impuestas sobre el prototipo.\\ 
+%En la siguiente secci\'on veremos porque es de inter\'es trabajar con la versi\'on de OpenFlow m\'as sencilla y minimalista posible que d\'e soporte a todas las funcionalidades y restricciones impuestas sobre el prototipo.\\ 
 
 \section[Alternativas de dise\~no para el router]{Alternativas de dise\~no para el router}
 

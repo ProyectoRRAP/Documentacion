@@ -18,7 +18,7 @@ En la actualidad, sobre la red Internet conviven aplicaciones académicas, comer
 %Por otro lado, si bien Internet está avanzando en el uso de enlaces de alta velocidad, esta tecnología es aún demasiado costosa para su comercialización masiva.
 Por estas razones Internet no parece apropiada para su utilización en el contexto académico, ya que se necesita una red que permita proveer de conectividad y a su vez soportar actividades experimentales como desplegar nuevos servicios y protocolos, así como asegurar determinados parámetros de calidad de servicio.\\ 
 
-En este contexto y en todo el mundo se vienen desarrollando desde mediados de la década de los 90’s las redes académicas avanzadas de alta velocidad, con el objetivo de proveer de una red que posibilite a docentes e investigadores colaborar en aplicaciones altamente demandantes de ancho de banda   
+En este contexto y en todo el mundo se vienen desarrollando desde mediados de la década de los 90’s las redes académicas avanzadas de alta velocidad, con el objetivo de proveer una red que posibilite a docentes e investigadores colaborar en aplicaciones altamente demandantes de ancho de banda   
  (educación a distancia, transferencia de grandes cantidades de información, acceso a equipos remotos, telemedicina, etc.), sin competir por este recurso con aplicaciones de naturaleza comercial.
 
 En Estados Unidos por ejemplo, el proyecto que lidera este desarrollo es Internet2\citep{Internet2}, en Canadá es el proyecto CA*net4\citep{Canarie2}, en Europa el proyectos GÉANT\citep{GEANT} y en Asia el proyecto APAN\citep{APAN}. Todas estas redes se encuentran a su vez conectadas entre sí, formando una gran red avanzada de alta velocidad de alcance mundial. En Latinoamérica, las redes académicas de Argentina, Brasil y Chile se encuentran integradas a Internet2.\\
@@ -38,12 +38,12 @@ La RAU brinda servicios a instituciones educativas y de investigación, as\'i co
 
 Actualmente entre facultades, escuelas, institutos y servicios de la Universidad de la República, así como diversas instituciones educativas y de investigación, son 31 las instituciones que forman parte de la RAU, las cuales hacen uso de los 64 nodos que la conforman para brindar servicios a un total aproximado de 8.000 docentes, 4.000 técnicos y 100.000 estudiantes en diferentes partes del país\footnote{Datos de escala de la RAU aproximados brindados por t\'ecnicos del SeCIU.}.
 
-Por otro lado, se viene trabajando en un proyecto para reemplazar la infraestructura actual de la RAU por una red avanzada de altas prestaciones, que pueda brindar de mayores y mejores servicios a las instituciones que forman parte de la misma, así como conectarse a las demás redes académicas de Latinoam\'erica. Este proyecto se denomin\'o RAU2  
+Por otro lado, se viene trabajando en un proyecto para reemplazar la infraestructura actual de la RAU por una red avanzada de altas prestaciones, que pueda brindar mayores y mejores servicios a las instituciones que forman parte de la misma, así como conectarse a las demás redes académicas de Latinoam\'erica. Este proyecto se denomin\'o RAU2  
 
 \section{Definición del Problema}
 
 El problema elegido como eje para el desarrollo de este trabajo es la 
-construcción de lo que se dio en llamar RAU2, la cual estaría dotada de funciones de virtualización de redes que permitan una gran flexibilidad en su definición y uso. Como red universitaria pretende no solo mejorar en el ancho de banda disponible para desarrollar las tareas comunes con cualquier otra red de esta magnitud, sino que además busca virtualizar la red como mecanismo de asignar recursos independientes a cada una de las instituciones que hacen uso de la misma (por ejemplo universidades y centros de investigación) y poder utilizarla al mismo tiempo como laboratorio de pruebas sin que esto interfiera con el funcionamiento normal de la red.\\
+construcción de lo que se dio en llamar RAU2, la cual estaría dotada de funciones de virtualización de redes que permitan una gran flexibilidad en su definición y uso. Como red universitaria pretende no solo mejorar el ancho de banda disponible para desarrollar las tareas comunes con cualquier otra red de esta magnitud, sino que además busca virtualizar la red como mecanismo de asignar recursos independientes a cada una de las instituciones que hacen uso de la misma (por ejemplo universidades y centros de investigación) y poder utilizarla al mismo tiempo como laboratorio de pruebas sin que esto interfiera con el funcionamiento normal de la red.\\
 
 Interesa entonces trabajar en el desarrollo de un prototipo para la RAU2 utilizando como plataforma PCs con placas de red aceleradas en hardware reconfigurable, fruto de un desarrollo de la Universidad de Stanford denominado NetFPGA (Field Programmable Gate Arrays)\citep{NetFPGA} y el enfoque de las Redes Definidas por Software (\gloss{SDN})\citep{gude2008nox}\citep{SDNReadingList}.
 
@@ -75,7 +75,8 @@ Los resultados esperados de este proyecto son:
 
 A continuación se describe la forma en que est\'a estructurado este documento y las temáticas asociadas a cada cap\'itulo.\\
 
-El cap\'itulo 2 presenta los resultados obtenidos en la investigación del estado del arte en SDN, NetFPGA y conceptos esenciales para el entendimiento de este trabajo. Se recomienda al lector fuertemente la lectura de las secciones \ref{section2.2}, \ref{section2.3}, \ref{section2.4},\ref{section2.7}, \ref{section2.8} y \ref{section2.9} para una mejor comprensión de este trabajo.\\
+El cap\'itulo 2 presenta los resultados obtenidos en la investigación del estado del arte en SDN, NetFPGA y conceptos esenciales para el entendimiento de este trabajo. Se recomienda al lector fuertemente la lectura de las secciones \ref{section2.2}, \ref{section2.3}, \ref{section2.4}, 
+ \ref{section2.7}, \ref{section2.8} y \ref{section2.9} para una mejor comprensión de este trabajo.\\
 
 En el cap\'itulo 3 se presenta el análisis del problema, donde se incluyen las principales ventajas en la utilización del enfoque SDN y hardware NetFPGA, los requerimientos relevados para el prototipo, el estudio de soluciones alternativas para la construcción del mismo y algunas de las decisiones de diseño m\'as importantes.\\
 
