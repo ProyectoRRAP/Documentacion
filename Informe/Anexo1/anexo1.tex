@@ -39,7 +39,7 @@ Se sugiere respetar los mismos en la medida que sea posible para evitar comporta
 \item Procesador: Intel Core i7 4770K 3.50GHz
 \item Motherboard Asus ROG Maximus VI Formula
 \item Fuente Thermaltake TR2 600W ATX 12V 2.3
-\item Memoria RAM Kingstom 8GB DIMM DDR3 1333 MHz (x2)
+\item Memoria RAM Kingston 8GB DIMM DDR3 1333 MHz (x2)
 \item Disco duro Seagate 1TB
 \end{itemize}\\
 
@@ -100,7 +100,7 @@ En cuanto al orden de precedencia esta guía está organizada de la siguiente fo
 \end{enumerate}
 
 \subsection{Instalación de sistema operativo}
-Para la instalaci\'on del sistema operativo, utilizamos un dvd de instalaci\'on de Ubuntu 12.04 LTS descargado desde la pagina oficial. Para descargar una imagen con el instalador de este sistema se puede recurrir a:
+Para la instalaci\'on del sistema operativo, utilizamos un dvd de instalaci\'on de Ubuntu 12.04 LTS descargado desde la p\'agina oficial. Para descargar una imagen con el instalador de este sistema se puede recurrir a:
 
 \begin{center}
 http://releases.ubuntu.com/12.04/
@@ -132,7 +132,7 @@ En caso de tener en algún momento errores con el comando gmake (por ejemplo “
 
 \subsection{Instalación de suite de desarrollo Xilinx ISE SDK}
 
-La instalación de la suite Xilinx ISE SDK la realizaremos desde el código fuente por lo que primero que nada debemos descargar dichos archivos desde la página oficial de Xilinx. En este trabajo se descargo el siguiente archivo:
+La instalación de la suite Xilinx ISE SDK la realizaremos desde el código fuente por lo que primero que nada debemos descargar dichos archivos desde la página oficial de Xilinx. En este trabajo se descarg\'o el siguiente archivo:
 
 \begin{center}
 Xilinx\_ISE\_DS\_Lin\_13.4\_087xd.3.0.tar
@@ -211,7 +211,7 @@ Luego se puede ejecutar cualquier herramienta de la suite Xilinx, como por ejemp
 \end{bash}
 
 \subsubsection{Instalación de licencias de usuario}
-Para trabajar con las herramientas de Xilinx es necesario contar con licencias correspondientes para cada una de ellas y en particular dependiendo del tipo de hardware con el que se trabaje dependerá el tipo de licencia necesaria. En nuestro caso se necesita una licencia completa (full license) y vale la pena destacar que con una licencia de prueba no se cuentan con las licencias apropiadas para compilar los proyectos de NetFPGA con los que se trabajar\'a.\\
+Para trabajar con las herramientas de Xilinx es necesario contar con licencias correspondientes para cada una de ellas y en particular seg\'un el tipo de hardware con el que se trabaje dependerá el tipo de licencia necesaria. En nuestro caso se necesita una licencia completa (full license) y vale la pena destacar que con una licencia de prueba no se cuentan con las licencias apropiadas para compilar los proyectos de NetFPGA con los que se trabajar\'a.\\
 
 Para obtener una licencia full se debe ir al sitio de Xilinx de gestión de licencias, registrarse y comprar una licencia full.\\
 
@@ -292,7 +292,7 @@ La tarjeta necesita un suministro de corriente mediante el conector ATX para pod
 \label{fig:Img1}
 \end{figure}
 
-\item Setear el switch SW9 en la posición PCIe. Asegurarse bien de que el switch esta completamente puesto en dicha posición (figura ~\ref{fig:Img2}).
+\item Setear el switch SW9 en la posición PCIe. Asegurarse bien de que el switch est\'a completamente puesto en dicha posición (figura ~\ref{fig:Img2}).
 
 \begin{figure}[htbp!] 
 \centering    
@@ -315,7 +315,7 @@ La tarjeta necesita un suministro de corriente mediante el conector ATX para pod
 \label{fig:Img3}
 \end{figure}
 
-\item Con la PC apagada y desconectada de la electricidad instalar la tarjeta NetFPGA-10G en un slot PCIe disponible.
+\item Con la PC apagada y desconectada de la red el\'ectrica instalar la tarjeta NetFPGA-10G en un slot PCIe disponible.
 
 \item Conectar alguno de los conectores ATX disponibles de la PC al conector ATX de la tarjeta NetFPGA-10G (figura ~\ref{fig:Img4}).
 
@@ -350,7 +350,7 @@ La tarjeta necesita un suministro de corriente mediante el conector ATX para pod
 \begin{figure}[htbp!] 
 \centering    
 \includegraphics[width=0.50\textwidth]{Img7}
-\caption[Cable serial puerto COM]{Cable seria puerto COM, Imagen extra\'ida de \citep{NetFPGA6}}
+\caption[Cable serial puerto COM]{Cable serial puerto COM, Imagen extra\'ida de \citep{NetFPGA6}}
 \label{fig:Img7}
 \end{figure}
 
@@ -420,7 +420,7 @@ El parámetro memmap=256M\textbackslash\$0x5f700000 es pasado al kernel al momen
 \item Programar la FPGA con el bitstream localizado en el directorio\\
 /NF\_ROOT/projects/production\_test/bitfiles/prod\_test\_no\_rldram.bit
 
-IMPACT posiblemente nos pregunte si queremos asociar un dispositivo PROM, seleccionar qué no. Programar la tarjeta puede llevar algún tiempo; de 10 a 20 minutos dependiendo del proyecto. Este proyecto en particular no debería tomar más de 10 minutos.
+IMPACT posiblemente nos pregunte si queremos asociar un dispositivo PROM, seleccionar que no. Programar la tarjeta puede llevar algún tiempo; de 10 a 20 minutos dependiendo del proyecto. Este proyecto en particular no debería tomar más de 10 minutos.
 
 \item Reiniciar la PC
 
@@ -501,9 +501,9 @@ Para ejecutar el RLDRAM Test recomendamos utilizar la guía \citep{NetFPGA8}.
 A continuación se describen los pasos necesarios para programar las tarjetas NetFPGA en particular con el proyecto ReferenceNIC. En lo que prosigue se utiliza NF\_ROOT para referirse al directorio donde se encuentra descargado el código fuente de NetFPGA.
 
 \subsubsection{Configuración de la tarjeta}
-Antes de comenzar, es necesario realizar algunas modificaciones en el hardware NetFPGA para habilitar la programación pcie del mismo, utilizada en la programación persistente.\\ 
+Antes de comenzar, es necesario realizar algunas modificaciones en el hardware NetFPGA para habilitar la programación PCIe del mismo, utilizada en la programación persistente.\\ 
 
-Para habilitar la programación PCIe, es necesario cambiar la posición del switch Disp SW3 desde la posición por defecto (M0:On, M1:On, M2:On) a la posición de programación PCIE (M0:Off, M1:On, M2:On). Esta configuración habilita tanto la programación de la tarjeta por el cable de programación JTAG como por la interfaz PCIe.\\
+Para habilitar la programación PCIe, es necesario cambiar la posición del switch Disp SW3 desde la posición por defecto (M0:On, M1:On, M2:On) a la posición de programación PCIe (M0:Off, M1:On, M2:On). Esta configuración habilita tanto la programación de la tarjeta por el cable de programación JTAG como por la interfaz PCIe.\\
 
 La siguiente figura muestra la posición del Dip SW3 en la configuración PCIe (ver figura ~\ref{fig:Img15}).
 
@@ -604,7 +604,7 @@ Para ello en una consola ejecutamos:
 # ./bit2bin.sh reference_nic.bit
 \end{bash}
 
-Con lo anterior se genera un archivo binario a partir del bitfile del proyecto, con el que programaremos la memoria. Luego de este comando se deberían de haber creado 3 archivos
+Con lo anterior se genera un archivo binario a partir del bitfile del proyecto, con el que programaremos la memoria. Luego de este comando se deberían haber creado 3 archivos
 
 \begin{itemize}
 \item reference\_nic.prm
@@ -673,7 +673,7 @@ Finalmente creamos la base de datos de configuración de ovs:
 vswitchd/vswitch.ovsschema
 \end{bash}
 
-Ya se esta en condiciones de levantar cualquiera de los demonios de ovs. En particular para iniciar ovs debemos indicar una serie de parámetros como la base de datos donde se encuentra la configuración, en caso de utilizar una conexión segura con el controlador los certificados SSL correspondiente entre otras cosas. Para ello es conveniente crear un script como el siguiente:
+Ya se est\'a en condiciones de levantar cualquiera de los demonios de ovs. En particular para iniciar ovs debemos indicar una serie de parámetros como la base de datos donde se encuentra la configuración, en caso de utilizar una conexión segura con el controlador los certificados SSL correspondiente entre otras cosas. Para ello es conveniente crear un script como el siguiente:
 
 \begin{bash}
 ovsdb-server /usr/local/etc/openvswitch/conf.db \
