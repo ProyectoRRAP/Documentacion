@@ -13,38 +13,35 @@
 En este capítulo se presentan los resultados obtenidos en el trabajo de investigación sobre el estado
 del arte de las Redes Definidas por Software (Software Defined Networking), lenguajes
 de programación y herramientas para el desarrollo sobre dicha arquitectura, hardware NetFPGA y otros conceptos esenciales para el desarrollo de este trabajo. En caso que el lector desee profundizar en alguno de los conceptos presentados en este cap\'itulo o consultar enfoques alternativos
-y/o complementarios se recomiendan los siguientes trabajos~\citep{StateOfArt1}~\citep{StateOfArt2}. Para el caso particular en que el lector est\'e familiarizándose con el enfoque de las Redes Definidas por Software, se sugiere también la lectura de \citep{SDNReadingList} y \citep{SDNBook1}.\\
+y/o complementarios se recomiendan los siguientes trabajos~\citep{StateOfArt1}~\citep{StateOfArt2}. Para el caso particular en que el lector est\'e familiarizándose con el enfoque de las Redes Definidas por Software, se sugiere también la lectura de \citep{SDNReadingList} y \citep{SDNBook1}.
 
-En relación a c\'omo se estructura este cap\'itulo, primero se introduce el concepto de Software Defined Networking (SDN) analizando sus principales antecedentes para luego presentar una definición del concepto. Luego se presenta y analiza en profundidad una de las arquitecturas existentes basadas en este enfoque y en particular utilizada en trabajo para la construcción de un prototipo. Se contin\'ua con la introducción de algunos conceptos esenciales para el desarrollo de este trabajo como el concepto de Redes Privadas Virtuales y Multilabel Protocol Switch (\gloss{MPLS}) entre otros. Finalmente se presenta el relevamiento en el estado del arte realizado sobre la plataforma NetFPGA.  
+En relación a c\'omo se estructura este cap\'itulo, primero se introduce el concepto de Software Defined Networking (SDN) analizando sus principales antecedentes para luego presentar una definición del concepto. Luego se presenta una de las arquitecturas existentes basadas en este enfoque y en particular utilizada en trabajo para la construcción de un prototipo. Se contin\'ua con la introducción de los conceptos Redes Privadas Virtuales y Multilabel Protocol Switch (\gloss{MPLS}) esenciales para el entendimiento de este trabajo. Finalmente se presenta el relevamiento en el estado del arte realizado sobre la plataforma NetFPGA.  
 
 %********************************** %First Section  **************************************
 \section{Antecedentes de SDN} %Section - 1.1
+\label{section2.1}
+
 Software Defined Networking, Redes Definidas por Software en español o simplemente SDN por su sigla en ingl\'es, es un concepto relativamente nuevo ya que bajo este nombre puede contextualizarse en la \'ultima década. No obstante muchas de las ideas que yacen detrás de este enfoque han sido introducidas por diferentes propuestas en el pasado. Por ello vale la pena repasar los principales antecedentes que desde nuestra perspectiva contribuyeron al enfoque de SDN. 
 
 \subsection{Open Signaling}
-En el año 1995 el grupo de investigación OPENSIG\cite{campbell1999open} dentro del \gloss{IETF}, comenzó a trabajar en alternativas para hacer ATM, Internet y las redes móviles ``más'' abiertas, extensibles y programables.
+En el año 1995 el grupo de investigación OPENSIG\cite{campbell1999open} dentro del \gloss{IETF}, comenzó a trabajar en alternativas para hacer ATM, Internet y las redes móviles ``más'' abiertas, extensibles y programables. El principal objetivo de este grupo fue proveer de un acceso al hardware de red (\gloss{router}s, \gloss{switch}es, etc) mediante un conjunto de interfaces abiertas. Con esto se buscaba permitir el despliegue de nuevos servicios de red a través de un ambiente de programación distribuido.
 
-El principal objetivo de este grupo fue proveer de un acceso al hardware de red (\gloss{router}s, \gloss{switch}es, etc) mediante un conjunto de interfaces abiertas. Con esto se buscaba permitir el despliegue de nuevos servicios de red a través de un ambiente de programación distribuido.
-
-El principal desafío con el que tuvo que lidiar esta iniciativa fue la estricta arquitectura en forma vertical que presenta el hardware de red (modelo de capas OSI), cuya naturaleza a su vez solía ser cerrada. Esto dificultaba una estricta separación entre el software de control y el hardware.\\
+El principal desafío con el que tuvo que lidiar esta iniciativa fue la estricta arquitectura en forma vertical que presenta el hardware de red (modelo de capas OSI), cuya naturaleza a su vez solía ser cerrada. Esto dificultaba una estricta separación entre el software de control y el hardware.
 
 Los esfuerzos de esta iniciativa desembocaron en la especificación del General Switch Managment Protocol (GSMP); un protocolo de propósito general para control de etiquetas en switches.
-GSMP permitía a un controlador establecer y liberar conexiones en un dispositivo conmutador de tramas (mejor conocido como switch), agregar, eliminar y dejar una conexión multicast, manejar los puertos de un switch, obtener información acerca de la configuración, obtener y eliminar recursos reservados en un switch y obtener información estadística.\\
+GSMP permitía a un controlador establecer y liberar conexiones en un dispositivo conmutador de tramas (mejor conocido como switch), agregar, eliminar y dejar una conexión multicast, manejar los puertos de un switch, obtener información acerca de la configuración, obtener y eliminar recursos reservados en un switch y obtener información estadística. 
 
 Tras años de trabajo, el grupo consider\'o concluida su labor, siendo su último trabajo publicado la especificación de GSMPv3 en Junio del 2002\cite{doria2002general}.
 
 \subsection{Active Networking}
-Active Networking\citep{tennenhouse1997survey}\citep{tennenhouse2002towards}\citep{moore2001towards} \'o Redes Activas en español es otra iniciativa que surge en la década de los 90's con la propuesta de una red programable que posibilitara la configuración de servicios sobre la misma. Fue propulsada por la USA Defense Advanced Research Projects Agency (DARPA), con el principal objetivo de acelerar la innovación en una área de redes marcada por la lentitud en incorporar nuevas tecnologías y servicios.\\
+Active Networking\citep{tennenhouse1997survey}\citep{tennenhouse2002towards}\citep{moore2001towards} \'o Redes Activas en español es otra iniciativa que surge en la década de los 90's con la propuesta de una red programable que posibilitara la configuración de servicios sobre la misma. Fue propulsada por la USA Defense Advanced Research Projects Agency (DARPA), con el principal objetivo de acelerar la innovación en una área de redes marcada por la lentitud en incorporar nuevas tecnologías y servicios.
 
-Se propusieron dos enfoques: (1) enfoque de Switches Programables en donde el tr\'afico es encaminado a través de nodos que ejecutan programas y cada paquete o su segmento correspondiente es derivado al programa apropiado en el nodo y (2) enfoque de C\'apsulas en donde cada paquete enviado en la red transporta un programa, evaluándose en cada nodo en su ambiente de ejecución correspondiente.\\
+Se propusieron dos enfoques: (1) enfoque de Switches Programables en donde el tr\'afico es encaminado a través de nodos que ejecutan programas y cada paquete o su segmento correspondiente es derivado al programa apropiado en el nodo y (2) enfoque de C\'apsulas en donde cada paquete enviado en la red transporta un programa, evaluándose en cada nodo en su ambiente de ejecución correspondiente.
 
 Como tal, este proyecto no alcanz\'o la suficiente masa cr\'itica como para imponerse en la industria, entre otras razones por la necesidad de un hardware diferente m\'as caro (tradicionalmente se utilizaba hardware de tipo \gloss{ASIC} y se requería de tipo \gloss{TCAM}, \gloss{FPGA} \'o \gloss{NPU}) adem\'as de interrogantes de seguridad y desarrollo de lenguajes de programación apropiados.
 
 \subsection{Routing Control Platform}
-Routing Control Platform (RCP)\citep{feamster2004case}\citep{caesar2005design} o Plataforma de Control de Ruteo, propone una entidad de control (Routing Control Platform) encargada de computar las rutas en una red, que luego utilizando protocolos estándares como iBGP traslada dicha configuración a los diferentes dispositivos.\\ 
-
-Esta estrategia ten\'ia como ventajas que al utilizar protocolos existentes estándares facilitaba notablemente la transición entre el paradigma actual y el propuesto. No obstante su potencial 
-se encontraba limitado justamente a las capacidades de los protocolos de comunicación existentes.
+Routing Control Platform (RCP)\citep{feamster2004case}\citep{caesar2005design} o Plataforma de Control de Ruteo, propone una entidad de control (Routing Control Platform) encargada de computar las rutas en una red, que luego utilizando protocolos estándares como iBGP traslada dicha configuración a los diferentes dispositivos. La principal ventaja de esta estrategia es que utiliza protocolos existentes estándares facilitando as\'i la transición entre el paradigma actual y el propuesto. No obstante su potencial se encontraba limitado justamente a las capacidades de los protocolos de comunicación existentes.
 
 \subsection{ForCES Protocol}
 Otro grupo de trabajo dentro del IETF denominado ForCES (Forwarding and Control Element Separation) comenzó a trabajar a mediados del año 2007 en un protocolo que permitiera la separación entre los dispositivos de red y la inteligencia que los gobierna. Dicho protocolo fue especificado como una propuesta de estándar y publicado en el año 2010 bajo el nombre ForCES Protocol\citep{doria2010forwarding}.
@@ -62,11 +59,11 @@ En el año 2004 el proyecto 4D \citep{rexford2004network}\citep{greenberg2005cle
 \item Control directo: se debe proveer una interfaz directa para el control de los dispositivos de red
 \end{itemize}
 
-Basándose en estos principios se construye el esquema denominado ``4D'' que merece su nombre por los cuatro planos presentes en su arquitectura: decisión (decision), diseminación (dissemination), descubrimiento (discovery) y datos (data).\\
+Basándose en estos principios se construye el esquema denominado ``4D'' que merece su nombre por los cuatro planos presentes en su arquitectura: decisión (decision), diseminación (dissemination), descubrimiento (discovery) y datos (data).
 
-Dicha arquitectura hace un fuerte énfasis en una completa separación de lo que son las decisiones lógicas que toma un Sistema Autónomo (\gloss{AS}), del conjunto de protocolos que gobiernan las redes e interacciones entre sus diferentes componentes.\\
+Dicha arquitectura hace un fuerte énfasis en una completa separación de lo que son las decisiones lógicas que toma un Sistema Autónomo (\gloss{AS}), del conjunto de protocolos que gobiernan las redes e interacciones entre sus diferentes componentes.
 
-Los objetivos al nivel de un AS son especificados en el plano de decisiones y mediante los servicios de los planos de diseminación y descubrimiento se ejerce un control directo sobre c\'omo se encamina y redirigen paquetes en el plano de datos.\\
+Los objetivos al nivel de un AS son especificados en el plano de decisiones y mediante los servicios de los planos de diseminación y descubrimiento se ejerce un control directo sobre c\'omo se encamina y redirigen paquetes en el plano de datos.
 
 \begin{figure}[htbp!] 
 \centering    
@@ -77,14 +74,14 @@ Los objetivos al nivel de un AS son especificados en el plano de decisiones y me
 
 %En otras palabras el plano de decisión es responsable de crear la configuración de la red, mientras que el plano de diseminación se encarga de recolectar información sobre el estado de la red para el plano de decisión y distribuir la salida del plano de decisión. 
 
-En resumen, utilizando el plano de diseminación se recolecta diferente información acerca del estado de la red, sobre la cual luego el plano de decisión construye las \textit{Políticas de red}. También a través del plano de diseminación se distribuyen dichas políticas a los distintos dispositivos de red. Mientras tanto el plano de descubrimiento permite a dispositivos descubrir vecinos directamente conectados en la red. Finalmente el plano de datos se encarga de redirigir el tráfico en la red.\\ \\
+En resumen, utilizando el plano de diseminación se recolecta diferente información acerca del estado de la red, sobre la cual luego el plano de decisión construye las \textit{Políticas de red}. También a través del plano de diseminación se distribuyen dichas políticas a los distintos dispositivos de red. Mientras tanto el plano de descubrimiento permite a dispositivos descubrir vecinos directamente conectados en la red. Finalmente el plano de datos se encarga de redirigir el tráfico en la red. \\
 
 Una vez introducidos los principales antecedentes de las redes definidas por software, en la siguiente secci\'on se propone profundizar en dicho concepto.
 
 \section{Software Defined Networking}
 \label{section2.2}
 
-Definir el concepto de Software Defined Networking no es una tarea simple, puesto que no existe una definici\'on \'unica entre las distintas organizaciones que se encuentran trabajando en la temática. En particular se pueden destacar el grupo de trabajo Software-Defined Networking Research Group (SDNRG) del \gloss{IRTF}, quien se encuentra trabajando en la redacción de las definiciones y estándares para este concepto y la organización Open Networking Foundation (ONF)\cite{ONF} que concentra gran cantidad de material y documentación sobre SDN y adem\'as se encuentra trabajando en el desarrollo del protocolo \gloss{OpenFlow} el cual se explica m\'as adelante en este trabajo.\\
+Definir el concepto de Software Defined Networking no es una tarea simple, puesto que no existe una definici\'on \'unica entre las distintas organizaciones que se encuentran trabajando en la temática. En particular se pueden destacar el grupo de trabajo Software-Defined Networking Research Group (SDNRG) del \gloss{IRTF}, quien se encuentra trabajando en la redacción de las definiciones y estándares para este concepto y la organización Open Networking Foundation (ONF)\cite{ONF} que concentra gran cantidad de material y documentación sobre SDN y adem\'as se encuentra trabajando en el desarrollo del protocolo \gloss{OpenFlow} el cual se explica m\'as adelante en este trabajo.
 
 Acorde a la Open Networking Foundation, SDN puede resumirse como:
 
@@ -92,9 +89,9 @@ Acorde a la Open Networking Foundation, SDN puede resumirse como:
 \textit{``La separación física del plano de control de la red del plano de datos, y donde el plano de control controla varios dispositivos.''}
 \end{quote}
 
-Más en detalle, SDN es una arquitectura de red que desacopla los planos de control y de datos, moviendo el plano de control (inteligencia, construcción y c\'alculo de políticas de red) hacia una entidad denominada Controlador. Esto habilita al control de la red a ser directamente programable y a la infraestructura subyacente ser abstraída por las aplicaciones y servicios de red.\\ 
+Más en detalle, SDN es una arquitectura de red que desacopla los planos de control y de datos, moviendo el plano de control (inteligencia, construcción y c\'alculo de políticas de red) hacia una entidad denominada Controlador. Esto habilita al control de la red a ser directamente programable y a la infraestructura subyacente ser abstraída por las aplicaciones y servicios de red.
 
-La ONF presenta a SDN como una arquitectura emergente, dinámica, escalable, rentable y adaptable, haciéndola ideal para aplicaciones de naturaleza dinámica y exigentes de los recursos de red disponibles. En particular destaca las cualidades de presentar una gestión centralizada y de estar basada en estándares abiertos neutrales a los vendedores.\\
+La ONF presenta a SDN como una arquitectura emergente, dinámica, escalable, rentable y adaptable, haciéndola ideal para aplicaciones de naturaleza dinámica y exigentes de los recursos de red disponibles. En particular destaca las cualidades de presentar una gestión centralizada y de estar basada en estándares abiertos neutrales a los vendedores.
 
 \begin{figure}[htbp!] 
 \centering    
@@ -104,23 +101,15 @@ La ONF presenta a SDN como una arquitectura emergente, dinámica, escalable, ren
 \end{figure}
 
 El enfoque de SDN propone tres capas lógicas (ver imagen ~\ref{fig:SDNArchitecture}): (1) capa de aplicaciones (Application Layer), (2) capa de control (Control Layer) y (3) capa de infraestructura  
- (Infrastructure Layer).\\
+(Infrastructure Layer).
 
-La capa de infraestructura se compone por los dispositivos de red tradicionales como switches y routers, en particular compatibles con la arquitectura SDN. La inteligencia de dichos dispositivos a diferencia de switches y routers convencionales es retirada de los mismos para ser trasladada a la capa de control.
+La capa de infraestructura se compone por los dispositivos de red tradicionales como switches y routers, en particular compatibles con la arquitectura SDN. La inteligencia de estos dispositivos a diferencia de los convencionales es retirada de ellos para ser trasladada a la capa de control. A su vez, cada dispositivo implementa un conjunto de operaciones bien definidas mediante la cual es manipulado por la capa de control. Esta API de operaciones forma parte de lo que se denomina Interfaz Sur.
 
-Cada dispositivo implementa un conjunto de operaciones bien definidas mediante la cual es manipulado por la capa de control. Esta API de operaciones forma parte de lo que se denomina Interfaz Sur.
-\\
+En la capa de control se encuentra el software encargado de implementar el plano de control en dicho modelo, usualmente denominado Controlador. Esta entidad expone un conjunto de operaciones a las aplicaciones SDN de la capa de Aplicación para la manipulación de los dispositivos de la capa inferior (capa de Infraestructura). Esta API de operaciones es conocida en el modelo bajo el nombre de Interfaz Norte.
 
-En la capa de control se encuentra el software encargado de implementar el plano de control en dicho modelo, usualmente denominado Controlador.\\
+La capa de aplicaciones, contiene implementado en software (aplicaciones SDN) toda la inteligencia que originalmente se agregaba en un dispositivo de la capa de infraestructura como por ejemplo la implementaci\'on de protocolos de red. En dicha capa se pueden implementar desde protocolos de ruteo como OSPF y \gloss{RIP}, backbones sobre MPLS, políticas de seguridad y hasta aplicaciones de ingeniería de tráfico. N\'otese aqu\'i la diferencia entre la capa de aplicaci\'on del modelo de capas OSI y la capa de aplicaci\'on  del modelo SDN. En el modelo SDN, una aplicaci\'on puede implementar protocolos y servicios de capa de enlace, capa de red y capas superiores en el modelo OSI.
 
-El Controlador expone un conjunto de operaciones a las aplicaciones SDN de la capa de Aplicación para la manipulación de los dispositivos de la capa inferior (capa de Infraestructura).  Esta API de operaciones es conocida en el modelo bajo el nombre de Interfaz Norte.\\
-
-La capa de aplicaciones, contiene implementado en software (aplicaciones SDN) toda la inteligencia que originalmente se agregaba en un dispositivo de la capa de infraestructura como por ejemplo la implementaci\'on de protocolos de red. En dicha capa se pueden implementar desde protocolos de ruteo como OSPF y \gloss{RIP}, backbones sobre MPLS, políticas de seguridad y hasta aplicaciones de ingeniería de tráfico.
-
-N\'otese aqu\'i la diferencia entre la capa de aplicaci\'on del modelo de capas OSI y la capa de aplicaci\'on  del modelo SDN. En el modelo SDN, una aplicaci\'on puede implementar protocolos y servicios de capa de enlace, capa de red y capas superiores en el modelo OSI.\\
-
-De esta forma Software Defined Networking centraliza el control de la red en una aplicación de software  
- (Controlador) y transforma algoritmos, procesos de control, políticas de seguridad y toda la inteligencia antiguamente acoplados a los dispositivos de red, en aplicaciones de controlador.\\
+De esta forma Software Defined Networking centraliza el control de la red en una aplicación de software (Controlador) y transforma algoritmos, procesos de control, políticas de seguridad y toda la inteligencia antiguamente acoplados a los dispositivos de red, en aplicaciones de controlador.
 
 \section{Arquitecturas basadas en SDN}
 \label{section2.3}
@@ -131,7 +120,7 @@ A continuaci\'on se explican los principales conceptos relacionados a la arquite
 
 \subsection{OpenFlow}
 
-Siguiendo el enfoque de tres capas de SDN y bajo la misma premisa de desacoplar completamente los planos de datos y control, OpenFlow\cite{mckeown2008openflow} brinda una implementaci\'on estándar para el mecanismo de comunicación entre las capas de control e infraestructura (Interfaz Sur). En otras palabras, provee un protocolo de comunicación estándar para manipular los distintos dispositivos de la red y así el plano de datos.\\ 
+Siguiendo el enfoque de tres capas de SDN y bajo la misma premisa de desacoplar completamente los planos de datos y control, OpenFlow\cite{mckeown2008openflow} brinda una implementaci\'on estándar para el mecanismo de comunicación entre las capas de control e infraestructura (Interfaz Sur). En otras palabras, provee un protocolo de comunicación estándar para manipular los distintos dispositivos de la red y así el plano de datos.
 
 OpenFlow se basa en tres componentes (ver figura ~\ref{fig:OpenFlowArch}): (1) Controlador OpenFlow compatible, (2) Protocolo OpenFlow y (3) Switch OpenFlow compatible.
 
@@ -148,30 +137,27 @@ OpenFlow se basa en tres componentes (ver figura ~\ref{fig:OpenFlowArch}): (1) C
 \end{figure}
 
 Desde la perspectiva de un Controlador OpenFlow, todos los dispositivos de red son equivalentes en sus funcionalidades y se denominan simplemente switches OpenFlow. Un switch OpenFlow se compone de tres componentes principales (ver figura ~\ref{fig:OpenFlowArch}): (1) Tabla de flujos, (2) Canal Seguro 
- (Secure Channel) que conecta el switch con el Controlador habilitando el intercambio de paquetes y comandos entre estos últimos dos utilizando (3) el protocolo OpenFlow.\\
+ (Secure Channel) que conecta el switch con el Controlador habilitando el intercambio de paquetes y comandos entre estos últimos dos utilizando (3) el protocolo OpenFlow.
  
-Cada switch OpenFlow presenta una o m\'as tablas de flujos. Cada una de las entradas de estas tablas es denominada flujo y determina c\'omo una clase de paquetes deben ser procesados y reenviados.\\
-
-Cada entrada o flujo en esta tabla (ver figura ~\ref{fig:OpenFlowArch2}) se compone de: (1) campos de selección (matching fields), utilizados en la definici\'on de reglas de selección con las cuales identificar a un conjunto de paquetes a ser tratados de una forma en particular, basándose en información relacionada a campos en los cabezales del paquete para esto; (2) contadores para la recolección de información estadística en relación al flujo (n\'umero de paquetes recibidos, cantidad de bytes, duración de un flujo, etc.) y (3) un conjunto de instrucciones y acciones que son aplicadas a cada paquete que coincide con la regla del flujo. Estos campos establecen la forma en que un paquete es procesado y reenviado.
- 
-\begin{figure}[htbp!] 
+\begin{figure}[h!] 
 \centering    
 \includegraphics[width=9cm]{OpenFlowArchitecture2}
 \caption[Visión esquemática del funcionamiento de un Switch OpenFlow]{Visión esquemática del funcionamiento de un Switch OpenFlow. Imagen extraída de \cite{mckeown2008openflow}}
 \label{fig:OpenFlowArch2}
 \end{figure}
 
-Cuando un paquete arriba a un switch (ver figura ~\ref{fig:OFPacketProcessing}), se extraen y comparan cabezales del paquete acorde a las reglas definidas en el flujo, comparando los campos utilizados. En caso que el paquete coincida con las reglas definidas, se aplican el conjunto de instrucciones y acciones asociadas a dicho flujo. En caso que el paquete no coincida con ningún flujo, el accionar a desempeñar dependerá del conjunto de instrucciones y acciones definidas por una entrada especial en la tabla de flujos, denominada Table-miss Flow Entry.\\ 
+Cada switch OpenFlow presenta una o m\'as tablas de flujos, compuestas por entradas denominadas flujo, las cuales determinan c\'omo una clase de paquetes deben ser procesados y reenviados. Cada entrada o flujo (ver figura ~\ref{fig:OpenFlowArch2}) se compone de: (1) campos de selección (matching fields), utilizados en la definici\'on de reglas de selección con las cuales identificar a un conjunto de paquetes a ser tratados de una forma en particular, basándose en información relacionada a campos en los cabezales del paquete para esto; (2) contadores para la recolección de información estadística en relación al flujo (n\'umero de paquetes recibidos, cantidad de bytes, duración de un flujo, etc.) y (3) un conjunto de instrucciones y acciones que son aplicadas a cada paquete que coincide con la regla del flujo. Estos campos establecen la forma en que un paquete es procesado y reenviado.
 
-\begin{figure}[htbp!] 
+\begin{figure}[h!] 
 \centering    
 \includegraphics[width=12cm]{OFPacketProcessing}
 \caption[Ciclo de vida de un paquete en pipe OpenFlow]{Ciclo de vida de un paquete en el pipe OpenFlow}
 \label{fig:OFPacketProcessing}
 \end{figure}
+ 
+Cuando un paquete arriba a un switch (ver figura ~\ref{fig:OFPacketProcessing}), se extraen y comparan cabezales del paquete acorde a las reglas definidas en el flujo, comparando los campos utilizados. En caso que el paquete coincida con las reglas definidas, se aplican el conjunto de instrucciones y acciones asociadas a dicho flujo. En caso que el paquete no coincida con ningún flujo, el accionar a desempeñar dependerá del conjunto de instrucciones y acciones definidas por una entrada especial en la tabla de flujos, denominada Table-miss Flow Entry.
 
-
-La Table-miss Flow Entry est\'a pensada para contemplar el tipo de tr\'afico que no es definido por ningún otro flujo, por ello en esencia es el \'ultimo flujo a ser considerado (menor prioridad) al momento de procesar un paquete. Generalmente tiene asociada la acción de eliminar el paquete (Drop), procesar el paquete en la siguiente tabla de flujos (GoTo Table) \'o reenviar el paquete al Controlador.\\
+La Table-miss Flow Entry est\'a pensada para contemplar el tipo de tr\'afico que no es definido por ningún otro flujo, por ello en esencia es el \'ultimo flujo a ser considerado (menor prioridad) al momento de procesar un paquete. Generalmente tiene asociada la acción de eliminar el paquete (Drop), procesar el paquete en la siguiente tabla de flujos (GoTo Table) \'o reenviar el paquete al Controlador.
 
 Otra caracter\'istica importante de un switch OpenFlow, es la capacidad para procesar paquetes utilizando protocolos tradicionales de red adem\'as del procesamiento normal de OpenFlow. Esta característica a su vez da lugar a la clasificaci\'on en switches OpenFlow puros y switches OpenFlow h\'ibridos. Mientras que los switches OpenFlow puros son aquellos que solamente soportan el protocolo de igual nombre, los switches OpenFlow h\'ibridos son aquellos que adicionalmente permiten procesar paquetes de la misma forma en que lo har\'ia un hardware de red legado.
 
@@ -331,6 +317,8 @@ La herramienta miniNExT\cite{MiniNext} es una extensi\'on de Mininet que permite
 En este trabajo Mininet es utilizado para realizar pruebas de experimentaci\'on y comparación entre las alternativas de controladores disponibles, con el objetivo de determinar el controlador OpenFlow a ser utilizado en la arquitectura del prototipo.\\
 
 \section{Aplicaciones de SDN}
+\label{section2.5}
+
 SDN presenta un campo de aplicación bastante extenso y es posible que a medida que el concepto siga evolucionando y asentándose se irán descubriendo nuevos casos de uso y campos de aplicación. A continuación se muestran algunos casos de uso:
 
 \begin{itemize}
@@ -378,6 +366,8 @@ Por estas razones soluciones basadas en el enfoque SDN con OpenFlow por ejemplo 
 \end{enumerate}
 
 \section{Casos de éxito de SDN/OpenFlow}
+\label{section2.6}
+
 OpenFlow en particular se ha hecho con un cierto protagonismo recientemente. Tal es el hecho que se pueden nombrar casos de éxito en la migración de servicios sobre esquemas tradicionales de redes a SDN/OpenFlow.\\
 
 La Open Networking Foundation en particular elabor\'o un art\'iculo\cite{ONFSuccessCase} en donde se recomiendan métodos y se proveen guías para la migración de servicios desde un esquema tradicional a SDN nombrando en particular tres casos de éxito en este tipo de migraciones, en escenarios reales: (1) Google InterDatacenter WAN, (2) NTT Provider Edge y (3) Stanford Campus Network.
