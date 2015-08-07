@@ -133,17 +133,17 @@ En la figura \ref{fig:LabE1P1CapsTraf} se muestra el procesamiento de los paquet
 
 En la figura \ref{fig:LabE1P1CapHost} se muestra una captura de pantalla del comando \textbf{Ping} utilizado para generar tr\'afico ICMP desde el host 20.20.20.130 en la subred A, al host 20.20.20.66 en la subred B.
 
-\begin{figure}[h!] 
+\newpage
+\begin{figure}[ht!] 
 \centering    
-\includegraphics[width=0.6\textwidth]{E1P1/E1P1202020130-2020266}
+\includegraphics[width=0.5\textwidth]{E1P1/E1P1202020130-2020266}
 \caption[Comando Ping H1 Subread A - H3 Subred B]{Comando Ping H1 Subread A - H3 Subred B}
 \label{fig:LabE1P1CapHost}
 \end{figure}
 
 Análogamente se procesan los paquetes asociados a los restantes servicios en el sistema. Para complementar el ejemplo anterior, en la figura \ref{fig:LabE1P1CapsTraf2} se muestra el procesamiento de los paquetes asociados al servicio S4, utilizando el comando ping para generar tr\'afico desde el host 20.20.20.66 en la subred B, al host 20.20.20.130 en la subred A. En la figura \ref{fig:LabE1P1CapsTraf2} se muestran las capturas de tr\'afico utilizando el comando tcpdump para las interfaces eth1 (cuarto superior izquierdo de la imagen) y nf1 (cuarto superior derecho de la imagen) en el nodo Poisson, la interfaz nf0 en el nodo Oz (cuarto inferior izquierdo) y la interfaz eth1 en el nodo Galois (cuarto inferior derecho).
 
-\newpage
-\begin{figure}[ht!] 
+\begin{figure}[h!] 
 \centering    
 \includegraphics[width=0.9\textwidth]{E1P1/E1P1CapturasTrafico2}
 \caption[Capturas de tr\'afico con tcpdump - servicio S4]{Capturas de tr\'afico con tcpdump - servicio S4}
@@ -162,8 +162,7 @@ Para comprobar que el algoritmo de ruteo recaclula correctamente las rutas, se i
 \label{fig:CU1P2DumpFlows1}
 \end{figure}
 
-\newpage
-\begin{figure}[ht!] 
+\begin{figure}[h!] 
 \centering    
 \includegraphics[width=1.0\textwidth]{E1P2/E1P2Oz}
 \caption[Tabla de flujos ovs - Oz]{Tabla de flujos ovs - Oz}
@@ -172,15 +171,16 @@ Para comprobar que el algoritmo de ruteo recaclula correctamente las rutas, se i
 
 \begin{figure}[h!] 
 \centering    
-\includegraphics[width=1.0\textwidth]{E1P2/E1P2Poisson}
-\caption[Tabla de flujos ovs - Poisson]{Tabla de flujos ovs - Poisson}
+\includegraphics[width=1.0\textwidth]{E1P2/E1P2Alice}
+\caption[Tabla de flujos ovs - Alice]{Tabla de flujos ovs - Alice}
 \label{fig:CU1P2DumpFlows3}
 \end{figure}
 
-\begin{figure}[h!] 
+\newpage
+\begin{figure}[ht!] 
 \centering    
-\includegraphics[width=1.0\textwidth]{E1P2/E1P2Alice}
-\caption[Tabla de flujos ovs - Alice]{Tabla de flujos ovs - Alice}
+\includegraphics[width=1.0\textwidth]{E1P2/E1P2Poisson}
+\caption[Tabla de flujos ovs - Poisson]{Tabla de flujos ovs - Poisson}
 \label{fig:CU1P2DumpFlows4}
 \end{figure}
 
@@ -226,14 +226,14 @@ n\_bytes=28968, priority=5,mpls,in\_port=2,mpls\_label=32,mpls\_bos=1 \\
 actions=pop\_mpls:0x0800,set\_field:00:00:00:aa:00:00->eth\_dst,output:1 }
 \end{center}
 
-En la figura \ref{fig:LabE1P1CapsTraf3} se muestran capturas de tr\'afico en las interfaces por las que atraviesa el nuevo LSP asociado al servicio S3. Enumerando las figuras de izquierda a derecha y de arriba hacia abajo, la primer imagen se corresponde con una captura sobre la interfaz eth1 del nodo Galois, la segunda con la interfaz nf0 del mismo nodo, la tercera con la interfaz nf2 del nodo Oz, la cuarta con la interfaz nf0 del nodo Alice y finalmente la quinta con la interfaz eth1 en el nodo Poisson.
-
 \begin{figure}[h!] 
 \centering    
-\includegraphics[width=1.0\textwidth]{E1P2/E1P2CapturasTrafico1}
+\includegraphics[width=0.9\textwidth]{E1P2/E1P2CapturasTrafico1}
 \caption[Capturas de tr\'afico con tcpdump - servicio S3 actualización topol\'ogica]{Capturas de tr\'afico con tcpdump - servicio S3 actualización topol\'ogica}
 \label{fig:LabE1P1CapsTraf3}
 \end{figure}
+
+En la figura \ref{fig:LabE1P1CapsTraf3} se muestran capturas de tr\'afico en las interfaces por las que atraviesa el nuevo LSP asociado al servicio S3. Enumerando las figuras de izquierda a derecha y de arriba hacia abajo, la primer imagen se corresponde con una captura sobre la interfaz eth1 del nodo Galois, la segunda con la interfaz nf0 del mismo nodo, la tercera con la interfaz nf2 del nodo Oz, la cuarta con la interfaz nf0 del nodo Alice y finalmente la quinta con la interfaz eth1 en el nodo Poisson.
 
 Adicionalmente en la figura \ref{fig:LabE1P2CapHost} se muestra le ejeuci\'on del comando Ping en el host H1 de la subred A con destino al host H3 de la subred B durante la ejecuci\'on de la prueba. En la misma puede observarse c\'omo se envían y reciben paquetes antes del desperfecto en el enlace (paquetes ICMP con n\'umero de secuencia 1 al 5) y como luego se continu\'a enviando y recibiendo paquetes tras el desperfecto en el enlace (paquetes ICMP con n\'umero de secuencia 11 al 16). Por otro lado los paquetes perdidos (secuencia entre el 6 y el 10) se deben al tiempo transcurrido mientras la base de datos topol\'ogica (LSDB) se actualiza, la aplicaci\'on RAUFlow es notificada, ejecuta el algoritmo de ruteo para los servicios en el sistema y actualiza las tablas de flujo correspondientes.   
 

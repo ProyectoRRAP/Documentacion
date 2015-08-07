@@ -9,9 +9,7 @@
 
 Este cap\'itulo est\'a destinado a la comprensi\'on de los aspectos principales que hacen al dise\~no e implementaci\'on del prototipo para la RAU2, tomando como punto de partida las decisiones reseñadas en el cap\'itulo anterior.
 
-%Cabe destacar que en el mismo se toman como punto de partida las decisiones asumidas en el cap\'itulo anterior.
-
-Por otro lado aspectos muy t\'ecnicos o problemas encontrados en cada componente de la arquitectura son tratados en profundidad en los ap\'endices, citándose aquí las referencias en caso que corresponda para complementar su lectura.\\
+Por otro lado aspectos muy t\'ecnicos o problemas encontrados en cada componente de la arquitectura son tratados en profundidad en los ap\'endices, citándose aquí las referencias en caso que corresponda para complementar su lectura.
 
 \section[Lineamientos generales]{Lineamientos generales}
 
@@ -204,10 +202,9 @@ El administrador SNMP es utilizado para consultar al agente SNMP instalado en un
 
 \subsection{Visi\'on general de la arquitectura}
 
-En resumen, los nodos del prototipo son constru\'idos en base al hardware NetFPGA y una PC convencional a la cual se le instalan diferentes componentes de software de forma de implementar un switch MPLS/OpenFlow. Luego el plano de control de la red se implementa en una PC con el software controlador Ryu instalado m\'as un conjunto de m\'odulos adicionales.
+En resumen, los nodos del prototipo son constru\'idos en base al hardware NetFPGA y una PC convencional a la cual se le instalan diferentes componentes de software de forma de implementar un switch MPLS/OpenFlow. Luego el plano de control de la red se implementa en una PC con el software controlador Ryu instalado m\'as un conjunto de m\'odulos adicionales.\\
 
-\newpage
-\begin{figure}[ht!] 
+\begin{figure}[h!] 
 \centering    
 \includegraphics[width=0.9\textwidth]{Arch_Figure4}
 \caption[Vista l\'ogica ampliada del prototipo]{Vista l\'ogica ampliada del prototipo}
