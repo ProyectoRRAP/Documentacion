@@ -14,11 +14,9 @@ En el presente anexo se incluyen detalles t\'ecnicos acerca de las pruebas reali
 
 \section{Verificación del algoritmo de ruteo en VPN de capa 3 escenario 1}
 \label{appendix6.1}
-En las figuras ~\ref{fig:CU1P1DumpFlows1}~-~\ref{fig:CU1P1DumpFlows4} se muestran las tablas de flujos asociadas a cada nodo del laboratorio, capturadas con el comando \textbf{dump-flows} de la herramienta Open vSwitch.\\
+En las figuras ~\ref{fig:CU1P1DumpFlows1}~-~\ref{fig:CU1P1DumpFlows4} se muestran las tablas de flujos asociadas a cada nodo del laboratorio, capturadas con el comando \textbf{dump-flows} de la herramienta Open vSwitch.
 
-Asumiéndose la notaci\'on $(n, i)$ para referirse a un enlace, donde \textit{n} indica nodo origen e \textit{i} interfaz de reenvío en \textit{n} para el próximo salto, entonces $<(n_1, i_1), \dots, (n_k, i_k)>$ puede usarse para denotar un camino en la red laboratorio. De esta forma se pueden comparar f\'acilmente los caminos te\'oricos con los calculados.\\
-
-Tomando como ejemplo el caso del servicio S3, el camino te\'orico puede denotarse de la siguiente forma:
+Asumiéndose la notaci\'on $(n, i)$ para referirse a un enlace, donde \textit{n} indica nodo origen e \textit{i} interfaz de reenvío en \textit{n} para el próximo salto, entonces $<(n_1, i_1), \dots, (n_k, i_k)>$ puede usarse para denotar un camino en la red laboratorio. De esta forma se pueden comparar f\'acilmente los caminos te\'oricos con los calculados. Tomando como ejemplo el caso del servicio S3, el camino te\'orico puede denotarse de la siguiente forma:
  
 $$<(Galois, nf_2)>$$
 
@@ -53,13 +51,9 @@ $$<(Galois, nf_2)>$$
 
 
 \newpage
-En otras palabras todo tr\'afico IP con origen en la subred A y destino a la subred B, es encaminado a través de la interfaz $nf_2$ en el nodo de ingreso \textit{Galois}. Luego en el nodo de egreso \textit{Poisson} es reenviado por la interfaz externa asociada al servicio.\\
+En otras palabras todo tr\'afico IP con origen en la subred A y destino a la subred B, es encaminado a través de la interfaz $nf_2$ en el nodo de ingreso \textit{Galois}. Luego en el nodo de egreso \textit{Poisson} es reenviado por la interfaz externa asociada al servicio.
 
-Analizando las tablas de flujos en los nodos \textit{Galois} y \textit{Poisson}, puede comprobarse fácilmente la correspondencia entre el camino calculado y el camino te\'orico.
-
-Por un lado en la tabla de flujos del nodo \textit{Galois} se tiene el siguiente flujo:
-
-%Por un lado, acorde a la definci\'on del servicio, Galois debería reenviar todo tr\'afico de tipo \textbf{ip} que ingresa por la interfaz eth1(la cual se corresponde con el n\'umero de puerto openflow 1), con origen en la subred 20.20.20.64/26 y destino 20.20.20.0/64 por la interfaz nf1(la cual se corresponde con el n\'umero de puerto openflow 3).
+Analizando las tablas de flujos en los nodos \textit{Galois} y \textit{Poisson}, puede comprobarse fácilmente la correspondencia entre el camino calculado y el camino te\'orico. Por un lado en la tabla de flujos del nodo \textit{Galois} se tiene el siguiente flujo:
 
 \begin{figure}[h]
 \texttt{cookie=0.0, duration=1022.644s, table=0, n\_packets=336, \\ 
@@ -72,9 +66,7 @@ set\_mpls\_ttl(128),output:4}
 \label{fig:Flujo1}
 \end{figure}
 
-Este flujo toma todo paquete recibido por el puerto OpenFlow identificado con el n\'umero 1 (interfaz eth1), numeración IP origen 20.20.20.128/26 (subred A) y destino 20.20.20.64/26 (subred B), decrementa el TTL del paquete, coloca un cabezal MPLS con la etiqueta 32 y finalmente lo reenvía por el puerto OpenFlow n\'umero 4 (interfaz nf2). Observar que el valor de la etiqueta MPLS colocado es el utilizado para identificar el servicio (etiqueta interna). \\
-
-%Notese adem\'as la acci\'on \textbf{dec\_ttl} en el flujo. Esta acci\'on es utilizada en cada nodo de borde en la definici\'on de un servicio para decrementar el ttl de un paquete ip cada vez que ingresa a la red del prototipo (en este caso a la red del laboratorio). Observese tambi\'en el valor de la etiqueta mpls(34) colocado en el paquete para identificar el servicio(etiqueta interna).
+Este flujo toma todo paquete recibido por el puerto OpenFlow identificado con el n\'umero 1 (interfaz eth1), numeración IP origen 20.20.20.128/26 (subred A) y destino 20.20.20.64/26 (subred B), decrementa el TTL del paquete, coloca un cabezal MPLS con la etiqueta 32 y finalmente lo reenvía por el puerto OpenFlow n\'umero 4 (interfaz nf2). Observar que el valor de la etiqueta MPLS colocado es el utilizado para identificar el servicio (etiqueta interna). 
 
 El procesamiento de los paquetes asociados al servicio S3 en el nodo \textit{Poisson} est\'a dado por el siguiente flujo:
 
@@ -87,11 +79,9 @@ actions=pop\_mpls:0x0800,set\_field:00:00:00:aa:00:00->eth\_dst,output:1 }
 \label{fig:Flujo2}
 \end{figure}
 
-Este flujo toma todo paquete recibido por el puerto OpenFlow n\'umero 4 (interfaz nf2), retira el cabezal MPLS, modifica el valor del campo direcci\'on MAC destino de la trama ethernet y finalmente lo reenvía por el puerto n\'umero 1 (interfaz eth1).\\
+Este flujo toma todo paquete recibido por el puerto OpenFlow n\'umero 4 (interfaz nf2), retira el cabezal MPLS, modifica el valor del campo direcci\'on MAC destino de la trama ethernet y finalmente lo reenvía por el puerto n\'umero 1 (interfaz eth1). 
 
-De esta forma todos los paquetes asociados al servicio S3 son transportados desde el nodo de ingreso \textit{Galois} al nodo de egreso \textit{Poisson} mediante un solo enlace, utilizando un solo nivel de etiquetas MPLS.\\
-
-Analizando el camino que deben seguir los paquetes al atravesar la red laboratorio en el sentido inverso; es decir, desde la subred B hacia la subred A (servicio S4), el camino teórico es el siguiente:
+De esta forma todos los paquetes asociados al servicio S3 son transportados desde el nodo de ingreso \textit{Galois} al nodo de egreso \textit{Poisson} mediante un solo enlace, utilizando un solo nivel de etiquetas MPLS. Analizando el camino que deben seguir los paquetes al atravesar la red laboratorio en el sentido inverso; es decir, desde la subred B hacia la subred A (servicio S4), el camino teórico es el siguiente:
 
 $$<(Poisson, nf_1), (Oz, nf_0)>$$ 
 
@@ -109,24 +99,17 @@ actions=push\_mpls:0x8847,set\_fied:30->mpls\_label,set\_mpls\_ttl(128),output:3
 }
 \end{center}
 
-Notar como primera diferencia en comparación al camino anterior que se tienen dos flujos: el primero coloca la etiqueta asociada al servicio (etiqueta interna) y el segundo coloca la etiqueta de reenvío (etiqueta externa). 
+Notar como primera diferencia en comparación al camino anterior que se tienen dos flujos: el primero coloca la etiqueta asociada al servicio (etiqueta interna) y el segundo coloca la etiqueta de reenvío (etiqueta externa). El camino anterior carece de etiqueta externa puesto que al ser un camino de un solo salto, el primer nodo coincide con el pen\'ultimo y al implementar PHP no es necesario colocar etiqueta externa. 
 
-El camino anterior carece de etiqueta externa puesto que al ser un camino de un solo salto, el primer nodo coincide con el pen\'ultimo y al implementar PHP no es necesario colocar etiqueta externa. 
+Tras colocar el par de etiquetas MPLS en el paquete el mismo es reenviado a trav\'es del puerto OpenFlow n\'umero 3 (interfaz nf1). Luego, el siguiente salto en el camino es implementado por el siguiente flujo en \textit{Oz}:
 
-Tras colocar el par de etiquetas MPLS en el paquete el mismo es reenviado a trav\'es del puerto OpenFlow n\'umero 3 (interfaz nf1).\\
-
-El siguiente salto en el camino, es implementado por el siguiente flujo en \textit{Oz}:
-
-\newpage
 \begin{center}
 \texttt{cookie=0.0, duration=1063.405s, table=0, n\_packets=186, \\
 n\_bytes=20206, priority=5,mpls,in\_port=3,mpls\_label=30,mpls\_bos=0 \\
 actions=pop\_mpls:0x8847,output:2 }
 \end{center}
 
-Como Oz representa el penúltimo salto en el LSP las acciones asociadas son retirar la etiqueta externa del paquete y reenviarlo por el puerto n\'umero 4 (interfaz nf2) al \'ultimo nodo en el camino.\\
-
-El tramo final del camino es implementado en el nodo \textit{Galois} mediante el siguiente flujo:
+Como Oz representa el penúltimo salto en el LSP las acciones asociadas son retirar la etiqueta externa del paquete y reenviarlo por el puerto n\'umero 4 (interfaz nf2) al \'ultimo nodo en el camino. Tras esto, el tramo final del camino es implementado en el nodo \textit{Galois} mediante el siguiente flujo:
 
 \begin{center}
 \texttt{cookie=0.0, duration=1022.644s, table=0, n\_packets=186, \\
@@ -139,21 +122,16 @@ Análogamente el lector puede completar el análisis de la correspondencia entre
 \section{Clasificación de tr\'afico en VPN de capa 3 escenario 1}
 \label{appendix6.2}
 
-En la figura \ref{fig:LabE1P1CapsTraf} se muestra el procesamiento de los paquetes asociados al servicio S3 en cada uno de los nodos que componen el LSP, cuando se genera tr\'afico desde un host en la sub red A con destino a otro host en la subred B.
+En la figura \ref{fig:LabE1P1CapsTraf} se muestra el procesamiento de los paquetes asociados al servicio S3 en cada uno de los nodos que componen el LSP, cuando se genera tr\'afico desde un host en la sub red A con destino a otro host en la subred B. Como puede observarse en el primer cuarto de la imagen (cuarto superior izquierdo), el cual se corresponde con una captura hecha con el comando \textbf{tcpdump} en la interfaz \textbf{eth1} en \textit{Galois}, se reciben paquetes ICMP request con origen 20.20.20.130 y destino 20.20.20.66. Tambi\'en puede observarse en esta imagen paquetes ICMP reply a los paquetes request enviados. Luego, como se muestra en el segundo cuarto de la imagen (cuarto superior derecho), el cual se corresponde con una captura realizada en la interfaz nf2 de dicho nodo, a cada paquete ICMP request recibido por la interfaz eth1 se le coloca un cabezal MPLS con la etiqueta 31 y se reenvía por la interfaz en cuestión. Finalmente al arribar al nodo \textit{Poisson} por la interfaz \textbf{nf2} (cuarto inferior izquierdo de la imagen), el cabezal MPLS es retirado de cada paquete para luego ser reenviado por la interfaz \textbf{eth1} hacia la subred B (cuarto inferior derecho de la imagen).
 
-Como puede observarse en el primer cuarto de la imagen (cuarto superior izquierdo), el cual se corresponde con una captura hecha con el comando \textbf{tcpdump} en la interfaz \textbf{eth1} en \textit{Galois}, se reciben paquetes ICMP request con origen 20.20.20.130 y destino 20.20.20.66. Tambi\'en puede observarse en esta imagen paquetes ICMP reply a los paquetes request enviados.
-
-Luego, como se muestra en el segundo cuarto de la imagen (cuarto superior derecho), el cual se corresponde con una captura realizada en la interfaz nf2 de dicho nodo, a cada paquete ICMP request recibido por la interfaz eth1 se le coloca un cabezal MPLS con la etiqueta 31 y se reenvía por la interfaz en cuestión. Finalmente al arribar al nodo \textit{Poisson} por la interfaz \textbf{nf2} (cuarto inferior izquierdo de la imagen), el cabezal MPLS es retirado de cada paquete para luego ser reenviado por la interfaz \textbf{eth1} hacia la subred B (cuarto inferior derecho de la imagen).\\
-
-\newpage
-\begin{figure}[ht!] 
+\begin{figure}[h!] 
 \centering    
-\includegraphics[width=1.0\textwidth]{E1P1/E1P1CapturasTrafico}
+\includegraphics[width=0.9\textwidth]{E1P1/E1P1CapturasTrafico}
 \caption[Capturas de tr\'afico con tcpdump - servicio S3]{Capturas de tr\'afico con tcpdump - servicio S3}
 \label{fig:LabE1P1CapsTraf}
 \end{figure}
 
-En la figura \ref{fig:LabE1P1CapHost} se muestra una captura de pantalla del comando \textbf{Ping} utilizado para generar tr\'afico ICMP desde el host 20.20.20.130 en la subred A, al host 20.20.20.66 en la subred B.\\
+En la figura \ref{fig:LabE1P1CapHost} se muestra una captura de pantalla del comando \textbf{Ping} utilizado para generar tr\'afico ICMP desde el host 20.20.20.130 en la subred A, al host 20.20.20.66 en la subred B.
 
 \begin{figure}[h!] 
 \centering    
@@ -162,57 +140,30 @@ En la figura \ref{fig:LabE1P1CapHost} se muestra una captura de pantalla del com
 \label{fig:LabE1P1CapHost}
 \end{figure}
 
-Análogamente se procesan los paquetes asociados a los restantes servicios en el sistema. Para complementar el ejemplo anterior, en la figura \ref{fig:LabE1P1CapsTraf2} se muestra el procesamiento de los paquetes asociados al servicio S4, utilizando el comando ping para generar tr\'afico desde el host 20.20.20.66 en la subred B, al host 20.20.20.130 en la subred A. En la imagen se muestran las capturas de tr\'afico utilizando el comando tcpdump para las interfaces eth1 (cuarto superior izquierdo de la imagen) y nf1 (cuarto superior derecho de la imagen) en el nodo Poisson, la interfaz nf0 en el nodo Oz (cuarto inferior izquierdo) y la interfaz eth1 en el nodo Galois (cuarto inferior derecho).\\
+Análogamente se procesan los paquetes asociados a los restantes servicios en el sistema. Para complementar el ejemplo anterior, en la figura \ref{fig:LabE1P1CapsTraf2} se muestra el procesamiento de los paquetes asociados al servicio S4, utilizando el comando ping para generar tr\'afico desde el host 20.20.20.66 en la subred B, al host 20.20.20.130 en la subred A. En la figura \ref{fig:LabE1P1CapsTraf2} se muestran las capturas de tr\'afico utilizando el comando tcpdump para las interfaces eth1 (cuarto superior izquierdo de la imagen) y nf1 (cuarto superior derecho de la imagen) en el nodo Poisson, la interfaz nf0 en el nodo Oz (cuarto inferior izquierdo) y la interfaz eth1 en el nodo Galois (cuarto inferior derecho).
 
-
-\begin{figure}[h!] 
+\newpage
+\begin{figure}[ht!] 
 \centering    
-\includegraphics[width=1.0\textwidth]{E1P1/E1P1CapturasTrafico2}
+\includegraphics[width=0.9\textwidth]{E1P1/E1P1CapturasTrafico2}
 \caption[Capturas de tr\'afico con tcpdump - servicio S4]{Capturas de tr\'afico con tcpdump - servicio S4}
 \label{fig:LabE1P1CapsTraf2}
 \end{figure}
 
-%Sin embargo RAUFlow admite realizar clasificaci\'on de tr\'afico por un conjunto bastante m\'as amplio de atributos. A continuaci\'on se definen una nueva lista de servicios orientados a demostrar la correcta implementaci\'on de esta funcionalidad.
-
-%Cabe destacar que para esta prueba los servicios anteriormente creados son eliminados.
-
-%\begin{table}[h]
-%\begin{tabular}{| l | l | l | p{4cm} | p{4cm} |}
-%\hline
-%Nombre & Ingreso & Egreso & Clasificación & Descripción \\ \hline
-%
-%\crule[Aquamarine]{0.3cm}{0.3cm} S1 & Galois - eth1 & Oz - eth1 & ip\_src=20.20.20.128/26 ip\_dst=20.20.20.0/26 & Tr\'afico de Subred A a Subred C \\ \hline
-%
-%\crule[Red]{0.3cm}{0.3cm} S2 & Oz - eth1 & Galois - eth1 & ip\_src=20.20.20.0/26 ip\_dst=20.20.20.128/26 & Tr\'afico de Subred C a Subred A \\ \hline
-%
-%\crule[ForestGreen]{0.3cm}{0.3cm} S3 & Galois - eth1 & Poisson - eth1 & ip\_src=20.20.20.128/26 ip\_dst=20.20.20.64/26 & Tr\'afico de Subred A a Subred B \\ \hline
-%
-%\crule[LimeGreen]{0.3cm}{0.3cm} S4 & Poisson - eth1 & Galois - eth1 & ip\_src=20.20.20.64/26 ip\_dst=20.20.20.128/26 & Tr\'afico de Subred B a Subred A \\ \hline
-%
-%\crule[RoyalPurple]{0.3cm}{0.3cm} S5 & Poisson - eth1 & Oz - eth1 & ip\_src=20.20.20.64/26 ip\_dst=20.20.20.0/26 & Tr\'afico de Subred B a Subred C \\ \hline
-%
-%\crule[YellowOrange]{0.3cm}{0.3cm} S6 & Oz - eth1 & Poisson - eth1 & ip\_src=20.20.20.0/26 ip\_dst=20.20.20.64/26 & Tr\'afico de Subred C a Subred B \\ \hline
-%\end{tabular}
-%\vspace{0.3cm}
-
-%\caption[CU1 - Escenario 1, servicios extra]{CU1 - Escenario 1, servicios extra}
-%\label{table:TablaFlujos2}
-%\end{table}
-
 \section{Actualización de Rutas en VPN de capa 3 escenario 1}
 \label{appendix6.3}
 
-Para comprobar que el algoritmo de ruteo recaclula correctamente las rutas, se inspeccionan nuevamente las tablas de flujos de cada nodo en la red laboratorio y se comparan los caminos calculados con los caminos te\'oricos. En las figuras \ref{fig:CU1P2DumpFlows1}-\ref{fig:CU1P2DumpFlows4} se muestran las tablas de flujos de cada uno de los nodos tras la actualización topol\'ogica.\\
+Para comprobar que el algoritmo de ruteo recaclula correctamente las rutas, se inspeccionan nuevamente las tablas de flujos de cada nodo en la red laboratorio y se comparan los caminos calculados con los caminos te\'oricos. En las figuras \ref{fig:CU1P2DumpFlows1}-\ref{fig:CU1P2DumpFlows4} se muestran las tablas de flujos de cada uno de los nodos tras la actualización topol\'ogica.
 
-\newpage
-\begin{figure}[ht!] 
+\begin{figure}[h!] 
 \centering    
 \includegraphics[width=1.0\textwidth]{E1P2/E1P2Galois}
 \caption[Tabla de flujos ovs - Galois]{Tabla de flujos ovs - Galois}
 \label{fig:CU1P2DumpFlows1}
 \end{figure}
 
-\begin{figure}[h!] 
+\newpage
+\begin{figure}[ht!] 
 \centering    
 \includegraphics[width=1.0\textwidth]{E1P2/E1P2Oz}
 \caption[Tabla de flujos ovs - Oz]{Tabla de flujos ovs - Oz}
@@ -226,17 +177,14 @@ Para comprobar que el algoritmo de ruteo recaclula correctamente las rutas, se i
 \label{fig:CU1P2DumpFlows3}
 \end{figure}
 
-\newpage
-\begin{figure}[ht!] 
+\begin{figure}[h!] 
 \centering    
 \includegraphics[width=1.0\textwidth]{E1P2/E1P2Alice}
 \caption[Tabla de flujos ovs - Alice]{Tabla de flujos ovs - Alice}
 \label{fig:CU1P2DumpFlows4}
 \end{figure}
 
-Tomando como ejemplo la actualizaci\'on del LSP asociado al servicio S3, mientras que en la topolog\'ia original el camino asociado es $<(Galois, nf2)>$, tras la actualizaci\'on el camino correcto puede ser o bien $<(Galois, nf0),(Oz, nf1)>$ o bien \\ $<(Galois, nf0), (Oz, nf2), (Alice, nf0)>$.\\
-
-Al cambiar el camino, los flujos asociados en cada nodo tambi\'en cambian. En particular como el camino nuevo no comparte ning\'un salto con el camino original, los flujos asociados al camino viejo deben ser eliminados de cada nodo.
+Tomando como ejemplo la actualizaci\'on del LSP asociado al servicio S3, mientras que en la topolog\'ia original el camino asociado es $<(Galois, nf2)>$, tras la actualizaci\'on el camino correcto puede ser o bien $<(Galois, nf0),(Oz, nf1)>$ o bien \\ $<(Galois, nf0), (Oz, nf2), (Alice, nf0)>$. Al cambiar el camino, los flujos asociados en cada nodo tambi\'en cambian. En particular como el camino nuevo no comparte ning\'un salto con el camino original, los flujos asociados al camino viejo deben ser eliminados de cada nodo.
 
 Recordando la tabla de flujos original del nodo \textit{Galois} (ver imagen \ref{fig:CU1P1DumpFlows1}), el flujo \ref{fig:Flujo1} es utilizado para procesar y reenviar paquetes al nodo Poisson. En la tabla de flujos actualizada, este flujo es remplazado por el siguiente flujo (ver imagen \ref{fig:CU1P2DumpFlows1}):
 
@@ -250,7 +198,7 @@ priority=5,mpls,in\_port=1,mpls\_label=32 \\
 actions=push\_mpls:0x8847,set\_fied:31->mpls\_label,set\_mpls\_ttl(128),output:2}
 \end{center}
 
-Mediante este par de flujos, se les colocan dos cabezales MPLS a los paquetes asociados al servicio, para luego ser reenviados por el puerto n\'umero 2 (interfaz nf0) al nodo \textit{Oz}.\\
+Mediante este par de flujos, se les colocan dos cabezales MPLS a los paquetes asociados al servicio, para luego ser reenviados por el puerto n\'umero 2 (interfaz nf0) al nodo \textit{Oz}. 
 
 Por otra parte en la tabla de flujos del nodo \textit{Oz}, se incorpora el siguiente flujo:
 
@@ -260,9 +208,7 @@ priority=5,mpls,in\_port=2,mpls\_label=31,mpls\_bos=0 \\
 actions=set\_field:31->mpls\_label,dec\_mpls\_ttl,output:4 }
 \end{center}
 
-El mismo implementa el cambio de etiqueta MPL en el paquete y su posterior reenvío por el puerto n\'umero 4 (interfaz nf2).\\
-
-Luego en la tabla de flujos del nodo \textit{Alice} se incorpora el siguiente flujo:
+El mismo implementa el cambio de etiqueta MPL en el paquete y su posterior reenvío por el puerto n\'umero 4 (interfaz nf2). Luego en la tabla de flujos del nodo \textit{Alice} se incorpora el siguiente flujo:
 
 \begin{center}
 \texttt{cookie=0.0, duration=252.632s, table=0, n\_packets=186, \\
@@ -270,7 +216,7 @@ n\_bytes=19716, priority=5,mpls,in\_port=4,mpls\_label=31,mpls\_bos=0 \\
 actions=pop\_mpls:0x8847,output:2 }
 \end{center}
 
-Este flujo implementa el pop de la etiqueta MPLS externa en el penúltimo nodo del LSP (penultimate-pop-hoping). Tras realizar esta acci\'on reenvía el paquete por el puerto n\'umero 2 (interfaz nf0).\\
+Este flujo implementa el pop de la etiqueta MPLS externa en el penúltimo nodo del LSP (penultimate-pop-hoping). Tras realizar esta acci\'on reenvía el paquete por el puerto n\'umero 2 (interfaz nf0).
 
 Finalmente cuando el paquete arriba al nodo \textit{Poisson}, el procesamiento final del paquete, realizado con anterioridad por el flujo \ref{fig:Flujo2} ahora se realiza mediante el siguiente flujo: 
 
@@ -282,17 +228,16 @@ actions=pop\_mpls:0x0800,set\_field:00:00:00:aa:00:00->eth\_dst,output:1 }
 
 En la figura \ref{fig:LabE1P1CapsTraf3} se muestran capturas de tr\'afico en las interfaces por las que atraviesa el nuevo LSP asociado al servicio S3. Enumerando las figuras de izquierda a derecha y de arriba hacia abajo, la primer imagen se corresponde con una captura sobre la interfaz eth1 del nodo Galois, la segunda con la interfaz nf0 del mismo nodo, la tercera con la interfaz nf2 del nodo Oz, la cuarta con la interfaz nf0 del nodo Alice y finalmente la quinta con la interfaz eth1 en el nodo Poisson.
 
-\newpage
-\begin{figure}[ht!] 
+\begin{figure}[h!] 
 \centering    
 \includegraphics[width=1.0\textwidth]{E1P2/E1P2CapturasTrafico1}
 \caption[Capturas de tr\'afico con tcpdump - servicio S3 actualización topol\'ogica]{Capturas de tr\'afico con tcpdump - servicio S3 actualización topol\'ogica}
 \label{fig:LabE1P1CapsTraf3}
 \end{figure}
 
-Adicionalmente en la figura \ref{fig:LabE1P2CapHost} se muestra le ejeuci\'on del comando Ping en el host H1 de la subred A con destino al host H3 de la subred B durante la ejecuci\'on de la prueba. En la misma puede observarse c\'omo se envían y reciben paquetes antes del desperfecto en el enlace (paquetes ICMP con n\'umero de secuencia 1 al 5) y como luego se continu\'a enviando y recibiendo paquetes tras el desperfecto en el enlace (paquetes ICMP con n\'umero de secuencia 11 al 16). Por otro lado los paquetes perdidos (secuencia entre el 6 y el 10) se deben al tiempo transcurrido mientras la base de datos topol\'ogica (LSDB) se actualiza, la aplicaci\'on RAUFlow es notificada, ejecuta el algoritmo de ruteo para los servicios en el sistema y actualiza las tablas de flujo correspondientes.   \\
+Adicionalmente en la figura \ref{fig:LabE1P2CapHost} se muestra le ejeuci\'on del comando Ping en el host H1 de la subred A con destino al host H3 de la subred B durante la ejecuci\'on de la prueba. En la misma puede observarse c\'omo se envían y reciben paquetes antes del desperfecto en el enlace (paquetes ICMP con n\'umero de secuencia 1 al 5) y como luego se continu\'a enviando y recibiendo paquetes tras el desperfecto en el enlace (paquetes ICMP con n\'umero de secuencia 11 al 16). Por otro lado los paquetes perdidos (secuencia entre el 6 y el 10) se deben al tiempo transcurrido mientras la base de datos topol\'ogica (LSDB) se actualiza, la aplicaci\'on RAUFlow es notificada, ejecuta el algoritmo de ruteo para los servicios en el sistema y actualiza las tablas de flujo correspondientes.   
 
-Análogamente se puede estudiar la correspondencia entre el camino te\'orico y el camino calculado para el servicio S6.\\
+Análogamente se puede estudiar la correspondencia entre el camino te\'orico y el camino calculado para el servicio S6.
 
 \begin{figure}[ht!] 
 \centering    
@@ -303,7 +248,7 @@ Análogamente se puede estudiar la correspondencia entre el camino te\'orico y e
 
 \section{Numeraciones IP solapadas en VPN de capa 3 \\ escenario 2}
 \label{appendix6.4}
-Para verificar que el tr\'afico asociado a un servicio es enrutado correctamente a la subred destino sin importar que la numeración IP est\'e solapada (aislamiento del espacio de direcciones), se prueba generar tr\'afico IP desde la subred A hacia la subred B al mismo tiempo que se genera tr\'afico desde la subred A' hacia la subred B'; el caso inverso (tr\'afico desde la subred B hacia la subred A) es an\'alogo. Al mismo tiempo se observan las tablas de flujos Open vSwitch en cada uno de los nodos de la red para verificar los caminos calculados para cada servicio y se observa el procesamiento de cada paquete mediante capturas tcpdump en las interfaces asociadas a cada LSP.\\
+Para verificar que el tr\'afico asociado a un servicio es enrutado correctamente a la subred destino sin importar que la numeración IP est\'e solapada (aislamiento del espacio de direcciones), se prueba generar tr\'afico IP desde la subred A hacia la subred B al mismo tiempo que se genera tr\'afico desde la subred A' hacia la subred B'; el caso inverso (tr\'afico desde la subred B hacia la subred A) es an\'alogo. Al mismo tiempo se observan las tablas de flujos Open vSwitch en cada uno de los nodos de la red para verificar los caminos calculados para cada servicio y se observa el procesamiento de cada paquete mediante capturas tcpdump en las interfaces asociadas a cada LSP.
 
 En las figuras \ref{fig:CU2P1DumpFlows1}-\ref{fig:CU2P1DumpFlows4} se muestran capturas de la tabla de flujos asociada a cada nodo en la red prototipo.
 
@@ -336,7 +281,7 @@ En las figuras \ref{fig:CU2P1DumpFlows1}-\ref{fig:CU2P1DumpFlows4} se muestran c
 \end{figure}
 
 \newpage
-Se prueba generar paquetes ICMP mediante el comando ping simultáneamente entre los host H3 y H1 (subred A a subred B) y los hosts H3' y H1' (subred A' a subred B'). Para verificar que el tr\'afico es correctamente enrutado se realizan capturas tcpdump en las interfaces atravesadas por los LSPs de los servicios S1 y S3.\\
+Se prueba generar paquetes ICMP mediante el comando ping simultáneamente entre los host H3 y H1 (subred A a subred B) y los hosts H3' y H1' (subred A' a subred B'). Para verificar que el tr\'afico es correctamente enrutado se realizan capturas tcpdump en las interfaces atravesadas por los LSPs de los servicios S1 y S3.
 
 Por otro lado se prueba establecer conexiones SSH entre ambos pares de nodos, observando tambi\'en el procesamiento del tr\'afico asociado a cada servicio. En la figura \ref{fig:CapSSHSASB} se muestra la conexi\'on SSH establecida entre los hosts H3 (20.20.20.66) y H1 (20.20.20.2) en las subredes A y B respectivamente; n\'otese el hostanme y el usuario en la consol Linux.
 
@@ -369,9 +314,9 @@ De acuerdo al camino calculado para el tr\'afico asociado al servicio S1, los pa
 \label{fig:CapturaTCP}
 \end{figure}
 
-En dicha figura se observan (de izquierda a derecha) capturas realizadas en las interfaces \textbf{eth1}, \textbf{nf2} de \textit{Galois} y la interfaz \textbf{eth1} de \textit{Poisson}. Por otro lado la primer fila de capturas muestra el procesamiento de paquetes IPv4, la segunda fila paquetes IPv6 y la tercera fila paquetes ARP.\\
+En dicha figura se observan (de izquierda a derecha) capturas realizadas en las interfaces \textbf{eth1}, \textbf{nf2} de \textit{Galois} y la interfaz \textbf{eth1} de \textit{Poisson}. Por otro lado la primer fila de capturas muestra el procesamiento de paquetes IPv4, la segunda fila paquetes IPv6 y la tercera fila paquetes ARP.
 
-Por simplicidad se omitieron capturas de las tablas de flujos Open vSwitch para los servicios creados dada la cantidad de entradas en la misma. Recordar que la implementaci\'on de RAUFlow crea una entrada en dicha tabla para cada ethertype soportado con el fin de rescribir dicho campo en el cabezal de un paquete en el nodo de egreso, puesto que este valor es sobrescrito en el primer salto de un LSP por el del protocolo MPLS cuando se coloca la primera etiqueta.\\
+Por simplicidad se omitieron capturas de las tablas de flujos Open vSwitch para los servicios creados dada la cantidad de entradas en la misma. Recordar que la implementaci\'on de RAUFlow crea una entrada en dicha tabla para cada ethertype soportado con el fin de rescribir dicho campo en el cabezal de un paquete en el nodo de egreso, puesto que este valor es sobrescrito en el primer salto de un LSP por el del protocolo MPLS cuando se coloca la primera etiqueta.
 
 A continuaci\'on se muestran los paquetes recibidos en la subred B utilizando la herramienta Wireshark, en donde puede observarse que los paquetes entregados por la red del prototipo son exactamente iguales a los recibidos.
 
