@@ -14,11 +14,9 @@
 
 \section{Resumen}
 
-En este documento se ofrece una guía paso a paso para construir partiendo de una PC de escritorio, una tarjeta NetFPGA-10G y diferentes herramientas de software, un switch OpenFlow 1.3 IP/MPLS híbrido; lo que denominamos RAUSwitch.\\
+En este documento se ofrece una guía paso a paso para construir partiendo de una PC de escritorio, una tarjeta NetFPGA-10G y diferentes herramientas de software, un switch OpenFlow 1.3 IP/MPLS híbrido; lo que denominamos RAUSwitch.
 
-En la misma no se asume ningún conocimiento previo acerca de la plataforma NetFPGA, Xilinx ISE ni sobre el protocolo OpenFlow.\\
-
-Cabe destacar que existen tutoriales y guías para algunas etapas de la construcción del switch, pero se espera que este documento sea un resumen práctico de todos ellos, para agilizar el proceso de construcción para una persona que recién se encuentra familiarizándose con los conceptos aquí tratados.\\
+En la misma no se asume ningún conocimiento previo acerca de la plataforma NetFPGA, Xilinx ISE ni sobre el protocolo OpenFlow. Cabe destacar adem\'as que existen tutoriales y guías para algunas etapas de la construcción del switch, pero se espera que este documento sea un resumen práctico de todos ellos, para agilizar el proceso de construcción para una persona que recién se encuentra familiarizándose con los conceptos aquí tratados.
 
 En caso de querer profundizar en alguna de las etapas, se puede recurrir al material (en caso de existir) utilizado para la construcci\'on de esta gu\'ia, siguiendo las referencias indicadas a lo largo de este documento.
 
@@ -26,11 +24,9 @@ En caso de querer profundizar en alguna de las etapas, se puede recurrir al mate
 
 \section{Plataforma utilizada}
 \label{annexI.1}
-A continuación se especifican las caracter\'isticas del hardware utilizado en la construcci\'on de RAU-Switch, as\'i como la especificaci\'on de las herramientas de software con sus correspondientes versiones de producto.
- 
-Se sugiere respetar los mismos en la medida que sea posible para evitar comportamientos inesperados o no contenidos en el alcance de esta guía.\\
+A continuación se especifican las caracter\'isticas del hardware utilizado en la construcci\'on de RAU-Switch, as\'i como la especificaci\'on de las herramientas de software con sus correspondientes versiones de producto. Se sugiere respetar los mismos en la medida que sea posible para evitar comportamientos inesperados o no contenidos en el alcance de esta guía.
 
-\begin{table}[h]\centering
+\begin{table}[!h]\centering
 \begin{tabularx}{\textwidth}{|>{\setlength\hsize{1.0\hsize}\setlength\linewidth{\hsize}}X|}
 \hline
 \multicolumn{1}{|c|}{Hardware}\\
@@ -60,8 +56,7 @@ Se sugiere respetar los mismos en la medida que sea posible para evitar comporta
 
 \footnotetext{En el desarrollo del proyecto, para la construcci\'on del laboratorio de pruebas se utiliza una tarjeta de red Ethernet adicional en el diseño RAU-Switch, para ser utilizada como interfaz para el ingreso de tr\'afico a la red prototipo. Dicho de otro modo esta interfaz se utiliza para conectarse a un Customer Edge router (CE) de una red privada.}
 
-
-\begin{table}[Htl]\centering
+\begin{table}[!h]\centering
 \begin{tabularx}{\textwidth}{|>{\setlength\hsize{1.0\hsize}\setlength\linewidth{\hsize}}X|}
 \hline
 \multicolumn{1}{|c|}{Software}\\
@@ -80,12 +75,9 @@ Se sugiere respetar los mismos en la medida que sea posible para evitar comporta
 \label{table:RAUSSpecs}
 \end{table}
 
-
 \newpage
 \section{Instalación y configuración}
-En esta sección se explica el proceso de instalación y configuración del software necesario para la construcción de RAUSwitch.\\
-
-En cuanto al orden de precedencia esta guía está organizada de la siguiente forma:
+En esta sección se explica el proceso de instalación y configuración del software necesario para la construcción de RAUSwitch. En cuanto al orden de precedencia esta guía está organizada de la siguiente forma:
 
 \begin{enumerate}
 \item Instalación del sistema operativo
@@ -113,9 +105,7 @@ http://www.ubuntu.com/download/desktop/install-ubuntu-desktop
 \end{center}
 
 \subsection{Instalación de librerías y dependencias}
-Las siguientes librerías son necesarias por las diferentes herramientas de software utilizadas en el switch: gitk, git-gui, libusb, build-essential, libc6-dev, fxload, autotools-dev, autoconf, uml-utilities, libtool.\\
-
-Para instalarlas abrir una consola y ejecutar los siguientes comandos:\\
+Las siguientes librerías son necesarias por las diferentes herramientas de software utilizadas en el switch: gitk, git-gui, libusb, build-essential, libc6-dev, fxload, autotools-dev, autoconf, uml-utilities, libtool. Para instalarlas abrir una consola y ejecutar los siguientes comandos:
 
 \begin{bash}
 # sudo apt-get update
@@ -124,7 +114,7 @@ Para instalarlas abrir una consola y ejecutar los siguientes comandos:\\
 # sudo apt-get install autoconf uml-utilities libtool
 \end{bash}
 
-En caso de tener en algún momento errores con el comando gmake (por ejemplo “gmake comand not found”), crear un link simbólico entre \textit{gmake} y \textit{make}. Para ello ejecutar en una consola:\\
+En caso de tener en algún momento errores con el comando gmake (por ejemplo “gmake comand not found”), crear un link simbólico entre \textit{gmake} y \textit{make}. Para ello ejecutar en una consola:
 
 \begin{bash}
 # sudo ln -s /usr/bin/make /usr/bin/gmake
@@ -146,15 +136,13 @@ Luego debemos ir al directorio en donde se descarg\'o el archivo y ejecutamos lo
 # sudo ./xsetup
 \end{bash}
 
-De esta forma se ejecuta el asistente de instalación de la suite de Xillinx.\\
+De esta forma se ejecuta el asistente de instalación de la suite de Xillinx. Dejar todas las opciones que marca por defecto con la excepción de la instalación de los drivers para el cable de programación. En este caso destildar el checkbox correspondiente para evitar que la instalación finalice con errores.
 
-Dejamos todas las opciones que marca por defecto con la excepción de la instalación de los drivers para el cable de programación. En este caso destildar el checkbox correspondiente para evitar que la instalación finalice con errores.\\
+Terminada la instalación de la suite de Xilinx debemos instalar los drivers para el cable de programación JTag. Trabajaremos con un driver proporcionado por terceras partes disponible en un repositorio github.
 
-Terminada la instalación de la suite de Xilinx debemos instalar los drivers para el cable de programación JTag. Trabajaremos con un driver proporcionado por terceras partes disponible en un repositorio github.\\
+Por defecto la instalación de Xilinx se realizó en el directorio /opt/Xilinx, en caso contrario trabajar en lo que prosigue en el directorio correspondiente. 
 
-Por defecto la instalación de Xilinx se realizó en el directorio /opt/Xilinx, en caso contrario trabajar en lo que prosigue en el directorio correspondiente.\\
-
-Abrimos una consola y ejecutamos lo siguiente:\footnote{Para la arquitectura de la máquina se debe compilar la versión de 64 bits del driver; lo cual se hace por defecto. En caso de trabajar con una arquitectura de 32bits se puede ejecutar el make para 32bits.}\\
+Abrimos una consola y ejecutamos lo siguiente:\footnote{Para la arquitectura de la máquina se debe compilar la versión de 64 bits del driver; lo cual se hace por defecto. En caso de trabajar con una arquitectura de 32bits se puede ejecutar el make para 32bits.}
 
 \begin{bash}
 # cd /opt/Xilinx/
@@ -168,7 +156,7 @@ Abrimos una consola y ejecutamos lo siguiente:\footnote{Para la arquitectura de 
 Finalmente reiniciamos la PC.
 
 \subsubsection{Configuración de variables de entorno}
-Para utilizar la suite de Xilinx es necesario agregar ciertas variables de entorno al sistema. Para ello una alternativa es editar el archivo \textbf{.bashrc} en la consola del usuario root, agregando las siguientes líneas:\\
+Para utilizar la suite de Xilinx es necesario agregar ciertas variables de entorno al sistema. Para ello una alternativa es editar el archivo \textbf{.bashrc} en la consola del usuario root, agregando las siguientes líneas:
 
 \begin{bash}
 # sudo su
@@ -196,50 +184,39 @@ export LD_LIBRARY_PATH
 De esta forma queda instalada la suite de Xilinx y los drivers del cable JTag para la programación de las tarjetas.
 
 \subsubsection{Ejecución de herramientas de la suite de Xilinx}
-Para la ejecución de cualquier herramienta de la suite Xilinx es necesario ejecutar un script de configuración, presente en el directorio de instalación de la herramienta. Para ello abrir una consola y ejecutar lo siguiente:\\
+Para la ejecución de cualquier herramienta de la suite Xilinx es necesario ejecutar un script de configuración, presente en el directorio de instalación de la herramienta. Para ello abrir una consola y ejecutar lo siguiente:
 
 \begin{bash}
 # /opt/Xilinx/13.4/ISE_DS/settings64.sh
 \end{bash}
 
-En caso de que el archivo \textbf{setting64.sh} no cuente con permisos de ejecución asignárselos.\\ 
+En caso de que el archivo \textbf{setting64.sh} no cuente con permisos de ejecución asignárselos. 
 
-Luego se puede ejecutar cualquier herramienta de la suite Xilinx, como por ejemplo la herramienta Impact para programar normalmente las tarjetas de la siguiente forma:\\
+Luego se puede ejecutar cualquier herramienta de la suite Xilinx, como por ejemplo la herramienta Impact para programar normalmente las tarjetas de la siguiente forma:
 
 \begin{bash}
 # impact
 \end{bash}
 
 \subsubsection{Instalación de licencias de usuario}
-Para trabajar con las herramientas de Xilinx es necesario contar con licencias correspondientes para cada una de ellas y en particular seg\'un el tipo de hardware con el que se trabaje dependerá el tipo de licencia necesaria. En nuestro caso se necesita una licencia completa (full license) y vale la pena destacar que con una licencia de prueba no se cuentan con las licencias apropiadas para compilar los proyectos de NetFPGA con los que se trabajar\'a.\\
+Para trabajar con las herramientas de Xilinx es necesario contar con licencias correspondientes para cada una de ellas y en particular seg\'un el tipo de hardware con el que se trabaje dependerá el tipo de licencia necesaria. En nuestro caso se necesita una licencia completa (full license) y vale la pena destacar que con una licencia de prueba no se cuentan con las licencias apropiadas para compilar los proyectos de NetFPGA con los que se trabajar\'a. Para obtener una licencia full se debe ir al sitio de Xilinx de gestión de licencias, registrarse y comprar una licencia full.
 
-Para obtener una licencia full se debe ir al sitio de Xilinx de gestión de licencias, registrarse y comprar una licencia full.\\
-
-Asumiendo que ya se tiene descargada una licencia full, para cargar la misma abrir una consola y ejecutar lo siguiente:\\
+Asumiendo que ya se tiene descargada una licencia full, para cargar la misma abrir una consola y ejecutar lo siguiente:
 
 \begin{bash}
 # /opt/Xilinx/13.4/ISE_DS/common/bin/lin64/xlcm
 \end{bash}
 
-Una vez que se ejecuta el comando anterior, se abrirá el programa  Xilinx Lincense Configuration Manager que es el asistente de licencias de la suite de Xilinx. Una vez abierto, ir a la pestaña de Manejo de Licencias (Manage Xilinx Licenses) e importar los archivos de licencias \emph{.lic} obtenidos (botón copy license).
-
-Una vez importada la licencia se podrán ver abajo las diferentes características que proveen las licencias cargadas. En caso de que no se actualice la pestañea apretar el botón \textbf{Refresh}.
-
+Una vez que se ejecuta el comando anterior, se abrirá el programa  Xilinx Lincense Configuration Manager que es el asistente de licencias de la suite de Xilinx. Una vez abierto, ir a la pestaña de Manejo de Licencias (Manage Xilinx Licenses) e importar los archivos de licencias \emph{.lic} obtenidos (botón copy license). Una vez importada la licencia se podrán ver abajo las diferentes características que proveen las licencias cargadas. En caso de que no se actualice la pestañea apretar el botón \textbf{Refresh}.
 
 \subsection{Configuración del entorno de desarrollo NetFPGA}
-A continuación se explica como acceder al código fuente de NetFPGA y como empezar a programar el hardware con el mismo.\\
-
-Lo primero que debemos hacer es obtener el código fuente con las implementaciones de proyectos y herramientas, para lo cual es necesario crearse un usuario github y luego registrarse como desarrollador NetFPGA en el sitio oficial. Este último proceso puede llevar algunas horas dado que el proceso de aceptación se realiza manualmente.\\
-
-Para registrarse como desarrollador NetFPGA completar el siguiente formulario:
+A continuación se explica como acceder al código fuente de NetFPGA y como empezar a programar el hardware con el mismo comenzando por obtener el código fuente con las implementaciones de proyectos y herramientas. Para ello es necesario crearse un usuario github y luego registrarse como desarrollador NetFPGA en el sitio oficial; este último proceso puede llevar algunas horas dado que el proceso de aceptación se realiza manualmente. Para registrarse como desarrollador NetFPGA completar el siguiente formulario:
 
 \begin{center}
 http://netfpga.org/2014/\#/10G\_going\_beta/
 \end{center}
 
-Una vez aceptada la solicitud de unirse al equipo de NetFPGA, se tendrá acceso a los repositorios de código fuente en github. Descargamos la versión base de código fuente en el sitio de NetFPGA en github.
-
-Para descargar el código fuente basta con acceder al siguiente link estando logueado en Github:
+Una vez aceptada la solicitud de unirse al equipo de NetFPGA, se tendrá acceso a los repositorios de código fuente en github. Descargamos la versión base de código fuente en el sitio de NetFPGA en github. Para descargar el código fuente basta con acceder al siguiente link estando logueado en Github:
 
 \begin{center}
 https://github.com/NetFPGA/NetFPGA-10G-live/tags
@@ -268,24 +245,24 @@ Antes de empezar a trabajar con el hardware NetFPGA y en especial a programarlo 
 \item Production Test\citep{NetFPGA7}
 \end{itemize}
 
-Estos tests son proyectos de referencia; es decir fueron desarrollados por NetFPGA y la universidad de Stanford. Con los mismos se programan las tarjetas de igual forma que se programaría cualquier otro proyecto y luego se ejecutan una serie de scripts que realizan pruebas de verificación del hardware. En pocas palabras, además de verificar el correcto funcionamiento de las tarjetas, al ejecutar los test se tiene una primera experiencia programando el hardware.\\
+Estos tests son proyectos de referencia; es decir fueron desarrollados por NetFPGA y la universidad de Stanford. Con los mismos se programan las tarjetas de igual forma que se programaría cualquier otro proyecto y luego se ejecutan una serie de scripts que realizan pruebas de verificación del hardware. En pocas palabras, además de verificar el correcto funcionamiento de las tarjetas, al ejecutar los test se tiene una primera experiencia programando el hardware.
 
 Es importante tener en cuenta que las tarjetas NetFPGA pueden funcionar tanto conectadas a una PC 
- (escenario elegido) denominado server mode como conectadas solamente a una fuente de poder denominado standalone mode.\\
+ (escenario elegido) denominado server mode como conectadas solamente a una fuente de poder denominado standalone mode.
 
 En particular, ambos proyectos de pruebas pueden programarse para ejecutarse en ambas modalidades de funcionamiento. En esta guía se explica como programar y ejecutar dichos proyectos bajo el modo de funcionamiento servidor. En caso de requerirse de una ejecuci\'on de pruebas en modo standalone puede encontrarse en\citep{NetFPGA6}\citep{NetFPGA8} una guía detallada.
 
 \subsubsection{Programación y ejecución del Production Test}
-A continuación se detalla el procedimiento para programar el hardware con el test de producción y luego ejecutar el conjunto de pruebas asociadas. Esta guía esta basada a su vez en una guía mas completa accesible en\citep{NetFPGA6}\\
+A continuación se detalla el procedimiento para programar el hardware con el test de producción y luego ejecutar el conjunto de pruebas asociadas. Esta guía esta basada a su vez en una guía mas completa accesible en\citep{NetFPGA6}
 
-EL primer paso para programar el test de producción es configurar la tarjeta NetFPGA-10G correctamente, así como instalarla en una PC. Es sumamente IMPORTANTE seguir cuidadosamente cada una de las indicaciones que aquí se mencionan para lograr los resultados correctos y no dañar el hardware en el proceso de manipulación.\\ 
+EL primer paso para programar el test de producción es configurar la tarjeta NetFPGA-10G correctamente, así como instalarla en una PC. Es sumamente IMPORTANTE seguir cuidadosamente cada una de las indicaciones que aquí se mencionan para lograr los resultados correctos y no dañar el hardware en el proceso de manipulación.
 
 La tarjeta necesita un suministro de corriente mediante el conector ATX para poder funcionar. A continuación se describe como instalar el hardware:
 
 \begin{itemize}
 \item Asegurarse que el jumper J16 no esta activado. Este Jumper se encuentra en la esquina superior izquierda de la tarjeta, en la cercanía del conector RS232 DB-9 (figura~\ref{fig:Img1}).
 
-\begin{figure}[htbp!] 
+\begin{figure}[h!] 
 \centering    
 \includegraphics[width=0.50\textwidth]{Img1}
 \caption[Jumper J16]{Jumper J16, Imagen extra\'ida de \citep{NetFPGA6}}
@@ -294,7 +271,7 @@ La tarjeta necesita un suministro de corriente mediante el conector ATX para pod
 
 \item Setear el switch SW9 en la posición PCIe. Asegurarse bien de que el switch est\'a completamente puesto en dicha posición (figura ~\ref{fig:Img2}).
 
-\begin{figure}[htbp!] 
+\begin{figure}[h!] 
 \centering    
 \includegraphics[width=0.50\textwidth]{Img2}
 \caption[SW9 en posicion PCIe]{SW9 en posicion PCIe, Imagen extra\'ida de \citep{NetFPGA6}}
@@ -319,7 +296,8 @@ La tarjeta necesita un suministro de corriente mediante el conector ATX para pod
 
 \item Conectar alguno de los conectores ATX disponibles de la PC al conector ATX de la tarjeta NetFPGA-10G (figura ~\ref{fig:Img4}).
 
-\begin{figure}[htbp!] 
+\newpage
+\begin{figure}[h!] 
 \centering    
 \includegraphics[width=0.50\textwidth]{Img4}
 \caption[Conector ATX]{Conector ATX, , Imagen extra\'ida de \citep{NetFPGA6}}
@@ -328,8 +306,7 @@ La tarjeta necesita un suministro de corriente mediante el conector ATX para pod
 
 \item Conectar el cable Samtec Twinax a la interfaz de expansión de la tarjeta formando un “loop” ( figura ~\ref{fig:Img5})
 
-\newpage
-\begin{figure}[htbp!] 
+\begin{figure}[h!] 
 \centering    
 \includegraphics[width=0.40\textwidth]{Img5}
 \caption[Cable samtec twinax]{Cable samtec twinax, , Imagen extra\'ida de \citep{NetFPGA6}}
@@ -338,7 +315,7 @@ La tarjeta necesita un suministro de corriente mediante el conector ATX para pod
 
 \item Conectar un par de cables 10GE SFP+ a las interfaces de la tarjeta. Cada cable conecta dos puertos adyacentes formando dos “bucles” (ver figura ~\ref{fig:Img6}):
 
-\begin{figure}[htbp!] 
+\begin{figure}[h!] 
 \centering    
 \includegraphics[width=0.50\textwidth]{Img6}
 \caption[Cables samtec twinax conectados]{Cables samtec twinax conectados}
@@ -347,7 +324,8 @@ La tarjeta necesita un suministro de corriente mediante el conector ATX para pod
 
 \item Conectar un cable serial RS232 al puerto serial RS232 en la tarjeta. Conectar el otro extremo en el puerto serial COM de la PC o a un adaptador USB por ejemplo (ver figura ~\ref{fig:Img7}).
 
-\begin{figure}[htbp!] 
+\newpage
+\begin{figure}[h!] 
 \centering    
 \includegraphics[width=0.50\textwidth]{Img7}
 \caption[Cable serial puerto COM]{Cable serial puerto COM, Imagen extra\'ida de \citep{NetFPGA6}}
@@ -356,8 +334,7 @@ La tarjeta necesita un suministro de corriente mediante el conector ATX para pod
 
 \item Conectar el cable de programación Xilinx JTAG al conector JTAG en la tarjeta. Luego conectar el otro extremo a la PC a través de un puerto USB por ejemplo (figura ~\ref{fig:Img8}).
 
-\newpage
-\begin{figure}[htbp!] 
+\begin{figure}[h!] 
 \centering    
 \includegraphics[width=0.55\textwidth]{Img8}
 \caption[Cable JTAG]{Cable JTAG, Imagen extra\'ida de \citep{NetFPGA6}}
@@ -368,7 +345,7 @@ La tarjeta necesita un suministro de corriente mediante el conector ATX para pod
 
 Al finalizar, la tarjeta NetFPGA debería estar instalada como se muestra en la siguientes figuras~\ref{fig:Img9}~\ref{fig:Img10}:
 
-\begin{figure}[htbp!] 
+\begin{figure}[h!] 
 \centering    
 \includegraphics[width=0.80\textwidth]{Img9}
 \caption[Tarjeta NetFPGA esquema de instalación]{Tarjeta NetFPGA esquema de instalación, Imagen extra\'ida de \citep{NetFPGA6}}
@@ -501,11 +478,7 @@ Para ejecutar el RLDRAM Test recomendamos utilizar la guía \citep{NetFPGA8}.
 A continuación se describen los pasos necesarios para programar las tarjetas NetFPGA en particular con el proyecto ReferenceNIC. En lo que prosigue se utiliza NF\_ROOT para referirse al directorio donde se encuentra descargado el código fuente de NetFPGA.
 
 \subsubsection{Configuración de la tarjeta}
-Antes de comenzar, es necesario realizar algunas modificaciones en el hardware NetFPGA para habilitar la programación PCIe del mismo, utilizada en la programación persistente.\\ 
-
-Para habilitar la programación PCIe, es necesario cambiar la posición del switch Disp SW3 desde la posición por defecto (M0:On, M1:On, M2:On) a la posición de programación PCIe (M0:Off, M1:On, M2:On). Esta configuración habilita tanto la programación de la tarjeta por el cable de programación JTAG como por la interfaz PCIe.\\
-
-La siguiente figura muestra la posición del Dip SW3 en la configuración PCIe (ver figura ~\ref{fig:Img15}).
+Antes de comenzar, es necesario realizar algunas modificaciones en el hardware NetFPGA para habilitar la programación PCIe del mismo, utilizada en la programación persistente. Para ello es necesario cambiar la posición del switch Disp SW3 desde la posición por defecto (M0:On, M1:On, M2:On) a la posición de programación PCIe (M0:Off, M1:On, M2:On). Esta configuración habilita tanto la programación de la tarjeta por el cable de programación JTAG como por la interfaz PCIe. La siguiente figura muestra la posición del Dip SW3 en la configuración PCIe (ver figura ~\ref{fig:Img15}).
 
 \begin{figure}[htbp!] 
 \centering    
@@ -514,7 +487,7 @@ La siguiente figura muestra la posición del Dip SW3 en la configuración PCIe (
 \label{fig:Img15}
 \end{figure}
 
-Recordar que los cambios a la configuración de la tarjeta se deben realizar con la PC apagada y sin conexión a la corriente eléctrica para evitar daños en el hardware.\\
+Recordar que los cambios a la configuración de la tarjeta se deben realizar con la PC apagada y sin conexión a la corriente eléctrica para evitar daños en el hardware.
 
 Una vez configurada la tarjeta conectar la PC a la corriente eléctrica y encender la misma.
 
@@ -568,11 +541,9 @@ Finalmente se debe compilar el proyecto. Para ello en una consola ejecutamos
 # make
 \end{bash}
 
-Este proceso puede llevar de 10 a 20 minutos.\\
+Este proceso puede llevar de 10 a 20 minutos.
 
-Ahora programamos la tarjeta NetFPGA con el proyecto ReferenceNIC, para lo cual es necesario conectar el cable de programación JTAG a la tarjeta y a la PC.\\
-
-Luego en una consola se ejecuta lo siguiente:
+Ahora programamos la tarjeta NetFPGA con el proyecto ReferenceNIC, para lo cual es necesario conectar el cable de programación JTAG a la tarjeta y a la PC. Luego en una consola se ejecuta lo siguiente:
 
 \begin{bash}
 # cd NetFPGA_ROOT
@@ -583,11 +554,11 @@ Luego en una consola se ejecuta lo siguiente:
 \end{bash}
 
 (*) En caso de que aparezca el error “NF\_ROOT or NF\_DESIGN\_DIR variable is not defined”
-abrir el script impact\_run.sh y definir una variable de nombre NF\_ROOT con el valor del directorio donde esta instalado el código fuente de NetFPGA.\\
+abrir el script impact\_run.sh y definir una variable de nombre NF\_ROOT con el valor del directorio donde esta instalado el código fuente de NetFPGA.
 
-Luego de finalizada la ejecución del comando reiniciar la máquina. Es sumamente importante que se reinicie y no que se apague, puesto que hasta el momento solo se ha programado el hardware en forma volátil. Esto quiere decir que de producirse un corte de corriente el misma se desprogramaría.\\
+Luego de finalizada la ejecución del comando reiniciar la máquina. Es sumamente importante que se reinicie y no que se apague, puesto que hasta el momento solo se ha programado el hardware en forma volátil. Esto quiere decir que de producirse un corte de corriente el misma se desprogramaría.
 
-Una vez reiniciada la PC es necesario cargar el driver del ReferenceNIC en el kernel del sistema. Para ello posiblemente primero se deba compilar el driver. Para compilar el driver ejecutar en una consola:\\
+Una vez reiniciada la PC es necesario cargar el driver del ReferenceNIC en el kernel del sistema. Para ello posiblemente primero se deba compilar el driver. Para compilar el driver ejecutar en una consola:
 
 \begin{bash}
 # cd NetFPGA_ROOT/projects/reference_nic/sw/host/driver
@@ -595,9 +566,7 @@ Una vez reiniciada la PC es necesario cargar el driver del ReferenceNIC en el ke
 # insmod nf10.ko
 \end{bash}
 
-Ahora vamos a programar una de las memorias flash de la tarjeta (en particular utilizaremos la unidad A con el proyecto ReferenceNIC, de forma de hacer persistente la programación de la tarjeta.
-
-Para ello en una consola ejecutamos:
+Ahora vamos a programar una de las memorias flash de la tarjeta (en particular utilizaremos la unidad A con el proyecto ReferenceNIC, de forma de hacer persistente la programación de la tarjeta. Para ello en una consola ejecutamos:
 
 \begin{bash}
 # cd NF_ROOT/projects/reference_nic/bitfiles
@@ -619,7 +588,7 @@ Luego ejecutamos lo siguiente:
 # ./nf10_configure -b ../../../bitfiles/reference_nic.bin -f a
 \end{bash}
 
-Apagamos la PC y la volvemos a prender. Ahora el chip FPGA de la tarjeta se encuentra programado a partir del contenido de la memoria flash A, con el proyecto que allí grabamos.\\
+Apagamos la PC y la volvemos a prender. Ahora el chip FPGA de la tarjeta se encuentra programado a partir del contenido de la memoria flash A, con el proyecto que allí grabamos.
 
 Para no cargar el driver del ReferenceNIC cada vez que se reinicie la máquina podemos modificar el archivo /etc/rc.local agregando la siguiente línea:
 
@@ -690,7 +659,7 @@ ovs-vsctl show
 
 \end{bash}
 
-Por simplicidad hemos comentado las líneas relacionadas a la parte de seguridad en la comunicación entre el ovs y el controlador.\\
+Por simplicidad hemos comentado las líneas relacionadas a la parte de seguridad en la comunicación entre el ovs y el controlador.
 
 Finalmente para automatizar la carga de los drivers de Open vSwitch al encender la PC, crear una carpeta de nombre ovs dentro del directorio /lib/modules/\$(uname -r)/kernel/drivers
 como se muestra a continuación.
@@ -700,7 +669,7 @@ como se muestra a continuación.
 # cd /lib/modules/$(uname -r)/kernel/drivers/ovs    
 \end{bash}
 
-Posteriormente copiar los archivos de extensión .o y .ko dentro de la carpeta de instalaci\'on de ovs (llamemos le OVS\_ROOT) en el siguiente directorio \\ OVS\_ROOT/datapath/linux al directorio anteriormente creado.\\
+Posteriormente copiar los archivos de extensión .o y .ko dentro de la carpeta de instalaci\'on de ovs (llamemos le OVS\_ROOT) en el siguiente directorio \\ OVS\_ROOT/datapath/linux al directorio anteriormente creado.
 
 Finalmente ejecutamos el siguiente comando para actualizar las listas de dependencias para cada módulo agregado.
 
@@ -709,9 +678,7 @@ Finalmente ejecutamos el siguiente comando para actualizar las listas de depende
 \end{bash}
 
 \subsection{Instalación de software de ruteo Quagga}
-El software de ruteo Quagga puede instalarse con un gestor de aplicaciones (apt-get) o desde su código fuente; en este tutorial utilizamos esta ultima opción. 
-
-El código fuente podemos obtenerlo desde el sitio oficial de quagga:
+El software de ruteo Quagga puede instalarse con un gestor de aplicaciones (apt-get) o desde su código fuente; en este tutorial utilizamos esta ultima opción. El código fuente podemos obtenerlo desde el sitio oficial de quagga:
 
 \begin{center}
 http://www.nongnu.org/quagga/
@@ -731,9 +698,7 @@ Una vez descargado el código fuente descomprimimos el archivo \textit{quagga.pu
 \end{bash}
 
 \subsection{Instalaci\'on de agente SNMP}
-Para la instalaci\'on del agente SNMP se utiliza el gestor de paquetes de Ubuntu \textbf{apt-get} (en otras plataformas se podr\'ia utilizar por ejemplo opkg o yum).
-
-Por lo tanto para instalar el agente SNMP ejecutamos en una consola lo siguiente:
+Para la instalaci\'on del agente SNMP se utiliza el gestor de paquetes de Ubuntu \textbf{apt-get} (en otras plataformas se podr\'ia utilizar por ejemplo opkg o yum). Por lo tanto para instalar el agente SNMP ejecutamos en una consola lo siguiente:
 
 \begin{bash}
 # apt-get install snmp snmpd

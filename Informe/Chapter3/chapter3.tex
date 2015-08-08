@@ -7,26 +7,19 @@
     \graphicspath{{Chapter3/Figs/Vector/}{Chapter3/Figs/}}
 \fi
 
-El primer paso en el proceso de construcción del prototipo para la RAU2, es el análisis del problema planteado. Definir en función de requerimientos el alcance del prototipo, investigar qu\'e alternativas se tienen para construir un nodo del prototipo a partir del hardware NetFPGA, resolver qu\'e estrategia ser\'a la utilizada para implementar servicios de VPNs, entre otros aspectos.\\
+El primer paso en el proceso de construcción del prototipo para la RAU2, es el análisis del problema planteado. Definir en función de requerimientos el alcance del prototipo, investigar qu\'e alternativas se tienen para construir un nodo del prototipo a partir del hardware NetFPGA, resolver qu\'e estrategia ser\'a la utilizada para implementar servicios de VPNs, entre otros aspectos.
 
 El presente cap\'itulo est\'a destinado al planteo de estos aspectos y los fundamentos sobre los que se basan las decisiones de diseño. 
-
-%En el abordaje de la problem\'atica planteada, surgen las primeras interrogantes acerca de la realidad a modelar, acerca de las tecnolog\'ias a utilizar, y en particular acerca del dise\~no en general de la soluci\'on. Algunas de estas interrogantes son ¿Como se implementan usualmente servicios de redes privadas virtuales(VPN)?, ¿Que arquitectura basada en SDN utilizar para el prototipo?, ¿Como constru\'ir un router opensource SDN a partir del hardware NetFPGA?, entre otras. 
-
-%Las respuestas a estas preguntas, establecen los lineamientos generales sobre los que se acenta el dise\~no del prototipo. Por ello destinamos el presente cap\'itulo al planteo de las principales interrogantes tanto conceptuales, como tecnol\'ogicas, como de dise\~no, que impactan en la soluci\'on.
-
 
 \section[Definición de requerimientos]{Definición de requerimientos}
 \label{3.1}
 
-Para identificar posibles requerimientos a implementar en el prototipo para la RAU2 , se trabaja inicialmente en identificar requerimientos generales sobre esta red. Luego los resultados obtenidos ser\'an contextualizados en el alcance, los objetivos y resultados esperados de este trabajo, alcanzando as\'i los requerimientos para el prototipo.\\
+Para identificar posibles requerimientos a implementar en el prototipo para la RAU2, se trabaja inicialmente en identificar requerimientos generales sobre esta red. Luego los resultados obtenidos ser\'an contextualizados en el alcance, los objetivos y resultados esperados de este trabajo, alcanzando as\'i los requerimientos para el prototipo.
 
 La RAU definió las funcionalidades esperadas para su evolución hacia RAU2, considerando a ANTEL como el proveedor de la infraestructura de red necesaria para el despliegue. Las principales características que se desean implementar son las siguientes:
 
-%Basándose en un acuerdo de colaboración para el avance en el desarrollo de la nueva Red Académica, firmado entre ANTEL y la Universidad de la República, se infieren las siguientes funcionalidades para la RAU2:
-
 \begin{enumerate}
-\item \textbf{Clasificación y separación del tráfico:} Una de las necesidades y objetivos de la futura actualizaci\'on de la RAU, es la facilidad para clasificar y aislar tráfico. Alineado con las actuales necesidades, en particular se precisa al menos diferenciar las siguientes 3 categorías, as\'i como aislar el tr\'afico de cada categoría y para cada organizaci\'on: (a) público, (b) académico y (c) servicios de contenido.
+\item \textbf{Clasificación y separación del tráfico:} Una de las necesidades y objetivos de la futura actualización de la RAU, es la facilidad para clasificar y aislar tráfico. Alineado con las actuales necesidades, en particular se precisa al menos diferenciar las siguientes 3 categorías, as\'i como aislar el tr\'afico de cada categoría y para cada organizaci\'on: (a) público, (b) académico y (c) servicios de contenido.
 
 \item \textbf{Manejo de grandes volúmenes de datos:} En la RAU intervienen instituciones como el Instituto Pasteur, Centro Uruguayo de Imagenología Molecular (CUDIM) entre otros, en donde la generación e intercambio de grandes volúmenes de datos como lo son los exámenes PET del Pasteur o una secuenciación de ADN del CUDIM entre otros es una de los servicios que la RAU2 deber\'a soportar.
 
@@ -40,8 +33,7 @@ Este conjunto de funcionalidades o requerimientos representa un problema de dime
 
 Partiendo de la clasificación de tr\'afico como funcionalidad principal, se llega a los siguientes requerimientos:
 
-\newpage
-\begin{table}[Ht!]\centering
+\begin{table}[h!]\centering
 \begin{tabularx}{\textwidth}{|>{\setlength\hsize{1.0\hsize}\setlength\linewidth{\hsize}}X|}
 \hline
 \multicolumn{1}{|c|}{Requerimientos Funcionales}\\ 
@@ -59,7 +51,7 @@ Partiendo de la clasificación de tr\'afico como funcionalidad principal, se lle
 \end{tabularx}
 \end{table}
 
-\begin{table}[Ht!]\centering
+\begin{table}[h!]\centering
 \begin{tabularx}{\textwidth}{|>{\setlength\hsize{1.0\hsize}\setlength\linewidth{\hsize}}X|}
 \hline
 \multicolumn{1}{|c|}{Requerimientos no Funcionales}\\ 
@@ -75,102 +67,53 @@ Partiendo de la clasificación de tr\'afico como funcionalidad principal, se lle
   
 \section[¿Por qu\'e utilizar SDN?]{¿Por qu\'e utilizar SDN?}
 
-Se tiene ya una noción básica del sistema que se pretende construir, interesa entonces analizar por qu\'e se quiere utilizar el enfoque de SDN en el mismo.\\
+Se tiene ya una noción básica del sistema que se pretende construir, interesa entonces analizar por qu\'e se quiere utilizar el enfoque de SDN en el mismo.
 
-El mecanismo estándar y transparente que propone SDN para manipular los diferentes dispositivos de red  
- (se han hecho grandes esfuerzos para estandarizar algunas de las implementaciones de la Interfaz Sur existentes, OpenFlow es un buen ejemplo de ellos) brinda flexibilidad y agilidad para el desarrollo de nuevos protocolos y servicios de redes en una infraestructura de dispositivos heterogénea, facilitando as\'i la innovaci\'on en el \'area. 
+El mecanismo estándar y transparente que propone SDN para manipular los diferentes dispositivos de red (se han hecho grandes esfuerzos para estandarizar algunas de las implementaciones de la Interfaz Sur existentes, OpenFlow es un buen ejemplo de ellos) brinda flexibilidad y agilidad para el desarrollo de nuevos protocolos y servicios de redes en una infraestructura de dispositivos heterogénea, facilitando as\'i la innovaci\'on en el \'area. A su vez, se gana independencia de la implementaci\'on propuesta por cada fabricante. Actualmente utilizar productos de un determinado fabricante para la construcción de servicios, muchas veces implica configurar equipos y desarrollar aplicaciones sobre la plataforma del mismo, la cual usualmente tiene su propia API de operaciones generalmente propietaria y su propio lenguaje de desarrollo. Esto implica dificultades para la incorporaci\'on de nuevos dispositivos a una red existente, eventualmente de diferente fabricante, dificultades para la incorporaci\'on de nuevos servicios y m\'as dificultades para migrar servicios existentes, eventualmente a una plataforma diferente.
 
-A su vez, se gana independencia de la implementaci\'on propuesta por cada fabricante. Actualmente utilizar productos de un determinado fabricante para la construcci\'on de servicios, muchas veces implica configurar equipos y desarrollar aplicaciones sobre la plataforma del mismo, la cual usualmente tiene su propia API de operaciones generalmente propietaria y su propio lenguaje de desarrollo. Esto implica dificultades para la incorporaci\'on de nuevos dispositivos a una red existente, eventualmente de diferente fabricante, dificultades para la incorporaci\'on de nuevos servicios y m\'as dificultades para migrar servicios existentes, eventualmente a una plataforma diferente.\\
-
-En pocas palabras, SDN facilita notablemente la investigaci\'on e innovaci\'on en el desarrollo de nuevos servicios y protocolos, eliminando barreras en la manipulaci\'on de los diferentes dispositivos de red, y ganando libertad de los fabricantes de hardware.\\
-
-
-%Las bondades y fortalezas del enfoque de SDN fueron explicadas con anterioridad en el cap\'itulo dedicado al estado del arte en dicha tem\'atica. En el mismo se deja constancia de las caracter\'isticas que plantea este enfoque; de las cuales muchas de ellas pueden explotarse en favor del desarrollo de funcionalidades y caracter\'isticas nuevas para el prototipo de la red acad\'emica.\\
-
-%Sin embargo, existen varias alternativas tecnol\'ogicas para la implementaci\'on del prototipo de la red acad\'emica adem\'as de SDN, por lo cual resulta interesante desarrollar los fundamentos en los que se basa la utilizaci\'on de este enfoque.\\  
-
-%SDN propone desacoplar los planos de datos y control, lo cual en si misma es una caracter\'istica fundamental del enfoque.
-
-%Si bien existen argumentos en favor de una infraestructura con un plano de control centralizado, tambi\'en existen argumentos v\'alidos en favor de un plano de control distribu\'ido; y esta disyuntiva entre plano centralizado y distribu\'ido no puede ser tomada a la ligera puesto que ambos enfoques pueden ser sumamente v\'alidos dependiendo del contexto en que se utilicen.\\
-
-%En el contexto del desarrollo del prototipo planteado, el enfoque centralizado adoptado por SDN resulta ventajoso sobre un enfoque distribu\'ido. Permite operar con una infraestructura de red heterog\'enea sin dependencias tecnol\'ogicas con las diferentes marcas comerciales de equipos.\\
-
-%SDN propone un mecanismo estándar para la manipulaci\'on de los diferentes dispositivos de red. Al estar estandarizada la interfaz de comunicaci\'on entre el plano de datos y el plano de control, por citar un ejemplo el protocolo OpenFlow; queda determinado el mecanismo de comunicaci\'on y las capacidades funcionales con cualquier dispositivo del plano de datos independientemente de sus, arquitectura, API de funcionalidades, de si sea de naturaleza abierto o cerrado o marca comercial.\\ 
-
-%Por otro lado el mecanismo estándar y transparente que propone SDN para manipular los diferentes dispositivos de red, brinda flexibilidad y agilidad para el desarrollo de nuevos protocolos, facilitando la investigaci\'on e innovaci\'on.\\
-
-%A su vez SDN permite que la investigaci\'on y el desarrollo de nuevos servicios y protocolos convivan con servicios comerciales en una misma infraestructura; permitiendo de esta forma utilizar adicionalmente la plataforma de hardware disponible para la investigaco\'on. 
-
+En pocas palabras, SDN facilita notablemente la investigaci\'on e innovaci\'on en el desarrollo de nuevos servicios y protocolos, eliminando barreras en la manipulaci\'on de los diferentes dispositivos de red, y ganando libertad de los fabricantes de hardware.
 
 \section[¿Por qu\'e utilizar NetFPGA?]{¿Por qu\'e utilizar NetFPGA?}
 
-Se necesita para el desarrollo de este proyecto una plataforma tecnol\'ogica compatible con SDN y en particular con el protocolo OpenFlow.
+Se necesita para el desarrollo de este proyecto una plataforma tecnol\'ogica compatible con SDN y en particular con el protocolo OpenFlow con la cual desarrollar un prototipo. El hardware NetFPGA puede configurarse para construir dicha plataforma a un precio significativamente menor que el de un equipo comercial, con funcionalidades y capacidades suficientes para el desarrollo del prototipo. 
 
-NetFPGA posibilita la construcci\'on de una plataforma de desarrollo y pruebas compatible con OpenFlow a un precio significativamente menor que el de un equipo comercial, con funcionalidades y capacidades suficientes para el desarrollo del prototipo. A su vez se quiere estudiar la aplicabilidad del enfoque OpenFlow/SDN para la construcción de la RAU2, para lo cual es necesario adem\'as de la construcción de un prototipo implementar algunos casos de uso representativos sobre el mismo. 
+Por otro lado, como se quiere estudiar la aplicabilidad del enfoque OpenFlow/SDN en la construcción de la RAU2, es necesario adem\'as de la construcción de un prototipo implementar algunos casos de uso representativos sobre el mismo en una red experimental. Por tanto, es imperativo la construcción de un laboratorio de pruebas compuesto por un conjunto de nodos que de ser hardware comercial tendría un costo significativamente mayor que el hardware NetFPGA.
 
-Es imperativo la construcción de un laboratorio de pruebas compuesto por un conjunto de nodos que de ser hardware comercial tendría un costo significativamente mayor que el hardware NetFPGA.\\
-
-Por otro lado utilizar hardware reconfigurable tiene la ventaja de poder prototipar diferentes dispositivos de red en un mismo equipo. Se puede entonces modificar din\'amicamente el laboratorio de pruebas en función de los casos de uso que se quieran probar sin la necesidad de incorporar nuevo hardware. Adem\'as la capacidad para programar el hardware, permite sacar provecho de las características del mismo para la implementaci\'on de funcionalidades espec\'ificas para la RAU, que en hardware comercial solo se podrían implementar si el mismo ya tuviera incorporadas dichas funcionalidades.\\
+Otro de los beneficios de utilizar hardware reconfigurable, es la capacidad de prototipar diferentes dispositivos de red en un mismo equipo. Se puede modificar din\'amicamente el laboratorio de pruebas en función de los casos de uso que se quieran probar sin la necesidad de adquirir nuevo hardware, reutilizando el disponible. Adem\'as la capacidad para programar el hardware, permite sacar provecho de las características del mismo para la implementaci\'on de funcionalidades espec\'ificas para la RAU, que en hardware comercial solo se podrían implementar si el mismo ya tuviera incorporadas dichas funcionalidades.
 
 Finalmente la utilizaci\'on de hardware abierto, en conjunci\'on con software libre y de código abierto posibilitan la construcci\'on de lo que se podría llamar “Router Open Source”, un nodo para la nueva red académica basado en tecnologías abiertas. Esto otorgaría una mayor flexibilidad y capacidades de reutilizaci\'on del hardware disponible en la red académica avanzada.
 
 \section[¿Qu\'e arquitectura basada en SDN utilizar?]{¿Qu\'e arquitectura basada en SDN utilizar?}
-
-%En el cap\'itulo dedicado al estado del arte de las redes definidas por software, se explica en profundidad la arquitectura de SDN, y a partir del mismo queda completamente sanjada la diferencia entre los conceptos de SDN y OpenFlow por ejemplo.\\
-
-%Entonces, la primer decisi\'on de dise\~no importante a tener en cuenta es por cual implementaci\'on del enfoque SDN optar, puesto que las alternativas existentes son bien diferentes.\\
  
-Naturalmente, otra de las decisiones de dise\~no importantes a tomar es la elecci\'on de una de las arquitecturas existentes basadas en el enfoque SDN.\\
-  
-Dentro de las alternativas existentes, OpenFlow se presenta como una opci\'on madura y probada~\citep{Ofelia}. Como se mencion\'o en el estado del arte OpenFlow  se ha caracterizado por un desarrollo sostenido y una amplia adopci\'on tanto por la academia como por la industria, adem\'as de ser compatible con una amplia variedad de tecnolog\'ias. Debido a esto cuenta con una amplia comunidad de usuarios, extensa documentaci\'on y es soportado en varios productos comerciales\citep{Pica8}\citep{HP}\citep{Centec}\citep{SDNProductlist}. Finalmente se puede agregar que OpenFlow est\'a íntegramente desarrollado bajo la filosof\'ia Open Source (c\'odigo abierto). 
+Naturalmente, otra de las decisiones de dise\~no importantes a tomar es la elecci\'on de una de las arquitecturas existentes basadas en el enfoque SDN. Dentro de las alternativas existentes, OpenFlow se presenta como una opci\'on madura y probada~\citep{Ofelia}. Como se mencion\'o en el estado del arte OpenFlow  se ha caracterizado por un desarrollo sostenido y una amplia adopci\'on tanto por la academia como por la industria, adem\'as de ser compatible con una amplia variedad de tecnolog\'ias. Debido a esto cuenta con una amplia comunidad de usuarios, extensa documentaci\'on y es soportado en varios productos comerciales (algunos ejemplos son \citep{Pica8}, \citep{HP}, \citep{Centec} y
+ \citep{SDNProductlist}. Finalmente se puede agregar que OpenFlow est\'a íntegramente desarrollado bajo la filosof\'ia Open Source (c\'odigo abierto). 
 
-Por estas razones, se decide utilizar OpenFlow como la implementaci\'on de SDN en el desarrollo del prototipo.\\
+Por estas razones, se decide utilizar OpenFlow como la implementaci\'on de SDN en el desarrollo del prototipo.
 
-%[METER EN EL ESTADO DEL ARTE PARA JUSTIFICAR]
-%nace como idea en el a\~no 2008, y luego de varias versiones de desarrollo libera su primera versi\'on oficial(OpenFlow v1.0.0) a finales del a\~no 2009. Tras ello se ha caracterizado por un desarrollo sostenido, siendo actualmente su versi\'on oficial la 1.5.
-%[FIN]
-
-
-
-
-%Por otro lado en las sucesivas versiones de OpenFlow, se han incorporado diferentes caracter\'isticas y funcionalidades que hacen en la actualidad a la versi\'on 1.5 de OpenFlow, una alternativa vers\'atil, flexible y completa.\\
-
-OpenFlow ha ido incorporando nuevas funcionalidades a medida que evolucionaron las versiones del protocolo. Actualmente con cinco versiones estables entre las cuales se pueden destacar la versi\'on 1.4 (versi\'on disponible m\'as reciente al momento de iniciar este trabajo) y versi\'on 1.5 (versi\'on m\'as reciente al momento de culminar este trabajo). Se debe decidir entonces cu\'al es la versi\'on del protocolo a utilizar.\\
-
-Por otro lado la versi\'on de OpenFlow elegida debe garantizar ciertos requerimientos de dise\~no a los que el prototipo est\'a sujeto. En particular interesa que garantice:
+Por otro lado, OpenFlow ha ido incorporando nuevas funcionalidades a medida que evolucionaron las versiones del protocolo. Actualmente con cinco versiones estables entre las cuales se pueden destacar la versi\'on 1.4 (versi\'on disponible m\'as reciente al momento de iniciar este trabajo) y versi\'on 1.5 (versi\'on m\'as reciente al momento de culminar este trabajo). Se debe decidir entonces cu\'al es la versi\'on del protocolo a utilizar, teniendo en cuenta a su vez que la versi\'on elegida debe garantizar:
 
 \begin{itemize}
 \item Soporte para MPLS, tanto en la capacidad de reconocer los cabezales como para la manipulaci\'on de los mismos mediante las primitivas POP, PUSH y SWAP
 \item Soporte para calidad de servicios (QoS)
 \end{itemize}
 
-A partir de la versión 1.3.1 OpenFlow brinda tanto soporte completo para MPLS, así como también incorpora el concepto de métricas por flujo, orientado a implementar funcionalidades de QoS. 
-
-De esta forma, se decide utilizar la versión 1.3.1 pese a no ser la m\'as nueva para la construcción del prototipo. En la siguiente secci\'on veremos por qu\'e es de inter\'es trabajar con la versi\'on de OpenFlow m\'as sencilla y minimalista posible que d\'e soporte a todas las funcionalidades y restricciones impuestas sobre el prototipo.\\ 
-
-%Sobre la primer restricci\'on, OpenFlow brinda soporte completo para MPLS a partir de la versi\'on 1.3.1, mientras que en relaci\'on a QoS OpenFlow incorpora el concepto de métricas por flujo a partir de la version 1.3.1, orientado a implementar funcionalidades de QoS.\\
-
-%e esta forma la versi\'on m\'as b\'asica de OpenFlow que cumple con las restricciones de dise\~no %mencionadas es la versi\'on 1.3.1.\\
-
-%En la siguiente secci\'on veremos porque es de inter\'es trabajar con la versi\'on de OpenFlow m\'as sencilla y minimalista posible que d\'e soporte a todas las funcionalidades y restricciones impuestas sobre el prototipo.\\ 
+A partir de la versión 1.3.1 OpenFlow brinda tanto soporte completo para MPLS, así como también incorpora el concepto de métricas por flujo, orientado a implementar funcionalidades de QoS. Por ello se decide utilizar la versión 1.3.1 pese a no ser la m\'as nueva para la construcción del prototipo.
+ 
+En la siguiente secci\'on veremos por qu\'e es de inter\'es trabajar con la versi\'on de OpenFlow m\'as sencilla y minimalista posible que d\'e soporte a todas las funcionalidades y restricciones impuestas sobre el prototipo.
 
 \section[Alternativas de dise\~no para el router]{Alternativas de dise\~no para el router}
 
-Como se menciona en el cap\'itulo 1, una de las premisas para la construcción del prototipo es la utilizaci\'on del hardware NetFPGA. El mismo es utilizado en la construcción de cada nodo del prototipo; por lo que asumiendo el uso de OpenFlow en la arquitectura, es necesario partiendo del mismo obtener nodos compatibles con OpenFlow.\\ 
+Como se menciona en el cap\'itulo 1, una de las premisas para la construcción del prototipo es la utilizaci\'on del hardware NetFPGA. El mismo es utilizado en la construcción de cada nodo del prototipo; por lo que asumiendo el uso de OpenFlow en la arquitectura, es necesario partiendo del mismo obtener nodos compatibles con OpenFlow.
 
-Existen dos estrategias bien definidas para la construcci\'on un switch OpenFlow partiendo del hardware NetFPGA y utilizando los diferentes proyectos de la plataforma. Una de ellas es programar el hardware para que se comporte como un switch compatible con el protocolo OpenFlow y la otra es programar el hardware para que se comporte como una tarjeta de red estándar, e implementar todo el comportamiento de un switch OpenFlow en software.\\
+Existen dos estrategias bien definidas para la construcci\'on un switch OpenFlow partiendo del hardware NetFPGA y utilizando los diferentes proyectos de la plataforma. Una de ellas es programar el hardware para que se comporte como un switch compatible con el protocolo OpenFlow y la otra es programar el hardware para que se comporte como una tarjeta de red estándar, e implementar todo el comportamiento de un switch OpenFlow en software.
 
-Para la primer estrategia se cuenta con un proyecto de la plataforma y disponible libremente en el repositorio de c\'odigo fuente. No obstante este proyecto presenta una dificultad y es que a pesar de haber sido dise\~nado para soportar en un futuro cualquier versi\'on disponible del protocolo OpenFlow, en su versi\'on actual solo soporta un conjunto reducido de funcionalidades de la versi\'on 1.0 de dicho protocolo. 
+Para la primer estrategia se cuenta con un proyecto de la plataforma y disponible libremente en el repositorio de c\'odigo fuente. No obstante este proyecto presenta una dificultad y es que a pesar de haber sido dise\~nado para soportar en un futuro cualquier versi\'on disponible del protocolo OpenFlow, en su versi\'on actual solo soporta un conjunto reducido de funcionalidades de la versi\'on 1.0 de dicho protocolo. Como se mencion\'o anteriormente la m\'inima versi\'on de este protocolo que permite soportar el conjunto de requerimientos es la versi\'on 1.3.1. Esto conlleva a la necesidad de extender el proyecto existente, para soportar las nuevas caracter\'isticas incorporadas en las sucesivas versiones posteriores a la 1.0, \'o al menos aquellas que son esenciales para soportar las caracter\'isticas pretendidas sobre el prototipo.
 
-Como se mencion\'o anteriormente la m\'inima versi\'on de este protocolo que permite soportar el conjunto de requerimientos es la versi\'on 1.3.1. Esto conlleva a la necesidad de extender el proyecto existente, para soportar las nuevas caracter\'isticas incorporadas en las sucesivas versiones posteriores a la 1.0, \'o al menos aquellas que son esenciales para soportar las caracter\'isticas pretendidas sobre el prototipo.\\
-
-Para la segunda estrategia se cuenta con un proyecto de la plataforma NetFPGA denominado ReferenceNIC. Este proyecto habilita a programar el hardware para que se comporte como una placa de red estándar. Adicionalmente se debe incluir o desarrollar herramientas que permitan implementar por software el comportamiento de un switch OpenFlow. En particular sobre este \'ultimo punto vale la pena destacar la existencia de Open vSwitch, herramienta que entre otras caracter\'isticas realiza esto mismo utilizando hardware convencional como una placa de red estándar.\\
+Para la segunda estrategia se cuenta con un proyecto de la plataforma NetFPGA denominado ReferenceNIC. Este proyecto habilita a programar el hardware para que se comporte como una placa de red estándar. Adicionalmente se debe incluir o desarrollar herramientas que permitan implementar por software el comportamiento de un switch OpenFlow. En particular sobre este \'ultimo punto vale la pena destacar la existencia de Open vSwitch, herramienta que entre otras caracter\'isticas realiza esto mismo utilizando hardware convencional como una placa de red estándar.
 
 En las tablas \ref{table:EOFP} y \ref{table:RNIC} se exponen comparativamente las principales ventajas y desventajas de cada alternativa.
 
-\newpage
-%%% Tabla Ventajas y Desventajas de ambas alternativas
-\begin{table}[!Ht]\centering\small
+\begin{table}[h]\centering\small
 \begin{tabularx}{\textwidth}{|>{\setlength\hsize{1.0\hsize}\setlength\linewidth{\hsize}}X|>{\setlength\hsize{1.0\hsize}\setlength\linewidth{\hsize}}X|}
 \hline
 \multicolumn{2}{|c|}{Ventajas}\\ \hline 
@@ -198,7 +141,8 @@ Extender proyecto OpenFlow NetFPGA & ReferenceNIC + Open vSwitch\\
 \label{table:EOFP}
 \end{table}
 
-\begin{table}[!HT]\centering\small
+\newpage
+\begin{table}[!Ht]\centering\small
 \begin{tabularx}{\textwidth}{|>{\setlength\hsize{1.0\hsize}\setlength\linewidth{\hsize}}X|>{\setlength\hsize{1.0\hsize}\setlength\linewidth{\hsize}}X|}
 \hline
 \multicolumn{2}{|c|}{Desventajas}\\ \hline
@@ -225,17 +169,13 @@ Extender proyecto OpenFlow NetFPGA & ReferenceNIC + Open vSwitch\\
 \label{table:RNIC}
 \end{table}
 
-\clearpage
-\newpage
-Teniendo presente el alcance del proyecto y el tiempo disponible para su ejecuci\'on, se opt\'o por la  estrategia de programar el hardware con el proyecto ReferenceNIC e implementar en software funcionalidades de OpenFlow. 
-
-Con esta estrategia se logra obtener en forma rápida un prototipo de switch OpenFlow con el cual trabajar en la implementaci\'on del plano de control, desarrollando estrategias para construir servicios en una red h\'ibrida IP/MPLS, as\'i como dise\~nar casos de uso y un laboratorio de pruebas que permitan validar tecnol\'ogicamente la soluci\'on propuesta.\\ 
+Teniendo presente el alcance del proyecto y el tiempo disponible para su ejecuci\'on, se opt\'o por la  estrategia de programar el hardware con el proyecto ReferenceNIC e implementar en software funcionalidades de OpenFlow. Con esta estrategia se logra obtener en forma rápida un prototipo de switch OpenFlow con el cual trabajar en la implementaci\'on del plano de control, desarrollando estrategias para construir servicios en una red h\'ibrida IP/MPLS, as\'i como dise\~nar casos de uso y un laboratorio de pruebas que permitan validar tecnol\'ogicamente la soluci\'on propuesta.
 
 
 \section[¿Qu\'e implementaci\'on de Controlador OpenFlow utilizar?]{¿Qu\'e implementaci\'on de Controlador OpenFlow \\ utilizar?}
-En el desarrollo de este proyecto, basándose en el estudio del estado del arte de las redes definidas por software realizado y en particular en el estudio sobre los controladores OpenFlow disponibles, se plantean dos alternativas que se ajustan bien a los requerimientos de este proyecto.
+En el desarrollo de este proyecto, basándose en el estudio del estado del arte de las redes definidas por software realizado y en particular en el estudio sobre los controladores OpenFlow disponibles, se plantean dos alternativas que se ajustan bien a los requerimientos de este proyecto. Estas alternativas surgen de analizar todas las propuestas estudiadas y comparadas en la tabla \ref{table:Controladores}. 
 
-Estas alternativas surgen de analizar todas las propuestas estudiadas y comparadas en la tabla \ref{table:Controladores}. De todas ellas se eligen las propuestas OpenDaylight y Ryu puesto que est\'an desarrolladas bajo la filosofía de software libre y de código abierto, cuentan con soporte, tienen una buena comunidad de usuarios, soportan el protocolo OpenFlow en su versi\'on 1.3.1 y son las dos propuestas m\'as utilizadas en la comunidad SDN/OpenFlow en la actualidad.\\
+Se elige dentro de este conjunto, las propuestas OpenDaylight y Ryu puesto que est\'an desarrolladas bajo la filosofía de software libre y de código abierto, cuentan con soporte, tienen una buena comunidad de usuarios, soportan el protocolo OpenFlow en su versi\'on 1.3.1 y son las dos propuestas m\'as utilizadas en la comunidad SDN/OpenFlow en la actualidad.
 
 Para elegir el controlador a utilizar en el prototipo, se instalan ambas implementaciones y utilizando el entorno de emulación Mininet se desarrollan pequeñas aplicaciones para cada alternativa. Comparando los resultados obtenidos y evaluando principalmente la expresividad y facilidad para el desarrollo de aplicaciones en cada entorno se resuelve utilizar el controlador Ryu para la implementaci\'on del prototipo de acuerdo a las siguientes razones:
 
