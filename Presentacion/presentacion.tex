@@ -82,8 +82,19 @@
 \usepackage{graphicx} % Allows including images
 \usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
 
+\usepackage{subcaption}
+\captionsetup{compatibility=false}
+
 \renewcommand\footnotemark{}
 \renewcommand\footnoterule{}
+
+\usepackage[export]{adjustbox}
+\usepackage{wrapfig}
+
+
+\newenvironment{figure*}%
+{\begin{figure}}
+{\end{figure}}
 
 %----------------------------------------------------------------------------------------
 %	TITLE PAGE
@@ -116,7 +127,10 @@ Instituto de Computaci\'on \\ Facultad de Ingeniería \\ Universidad de la Repú
 %	PRESENTATION SLIDES
 %----------------------------------------------------------------------------------------
 
+
 %------------------------------------------------
+\section{Motivaci\'on} 
+
 \begin{frame}
 \frametitle{Motivaci\'on} 
 
@@ -127,7 +141,7 @@ Internet no parece apropiada para su utilizaci\'on en el contexto académico en 
 \begin{figure}[h] 
 \centering    
 \includegraphics[width=0.7\textwidth]{imagenes/redesAcademicas.png}
-\label{fig:4DProject}
+\label{fig:AcademicNetworks}
 \end{figure}
 
 \end{frame}
@@ -146,7 +160,7 @@ Remplazo de la actual red académica, es una red avanzada de altas prestaciones 
 \begin{figure}[h] 
 \centering    
 \includegraphics[width=0.3\textwidth]{imagenes/logorau2.png}
-\label{fig:4DProject}
+\label{fig:RAU}
 \end{figure}
 
 \end{frame}
@@ -154,15 +168,51 @@ Remplazo de la actual red académica, es una red avanzada de altas prestaciones 
 \begin{frame}
 \frametitle{Motivaci\'on} 
 
-\begin{block}{Desarrollo e innovacion en el area}
-Los equipos de red de backbone comerciales son caros y limitados a las funcionalidades de una API generalmente propietaria.
+\begin{block}{Hardware comercial}
+Los equipos de red de backbone comerciales como HP, CISCO, Juniper son costos y generalmente de naturaleza cerrada. Las funcionalidades del hardware se restringen a las funcionalidades expuesta por
+una API propietaria. 
 \end{block}
+
+\begin{figure}[htp]
+\centering
+\includegraphics[width=.25\textwidth]{imagenes/corerouter2.png}\hfill
+\includegraphics[width=.35\textwidth]{imagenes/corerouter1.png}\hfill
+\includegraphics[width=.35\textwidth]{imagenes/corerouter3.jpg}
+\label{fig:figure3}
+\end{figure}
 \end{frame}
 %------------------------------------------------
 
 %------------------------------------------------
-\section{Conceptos preliminares} 
+\section{Definición del problema} 
+
+
+\begin{frame}
+\frametitle{Definición del problema} 
+
+\begin{block}{Definición del Problema }
+Definir el problema de forma breve y concisa
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Definición del problema} 
+
+\begin{block}{Objetivos}
+Enumerar los principales objetivos
+\end{block}
+
+\begin{block}{Resultados esperados}
+Enumerar los principales resultados esperados
+\end{block}
+
+\end{frame}
+
 %------------------------------------------------
+
+%------------------------------------------------
+\section{Conceptos preliminares} 
+
 
 \begin{frame}
 \frametitle{SDN-Enfoque tradicional} 
@@ -209,57 +259,56 @@ Y mostrar imagen enfoque tradicional vs sdn
 
 \end{frame}
 
-\begin{comment}
-SDN 
 
-PUNTO DE CONTROL CENTRALIZADO DE LA RED
-BUSCAR OTROS EJEMPLOS DE implementaciones SDN
+%SDN 
+%
+%PUNTO DE CONTROL CENTRALIZADO DE LA RED
+%BUSCAR OTROS EJEMPLOS DE implementaciones SDN
+%
+%EJEMPLOS DE PLANO DE CONTROL, ospfd, firewalls etc
+%
+%
+%Alternativa al enfoque tradicional
+%EN SDN MOSTRAR UNA IMAGEN DE ARQUITECTURA ACTUAL Y 
+%ARQUITECTURA SDN
+%Pueden ser parecidas a esto:
+%http://millennialmainframer.com/2012/09/the-mainframe-and-software-defined-networking/
+%http://www.aryaka.com/why-sdn-concepts-need-to-extend-into-the-wan/
+%
+%
+%Es una solucion abierta de SDN
+%
+%Define una arquitectura
+%
+%
+%-----Elegir una imagen que muestre las apps arriba del controler
+% y explicar como se programa------
+%COntrolador
+%(Interfaz sur
+%Interfaz norte
+%Interfaz este-oeste)
+%Protocolo
+%Dispositivo opewnflow-capable(Canal openflow, tablas)
+%----------------------
+%
+%Define un protocolo y una estructura de mensaje
+%
+%
+%Define un protocolo de red que permite comunicar el controlador(plano de control) 
+%con los dispositivos (plano de datos)
+%Rapido hablar de los tres tipos de mensajes(Controlador a disp,asinc, simetricos(keepalives,echos))
+%
+%Define la estructura de la tabla de flujos
+%
+%(Match field)
+%Que match fields? Mostrar una imagen con ether, mpls tpc ip
+%
+%(Contador, estadisticas por flujo)
+%Instrucciones(Que hacer? reenviar ,modificar y reenviar, broadcast, multicast, normal).
+%
+%
+%Ventajas y desventajas?
 
-EJEMPLOS DE PLANO DE CONTROL, ospfd, firewalls etc
-
-
-Alternativa al enfoque tradicional
-EN SDN MOSTRAR UNA IMAGEN DE ARQUITECTURA ACTUAL Y 
-ARQUITECTURA SDN
-Pueden ser parecidas a esto:
-http://millennialmainframer.com/2012/09/the-mainframe-and-software-defined-networking/
-http://www.aryaka.com/why-sdn-concepts-need-to-extend-into-the-wan/
-
-
-Es una solucion abierta de SDN
-
-Define una arquitectura
-
-
------Elegir una imagen que muestre las apps arriba del controler
- y explicar como se programa------
-COntrolador
-(Interfaz sur
-Interfaz norte
-Interfaz este-oeste)
-Protocolo
-Dispositivo opewnflow-capable(Canal openflow, tablas)
-----------------------
-
-Define un protocolo y una estructura de mensaje
-
-
-Define un protocolo de red que permite comunicar el controlador(plano de control) 
-con los dispositivos (plano de datos)
-Rapido hablar de los tres tipos de mensajes(Controlador a disp,asinc, simetricos(keepalives,echos))
-
-Define la estructura de la tabla de flujos
-
-(Match field)
-Que match fields? Mostrar una imagen con ether, mpls tpc ip
-
-(Contador, estadisticas por flujo)
-Instrucciones(Que hacer? reenviar ,modificar y reenviar, broadcast, multicast, normal).
-
-
-Ventajas y desventajas?
-
-\end{comment}
 
 
 \begin{frame}
@@ -283,7 +332,79 @@ Ventajas y desventajas?
 \begin{frame}
 \frametitle{Arquitectura de la soluci\'on} 
 
+Poner una imagen de la arquitectura esperada basada en SDN
+plano de control, plano de datos dispositivos OpenFlow capaz, etc. Mi idea es ahi explicar
+las cuestiones que hay que atacar. En el trabajo hay que implementar:
+1) Plano de Control
+2) Dispisitivos SDN/OpenFlow
+
+Redondear ambas lineas de trabajo mientras se explica asi se pasa en las siguientes ppt a hablar de eso
+
 \end{frame}
+
+\begin{frame}
+\frametitle{Arquitectura de la soluci\'on} 
+
+\begin{minipage}{0.60\textwidth}
+Switch OpenFlow
+
+Dos alternativas: Mencionarlas (NetFPGA + Openflow, ...)
+
+Mostrar las dos fotos del stack Plano Control - Dispositivo con los building blocks
+
+\end{minipage}
+\hfill
+\begin{minipage}{0.30\textwidth}
+\begin{figure}[H]
+\raggedright
+\includegraphics[width=1.0\textwidth, right]{imagenes/BuilidngBlocks1.png}
+\end{figure}
+\end{minipage} 
+
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Arquitectura de la soluci\'on} 
+
+Controlador
+
+Utilizamos Ryu blablabla....
+
+Mostrar las dos fotos del stack Plano Control - Dispositivo con los building blocks
+\end{frame}
+
+\begin{frame}
+\frametitle{Arquitectura de la soluci\'on} 
+
+\onslide<1->{Algoritmo de ruteo}
+
+\onslide<2->{OSPF para el descubrimiento de la topologia y algoritmo de ruteo centralizado
+
+Mostrar las dos fotos del stack Plano Control - Dispositivo con los building blocks}
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Arquitectura de la soluci\'on} 
+
+Mapeo de puertos a direcciones IP
+
+SNMP
+
+Mostrar las dos fotos del stack Plano Control - Dispositivo con los building blocks
+\end{frame}
+
+\begin{frame}
+\frametitle{Arquitectura de la soluci\'on} 
+
+Esbozo de arquitectura final
+
+misma imagen que la inicial pero con los building blocks
+\end{frame}
+
 %------------------------------------------------
 
 %------------------------------------------------
