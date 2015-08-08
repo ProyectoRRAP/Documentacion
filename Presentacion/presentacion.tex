@@ -166,8 +166,87 @@ Los equipos de red de backbone comerciales son caros y limitados a las funcional
 
 \begin{frame}
 \frametitle{SDN} 
+Enfoque arquitectonico alternativo al enfoque tradicional de redes.
+
+En el enfoque tradicional tenemos que la inteligencia de la red se encuentra
+distribuida en los mismos dispositivos que reenvian la informacion
+
+%Imagen enfoque tradicional
+
 
 \end{frame}
+
+\begin{frame}
+\frametitle{SDN} 
+Se habla de plano de control y plano de datos.
+El plano de control donde reside la inteligencia de la red
+ejemplos son: algoritmos de ruteo tradicionales, OSPF, RIP,Firewalls
+
+Plano de datos: 
+
+%Imagen enfoque tradicional
+
+\end{frame}
+
+\begin{frame}
+\frametitle{SDN} 
+Definicion:
+Y mostrar imagen enfoque tradicional vs sdn
+
+\end{frame}
+
+\begin{comment}
+SDN 
+
+PUNTO DE CONTROL CENTRALIZADO DE LA RED
+BUSCAR OTROS EJEMPLOS DE implementaciones SDN
+
+EJEMPLOS DE PLANO DE CONTROL, ospfd, firewalls etc
+
+
+Alternativa al enfoque tradicional
+EN SDN MOSTRAR UNA IMAGEN DE ARQUITECTURA ACTUAL Y 
+ARQUITECTURA SDN
+Pueden ser parecidas a esto:
+http://millennialmainframer.com/2012/09/the-mainframe-and-software-defined-networking/
+http://www.aryaka.com/why-sdn-concepts-need-to-extend-into-the-wan/
+
+
+Es una solucion abierta de SDN
+
+Define una arquitectura
+
+
+-----Elegir una imagen que muestre las apps arriba del controler
+ y explicar como se programa------
+COntrolador
+(Interfaz sur
+Interfaz norte
+Interfaz este-oeste)
+Protocolo
+Dispositivo opewnflow-capable(Canal openflow, tablas)
+----------------------
+
+Define un protocolo y una estructura de mensaje
+
+
+Define un protocolo de red que permite comunicar el controlador(plano de control) 
+con los dispositivos (plano de datos)
+Rapido hablar de los tres tipos de mensajes(Controlador a disp,asinc, simetricos(keepalives,echos))
+
+Define la estructura de la tabla de flujos
+
+(Match field)
+Que match fields? Mostrar una imagen con ether, mpls tpc ip
+
+(Contador, estadisticas por flujo)
+Instrucciones(Que hacer? reenviar ,modificar y reenviar, broadcast, multicast, normal).
+
+
+Ventajas y desventajas?
+
+\end{comment}
+
 
 \begin{frame}
 \frametitle{OpenFlow} 
