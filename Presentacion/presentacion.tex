@@ -191,7 +191,8 @@ una API propietaria.
 \frametitle{Definición del problema} 
 
 \begin{block}{Definición del Problema }
-Definir el problema de forma breve y concisa
+Constru\'ir un prototipo para la RAU2 utilizando como plataforma PCs con placas de red aceleradas en hardware reconfigurable NetFPGA y el enfoque de las Redes Definidas por Software (SDN).
+
 \end{block}
 \end{frame}
 
@@ -203,7 +204,11 @@ Enumerar los principales objetivos
 \end{block}
 
 \begin{block}{Resultados esperados}
-Enumerar los principales resultados esperados
+\begin{itemize}
+\item Estado del arte en Redes Definidas por Software y hardware NetFPGA
+\item Prototipo de aplicaci\'on de gesti\'on de red utilizando SDN y el hardware NetFPGA enfocado en los requerimientos recabados sobre la RAU2
+\item Diseño e implementaci\'on de pruebas de verificaci\'on para el prototipo construido
+\end{itemize}
 \end{block}
 
 \end{frame}
@@ -422,7 +427,66 @@ misma imagen que la inicial pero con los building blocks
 \begin{frame}
 \frametitle{Conclusiones} 
 
+\begin{itemize}
+\item Se realiz\'o una investigaci\'on en profundidad del estado del arte de las redes definidas por software (SDN) y la plataforma de hardware NetFPGA
+
+\item Se implement\'o un prototipo de red de backbone utilizando el hardware NetFPGA y el enfoque SDN
+
+\item Se implement\'o un conjunto de pruebas para la verificaci\'on del prototipo construido 
+
+\end{itemize}
 \end{frame}
+
+\begin{frame}
+\frametitle{Conclusiones} 
+
+\begin{itemize}
+\item Se realiz\'o una investigaci\'on en profundidad del estado del arte de las redes definidas por software (SDN) y la plataforma de hardware NetFPGA
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Conclusiones} 
+
+Se implement\'o un prototipo de red de backbone utilizando el hardware NetFPGA y el enfoque SDN:
+
+\begin{itemize}
+\item \textbf{RAUswitch} Se construy\'o un router de backbone IP/MPLS compatible con el protocolo OpenFlow y OSPF utilizando el hardware NetFPGA
+
+\item \textbf{RAUflow} Se implement\'o una aplicaci\'on de gesti\'on de red utilizando el enfoque SDN con funcionalidades para la definici\'on de redes privadas virtuales
+
+\begin{itemize}
+\item Redefinici\'on del concepto de FEC
+\item Clasificaci\'on de tr\'afico mediante protocolo OpenFlow 1.3.1
+\item Algoritmo de ruteo din\'amico SPF centralizado
+\end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Conclusiones} 
+
+Se construy\'o un laboratorio de pruebas para la verificaci\'on del prototipo:
+
+\begin{itemize}
+\item Se verific\'o algoritmo de ruteo, distribuci\'on de etiquetas y clasificaci\'on de tr\'afico 
+
+\item Se implement\'o el caso de uso VPN L3 Multipunto en un escenario de dos organizaciones con dos sucursales
+
+\item Se implement\'o el caso de uso VPN L2 Punto a Punto 
+
+\end{itemize}
+
+\end{frame}
+
+%Se implement ́o un prototipo de red de backbone utilizando el
+%hardware NetFPGA y el enfoque SDN
+%Se implement ́o un conjunto de pruebas para la verificaci ́on del
+%prototipo construido
+
 %------------------------------------------------
 
 %------------------------------------------------
