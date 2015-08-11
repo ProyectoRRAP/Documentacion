@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1439250850 "presentacion.tex" "presentacion.pdf" "presentacion" 1439250853
+["pdflatex"] 1439252751 "presentacion.tex" "presentacion.pdf" "presentacion" 1439252754
   "/etc/texmf/web2c/texmf.cnf" 1429299280 1101 af7716885e081ab43982cab7b4672c1a ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1272929888 3287 e6b82fe08f5336d4d5ebc73fb1152e87 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
@@ -205,16 +205,16 @@
   "imagenes/corerouter3.jpg" 1439067334 360954 2749e35939e95dca445efdaaa407f29d ""
   "imagenes/logorau2.png" 1438559231 8804 fc51248275e6827bea119e5ee7e3b68b ""
   "imagenes/redesAcademicas.png" 1438558544 670943 7a6c43e088b614aeeebe12510073c271 ""
-  "presentacion.aux" 1439250853 7207 f8167e5b4cf0ecb987a51ec2ba92f64a ""
-  "presentacion.nav" 1439250853 3765 2d107f8a779a09c09100c7f453b80906 ""
-  "presentacion.out" 1439250853 381 33717fbe8a45d2bbf167d23af2fb3163 ""
-  "presentacion.tex" 1439250848 13794 2279397b185d350a6d05c0320f186a7f ""
-  "presentacion.toc" 1439250853 462 76731344d7b8f09160fbafa8837247cf ""
+  "presentacion.aux" 1439252754 7465 b1da76b3ee22f061c83a7b6bdd57e023 ""
+  "presentacion.nav" 1439252754 3951 4741d4f720508bdd42ac8388c945f35f ""
+  "presentacion.out" 1439252754 381 33717fbe8a45d2bbf167d23af2fb3163 ""
+  "presentacion.tex" 1439252749 15234 b58c705fe2763c03b5454f20b60aee48 ""
+  "presentacion.toc" 1439252754 462 206fe39b72ad7654eefc17cae463d953 ""
   (generated)
-  "presentacion.aux"
-  "presentacion.toc"
-  "presentacion.log"
-  "presentacion.nav"
-  "presentacion.out"
   "presentacion.pdf"
+  "presentacion.log"
+  "presentacion.out"
+  "presentacion.nav"
+  "presentacion.toc"
+  "presentacion.aux"
   "presentacion.snm"
