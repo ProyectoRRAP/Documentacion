@@ -91,6 +91,7 @@
 \usepackage[export]{adjustbox}
 \usepackage{wrapfig}
 
+\usepackage{textpos}
 
 \newenvironment{figure*}%
 {\begin{figure}}
@@ -350,6 +351,39 @@ Redondear ambas lineas de trabajo mientras se explica asi se pasa en las siguien
 \begin{frame}
 \frametitle{Arquitectura de la soluci\'on} 
 
+\textbf{Construir un switch OpenFlow} 
+
+\vspace{0.3cm}
+Se identifican dos alternativas: 
+\begin{enumerate}
+\item Proyecto OpenFlow
+\item Proyecto ReferenceNIC m\'as implementaci\'on OF en software (Open vSwitch)
+\end{enumerate}
+
+\begin{table}[]
+\small
+\centering
+\label{label}
+\begin{tabular}{| p{5cm} | p{5cm} |}
+
+\hline
+\multicolumn{1}{|c|}{(1) OpenFlow } & \multicolumn{1}{c|}{(2) ReferenceNIC y OvS } \\
+\hline
+Velocidad de procesamiento & Prototipaci\'on agil \\
+Utilizaci\'on del hardaware &  Tiempo libre para investigaci\'on \\
+Conocimiento espec\'ifico &  No hay que utilizar HDLs \\
+Licencias full &  Licencias econ\'omicas \\
+
+\hline  
+\end{tabular}
+\end{table}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Arquitectura de la soluci\'on} 
+
 \begin{minipage}{0.60\textwidth}
 Switch OpenFlow
 
@@ -362,52 +396,291 @@ Mostrar las dos fotos del stack Plano Control - Dispositivo con los building blo
 \begin{minipage}{0.30\textwidth}
 \begin{figure}[H]
 \raggedright
-\includegraphics[width=1.0\textwidth, right]{imagenes/BuilidngBlocks1.png}
+\includegraphics[width=1.0\textwidth, right]{imagenes/Stack.png}
 \end{figure}
 \end{minipage} 
 
+\pause
 
+\begin{textblock}{3}(11.47,-2.9)
+\begin{minipage}{\textwidth}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.1cm}
+\includegraphics[width=0.53\textwidth, right]{imagenes/buildingbnetfpga.png}
+\end{minipage}
+\end{textblock}
+
+\begin{textblock}{3}(11.47,-4.2)
+\begin{minipage}{\textwidth}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.1cm}
+\includegraphics[width=0.53\textwidth, right]{imagenes/buildingblockovs.png}
+\end{minipage}
+\end{textblock}
 
 \end{frame}
 
 \begin{frame}
 \frametitle{Arquitectura de la soluci\'on} 
 
+
+\begin{minipage}{0.60\textwidth}
 Controlador
 
 Utilizamos Ryu blablabla....
 
 Mostrar las dos fotos del stack Plano Control - Dispositivo con los building blocks
+
+\end{minipage}
+\hfill
+\begin{minipage}{0.30\textwidth}
+\begin{figure}[H]
+\raggedright
+\includegraphics[width=1.0\textwidth, right]{imagenes/Stack.png}
+\end{figure}
+\end{minipage} 
+
+\begin{textblock}{3}(11.47,-2.9)
+\begin{minipage}{\textwidth}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.1cm}
+\includegraphics[width=0.53\textwidth, right]{imagenes/buildingbnetfpga.png}
+\end{minipage}
+\end{textblock}
+
+\begin{textblock}{3}(11.47,-4.2)
+\begin{minipage}{\textwidth}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.1cm}
+\includegraphics[width=0.53\textwidth, right]{imagenes/buildingblockovs.png}
+\end{minipage}
+\end{textblock}
+
+\pause
+
+\begin{textblock}{3}(9.55,-2.9)
+\begin{minipage}{\textwidth}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.1cm}
+\includegraphics[width=0.53\textwidth, right]{imagenes/buildingblockryu.png}
+\end{minipage}
+\end{textblock}
+
 \end{frame}
 
 \begin{frame}
 \frametitle{Arquitectura de la soluci\'on} 
 
+\begin{minipage}{0.60\textwidth}
 \onslide<1->{Algoritmo de ruteo}
 
 \onslide<2->{OSPF para el descubrimiento de la topologia y algoritmo de ruteo centralizado
 
 Mostrar las dos fotos del stack Plano Control - Dispositivo con los building blocks}
 
+\end{minipage}
+\hfill
+\begin{minipage}{0.30\textwidth}
+\begin{figure}[H]
+\raggedright
+\includegraphics[width=1.0\textwidth, right]{imagenes/Stack.png}
+\end{figure}
+\end{minipage} 
+
+\begin{textblock}{3}(11.47,-2.9)
+\begin{minipage}{\textwidth}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.1cm}
+\includegraphics[width=0.53\textwidth, right]{imagenes/buildingbnetfpga.png}
+\end{minipage}
+\end{textblock}
+
+\begin{textblock}{3}(11.47,-4.2)
+\begin{minipage}{\textwidth}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.1cm}
+\includegraphics[width=0.53\textwidth, right]{imagenes/buildingblockovs.png}
+\end{minipage}
+\end{textblock}
+
+\begin{textblock}{3}(9.55,-2.9)
+\begin{minipage}{\textwidth}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.1cm}
+\includegraphics[width=0.53\textwidth, right]{imagenes/buildingblockryu.png}
+\end{minipage}
+\end{textblock}
+
+\pause
+
+\begin{textblock}{3}(11.47,-5.5)
+\begin{minipage}{\textwidth}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.1cm}
+\includegraphics[width=0.53\textwidth, right]{imagenes/buildingblockquagga.png}
+\end{minipage}
+\end{textblock}
+
+\begin{textblock}{3}(9.55,-4.2)
+\begin{minipage}{\textwidth}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.1cm}
+\includegraphics[width=0.53\textwidth, right]{imagenes/buildingblockquagga.png}
+\end{minipage}
+\end{textblock}
 
 \end{frame}
 
 \begin{frame}
 \frametitle{Arquitectura de la soluci\'on} 
 
+\begin{minipage}{0.60\textwidth}
+RAUFlow App algoritmo de ruteo, clasificacion de trafico, LDP etc
+\end{minipage}
+\hfill
+\begin{minipage}{0.30\textwidth}
+\begin{figure}[H]
+\raggedright
+\includegraphics[width=1.0\textwidth, right]{imagenes/Stack.png}
+\end{figure}
+\end{minipage} 
+
+\begin{textblock}{3}(11.47,-2.9)
+\begin{minipage}{\textwidth}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.1cm}
+\includegraphics[width=0.53\textwidth, right]{imagenes/buildingbnetfpga.png}
+\end{minipage}
+\end{textblock}
+
+\begin{textblock}{3}(11.47,-4.2)
+\begin{minipage}{\textwidth}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.1cm}
+\includegraphics[width=0.53\textwidth, right]{imagenes/buildingblockovs.png}
+\end{minipage}
+\end{textblock}
+
+\begin{textblock}{3}(9.55,-2.9)
+\begin{minipage}{\textwidth}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.1cm}
+\includegraphics[width=0.53\textwidth, right]{imagenes/buildingblockryu.png}
+\end{minipage}
+\end{textblock}
+
+\begin{textblock}{3}(11.47,-5.5)
+\begin{minipage}{\textwidth}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.1cm}
+\includegraphics[width=0.53\textwidth, right]{imagenes/buildingblockquagga.png}
+\end{minipage}
+\end{textblock}
+
+\begin{textblock}{3}(9.55,-4.2)
+\begin{minipage}{\textwidth}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.1cm}
+\includegraphics[width=0.53\textwidth, right]{imagenes/buildingblockquagga.png}
+\end{minipage}
+\end{textblock}
+
+\pause
+
+\begin{textblock}{3}(9.55,-5.5)
+\begin{minipage}{\textwidth}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.1cm}
+\includegraphics[width=0.53\textwidth, right]{imagenes/buldingblockrauflow.png}
+\end{minipage}
+\end{textblock}
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Arquitectura de la soluci\'on} 
+
+\begin{minipage}{0.60\textwidth}
 Mapeo de puertos a direcciones IP
 
 SNMP
 
 Mostrar las dos fotos del stack Plano Control - Dispositivo con los building blocks
-\end{frame}
+\end{minipage}
+\hfill
+\begin{minipage}{0.30\textwidth}
+\begin{figure}[H]
+\raggedright
+\includegraphics[width=1.0\textwidth, right]{imagenes/Stack.png}
+\end{figure}
+\end{minipage} 
 
-\begin{frame}
-\frametitle{Arquitectura de la soluci\'on} 
+\begin{textblock}{3}(11.47,-2.9)
+\begin{minipage}{\textwidth}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.1cm}
+\includegraphics[width=0.53\textwidth, right]{imagenes/buildingbnetfpga.png}
+\end{minipage}
+\end{textblock}
 
-Esbozo de arquitectura final
+\begin{textblock}{3}(11.47,-4.2)
+\begin{minipage}{\textwidth}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.1cm}
+\includegraphics[width=0.53\textwidth, right]{imagenes/buildingblockovs.png}
+\end{minipage}
+\end{textblock}
 
-misma imagen que la inicial pero con los building blocks
+\begin{textblock}{3}(9.55,-2.9)
+\begin{minipage}{\textwidth}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.1cm}
+\includegraphics[width=0.53\textwidth, right]{imagenes/buildingblockryu.png}
+\end{minipage}
+\end{textblock}
+
+\begin{textblock}{3}(11.47,-5.5)
+\begin{minipage}{\textwidth}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.1cm}
+\includegraphics[width=0.53\textwidth, right]{imagenes/buildingblockquagga.png}
+\end{minipage}
+\end{textblock}
+
+\begin{textblock}{3}(9.55,-4.2)
+\begin{minipage}{\textwidth}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.1cm}
+\includegraphics[width=0.53\textwidth, right]{imagenes/buildingblockquagga.png}
+\end{minipage}
+\end{textblock}
+
+\begin{textblock}{3}(9.55,-5.5)
+\begin{minipage}{\textwidth}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.1cm}
+\includegraphics[width=0.53\textwidth, right]{imagenes/buldingblockrauflow.png}
+\end{minipage}
+\end{textblock}
+
+\pause
+
+\begin{textblock}{3}(9.55,-6.8)
+\begin{minipage}{\textwidth}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.1cm}
+\includegraphics[width=0.53\textwidth, right]{imagenes/buildingblockadminsnmp.png}
+\end{minipage}
+\end{textblock}
+
+\begin{textblock}{3}(11.47,-6.8)
+\begin{minipage}{\textwidth}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.1cm}
+\includegraphics[width=0.53\textwidth, right]{imagenes/buildingblockagentesnmp.png}
+\end{minipage}
+\end{textblock}
 \end{frame}
 
 %------------------------------------------------
