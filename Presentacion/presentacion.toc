@@ -3,7 +3,7 @@
 \beamer@sectionintoc {1}{Motivaci\'on}{3}{0}{1}
 \beamer@sectionintoc {2}{Definici\IeC {\'o}n del problema}{6}{0}{2}
 \beamer@sectionintoc {3}{Conceptos preliminares}{8}{0}{3}
-\beamer@sectionintoc {4}{Arquitectura de la soluci\'on}{14}{0}{4}
-\beamer@sectionintoc {5}{Implementaci\'on}{26}{0}{5}
-\beamer@sectionintoc {6}{Conclusiones}{27}{0}{6}
-\beamer@sectionintoc {7}{Trabajo a futuro}{32}{0}{7}
+\beamer@sectionintoc {4}{Arquitectura de la soluci\'on}{19}{0}{4}
+\beamer@sectionintoc {5}{Implementaci\'on}{31}{0}{5}
+\beamer@sectionintoc {6}{Conclusiones}{32}{0}{6}
+\beamer@sectionintoc {7}{Trabajo a futuro}{37}{0}{7}

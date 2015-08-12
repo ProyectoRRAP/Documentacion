@@ -319,7 +319,54 @@ Y mostrar imagen enfoque tradicional vs sdn
 
 \begin{frame}
 \frametitle{OpenFlow} 
+Solucion basada en el enfoque SDN
 
+
+\end{frame}
+
+\begin{frame}
+\frametitle{OpenFlow} 
+1 Transicion) Controlador o sistema operativo de red.(Plano de control) 
+/*
+Llamado el sistema operativo de la red, 
+*/
+Software que ejecuta en hardware x86 (PC, Servidor)
+Ofrece una api de alto nivel a los programadores (NorthBound) para controlar la red.
+Cada operacion ofrecida por la api es traducida a reglas openflow y comunicadas por el canal openflow (SouthBound)hacia el dispositivo.
+\end{frame}
+
+\begin{frame}
+\frametitle{OpenFlow} 
+
+2 Transicion) Canal Openflow 
+Entre el controlador y los dispositivos
+Protocolo OpenFlow
+Capa de aplicacion, corre sobre TCP
+
+Define mensajes
+- Controlador a dispositivo. 
+- Asincronicos
+- Simetricos (keepalives,echos)
+
+\end{frame}
+
+\begin{frame}
+\frametitle{OpenFlow} 
+Dispositivo:
+
+Dispositivo opewnflow-capable(Canal openflow, tablas)
+
+
+Canal openflow
+
+Tabla en un dispositivo:    
+/*
+Cabe destacar que mediante firmware.... uno de los porque del exito de openflow..
+*/
+
+(Match field, mostrar imagen famosa)
+(Contador, estadisticas por flujo)
+Instrucciones(Que hacer? reenviar ,modificar y reenviar, broadcast, multicast, normal).
 \end{frame}
 
 \begin{frame}
@@ -331,6 +378,56 @@ Y mostrar imagen enfoque tradicional vs sdn
 \frametitle{MPLS} 
 
 \end{frame}
+
+
+\begin{frame}
+\frametitle{NetFPGA} 
+
+
+	Plataforma de hardware de red reconfigurable y software OpenSource.
+
+
+
+%	\begin{block}{Hardware}
+		Hardware: Placa PCI-E que cuenta con: 
+		\begin{enumerate}
+			\item Chip programable FPGA 
+			\item 15 GB RAM
+			\item 4 Puertos 10-Gigabit Ethernet
+		\end{enumerate}
+		
+	\begin{figure}[H]
+		\includegraphics[width=0.65\textwidth, right]{imagenes/NetFPGA10G_web.jpg}
+	\end{figure}
+
+%	\end{block}
+
+\end{frame}
+
+
+
+
+\begin{frame}
+\frametitle{NetFPGA} 
+\begin{block}{Software}
+Proyectos de software OpenSource que permiten programar comportamientos de la placa
+
+\begin{enumerate}
+\item Router IP
+\item Switch Ethernet
+\item Placa de red convencional
+\item Switch OpenFlow 1.0
+\end{enumerate}
+
+\end{block}
+
+\end{frame}
+
+
+
+
+
+
 
 %------------------------------------------------
 \section{Arquitectura de la soluci\'on} 
@@ -822,3 +919,4 @@ Otras posibles l\'ineas:
 %----------------------------------------------------------------------------------------
 
 \end{document} 
+
