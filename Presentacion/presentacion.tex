@@ -193,15 +193,6 @@ una API propietaria.
 
 \begin{block}{Definición del Problema }
 Constru\'ir un prototipo para la RAU2 utilizando como plataforma PCs con placas de red aceleradas en hardware reconfigurable NetFPGA y el enfoque de las Redes Definidas por Software (SDN).
-
-\end{block}
-\end{frame}
-
-\begin{frame}
-\frametitle{Definición del problema} 
-
-\begin{block}{Objetivos}
-Enumerar los principales objetivos
 \end{block}
 
 \begin{block}{Resultados esperados}
@@ -213,6 +204,32 @@ Enumerar los principales objetivos
 \end{block}
 
 \end{frame}
+
+\begin{frame}
+\frametitle{Definición del problema} 
+
+Que características se esperan del prototipo, ¿cuales son los requerimientos?
+
+\pause
+R: Veamos cuales son los posibles requerimientos de la RAU2.
+
+\pause
+\begin{block}{Requerimientos}
+\begin{enumerate}[<+->]
+\item Clasificaci\'on y separaci\'on de tr\'afico seg\'un categorías
+\item Manejo de grandes vol\'umenes de datos
+\item Escalabilidad
+\item Red de entrega de contenidos
+\end{enumerate}
+\end{block}
+
+\pause
+Problema demasiado grande!
+
+(Ver como hacer para que al final dejar todo en gris y remarcar solo el requerimiento 1)
+\end{frame}
+
+
 
 %------------------------------------------------
 
@@ -430,20 +447,128 @@ Proyectos de software OpenSource que permiten programar comportamientos de la pl
 
 
 %------------------------------------------------
-\section{Arquitectura de la soluci\'on} 
+\section{Arquitectura propuesta} 
+
 
 \begin{frame}
-\frametitle{Arquitectura de la soluci\'on} 
+\frametitle{Arquitectura propuesta} 
 
-Poner una imagen de la arquitectura esperada basada en SDN
-plano de control, plano de datos dispositivos OpenFlow capaz, etc. Mi idea es ahi explicar
-las cuestiones que hay que atacar. En el trabajo hay que implementar:
-1) Plano de Control
-2) Dispisitivos SDN/OpenFlow
+Se propone una arquitectura h\'ibrida que combina el enfoque SDN con tecnologías actuales, basándose 
+en la implementaci\'on de OpenFlow.
 
-Redondear ambas lineas de trabajo mientras se explica asi se pasa en las siguientes ppt a hablar de eso
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth, left]{imagenes/arquitecturapropuesta.png}
+\end{figure}
 
 \end{frame}
+
+\begin{frame}
+\frametitle{Arquitectura propuesta} 
+
+\begin{itemize}
+\item ¿C\'omo implementamos clasificación de tr\'afico y separamos en categorías?
+
+\pause
+R: Construyendo Redes Privadas Virtuales (VPNs)
+\pause
+
+\vspace{0.5cm}
+\item ¿C\'omo implementamos Redes Privadas Virtuales?
+
+\pause
+R: Utilizando MPLS (Multilabel Protocol Switch)
+
+\pause
+\vspace{0.5cm}
+\item ¿VPNs con MPLS en SDN?
+
+\pause
+R: OpenFlow!
+
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Arquitectura propuesta} 
+
+Utilizamos OpenFlow porque:
+
+\begin{enumerate}[<+->]
+\item Es una implementaci\'on estándar y estable del enfoque SDN
+%Tiene m\'as de 7 a;os en desarrollo, se ha caracterizado por un desarrollo sostenido, ya va por la version 1.5
+\item Adopci\'on de fabricantes de hardware de red
+% Equipos comerciales lo soportan
+\item Gran variedad de software compatible
+\item Esta implementada bajo la filosofía Open Source
+\item OpenFlow incorpora soporte para MPLS desde la versi\'on 1.3.1 del protocolo
+\end{enumerate}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Arquitectura propuesta} 
+
+\begin{enumerate}
+\item Implementacion de switch OpenFlow
+\item Controlador OpenFlow -> Ryu
+\item version de OpenFlow
+\item Implementacion de Redes Privada -> MPLS
+\item Algoritmo de ruteo -> OSPF
+\item SNMP
+\end{enumerate}
+
+\end{frame}
+
+
+
+%\begin{frame}
+%\frametitle{Arquitectura de la soluci\'on} 
+%
+%\small
+%\begin{minipage}{0.50\textwidth}
+%\begin{figure}[H]
+%\raggedleft
+%\includegraphics[width=0.95\textwidth, left]{imagenes/sdnarquitecturaprop.png}
+%\end{figure}
+%\end{minipage} 
+%\hfill
+%\begin{minipage}{0.49\textwidth}
+%
+%\begin{itemize}
+%\item Controlador
+%\item Ruteo
+%\item MPLS
+%\end{itemize}
+%
+%\begin{itemize}
+%\item OpenFlow
+%\item d
+%\item b
+%\item b
+%\end{itemize}
+%\end{minipage} 
+%
+%\pause
+%\begin{textblock}{15}(0.1,-13.8)
+%\begin{minipage}{\textwidth}
+%\setlength{\parindent}{0pt}
+%\setlength{\parskip}{0.1cm}
+%\includegraphics[width=1.0\textwidth, right]{imagenes/sdnarquitecturapropc.png}
+%\end{minipage}
+%\end{textblock}
+%\begin{textblock}{15}(-9.3,-0.8)
+%\begin{minipage}{\textwidth}
+%\setlength{\parindent}{0pt}
+%\setlength{\parskip}{0.1cm}
+%\includegraphics[width=1.0\textwidth, right]{imagenes/sdnarquitecturapropd.png}
+%\end{minipage}
+%\end{textblock}
+%
+%\end{frame}
+
 
 \begin{frame}
 \frametitle{Arquitectura de la soluci\'on} 
@@ -464,7 +589,7 @@ Se identifican dos alternativas:
 \begin{tabular}{| p{5cm} | p{5cm} |}
 
 \hline
-\multicolumn{1}{|c|}{(1) OpenFlow } & \multicolumn{1}{c|}{(2) ReferenceNIC y OvS } \\
+\multicolumn{1}{|l|}{(1) OpenFlow } & \multicolumn{1}{l|}{(2) ReferenceNIC y OvS } \\
 \hline
 Velocidad de procesamiento & Prototipaci\'on agil \\
 Utilizaci\'on del hardaware &  Tiempo libre para investigaci\'on \\
@@ -474,7 +599,6 @@ Licencias full &  Licencias econ\'omicas \\
 \hline  
 \end{tabular}
 \end{table}
-
 \end{frame}
 
 
