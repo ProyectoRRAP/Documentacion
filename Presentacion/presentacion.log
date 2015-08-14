@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014/Debian) (preloaded format=pdflatex 2015.4.17)  14 AUG 2015 11:59
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014/Debian) (preloaded format=pdflatex 2015.4.17)  14 AUG 2015 18:48
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1287,7 +1287,7 @@ LaTeX Info: Redefining \% on input line 2.
 )
 [2
 
-] <imagenes/redesAcademicas.png, id=123, 831.105pt x 475.7775pt>
+] <imagenes/redesAcademicas.png, id=129, 831.105pt x 475.7775pt>
 File: imagenes/redesAcademicas.png Graphic file (type png)
 
 <use imagenes/redesAcademicas.png>
@@ -1296,7 +1296,7 @@ Package pdftex.def Info: imagenes/redesAcademicas.png used on input line 148.
  [3
 
  <./imagenes/redesAcademicas.png>]
-<imagenes/logorau2.png, id=155, 501.875pt x 167.62625pt>
+<imagenes/logorau2.png, id=161, 501.875pt x 167.62625pt>
 File: imagenes/logorau2.png Graphic file (type png)
 
 <use imagenes/logorau2.png>
@@ -1305,21 +1305,21 @@ Package pdftex.def Info: imagenes/logorau2.png used on input line 167.
  [4
 
  <./imagenes/logorau2.png>]
-<imagenes/corerouter2.png, id=182, 475.7775pt x 357.335pt>
+<imagenes/corerouter2.png, id=188, 475.7775pt x 357.335pt>
 File: imagenes/corerouter2.png Graphic file (type png)
 
 <use imagenes/corerouter2.png>
 Package pdftex.def Info: imagenes/corerouter2.png used on input line 184.
 (pdftex.def)             Requested size: 85.57382pt x 64.26845pt.
 
-<imagenes/corerouter1.png, id=183, 475.7775pt x 357.335pt>
+<imagenes/corerouter1.png, id=189, 475.7775pt x 357.335pt>
 File: imagenes/corerouter1.png Graphic file (type png)
 
 <use imagenes/corerouter1.png>
 Package pdftex.def Info: imagenes/corerouter1.png used on input line 184.
 (pdftex.def)             Requested size: 119.80544pt x 89.97691pt.
 
-<imagenes/corerouter3.jpg, id=184, 1505.625pt x 831.105pt>
+<imagenes/corerouter3.jpg, id=190, 1505.625pt x 831.105pt>
 File: imagenes/corerouter3.jpg Graphic file (type jpg)
 
 <use imagenes/corerouter3.jpg>
@@ -1366,7 +1366,7 @@ er3.jpg>] [6
 ] [23
 
 ]
-<imagenes/NetFPGA10G_web.jpg, id=693, 752.8125pt x 400.49625pt>
+<imagenes/NetFPGA10G_web.jpg, id=699, 752.8125pt x 400.49625pt>
 File: imagenes/NetFPGA10G_web.jpg Graphic file (type jpg)
 
 <use imagenes/NetFPGA10G_web.jpg>
@@ -1377,16 +1377,9 @@ Package pdftex.def Info: imagenes/NetFPGA10G_web.jpg used on input line 422.
  <./imagenes/NetFPGA10G_web.jpg>] [25
 
 ]
-<imagenes/arquitecturapropuesta.png, id=745, 2007.5pt x 1122.1925pt>
-File: imagenes/arquitecturapropuesta.png Graphic file (type png)
+[26
 
-<use imagenes/arquitecturapropuesta.png>
-Package pdftex.def Info: imagenes/arquitecturapropuesta.png used on input line 
-464.
-(pdftex.def)             Requested size: 325.17949pt x 181.76337pt.
- [26
-
- <./imagenes/arquitecturapropuesta.png>] [27
+] [27
 
 ] [28
 
@@ -1406,360 +1399,97 @@ Package pdftex.def Info: imagenes/arquitecturapropuesta.png used on input line
 
 ] [36
 
-] [37
-
-] [38
-
 ]
-LaTeX Font Info:    Try loading font information for U+msa on input line 602.
+<imagenes/arquitecturapropuesta.png, id=1042, 1993.4475pt x 1183.42125pt>
+File: imagenes/arquitecturapropuesta.png Graphic file (type png)
+
+<use imagenes/arquitecturapropuesta.png>
+Package pdftex.def Info: imagenes/arquitecturapropuesta.png used on input line 
+509.
+(pdftex.def)             Requested size: 325.17949pt x 193.035pt.
+
+Overfull \vbox (5.2936pt too high) detected at line 509
+ []
+
+[37
+
+ <./imagenes/arquitecturapropuesta.png>]
+LaTeX Font Info:    Try loading font information for U+msa on input line 541.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 602.
+LaTeX Font Info:    Try loading font information for U+msb on input line 541.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Try loading font information for OT1+mathkerncmss on input 
-line 602.
+line 541.
 
 (/usr/share/texlive/texmf-dist/tex/latex/sansmathaccent/ot1mathkerncmss.fd
 File: ot1mathkerncmss.fd 2013/03/27 Fontinst v1.933 font definitions for OT1/ma
 thkerncmss.
 )
-[39
+[38
 
-] <imagenes/Stack.png, id=1120, 349.305pt x 622.325pt>
-File: imagenes/Stack.png Graphic file (type png)
+] <imagenes/ryuarch.png, id=1099, 760.8425pt x 446.66875pt>
+File: imagenes/ryuarch.png Graphic file (type png)
 
-<use imagenes/Stack.png>
-Package pdftex.def Info: imagenes/Stack.png used on input line 642.
-(pdftex.def)             Requested size: 102.68962pt x 182.94804pt.
+<use imagenes/ryuarch.png>
+Package pdftex.def Info: imagenes/ryuarch.png used on input line 560.
+(pdftex.def)             Requested size: 222.48985pt x 130.61429pt.
+ [39
 
-<imagenes/buildingbnetfpga.png, id=1121, 119.44624pt x 99.37125pt>
-File: imagenes/buildingbnetfpga.png Graphic file (type png)
+ <./imagenes/ryuarch.png>] [40
 
-<use imagenes/buildingbnetfpga.png>
-Package pdftex.def Info: imagenes/buildingbnetfpga.png used on input line 642.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
-
-<imagenes/buildingblockovs.png, id=1122, 119.44624pt x 99.37125pt>
-File: imagenes/buildingblockovs.png Graphic file (type png)
-
-<use imagenes/buildingblockovs.png>
-Package pdftex.def Info: imagenes/buildingblockovs.png used on input line 642.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
- [40
-
- <./imagenes/Stack.png> <./imagenes/buildingbnetfpga.png> <./imagenes/buildingb
-lockovs.png>]
-File: imagenes/Stack.png Graphic file (type png)
- <use imagenes/Stack.png>
-Package pdftex.def Info: imagenes/Stack.png used on input line 642.
-(pdftex.def)             Requested size: 102.68962pt x 182.94804pt.
-File: imagenes/buildingbnetfpga.png Graphic file (type png)
-
-<use imagenes/buildingbnetfpga.png>
-Package pdftex.def Info: imagenes/buildingbnetfpga.png used on input line 642.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
-File: imagenes/buildingblockovs.png Graphic file (type png)
- <use imagenes/buildingblockovs.png>
-Package pdftex.def Info: imagenes/buildingblockovs.png used on input line 642.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
-
-[41
+] [41
 
 ]
-File: imagenes/Stack.png Graphic file (type png)
- <use imagenes/Stack.png>
-Package pdftex.def Info: imagenes/Stack.png used on input line 690.
-(pdftex.def)             Requested size: 102.68962pt x 182.94804pt.
-File: imagenes/buildingbnetfpga.png Graphic file (type png)
- <use imagenes/buildingbnetfpga.png>
-Package pdftex.def Info: imagenes/buildingbnetfpga.png used on input line 690.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
-File: imagenes/buildingblockovs.png Graphic file (type png)
+<imagenes/arquitecturapropuesta1.png, id=1179, 1430.34375pt x 985.6825pt>
+File: imagenes/arquitecturapropuesta1.png Graphic file (type png)
 
-<use imagenes/buildingblockovs.png>
-Package pdftex.def Info: imagenes/buildingblockovs.png used on input line 690.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
-
-<imagenes/buildingblockryu.png, id=1178, 119.44624pt x 99.37125pt>
-File: imagenes/buildingblockryu.png Graphic file (type png)
-
-<use imagenes/buildingblockryu.png>
-Package pdftex.def Info: imagenes/buildingblockryu.png used on input line 690.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
+<use imagenes/arquitecturapropuesta1.png>
+Package pdftex.def Info: imagenes/arquitecturapropuesta1.png used on input line
+ 596.
+(pdftex.def)             Requested size: 273.83728pt x 188.71045pt.
  [42
 
- <./imagenes/buildingblockryu.png>]
-File: imagenes/Stack.png Graphic file (type png)
-
-<use imagenes/Stack.png>
-Package pdftex.def Info: imagenes/Stack.png used on input line 690.
-(pdftex.def)             Requested size: 102.68962pt x 182.94804pt.
-File: imagenes/buildingbnetfpga.png Graphic file (type png)
- <use imagenes/buildingbnetfpga.png>
-Package pdftex.def Info: imagenes/buildingbnetfpga.png used on input line 690.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
-File: imagenes/buildingblockovs.png Graphic file (type png)
-
-<use imagenes/buildingblockovs.png>
-Package pdftex.def Info: imagenes/buildingblockovs.png used on input line 690.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
-File: imagenes/buildingblockryu.png Graphic file (type png)
- <use imagenes/buildingblockryu.png>
-Package pdftex.def Info: imagenes/buildingblockryu.png used on input line 690.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
-
-[43
+ <./imagenes/arquitecturapropuesta1.png>] [43
 
 ]
-File: imagenes/Stack.png Graphic file (type png)
- <use imagenes/Stack.png>
-Package pdftex.def Info: imagenes/Stack.png used on input line 753.
-(pdftex.def)             Requested size: 102.68962pt x 182.94804pt.
-File: imagenes/buildingbnetfpga.png Graphic file (type png)
- <use imagenes/buildingbnetfpga.png>
-Package pdftex.def Info: imagenes/buildingbnetfpga.png used on input line 753.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
-File: imagenes/buildingblockovs.png Graphic file (type png)
+<imagenes/rauflowarquitectura.png, id=1234, 2007.5pt x 1149.29375pt>
+File: imagenes/rauflowarquitectura.png Graphic file (type png)
 
-<use imagenes/buildingblockovs.png>
-Package pdftex.def Info: imagenes/buildingblockovs.png used on input line 753.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
-File: imagenes/buildingblockryu.png Graphic file (type png)
- <use imagenes/buildingblockryu.png>
-Package pdftex.def Info: imagenes/buildingblockryu.png used on input line 753.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
+<use imagenes/rauflowarquitectura.png>
+Package pdftex.def Info: imagenes/rauflowarquitectura.png used on input line 62
+2.
+(pdftex.def)             Requested size: 342.2953pt x 195.95607pt.
+ [44
 
-<imagenes/buildingblockquagga.png, id=1234, 119.44624pt x 99.37125pt>
-File: imagenes/buildingblockquagga.png Graphic file (type png)
+ <./imagenes/rauflowarquitectura.png>] <imagenes/Topologia.png, id=1261, 936.49
+875pt x 740.7675pt>
+File: imagenes/Topologia.png Graphic file (type png)
 
-<use imagenes/buildingblockquagga.png>
-Package pdftex.def Info: imagenes/buildingblockquagga.png used on input line 75
-3.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
-File: imagenes/buildingblockquagga.png Graphic file (type png)
- <use imagenes/buildingblockquagga.png>
-Package pdftex.def Info: imagenes/buildingblockquagga.png used on input line 75
-3.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
+<use imagenes/Topologia.png>
+Package pdftex.def Info: imagenes/Topologia.png used on input line 648.
+(pdftex.def)             Requested size: 166.35669pt x 131.5804pt.
 
-[44
+<imagenes/laboratorio.jpg, id=1262, 3565.32pt x 2007.5pt>
+File: imagenes/laboratorio.jpg Graphic file (type jpg)
 
- <./imagenes/buildingblockquagga.png>]
-File: imagenes/Stack.png Graphic file (type png)
- <use imagenes/Stack.png>
-Package pdftex.def Info: imagenes/Stack.png used on input line 753.
-(pdftex.def)             Requested size: 102.68962pt x 182.94804pt.
-File: imagenes/buildingbnetfpga.png Graphic file (type png)
-
-<use imagenes/buildingbnetfpga.png>
-Package pdftex.def Info: imagenes/buildingbnetfpga.png used on input line 753.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
-File: imagenes/buildingblockovs.png Graphic file (type png)
- <use imagenes/buildingblockovs.png>
-Package pdftex.def Info: imagenes/buildingblockovs.png used on input line 753.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
-File: imagenes/buildingblockryu.png Graphic file (type png)
-
-<use imagenes/buildingblockryu.png>
-Package pdftex.def Info: imagenes/buildingblockryu.png used on input line 753.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
-File: imagenes/buildingblockquagga.png Graphic file (type png)
- <use imagenes/buildingblockquagga.png>
-Package pdftex.def Info: imagenes/buildingblockquagga.png used on input line 75
-3.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
-File: imagenes/buildingblockquagga.png Graphic file (type png)
-
-<use imagenes/buildingblockquagga.png>
-Package pdftex.def Info: imagenes/buildingblockquagga.png used on input line 75
-3.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
+<use imagenes/laboratorio.jpg>
+Package pdftex.def Info: imagenes/laboratorio.jpg used on input line 648.
+(pdftex.def)             Requested size: 119.80544pt x 67.45154pt.
  [45
 
-]
-File: imagenes/Stack.png Graphic file (type png)
- <use imagenes/Stack.png>
-Package pdftex.def Info: imagenes/Stack.png used on input line 820.
-(pdftex.def)             Requested size: 102.68962pt x 182.94804pt.
-File: imagenes/buildingbnetfpga.png Graphic file (type png)
+ <./imagenes/Topologia.png> <./imagenes/laboratorio.jpg>] [46
 
-<use imagenes/buildingbnetfpga.png>
-Package pdftex.def Info: imagenes/buildingbnetfpga.png used on input line 820.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
-File: imagenes/buildingblockovs.png Graphic file (type png)
- <use imagenes/buildingblockovs.png>
-Package pdftex.def Info: imagenes/buildingblockovs.png used on input line 820.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
-File: imagenes/buildingblockryu.png Graphic file (type png)
+] [47
 
-<use imagenes/buildingblockryu.png>
-Package pdftex.def Info: imagenes/buildingblockryu.png used on input line 820.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
-File: imagenes/buildingblockquagga.png Graphic file (type png)
- <use imagenes/buildingblockquagga.png>
-Package pdftex.def Info: imagenes/buildingblockquagga.png used on input line 82
-0.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
-File: imagenes/buildingblockquagga.png Graphic file (type png)
+] [48
 
-<use imagenes/buildingblockquagga.png>
-Package pdftex.def Info: imagenes/buildingblockquagga.png used on input line 82
-0.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
-
-<imagenes/buldingblockrauflow.png, id=1288, 119.44624pt x 99.37125pt>
-File: imagenes/buldingblockrauflow.png Graphic file (type png)
-
-<use imagenes/buldingblockrauflow.png>
-Package pdftex.def Info: imagenes/buldingblockrauflow.png used on input line 82
-0.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
- [46
-
- <./imagenes/buldingblockrauflow.png>]
-File: imagenes/Stack.png Graphic file (type png)
- <use imagenes/Stack.png>
-Package pdftex.def Info: imagenes/Stack.png used on input line 820.
-(pdftex.def)             Requested size: 102.68962pt x 182.94804pt.
-File: imagenes/buildingbnetfpga.png Graphic file (type png)
- <use imagenes/buildingbnetfpga.png>
-Package pdftex.def Info: imagenes/buildingbnetfpga.png used on input line 820.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
-File: imagenes/buildingblockovs.png Graphic file (type png)
-
-<use imagenes/buildingblockovs.png>
-Package pdftex.def Info: imagenes/buildingblockovs.png used on input line 820.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
-File: imagenes/buildingblockryu.png Graphic file (type png)
- <use imagenes/buildingblockryu.png>
-Package pdftex.def Info: imagenes/buildingblockryu.png used on input line 820.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
-File: imagenes/buildingblockquagga.png Graphic file (type png)
-
-<use imagenes/buildingblockquagga.png>
-Package pdftex.def Info: imagenes/buildingblockquagga.png used on input line 82
-0.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
-File: imagenes/buildingblockquagga.png Graphic file (type png)
- <use imagenes/buildingblockquagga.png>
-Package pdftex.def Info: imagenes/buildingblockquagga.png used on input line 82
-0.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
-File: imagenes/buldingblockrauflow.png Graphic file (type png)
-
-<use imagenes/buldingblockrauflow.png>
-Package pdftex.def Info: imagenes/buldingblockrauflow.png used on input line 82
-0.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
- [47
-
-]
-File: imagenes/Stack.png Graphic file (type png)
- <use imagenes/Stack.png>
-Package pdftex.def Info: imagenes/Stack.png used on input line 905.
-(pdftex.def)             Requested size: 102.68962pt x 182.94804pt.
-File: imagenes/buildingbnetfpga.png Graphic file (type png)
-
-<use imagenes/buildingbnetfpga.png>
-Package pdftex.def Info: imagenes/buildingbnetfpga.png used on input line 905.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
-File: imagenes/buildingblockovs.png Graphic file (type png)
- <use imagenes/buildingblockovs.png>
-Package pdftex.def Info: imagenes/buildingblockovs.png used on input line 905.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
-File: imagenes/buildingblockryu.png Graphic file (type png)
-
-<use imagenes/buildingblockryu.png>
-Package pdftex.def Info: imagenes/buildingblockryu.png used on input line 905.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
-File: imagenes/buildingblockquagga.png Graphic file (type png)
- <use imagenes/buildingblockquagga.png>
-Package pdftex.def Info: imagenes/buildingblockquagga.png used on input line 90
-5.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
-File: imagenes/buildingblockquagga.png Graphic file (type png)
-
-<use imagenes/buildingblockquagga.png>
-Package pdftex.def Info: imagenes/buildingblockquagga.png used on input line 90
-5.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
-File: imagenes/buldingblockrauflow.png Graphic file (type png)
- <use imagenes/buldingblockrauflow.png>
-Package pdftex.def Info: imagenes/buldingblockrauflow.png used on input line 90
-5.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
-
-<imagenes/buildingblockadminsnmp.png, id=1343, 119.44624pt x 99.37125pt>
-File: imagenes/buildingblockadminsnmp.png Graphic file (type png)
-
-<use imagenes/buildingblockadminsnmp.png>
-Package pdftex.def Info: imagenes/buildingblockadminsnmp.png used on input line
- 905.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
-
-<imagenes/buildingblockagentesnmp.png, id=1344, 119.44624pt x 99.37125pt>
-File: imagenes/buildingblockagentesnmp.png Graphic file (type png)
-
-<use imagenes/buildingblockagentesnmp.png>
-Package pdftex.def Info: imagenes/buildingblockagentesnmp.png used on input lin
-e 905.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
- [48
-
- <./imagenes/buildingblockadminsnmp.png> <./imagenes/buildingblockagentesnmp.pn
-g>]
-File: imagenes/Stack.png Graphic file (type png)
- <use imagenes/Stack.png>
-Package pdftex.def Info: imagenes/Stack.png used on input line 905.
-(pdftex.def)             Requested size: 102.68962pt x 182.94804pt.
-File: imagenes/buildingbnetfpga.png Graphic file (type png)
-
-<use imagenes/buildingbnetfpga.png>
-Package pdftex.def Info: imagenes/buildingbnetfpga.png used on input line 905.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
-File: imagenes/buildingblockovs.png Graphic file (type png)
- <use imagenes/buildingblockovs.png>
-Package pdftex.def Info: imagenes/buildingblockovs.png used on input line 905.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
-File: imagenes/buildingblockryu.png Graphic file (type png)
-
-<use imagenes/buildingblockryu.png>
-Package pdftex.def Info: imagenes/buildingblockryu.png used on input line 905.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
-File: imagenes/buildingblockquagga.png Graphic file (type png)
- <use imagenes/buildingblockquagga.png>
-Package pdftex.def Info: imagenes/buildingblockquagga.png used on input line 90
-5.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
-File: imagenes/buildingblockquagga.png Graphic file (type png)
-
-<use imagenes/buildingblockquagga.png>
-Package pdftex.def Info: imagenes/buildingblockquagga.png used on input line 90
-5.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
-File: imagenes/buldingblockrauflow.png Graphic file (type png)
- <use imagenes/buldingblockrauflow.png>
-Package pdftex.def Info: imagenes/buldingblockrauflow.png used on input line 90
-5.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
-File: imagenes/buildingblockadminsnmp.png Graphic file (type png)
-
-<use imagenes/buildingblockadminsnmp.png>
-Package pdftex.def Info: imagenes/buildingblockadminsnmp.png used on input line
- 905.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
-File: imagenes/buildingblockagentesnmp.png Graphic file (type png)
-
-<use imagenes/buildingblockagentesnmp.png>
-Package pdftex.def Info: imagenes/buildingblockagentesnmp.png used on input lin
-e 905.
-(pdftex.def)             Requested size: 36.19182pt x 30.10878pt.
- [49
+] [49
 
 ] [50
 
@@ -1771,12 +1501,7 @@ e 905.
 
 ] [54
 
-]
-[55
-
-] [56
-
-] [57
+] [55
 
 ]
 \tf@nav=\write6
@@ -1788,29 +1513,29 @@ e 905.
 \tf@snm=\write8
 \openout8 = `presentacion.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1045.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1045.
- (./presentacion.aux
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 831.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 831.
+
+(./presentacion.aux
 LaTeX Info: Redefining \. on input line 26.
 LaTeX Info: Redefining \% on input line 26.
 )
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1045.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1045.
-
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 831.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 831.
 Package rerunfilecheck Info: File `presentacion.out' has not changed.
-(rerunfilecheck)             Checksum: CA1B7F8E2E45C5C470BCF757B2668A4F;373.
+(rerunfilecheck)             Checksum: C844A049E2FDEF784C83014525DB4CA8;426.
 
 
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.0pt have occurred.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1045.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 831.
  ) 
 Here is how much of TeX's memory you used:
- 19917 strings out of 493104
- 371422 string characters out of 6136932
- 457285 words of memory out of 5000000
- 22755 multiletter control sequences out of 15000+600000
+ 19909 strings out of 493104
+ 370921 string characters out of 6136932
+ 456285 words of memory out of 5000000
+ 22753 multiletter control sequences out of 15000+600000
  14485 words of font info for 53 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  56i,16n,60p,392b,888s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1818,10 +1543,10 @@ Here is how much of TeX's memory you used:
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb>
-Output written on presentacion.pdf (57 pages, 2022701 bytes).
+Output written on presentacion.pdf (55 pages, 4608818 bytes).
 PDF statistics:
- 1653 PDF objects out of 1728 (max. 8388607)
- 1532 compressed objects within 16 object streams
- 126 named destinations out of 1000 (max. 500000)
- 222 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1598 PDF objects out of 1728 (max. 8388607)
+ 1487 compressed objects within 15 object streams
+ 123 named destinations out of 1000 (max. 500000)
+ 215 words of extra memory for PDF output out of 10000 (max. 10000000)
 

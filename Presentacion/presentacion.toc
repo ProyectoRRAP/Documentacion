@@ -4,6 +4,7 @@
 \beamer@sectionintoc {2}{Definici\IeC {\'o}n del problema}{6}{0}{2}
 \beamer@sectionintoc {3}{Conceptos preliminares}{15}{0}{3}
 \beamer@sectionintoc {4}{Arquitectura propuesta}{26}{0}{4}
-\beamer@sectionintoc {5}{Implementaci\'on}{50}{0}{5}
-\beamer@sectionintoc {6}{Conclusiones}{51}{0}{6}
-\beamer@sectionintoc {7}{Trabajo a futuro}{56}{0}{7}
+\beamer@sectionintoc {5}{Implementaci\'on}{43}{0}{5}
+\beamer@sectionintoc {6}{Experimentaci\'on}{45}{0}{6}
+\beamer@sectionintoc {7}{Conclusiones}{49}{0}{7}
+\beamer@sectionintoc {8}{Trabajo a futuro}{54}{0}{8}

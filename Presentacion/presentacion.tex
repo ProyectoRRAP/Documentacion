@@ -453,19 +453,6 @@ Proyectos de software OpenSource que permiten programar comportamientos de la pl
 \begin{frame}
 \frametitle{Arquitectura propuesta} 
 
-Se propone una arquitectura h\'ibrida que combina el enfoque SDN con tecnologías actuales, basándose 
-en la implementaci\'on de OpenFlow.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.95\textwidth, left]{imagenes/arquitecturapropuesta.png}
-\end{figure}
-
-\end{frame}
-
-\begin{frame}
-\frametitle{Arquitectura propuesta} 
-
 \begin{itemize}
 \item ¿C\'omo implementamos clasificación de tr\'afico y separamos en categorías?
 
@@ -511,63 +498,15 @@ Utilizamos OpenFlow porque:
 \begin{frame}
 \frametitle{Arquitectura propuesta} 
 
-\begin{enumerate}
-\item Implementacion de switch OpenFlow
-\item Controlador OpenFlow -> Ryu
-\item version de OpenFlow
-\item Implementacion de Redes Privada -> MPLS
-\item Algoritmo de ruteo -> OSPF
-\item SNMP
-\end{enumerate}
+Se propone una arquitectura h\'ibrida que combina el enfoque SDN con tecnologías actuales, basándose 
+en la implementaci\'on de OpenFlow.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth, left]{imagenes/arquitecturapropuesta.png}
+\end{figure}
 
 \end{frame}
-
-
-
-%\begin{frame}
-%\frametitle{Arquitectura de la soluci\'on} 
-%
-%\small
-%\begin{minipage}{0.50\textwidth}
-%\begin{figure}[H]
-%\raggedleft
-%\includegraphics[width=0.95\textwidth, left]{imagenes/sdnarquitecturaprop.png}
-%\end{figure}
-%\end{minipage} 
-%\hfill
-%\begin{minipage}{0.49\textwidth}
-%
-%\begin{itemize}
-%\item Controlador
-%\item Ruteo
-%\item MPLS
-%\end{itemize}
-%
-%\begin{itemize}
-%\item OpenFlow
-%\item d
-%\item b
-%\item b
-%\end{itemize}
-%\end{minipage} 
-%
-%\pause
-%\begin{textblock}{15}(0.1,-13.8)
-%\begin{minipage}{\textwidth}
-%\setlength{\parindent}{0pt}
-%\setlength{\parskip}{0.1cm}
-%\includegraphics[width=1.0\textwidth, right]{imagenes/sdnarquitecturapropc.png}
-%\end{minipage}
-%\end{textblock}
-%\begin{textblock}{15}(-9.3,-0.8)
-%\begin{minipage}{\textwidth}
-%\setlength{\parindent}{0pt}
-%\setlength{\parskip}{0.1cm}
-%\includegraphics[width=1.0\textwidth, right]{imagenes/sdnarquitecturapropd.png}
-%\end{minipage}
-%\end{textblock}
-%
-%\end{frame}
 
 
 \begin{frame}
@@ -601,307 +540,59 @@ Licencias full &  Licencias econ\'omicas \\
 \end{table}
 \end{frame}
 
-
 \begin{frame}
 \frametitle{Arquitectura de la soluci\'on} 
 
-\begin{minipage}{0.60\textwidth}
-Switch OpenFlow
+\textbf{Controlador} \\
+Utilizamos Ryu como software de control SDN
 
-Dos alternativas: Mencionarlas (NetFPGA + Openflow, ...)
+\begin{itemize}
+\item Compatible con OF hasta v1.4
+\item Acad\'emico, sencillo, liviano
+\item Libre y Open Source
+\end{itemize}
 
-Mostrar las dos fotos del stack Plano Control - Dispositivo con los building blocks
-
-\end{minipage}
-\hfill
-\begin{minipage}{0.30\textwidth}
 \begin{figure}[H]
-\raggedright
-\includegraphics[width=1.0\textwidth, right]{imagenes/Stack.png}
+\centering
+\includegraphics[width=0.65\textwidth]{imagenes/ryuarch.png}
 \end{figure}
-\end{minipage} 
-
-\pause
-
-\begin{textblock}{3}(11.47,-2.9)
-\begin{minipage}{\textwidth}
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{0.1cm}
-\includegraphics[width=0.53\textwidth, right]{imagenes/buildingbnetfpga.png}
-\end{minipage}
-\end{textblock}
-
-\begin{textblock}{3}(11.47,-4.2)
-\begin{minipage}{\textwidth}
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{0.1cm}
-\includegraphics[width=0.53\textwidth, right]{imagenes/buildingblockovs.png}
-\end{minipage}
-\end{textblock}
 
 \end{frame}
 
 \begin{frame}
 \frametitle{Arquitectura de la soluci\'on} 
 
-
-\begin{minipage}{0.60\textwidth}
-Controlador
-
-Utilizamos Ryu blablabla....
-
-Mostrar las dos fotos del stack Plano Control - Dispositivo con los building blocks
-
-\end{minipage}
-\hfill
-\begin{minipage}{0.30\textwidth}
-\begin{figure}[H]
-\raggedright
-\includegraphics[width=1.0\textwidth, right]{imagenes/Stack.png}
-\end{figure}
-\end{minipage} 
-
-\begin{textblock}{3}(11.47,-2.9)
-\begin{minipage}{\textwidth}
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{0.1cm}
-\includegraphics[width=0.53\textwidth, right]{imagenes/buildingbnetfpga.png}
-\end{minipage}
-\end{textblock}
-
-\begin{textblock}{3}(11.47,-4.2)
-\begin{minipage}{\textwidth}
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{0.1cm}
-\includegraphics[width=0.53\textwidth, right]{imagenes/buildingblockovs.png}
-\end{minipage}
-\end{textblock}
-
-\pause
-
-\begin{textblock}{3}(9.55,-2.9)
-\begin{minipage}{\textwidth}
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{0.1cm}
-\includegraphics[width=0.53\textwidth, right]{imagenes/buildingblockryu.png}
-\end{minipage}
-\end{textblock}
+\textbf{Algoritmo de ruteo} \\
+\begin{itemize}
+\item Calculo de rutas en base a IP
+\item Utilizamos OSPF para la construcci\'on de una base de datos topol\'ogica (LSDB)
+\item Cada nodo en la red incluyendo el controlador ejecutan un demonio OSPF de la herramienta Quagga
+\item Algoritmo de ruteo como App SDN en el controlador, toma informaci\'on de la LSDB
+\end{itemize}
 
 \end{frame}
 
 \begin{frame}
 \frametitle{Arquitectura de la soluci\'on} 
 
-\begin{minipage}{0.60\textwidth}
-\onslide<1->{Algoritmo de ruteo}
+\textbf{Agente SNMP} \\
+OpenFlow no prev\'e un mecanismo para informar al plano de control direccionamiento IP de un puerto en un dispositivo. \\
 
-\onslide<2->{OSPF para el descubrimiento de la topologia y algoritmo de ruteo centralizado
-
-Mostrar las dos fotos del stack Plano Control - Dispositivo con los building blocks}
-
-\end{minipage}
-\hfill
-\begin{minipage}{0.30\textwidth}
-\begin{figure}[H]
-\raggedright
-\includegraphics[width=1.0\textwidth, right]{imagenes/Stack.png}
-\end{figure}
-\end{minipage} 
-
-\begin{textblock}{3}(11.47,-2.9)
-\begin{minipage}{\textwidth}
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{0.1cm}
-\includegraphics[width=0.53\textwidth, right]{imagenes/buildingbnetfpga.png}
-\end{minipage}
-\end{textblock}
-
-\begin{textblock}{3}(11.47,-4.2)
-\begin{minipage}{\textwidth}
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{0.1cm}
-\includegraphics[width=0.53\textwidth, right]{imagenes/buildingblockovs.png}
-\end{minipage}
-\end{textblock}
-
-\begin{textblock}{3}(9.55,-2.9)
-\begin{minipage}{\textwidth}
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{0.1cm}
-\includegraphics[width=0.53\textwidth, right]{imagenes/buildingblockryu.png}
-\end{minipage}
-\end{textblock}
-
-\pause
-
-\begin{textblock}{3}(11.47,-5.5)
-\begin{minipage}{\textwidth}
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{0.1cm}
-\includegraphics[width=0.53\textwidth, right]{imagenes/buildingblockquagga.png}
-\end{minipage}
-\end{textblock}
-
-\begin{textblock}{3}(9.55,-4.2)
-\begin{minipage}{\textwidth}
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{0.1cm}
-\includegraphics[width=0.53\textwidth, right]{imagenes/buildingblockquagga.png}
-\end{minipage}
-\end{textblock}
+\vspace{0.5cm}
+\textbf{Soluci\'on:}  Utilizamos un agente SNMP en cada nodo de la red para obtener mapeo entre puertos OF y direcciones IP
 
 \end{frame}
 
 \begin{frame}
 \frametitle{Arquitectura de la soluci\'on} 
 
-\begin{minipage}{0.60\textwidth}
-RAUFlow App algoritmo de ruteo, clasificacion de trafico, LDP etc
-\end{minipage}
-\hfill
-\begin{minipage}{0.30\textwidth}
+\textbf{Arquitectura propuesta} \\
+
 \begin{figure}[H]
-\raggedright
-\includegraphics[width=1.0\textwidth, right]{imagenes/Stack.png}
+\centering
+\includegraphics[width=0.80\textwidth]{imagenes/arquitecturapropuesta1.png}
 \end{figure}
-\end{minipage} 
 
-\begin{textblock}{3}(11.47,-2.9)
-\begin{minipage}{\textwidth}
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{0.1cm}
-\includegraphics[width=0.53\textwidth, right]{imagenes/buildingbnetfpga.png}
-\end{minipage}
-\end{textblock}
-
-\begin{textblock}{3}(11.47,-4.2)
-\begin{minipage}{\textwidth}
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{0.1cm}
-\includegraphics[width=0.53\textwidth, right]{imagenes/buildingblockovs.png}
-\end{minipage}
-\end{textblock}
-
-\begin{textblock}{3}(9.55,-2.9)
-\begin{minipage}{\textwidth}
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{0.1cm}
-\includegraphics[width=0.53\textwidth, right]{imagenes/buildingblockryu.png}
-\end{minipage}
-\end{textblock}
-
-\begin{textblock}{3}(11.47,-5.5)
-\begin{minipage}{\textwidth}
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{0.1cm}
-\includegraphics[width=0.53\textwidth, right]{imagenes/buildingblockquagga.png}
-\end{minipage}
-\end{textblock}
-
-\begin{textblock}{3}(9.55,-4.2)
-\begin{minipage}{\textwidth}
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{0.1cm}
-\includegraphics[width=0.53\textwidth, right]{imagenes/buildingblockquagga.png}
-\end{minipage}
-\end{textblock}
-
-\pause
-
-\begin{textblock}{3}(9.55,-5.5)
-\begin{minipage}{\textwidth}
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{0.1cm}
-\includegraphics[width=0.53\textwidth, right]{imagenes/buldingblockrauflow.png}
-\end{minipage}
-\end{textblock}
-
-
-\end{frame}
-
-\begin{frame}
-\frametitle{Arquitectura de la soluci\'on} 
-
-\begin{minipage}{0.60\textwidth}
-Mapeo de puertos a direcciones IP
-
-SNMP
-
-Mostrar las dos fotos del stack Plano Control - Dispositivo con los building blocks
-\end{minipage}
-\hfill
-\begin{minipage}{0.30\textwidth}
-\begin{figure}[H]
-\raggedright
-\includegraphics[width=1.0\textwidth, right]{imagenes/Stack.png}
-\end{figure}
-\end{minipage} 
-
-\begin{textblock}{3}(11.47,-2.9)
-\begin{minipage}{\textwidth}
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{0.1cm}
-\includegraphics[width=0.53\textwidth, right]{imagenes/buildingbnetfpga.png}
-\end{minipage}
-\end{textblock}
-
-\begin{textblock}{3}(11.47,-4.2)
-\begin{minipage}{\textwidth}
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{0.1cm}
-\includegraphics[width=0.53\textwidth, right]{imagenes/buildingblockovs.png}
-\end{minipage}
-\end{textblock}
-
-\begin{textblock}{3}(9.55,-2.9)
-\begin{minipage}{\textwidth}
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{0.1cm}
-\includegraphics[width=0.53\textwidth, right]{imagenes/buildingblockryu.png}
-\end{minipage}
-\end{textblock}
-
-\begin{textblock}{3}(11.47,-5.5)
-\begin{minipage}{\textwidth}
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{0.1cm}
-\includegraphics[width=0.53\textwidth, right]{imagenes/buildingblockquagga.png}
-\end{minipage}
-\end{textblock}
-
-\begin{textblock}{3}(9.55,-4.2)
-\begin{minipage}{\textwidth}
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{0.1cm}
-\includegraphics[width=0.53\textwidth, right]{imagenes/buildingblockquagga.png}
-\end{minipage}
-\end{textblock}
-
-\begin{textblock}{3}(9.55,-5.5)
-\begin{minipage}{\textwidth}
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{0.1cm}
-\includegraphics[width=0.53\textwidth, right]{imagenes/buldingblockrauflow.png}
-\end{minipage}
-\end{textblock}
-
-\pause
-
-\begin{textblock}{3}(9.55,-6.8)
-\begin{minipage}{\textwidth}
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{0.1cm}
-\includegraphics[width=0.53\textwidth, right]{imagenes/buildingblockadminsnmp.png}
-\end{minipage}
-\end{textblock}
-
-\begin{textblock}{3}(11.47,-6.8)
-\begin{minipage}{\textwidth}
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{0.1cm}
-\includegraphics[width=0.53\textwidth, right]{imagenes/buildingblockagentesnmp.png}
-\end{minipage}
-\end{textblock}
 \end{frame}
 
 %------------------------------------------------
@@ -911,6 +602,101 @@ Mostrar las dos fotos del stack Plano Control - Dispositivo con los building blo
 
 \begin{frame}
 \frametitle{Implementaci\'on} 
+
+Se implementaron dos componentes:
+
+\begin{enumerate}
+\item RAU-Switch: Dispositivo de red compatible con el protocolo OpenFlow
+\item RAUFlow: Conjunto de aplicaciones de gesti\'on de redes, implementan plano de control en el prototipo
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{Implementaci\'on} 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.0\textwidth]{imagenes/rauflowarquitectura.png}
+\end{figure}
+
+\end{frame}
+%------------------------------------------------
+
+%------------------------------------------------
+\section{Experimentaci\'on} 
+
+\begin{frame}
+\frametitle{Experimentaci\'on} 
+
+Se construye un laboratorio de experimentaci\'on compuesto por 4 nodos RAU-Switch conectados mediante enlaces \'opticos de alta velocidad en una topolog\'ia full Mesh.
+
+\vspace{0.5cm}
+\begin{minipage}{0.60\textwidth}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.81\textwidth]{imagenes/Topologia.png}\hfill
+\end{figure}
+\end{minipage}
+\hfill
+\begin{minipage}{0.35\textwidth}
+\begin{figure}[H]
+\centering
+\includegraphics[width=1.0\textwidth]{imagenes/laboratorio.jpg}
+\end{figure}
+\end{minipage} 
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Experimentaci\'on} 
+
+Mediante la definici\'on de servicios en la aplicaci\'on RAUFlow, se configuran dos tipos de redes privadas:
+\begin{enumerate}
+\item VPN L3 multipunto
+\item VPN L2 punto a punto 
+\end{enumerate}
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Experimentaci\'on} 
+
+\textbf{VPN L3:}\\
+
+Se configuran dos escenarios:
+
+\begin{enumerate}
+\item Una organizaci\'on con tres sucursales f\'isicamente separadas
+\item Dos organizaciones con dos sucursales f\'isicamente separadas cada una
+\end{enumerate}
+
+\vspace{0.4cm}
+
+Las principales características de la implementaci\'on son:
+\begin{itemize}
+\item Reducci\'on del MTU en 64bits (2 cabezales MPLS)
+\item Clasificaci\'on de tr\'afico basada en campos del cabezal OpenFlow
+\item Aislamiento del espacio de direcciones IP
+\end{itemize}
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Experimentaci\'on} 
+
+\textbf{VPN L2:}\\
+
+Se configuran un \'unico escenario: Una organizaci\'on con dos sucursales f\'isicamente separadas.
+
+Las principales características de la implementaci\'on son:
+\begin{itemize}
+\item Reducci\'on del MTU en 64bits (2 cabezales MPLS)
+\item Soporte para un conjunto de 43 ethertypes diferentes
+\item Se probo diferentes protocolos como ARP, IPv4 IPv6 e IP con tags de VLAN
+\end{itemize}
+
 
 \end{frame}
 %------------------------------------------------
