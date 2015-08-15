@@ -92,6 +92,8 @@
 \usepackage{wrapfig}
 
 \usepackage{textpos}
+\usepackage{color}
+
 
 \newenvironment{figure*}%
 {\begin{figure}}
@@ -123,6 +125,8 @@ Instituto de Computaci\'on \\ Facultad de Ingeniería \\ Universidad de la Repú
 \frametitle{Agenda} % Table of contents slide, comment this block out to remove it
 \tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
 \end{frame}
+
+\definecolor{blue(ryb)}{rgb}{0.01, 0.28, 1.0}
 
 %----------------------------------------------------------------------------------------
 %	PRESENTATION SLIDES
@@ -211,7 +215,7 @@ Constru\'ir un prototipo para la RAU2 utilizando como plataforma PCs con placas 
 Que características se esperan del prototipo, ¿cuales son los requerimientos?
 
 \pause
-R: Veamos cuales son los posibles requerimientos de la RAU2.
+{\color{blue}R: Veamos cuales son los posibles requerimientos de la RAU2}
 
 \pause
 \begin{block}{Requerimientos}
@@ -228,8 +232,6 @@ Problema demasiado grande!
 
 (Ver como hacer para que al final dejar todo en gris y remarcar solo el requerimiento 1)
 \end{frame}
-
-
 
 %------------------------------------------------
 
@@ -394,6 +396,19 @@ Instrucciones(Que hacer? reenviar ,modificar y reenviar, broadcast, multicast, n
 \begin{frame}
 \frametitle{MPLS} 
 
+MPLS (Multilabel Protocol Switchig) es la soluci\'on de facto para la implementaci\'on de servicios de VPN L2 y L3. Permite transportar tr\'afico mediante la conmutaci\'on de etiquetas.\\
+
+\vspace{0.2cm}
+Arqeuitectura:\\
+
+\begin{itemize}
+\item Label: Etiqueta MPLS (20bits)
+\item Acci\'on: Pop, Push y Swap
+\item LSP: Camino de conmutaci\'on de etiquetas
+\item FEC: Clase de equivalencia de tr\'afico
+\item LDP: Protocolo de distribución de etiquetas
+\end{itemize}
+
 \end{frame}
 
 
@@ -457,21 +472,21 @@ Proyectos de software OpenSource que permiten programar comportamientos de la pl
 \item ¿C\'omo implementamos clasificación de tr\'afico y separamos en categorías?
 
 \pause
-R: Construyendo Redes Privadas Virtuales (VPNs)
+{\color{blue}R: Construyendo Redes Privadas Virtuales (VPNs)}
 \pause
 
 \vspace{0.5cm}
 \item ¿C\'omo implementamos Redes Privadas Virtuales?
 
 \pause
-R: Utilizando MPLS (Multilabel Protocol Switch)
+{\color{blue}R: Utilizando MPLS (Multilabel Protocol Switch)}
 
 \pause
 \vspace{0.5cm}
 \item ¿VPNs con MPLS en SDN?
 
 \pause
-R: OpenFlow!
+{\color{blue}R: OpenFlow!}
 
 \end{itemize}
 
@@ -709,23 +724,8 @@ Las principales características de la implementaci\'on son:
 
 \begin{itemize}
 \item Se realiz\'o una investigaci\'on en profundidad del estado del arte de las redes definidas por software (SDN) y la plataforma de hardware NetFPGA
-
-\item Se implement\'o un prototipo de red de backbone utilizando el hardware NetFPGA y el enfoque SDN
-
-\item Se implement\'o un conjunto de pruebas para la verificaci\'on del prototipo construido 
-
 \end{itemize}
 \end{frame}
-
-\begin{frame}
-\frametitle{Conclusiones} 
-
-\begin{itemize}
-\item Se realiz\'o una investigaci\'on en profundidad del estado del arte de las redes definidas por software (SDN) y la plataforma de hardware NetFPGA
-\end{itemize}
-
-\end{frame}
-
 
 \begin{frame}
 \frametitle{Conclusiones} 
@@ -821,6 +821,13 @@ Otras posibles l\'ineas:
 \item Incorporar m\'as dimensiones a la definici\'on de un servicio (tiempo)
 
 \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\centering
+\Huge
+\textbf{¿Preguntas?}
 
 \end{frame}
 

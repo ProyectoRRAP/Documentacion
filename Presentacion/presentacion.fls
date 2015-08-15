@@ -402,6 +402,8 @@ INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/sansmathaccent/mathkerncmss
 INPUT imagenes/laboratorio.jpg
 INPUT ./imagenes/laboratorio.jpg
 INPUT ./imagenes/laboratorio.jpg
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmss17.tfm
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmssbx10.tfm
 OUTPUT presentacion.nav
 OUTPUT presentacion.toc
 OUTPUT presentacion.snm
