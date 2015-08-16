@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1439651475 "presentacion.tex" "presentacion.pdf" "presentacion" 1439651482
+["pdflatex"] 1439760443 "presentacion.tex" "presentacion.pdf" "presentacion" 1439760450
   "/etc/texmf/web2c/texmf.cnf" 1429299280 1101 af7716885e081ab43982cab7b4672c1a ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1272929888 3287 e6b82fe08f5336d4d5ebc73fb1152e87 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
@@ -215,16 +215,16 @@
   "imagenes/rauflowarquitectura.png" 1439581881 104900 7330a132ab784626a1901d0b361a2fbe ""
   "imagenes/redesAcademicas.png" 1438558544 670943 7a6c43e088b614aeeebe12510073c271 ""
   "imagenes/ryuarch.png" 1439575070 19587 c1124ee7b1803351a0001ea9ff5da53a ""
-  "presentacion.aux" 1439651482 9452 30a90f3fd9577306d0dbce6fb9b717ef ""
-  "presentacion.nav" 1439651482 5239 72a4118da49d064e58d13c128295cc85 ""
-  "presentacion.out" 1439651482 426 c844a049e2fdef784c83014525db4ca8 ""
-  "presentacion.tex" 1439647791 22036 dca72288440fb5c011883f25fdbe2a66 ""
-  "presentacion.toc" 1439651482 510 3128d6bc42f07087f0f343265243312a ""
+  "presentacion.aux" 1439760450 9454 3d0d88624b614e0757abddba98bafa49 ""
+  "presentacion.nav" 1439760450 5241 50550b91055a28ba59601c19ea6dae16 ""
+  "presentacion.out" 1439760450 426 c844a049e2fdef784c83014525db4ca8 ""
+  "presentacion.tex" 1439760435 22062 240f22d4ccfb9f95249936d73b186ceb ""
+  "presentacion.toc" 1439760450 510 e52ce39fdfaab40b5a8d9e96aaa7459a ""
   (generated)
-  "presentacion.toc"
-  "presentacion.log"
   "presentacion.out"
-  "presentacion.aux"
-  "presentacion.pdf"
-  "presentacion.snm"
   "presentacion.nav"
+  "presentacion.snm"
+  "presentacion.aux"
+  "presentacion.log"
+  "presentacion.toc"
+  "presentacion.pdf"

@@ -199,10 +199,13 @@ una API propietaria.
 Constru\'ir un prototipo para la RAU2 utilizando como plataforma PCs con placas de red aceleradas en hardware reconfigurable NetFPGA y el enfoque de las Redes Definidas por Software (SDN).
 \end{block}
 
+\pause
 \begin{block}{Resultados esperados}
 \begin{itemize}
 \item Estado del arte en Redes Definidas por Software y hardware NetFPGA
+\pause
 \item Prototipo de aplicaci\'on de gesti\'on de red utilizando SDN y el hardware NetFPGA enfocado en los requerimientos recabados sobre la RAU2
+\pause
 \item Diseño e implementaci\'on de pruebas de verificaci\'on para el prototipo construido
 \end{itemize}
 \end{block}
@@ -530,12 +533,15 @@ en la implementaci\'on de OpenFlow.
 \textbf{Construir un switch OpenFlow} 
 
 \vspace{0.3cm}
-Se identifican dos alternativas: 
+Se identifican dos alternativas utilizando hardware NetFPGA:
+\pause 
 \begin{enumerate}
 \item Proyecto OpenFlow
+\pause
 \item Proyecto ReferenceNIC m\'as implementaci\'on OF en software (Open vSwitch)
 \end{enumerate}
 
+\pause
 \begin{table}[]
 \small
 \centering
@@ -553,6 +559,10 @@ Licencias full &  Licencias econ\'omicas \\
 \hline  
 \end{tabular}
 \end{table}
+
+\pause
+{\color{blue} (2) ReferenceNIC y OvS!}
+
 \end{frame}
 
 \begin{frame}
@@ -705,6 +715,8 @@ Las principales características de la implementaci\'on son:
 
 Se configuran un \'unico escenario: Una organizaci\'on con dos sucursales f\'isicamente separadas.
 
+\vspace{0.4cm}
+
 Las principales características de la implementaci\'on son:
 \begin{itemize}
 \item Reducci\'on del MTU en 64bits (2 cabezales MPLS)
@@ -723,7 +735,7 @@ Las principales características de la implementaci\'on son:
 \frametitle{Conclusiones} 
 
 \begin{itemize}
-\item Se realiz\'o una investigaci\'on en profundidad del estado del arte de las redes definidas por software (SDN) y la plataforma de hardware NetFPGA
+\item Se realiz\'o una investigaci\'on en profundidad del estado del arte de las redes definidas por software (SDN) y la plataforma de hardware NetFPGA.
 \end{itemize}
 \end{frame}
 
@@ -752,11 +764,13 @@ Se implement\'o un prototipo de red de backbone utilizando el hardware NetFPGA y
 Se construy\'o un laboratorio de pruebas para la verificaci\'on del prototipo:
 
 \begin{itemize}
-\item Se verific\'o algoritmo de ruteo, distribuci\'on de etiquetas y clasificaci\'on de tr\'afico 
+\item Se ejecutaron pruebas funcionales
 
-\item Se implement\'o el caso de uso VPN L3 Multipunto en un escenario de dos organizaciones con dos sucursales
-
-\item Se implement\'o el caso de uso VPN L2 Punto a Punto 
+\item Se implementaron dos casos de uso:
+\begin{itemize}
+\item VPN L3 multipunto
+\item VPN L2 punto a punto
+\end{itemize}
 
 \end{itemize}
 
@@ -770,7 +784,7 @@ Se construy\'o un laboratorio de pruebas para la verificaci\'on del prototipo:
 
 \item Se contribuy\'o a la comunidad NetFPGA reportando dos BUGs
 
-\item Se escribió el articulo cient\'ifico el cual fue aceptado en la conferencia Latin American Network Operations and Management Symposium (LANOMS) 2015
+\item Se escribió un articulo cient\'ifico el cual fue aceptado en la confenrencia Latin American Network Operations and Management Symposium (LANOMS) 2015
 
 \item Se gener\'o un grupo de trabajo (GT SDNUY) uniendo profesionales del SeCIU, Centro de Capacitación y Desarrollo de ANTEL y del Centro Universitario de la Región Este (CURE) 
 
