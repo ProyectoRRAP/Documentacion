@@ -1,6 +1,11 @@
 # Fdb version 3
+<<<<<<< HEAD
 ["pdflatex"] 1439768864 "presentacion.tex" "presentacion.pdf" "presentacion" 1439768875
   "/etc/texmf/web2c/texmf.cnf" 1429299280 1101 af7716885e081ab43982cab7b4672c1a ""
+=======
+["pdflatex"] 1439768834 "presentacion.tex" "presentacion.pdf" "presentacion" 1439768841
+  "/etc/texmf/web2c/texmf.cnf" 1429571373 1101 af7716885e081ab43982cab7b4672c1a ""
+>>>>>>> fcf0057e79e9120cff036f6183f21a5119e264d7
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1272929888 3287 e6b82fe08f5336d4d5ebc73fb1152e87 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1246382020 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -206,6 +211,7 @@
   "/usr/share/texlive/texmf-dist/tex/latex/xkeyval/xkeyval.sty" 1403829539 4961 d3900e3f4756248d8d0ccedc0016c2eb ""
   "/usr/share/texlive/texmf-dist/web2c/texmf.cnf" 1406646078 31088 8e088e958dd0258cc5414842768a3a00 ""
   "/usr/share/texmf/web2c/texmf.cnf" 1406646078 31088 8e088e958dd0258cc5414842768a3a00 ""
+<<<<<<< HEAD
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1429299518 1452998 01a8be976133af43d194d1993967caa0 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1429299547 3836620 2fe74c00bf57cde842a8674b60567dd3 ""
   "imagenes/NetFPGA10G_web.jpg" 1439338646 204625 fa071c12ee083dcbd3adbfeaa9098418 ""
@@ -232,6 +238,35 @@
   "presentacion.toc"
   "presentacion.out"
   "presentacion.aux"
+=======
+  "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1429571494 1452998 01a8be976133af43d194d1993967caa0 ""
+  "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1429571515 3836620 41b44b2f30a7c66016cba8ffcbebb4da ""
+  "imagenes/NetFPGA10G_web.jpg" 1439325429 204625 fa071c12ee083dcbd3adbfeaa9098418 ""
+  "imagenes/SDN-distribuido.png" 1439762451 13696 6911fb3e7cbb8c97817c11c35c25dce6 ""
+  "imagenes/SDN-tradicional.png" 1439767723 18005 b184fdf54690e1a8c51116286a6f304e ""
+  "imagenes/Topologia.png" 1439766299 139422 829fc4a119185052c445ab1912c3ff4e ""
+  "imagenes/arquitecturapropuesta.png" 1439766299 124191 b07979bd78bbb3650b381ca6ea6ba321 ""
+  "imagenes/arquitecturapropuesta1.png" 1439766299 95806 97c339bdf48134cdb1e0007b7da90565 ""
+  "imagenes/corerouter1.png" 1439766299 78227 3662cfa6b1902733360706657b1de09c ""
+  "imagenes/corerouter2.png" 1439766299 259445 a3c6d6bc15e60aa93b3b70af324b5b4e ""
+  "imagenes/corerouter3.jpg" 1439766299 360954 2749e35939e95dca445efdaaa407f29d ""
+  "imagenes/laboratorio.jpg" 1439766299 5751510 4bfe19cfca8f0944f0d4d808cda31b74 ""
+  "imagenes/logorau2.png" 1439766299 8804 fc51248275e6827bea119e5ee7e3b68b ""
+  "imagenes/openflowFull.png" 1439644180 47230 3a8a03e32b085494325f3efac9508250 ""
+  "imagenes/rauflowarquitectura.png" 1439766299 104900 7330a132ab784626a1901d0b361a2fbe ""
+  "imagenes/redesAcademicas.png" 1439766299 670943 7a6c43e088b614aeeebe12510073c271 ""
+  "imagenes/ryuarch.png" 1439766299 19587 c1124ee7b1803351a0001ea9ff5da53a ""
+  "imagenes/vpn.png" 1439646008 29806 f4cd4ff5c20abc4ed817eed9cd5435ce ""
+  "presentacion.aux" 1439768841 10369 89be59d94f890e18eb08dca530c1bd1e ""
+  "presentacion.nav" 1439768841 5793 2699b12d0c963462b24105b6f099f3cf ""
+  "presentacion.out" 1439768841 426 c844a049e2fdef784c83014525db4ca8 ""
+  "presentacion.tex" 1439768807 23192 897f22cbdb6caabe563edb93a7a6d955 ""
+  "presentacion.toc" 1439768841 510 23c7ac61f34220286c20d982560fc5f8 ""
+  (generated)
+  "presentacion.aux"
+  "presentacion.toc"
+  "presentacion.out"
+>>>>>>> fcf0057e79e9120cff036f6183f21a5119e264d7
   "presentacion.pdf"
   "presentacion.snm"
   "presentacion.log"
