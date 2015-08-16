@@ -135,6 +135,7 @@ Instituto de Computaci\'on \\ Facultad de Ingeniería \\ Universidad de la Repú
 
 %------------------------------------------------
 \section{Motivaci\'on} 
+\frame{\tableofcontents[currentsection]}
 
 \begin{frame}
 \frametitle{Motivaci\'on} 
@@ -190,7 +191,7 @@ una API propietaria.
 
 %------------------------------------------------
 \section{Definición del problema} 
-
+\frame{\tableofcontents[currentsection]}
 
 \begin{frame}
 \frametitle{Definición del problema} 
@@ -240,7 +241,7 @@ Problema demasiado grande!
 
 %------------------------------------------------
 \section{Conceptos preliminares} 
-
+\frame{\tableofcontents[currentsection]}
 
 \begin{frame}
 \frametitle{SDN-Enfoque tradicional} 
@@ -401,8 +402,9 @@ Instrucciones(Que hacer? reenviar ,modificar y reenviar, broadcast, multicast, n
 
 MPLS (Multilabel Protocol Switchig) es la soluci\'on de facto para la implementaci\'on de servicios de VPN L2 y L3. Permite transportar tr\'afico mediante la conmutaci\'on de etiquetas.\\
 
-\vspace{0.2cm}
-Arqeuitectura:\\
+\vspace{0.4cm}
+\pause
+Arquitectura:\\
 
 \begin{itemize}
 \item Label: Etiqueta MPLS (20bits)
@@ -440,21 +442,32 @@ Arqeuitectura:\\
 \end{frame}
 
 
-
-
 \begin{frame}
 \frametitle{NetFPGA} 
 \begin{block}{Software}
-Proyectos de software OpenSource que permiten programar comportamientos de la placa
-
-\begin{enumerate}
-\item Router IP
-\item Switch Ethernet
-\item Placa de red convencional
-\item Switch OpenFlow 1.0
-\end{enumerate}
+Proyectos de software Open Source que permiten programar comportamientos en el hardware. Dos tipos de proyectos: Referencia y Comunitarios
 
 \end{block}
+
+\begin{table}[]
+\small
+\centering
+\label{label}
+\begin{tabular}{| p{3.7cm} | p{6.8cm} |}
+
+\hline
+\multicolumn{1}{|l|}{Proyecto \footnote[frame]{\tiny Proyectos NetFPGA extraidos de http://netfpga.org/site/\#/systems/3netfpga-10g/applications/}} & \multicolumn{1}{l|}{Organizaci\'on}\\
+\hline
+Production Test  & Stanford University \\
+Learning CAM Switch &  Stanford University/University of Cambridge \\
+Reference NIC 10G  &  Stanford University/University of Cambridge  \\
+Reference Router  &  Stanford University/University of Cambridge  \\
+\hline
+OpenFlow Switch & Stanford University  \\
+\hline  
+\end{tabular}
+\end{table}
+
 
 \end{frame}
 
@@ -463,10 +476,9 @@ Proyectos de software OpenSource que permiten programar comportamientos de la pl
 
 
 
-
 %------------------------------------------------
 \section{Arquitectura propuesta} 
-
+\frame{\tableofcontents[currentsection]}
 
 \begin{frame}
 \frametitle{Arquitectura propuesta} 
@@ -624,6 +636,7 @@ OpenFlow no prev\'e un mecanismo para informar al plano de control direccionamie
 
 %------------------------------------------------
 \section{Implementaci\'on} 
+\frame{\tableofcontents[currentsection]}
 
 \begin{frame}
 \frametitle{Implementaci\'on} 
@@ -649,6 +662,7 @@ Se implementaron dos componentes:
 
 %------------------------------------------------
 \section{Experimentaci\'on} 
+\frame{\tableofcontents[currentsection]}
 
 \begin{frame}
 \frametitle{Experimentaci\'on} 
@@ -730,6 +744,7 @@ Las principales características de la implementaci\'on son:
 
 %------------------------------------------------
 \section{Conclusiones} 
+\frame{\tableofcontents[currentsection]}
 
 \begin{frame}
 \frametitle{Conclusiones} 
@@ -744,7 +759,8 @@ Las principales características de la implementaci\'on son:
 
 Se implement\'o un prototipo de red de backbone utilizando el hardware NetFPGA y el enfoque SDN:
 
-\begin{itemize}
+\pause
+\begin{itemize}[<+->]
 \item \textbf{RAUswitch} Se construy\'o un router de backbone IP/MPLS compatible con el protocolo OpenFlow y OSPF utilizando el hardware NetFPGA
 
 \item \textbf{RAUflow} Se implement\'o una aplicaci\'on de gesti\'on de red utilizando el enfoque SDN con funcionalidades para la definici\'on de redes privadas virtuales
@@ -763,7 +779,8 @@ Se implement\'o un prototipo de red de backbone utilizando el hardware NetFPGA y
 
 Se construy\'o un laboratorio de pruebas para la verificaci\'on del prototipo:
 
-\begin{itemize}
+\pause
+\begin{itemize}[<+->]
 \item Se ejecutaron pruebas funcionales
 
 \item Se implementaron dos casos de uso:
@@ -779,7 +796,7 @@ Se construy\'o un laboratorio de pruebas para la verificaci\'on del prototipo:
 \begin{frame}
 \frametitle{Conclusiones} 
 
-\begin{itemize}
+\begin{itemize}[<+->]
 \item Se confeccion\'o un manual para la construcci\'on del dispositivo RAUswitch
 
 \item Se contribuy\'o a la comunidad NetFPGA reportando dos BUGs
@@ -801,13 +818,15 @@ Se construy\'o un laboratorio de pruebas para la verificaci\'on del prototipo:
 
 %------------------------------------------------
 \section{Trabajo a futuro} 
+\frame{\tableofcontents[currentsection]}
 
 \begin{frame}
 \frametitle{Trabajo a futuro} 
 
 Se identifican las siguientes l\'ineas de trabajo a futuro:
+\pause
 
-\begin{itemize}
+\begin{itemize}[<+->]
 
 \item Extender el proyecto OpenFlow de la plataforma NetFPGA para soportar al menos la versi\'on 1.3.1 del protocolo OpenFlow
 
@@ -823,8 +842,8 @@ Se identifican las siguientes l\'ineas de trabajo a futuro:
 \frametitle{Trabajo a futuro} 
 
 Otras posibles l\'ineas:
-
-\begin{itemize}
+\pause
+\begin{itemize}[<+->]
 
 \item Agregar una capa de persistencia para ciertos datos
 
