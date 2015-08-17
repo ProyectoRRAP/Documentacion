@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014/Debian) (preloaded format=pdflatex 2015.4.17)  17 AUG 2015 19:01
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014/Debian) (preloaded format=pdflatex 2015.4.17)  17 AUG 2015 19:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1401,20 +1401,20 @@ File: imagenes/openflowApplication.png Graphic file (type png)
 
 <use imagenes/openflowApplication.png>
 Package pdftex.def Info: imagenes/openflowApplication.png used on input line 33
-4.
+9.
 (pdftex.def)             Requested size: 136.91603pt x 117.44084pt.
-LaTeX Font Info:    Try loading font information for U+msa on input line 334.
+LaTeX Font Info:    Try loading font information for U+msa on input line 339.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 334.
+LaTeX Font Info:    Try loading font information for U+msb on input line 339.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Try loading font information for OT1+mathkerncmss on input 
-line 334.
+line 339.
 
 (/usr/share/texlive/texmf-dist/tex/latex/sansmathaccent/ot1mathkerncmss.fd
 File: ot1mathkerncmss.fd 2013/03/27 Fontinst v1.933 font definitions for OT1/ma
@@ -1427,7 +1427,7 @@ thkerncmss.
 File: imagenes/openflowController.png Graphic file (type png)
 
 <use imagenes/openflowController.png>
-Package pdftex.def Info: imagenes/openflowController.png used on input line 353
+Package pdftex.def Info: imagenes/openflowController.png used on input line 358
 .
 (pdftex.def)             Requested size: 136.91603pt x 117.69077pt.
  [24
@@ -1437,14 +1437,14 @@ Package pdftex.def Info: imagenes/openflowController.png used on input line 353
 File: imagenes/openflowDevices.png Graphic file (type png)
 
 <use imagenes/openflowDevices.png>
-Package pdftex.def Info: imagenes/openflowDevices.png used on input line 378.
+Package pdftex.def Info: imagenes/openflowDevices.png used on input line 383.
 (pdftex.def)             Requested size: 136.91603pt x 117.44084pt.
 
 <imagenes/OpenFlow.png, id=746, 772.8875pt x 99.37125pt>
 File: imagenes/OpenFlow.png Graphic file (type png)
 
 <use imagenes/OpenFlow.png>
-Package pdftex.def Info: imagenes/OpenFlow.png used on input line 378.
+Package pdftex.def Info: imagenes/OpenFlow.png used on input line 383.
 (pdftex.def)             Requested size: 168.75331pt x 21.69646pt.
  [25
 
@@ -1453,7 +1453,7 @@ Package pdftex.def Info: imagenes/OpenFlow.png used on input line 378.
 File: imagenes/vpn.png Graphic file (type png)
 
 <use imagenes/vpn.png>
-Package pdftex.def Info: imagenes/vpn.png used on input line 394.
+Package pdftex.def Info: imagenes/vpn.png used on input line 399.
 (pdftex.def)             Requested size: 222.48985pt x 88.7843pt.
  [26
 
@@ -1466,7 +1466,7 @@ Package pdftex.def Info: imagenes/vpn.png used on input line 394.
 File: imagenes/NetFPGA10G_web.jpg Graphic file (type jpg)
 
 <use imagenes/NetFPGA10G_web.jpg>
-Package pdftex.def Info: imagenes/NetFPGA10G_web.jpg used on input line 438.
+Package pdftex.def Info: imagenes/NetFPGA10G_web.jpg used on input line 444.
 (pdftex.def)             Requested size: 222.48985pt x 118.36536pt.
  [29
 
@@ -1496,10 +1496,10 @@ File: imagenes/arquitecturapropuesta.png Graphic file (type png)
 
 <use imagenes/arquitecturapropuesta.png>
 Package pdftex.def Info: imagenes/arquitecturapropuesta.png used on input line 
-536.
+542.
 (pdftex.def)             Requested size: 325.17949pt x 193.035pt.
 
-Overfull \vbox (5.2936pt too high) detected at line 536
+Overfull \vbox (5.2936pt too high) detected at line 542
  []
 
 [38
@@ -1508,7 +1508,7 @@ Overfull \vbox (5.2936pt too high) detected at line 536
  the same identifier (name{label}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.572 \end{frame}
+l.578 \end{frame}
                   [39
 
 ] [40
@@ -1524,7 +1524,7 @@ l.572 \end{frame}
 File: imagenes/ryuarch.png Graphic file (type png)
 
 <use imagenes/ryuarch.png>
-Package pdftex.def Info: imagenes/ryuarch.png used on input line 590.
+Package pdftex.def Info: imagenes/ryuarch.png used on input line 596.
 (pdftex.def)             Requested size: 222.48985pt x 130.61429pt.
  [44
 
@@ -1538,7 +1538,7 @@ File: imagenes/arquitecturapropuesta1.png Graphic file (type png)
 
 <use imagenes/arquitecturapropuesta1.png>
 Package pdftex.def Info: imagenes/arquitecturapropuesta1.png used on input line
- 623.
+ 629.
 (pdftex.def)             Requested size: 273.83728pt x 188.71045pt.
  [47
 
@@ -1555,7 +1555,7 @@ File: imagenes/rauflowarquitectura.png Graphic file (type png)
 
 <use imagenes/rauflowarquitectura.png>
 Package pdftex.def Info: imagenes/rauflowarquitectura.png used on input line 65
-0.
+6.
 (pdftex.def)             Requested size: 342.2953pt x 195.95607pt.
  [50
 
@@ -1569,17 +1569,17 @@ LaTeX Info: Redefining \% on input line 2.
 File: imagenes/Topologia.png Graphic file (type png)
 
 <use imagenes/Topologia.png>
-Package pdftex.def Info: imagenes/Topologia.png used on input line 677.
+Package pdftex.def Info: imagenes/Topologia.png used on input line 683.
 (pdftex.def)             Requested size: 166.35669pt x 131.5804pt.
 
 <imagenes/laboratorio.jpg, id=1495, 963.6pt x 1445.4pt>
 File: imagenes/laboratorio.jpg Graphic file (type jpg)
 
 <use imagenes/laboratorio.jpg>
-Package pdftex.def Info: imagenes/laboratorio.jpg used on input line 677.
+Package pdftex.def Info: imagenes/laboratorio.jpg used on input line 683.
 (pdftex.def)             Requested size: 119.80544pt x 179.70413pt.
 
-Overfull \vbox (7.7891pt too high) detected at line 677
+Overfull \vbox (7.7891pt too high) detected at line 683
  []
 
 [52
@@ -1665,14 +1665,14 @@ LaTeX Info: Redefining \% on input line 2.
 \tf@snm=\write8
 \openout8 = `presentacion.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 857.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 857.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 863.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 863.
  (./presentacion.aux
 LaTeX Info: Redefining \. on input line 26.
 LaTeX Info: Redefining \% on input line 26.
 )
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 857.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 857.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 863.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 863.
 Package rerunfilecheck Info: File `presentacion.out' has not changed.
 (rerunfilecheck)             Checksum: 9E7C01C0B2306AA4A01791641746FBF8;367.
 
@@ -1683,7 +1683,7 @@ LaTeX Font Warning: Size substitutions with differences
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 857.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 863.
  ) 
 Here is how much of TeX's memory you used:
  20081 strings out of 493104
@@ -1698,7 +1698,7 @@ r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss17.pfb></usr/share/texl
 ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive/tex
 mf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb>
-Output written on presentacion.pdf (83 pages, 8474183 bytes).
+Output written on presentacion.pdf (83 pages, 8474496 bytes).
 PDF statistics:
  2414 PDF objects out of 2487 (max. 8388607)
  2250 compressed objects within 23 object streams

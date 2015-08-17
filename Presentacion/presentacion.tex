@@ -255,14 +255,14 @@ Problema demasiado grande!
 %La inteligencia y estado de la red se encuentra distribuida en los mismos dispositivos que reenvian la informacion
 
 \begin{block}{Plano de control}
-Es donde reside la inteligencia de la red, es la logica que controla el el comportamiento de reenvio. Ejs : OSPF, RIP,Firewalls
+Es donde reside la inteligencia de la red, es la l\'ogica que controla el el comportamiento de reenv\'io. Ejs : OSPF, RIP,Firewalls
 %El cerebro de la red%
 \end{block}
 
 
 
 \begin{block}{Plano de datos}
-Se encarga de reenviar el trafico conforme a el plano de control Ejs : Reenvio IP
+Se encarga de reenviar el tr\'afico conforme a el plano de control Ejs : Reenv\'io IP
  
 \end{block}
 
@@ -305,7 +305,12 @@ de control controla varios dispositivos.
 \begin{frame}
 \frametitle{OpenFlow} 
 
-Soluci\'on basada en el enfoque SDN, ofrece una implementaci\'on est\'andar de la Interfaz Sur (protocolo OpenFlow).
+Soluci\'on basada en el enfoque SDN, ofrece una implementaci\'on est\'andar de la Interfaz Sur. El protocolo especifica:
+
+\begin{itemize}
+\item Canal seguro de comunicaci\'on entre capa de control e infraestructura (Protocolo OpenFlow)
+\item Especificaci\'on de dispositivos compatibles con la arquitectura (Switch OpenFlow)
+\end{itemize}
 
 
 \end{frame}
@@ -378,11 +383,11 @@ Todo dispositivo OpenFlow implementa un conjunto de \textbf{Tablas de Flujos}. M
 \end{frame}
 
 \begin{frame}
-\frametitle{VPN (Red privada virtual)} 
+\frametitle{VPN (Red Privada Virtual)} 
 Extensión de una red privada sobre la infraestructura de una red pública. Nos interesa diferenciarlas de acuerdo a:
 \begin{itemize}
 \item Qu\'e capa OSI virtualizan: L2 o L3
-\item Conexi\'on utilziada: punto a punto o multipunto
+\item Conexi\'on utilizada: punto a punto o multipunto
 \end{itemize}
 	
 \vspace{0.4cm}
@@ -417,7 +422,7 @@ Arquitectura:\\
 \frametitle{NetFPGA} 
 
 
-	Plataforma de hardware de red reconfigurable y software OpenSource.
+	Plataforma de hardware de red reconfigurable y software Open Source.
 
 
 
@@ -426,11 +431,12 @@ Arquitectura:\\
 		\begin{enumerate}
 			\item Chip programable FPGA 
 			\item 15 GB RAM
-			\item 4 Puertos 10-Gigabit Ethernet
+			\item 4 Puertos 10-Gigabit SFP+ Ethernet
 		\end{enumerate}
 		
 	\begin{figure}[H]
-		\includegraphics[width=0.65\textwidth, right]{imagenes/NetFPGA10G_web.jpg}
+		\centering
+		\includegraphics[width=0.65\textwidth]{imagenes/NetFPGA10G_web.jpg}
 	\end{figure}
 
 %	\end{block}
@@ -456,8 +462,8 @@ Proyectos de software Open Source que permiten programar comportamientos en el h
 \hline
 Production Test  & Stanford University \\
 Learning CAM Switch &  Stanford University/University of Cambridge \\
-Reference NIC 10G  &  Stanford University/University of Cambridge  \\
 Reference Router  &  Stanford University/University of Cambridge  \\
+Reference NIC 10G  &  Stanford University/University of Cambridge  \\
 \hline
 OpenFlow Switch & Stanford University  \\
 \hline  
@@ -749,7 +755,7 @@ Se implement\'o un prototipo de red de backbone utilizando el hardware NetFPGA y
 \begin{itemize}[<+->]
 \item \textbf{RAUswitch} Se construy\'o un router de backbone IP/MPLS compatible con el protocolo OpenFlow y OSPF utilizando el hardware NetFPGA
 
-\item \textbf{RAUflow} Se implement\'o una aplicaci\'on de gesti\'on de red utilizando el enfoque SDN con funcionalidades para la definici\'on de redes privadas virtuales
+\item \textbf{RAUflow} Se implement\'o una aplicaci\'on de control y gesti\'on de red utilizando el enfoque SDN con funcionalidades para la definici\'on de redes privadas virtuales
 
 \begin{itemize}
 \item Redefinici\'on del concepto de FEC
