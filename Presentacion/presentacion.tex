@@ -141,7 +141,7 @@ Instituto de Computaci\'on \\ Facultad de Ingeniería \\ Universidad de la Repú
 \frametitle{Motivaci\'on I} 
 
 \begin{block}{Redes acad\'emicas}
-Internet no parece apropiada para su utilizaci\'on en el contexto académico en el desarrollo de nuevos protocolos y servicios, enseñanza, investigaci\'on y la innovaci\'on en el \'area.
+Internet no parece apropiada para su utilizaci\'on en el contexto académico en actividades de enseñanza, investigac\'on, el desarrollo de nuevos protocolos, servicios e innovaci\'on en el \'area.
 \end{block}
 
 \begin{figure}[h] 
@@ -340,7 +340,6 @@ Explicar
 		\centering
 		\includegraphics[width=1.0\textwidth]{imagenes/openflowController.png}
 	\end{figure}
-
 \end{minipage}
 \hfill
 \begin{minipage}{0.58\textwidth}
@@ -364,7 +363,17 @@ Explicar
 \end{minipage}
 \hfill
 \begin{minipage}{0.58\textwidth}
-Capa de dispositivos
+Todo dispositivo OpenFlow implementa un conjunto de \textbf{Tablas de Flujos}. Mediante esta tabla se configura el plano de datos de una red. Cada entrada de esta tabla se compone de:
+
+\pause
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.85\textwidth]{imagenes/OpenFlow.png}
+	\end{figure}
+	
+	\textbf{Regla}: Define una clase de tr\'afico utilizando campos en los cabezales de dierentes protocolos (L1 a L4)\\
+	\textbf{Acci\'on}: Procesamiento de cada paquete (Drop, Output, Flood, GoToTable)\\
+	\textbf{Estad\'isticas}: Informaci\'on sobre paquetes procesados por cada regla, etc
 \end{minipage}
 
 \end{frame}

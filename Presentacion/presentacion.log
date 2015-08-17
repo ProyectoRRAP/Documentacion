@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014/Debian) (preloaded format=pdflatex 2015.4.17)  17 AUG 2015 17:16
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014/Debian) (preloaded format=pdflatex 2015.4.17)  17 AUG 2015 18:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1429,7 +1429,7 @@ thkerncmss.
 File: imagenes/openflowController.png Graphic file (type png)
 
 <use imagenes/openflowController.png>
-Package pdftex.def Info: imagenes/openflowController.png used on input line 354
+Package pdftex.def Info: imagenes/openflowController.png used on input line 353
 .
 (pdftex.def)             Requested size: 136.91603pt x 117.69077pt.
  [25
@@ -1439,41 +1439,57 @@ Package pdftex.def Info: imagenes/openflowController.png used on input line 354
 File: imagenes/openflowDevices.png Graphic file (type png)
 
 <use imagenes/openflowDevices.png>
-Package pdftex.def Info: imagenes/openflowDevices.png used on input line 370.
+Package pdftex.def Info: imagenes/openflowDevices.png used on input line 379.
 (pdftex.def)             Requested size: 136.91603pt x 117.44084pt.
+
+<imagenes/OpenFlow.png, id=773, 772.8875pt x 99.37125pt>
+File: imagenes/OpenFlow.png Graphic file (type png)
+
+<use imagenes/OpenFlow.png>
+Package pdftex.def Info: imagenes/OpenFlow.png used on input line 379.
+(pdftex.def)             Requested size: 168.75331pt x 21.69646pt.
  [26
 
- <./imagenes/openflowDevices.png>]
-<imagenes/vpn.png, id=801, 313.17pt x 124.96687pt>
-File: imagenes/vpn.png Graphic file (type png)
- <use imagenes/vpn.png>
-Package pdftex.def Info: imagenes/vpn.png used on input line 386.
-(pdftex.def)             Requested size: 222.48985pt x 88.7843pt.
+ <./imagenes/openflowDevices.png> <./imagenes/OpenFlow.png>]
+File: imagenes/openflowDevices.png Graphic file (type png)
+ <use imagenes/openflowDevices.png>
+Package pdftex.def Info: imagenes/openflowDevices.png used on input line 379.
+(pdftex.def)             Requested size: 136.91603pt x 117.44084pt.
+File: imagenes/OpenFlow.png Graphic file (type png)
+ <use imagenes/OpenFlow.png>
+Package pdftex.def Info: imagenes/OpenFlow.png used on input line 379.
+(pdftex.def)             Requested size: 168.75331pt x 21.69646pt.
 
 [27
 
- <./imagenes/vpn.png>] [28
+] <imagenes/vpn.png, id=830, 313.17pt x 124.96687pt>
+File: imagenes/vpn.png Graphic file (type png)
+ <use imagenes/vpn.png>
+Package pdftex.def Info: imagenes/vpn.png used on input line 395.
+(pdftex.def)             Requested size: 222.48985pt x 88.7843pt.
 
-] [29
+[28
+
+ <./imagenes/vpn.png>] [29
+
+] [30
 
 ]
-<imagenes/NetFPGA10G_web.jpg, id=881, 752.8125pt x 400.49625pt>
+<imagenes/NetFPGA10G_web.jpg, id=911, 752.8125pt x 400.49625pt>
 File: imagenes/NetFPGA10G_web.jpg Graphic file (type jpg)
 
 <use imagenes/NetFPGA10G_web.jpg>
-Package pdftex.def Info: imagenes/NetFPGA10G_web.jpg used on input line 430.
+Package pdftex.def Info: imagenes/NetFPGA10G_web.jpg used on input line 439.
 (pdftex.def)             Requested size: 222.48985pt x 118.36536pt.
- [30
+ [31
 
- <./imagenes/NetFPGA10G_web.jpg>] [31
+ <./imagenes/NetFPGA10G_web.jpg>] [32
 
 ]
 (./presentacion.toc
 LaTeX Info: Redefining \. on input line 2.
 LaTeX Info: Redefining \% on input line 2.
-) [32
-
-] [33
+) [33
 
 ] [34
 
@@ -1485,28 +1501,28 @@ LaTeX Info: Redefining \% on input line 2.
 
 ] [38
 
+] [39
+
 ]
-<imagenes/arquitecturapropuesta.png, id=1128, 1993.4475pt x 1183.42125pt>
+<imagenes/arquitecturapropuesta.png, id=1157, 1993.4475pt x 1183.42125pt>
 File: imagenes/arquitecturapropuesta.png Graphic file (type png)
 
 <use imagenes/arquitecturapropuesta.png>
 Package pdftex.def Info: imagenes/arquitecturapropuesta.png used on input line 
-528.
+537.
 (pdftex.def)             Requested size: 325.17949pt x 193.035pt.
 
-Overfull \vbox (5.2936pt too high) detected at line 528
+Overfull \vbox (5.2936pt too high) detected at line 537
  []
 
-[39
+[40
 
  <./imagenes/arquitecturapropuesta.png>]pdfTeX warning (ext4): destination with
  the same identifier (name{label}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.564 \end{frame}
-                  [40
-
-] [41
+l.573 \end{frame}
+                  [41
 
 ] [42
 
@@ -1514,84 +1530,84 @@ l.564 \end{frame}
 
 ] [44
 
+] [45
+
 ]
-<imagenes/ryuarch.png, id=1288, 760.8425pt x 446.66875pt>
+<imagenes/ryuarch.png, id=1317, 760.8425pt x 446.66875pt>
 File: imagenes/ryuarch.png Graphic file (type png)
 
 <use imagenes/ryuarch.png>
-Package pdftex.def Info: imagenes/ryuarch.png used on input line 582.
+Package pdftex.def Info: imagenes/ryuarch.png used on input line 591.
 (pdftex.def)             Requested size: 222.48985pt x 130.61429pt.
- [45
+ [46
 
- <./imagenes/ryuarch.png>] [46
+ <./imagenes/ryuarch.png>] [47
 
-] [47
+] [48
 
 ]
-<imagenes/arquitecturapropuesta1.png, id=1369, 1430.34375pt x 985.6825pt>
+<imagenes/arquitecturapropuesta1.png, id=1397, 1430.34375pt x 985.6825pt>
 File: imagenes/arquitecturapropuesta1.png Graphic file (type png)
 
 <use imagenes/arquitecturapropuesta1.png>
 Package pdftex.def Info: imagenes/arquitecturapropuesta1.png used on input line
- 615.
+ 624.
 (pdftex.def)             Requested size: 273.83728pt x 188.71045pt.
- [48
+ [49
 
  <./imagenes/arquitecturapropuesta1.png>] (./presentacion.toc
 LaTeX Info: Redefining \. on input line 2.
 LaTeX Info: Redefining \% on input line 2.
-) [49
+) [50
 
-] [50
+] [51
 
 ]
-<imagenes/rauflowarquitectura.png, id=1457, 2007.5pt x 1149.29375pt>
+<imagenes/rauflowarquitectura.png, id=1485, 2007.5pt x 1149.29375pt>
 File: imagenes/rauflowarquitectura.png Graphic file (type png)
 
 <use imagenes/rauflowarquitectura.png>
-Package pdftex.def Info: imagenes/rauflowarquitectura.png used on input line 64
-2.
+Package pdftex.def Info: imagenes/rauflowarquitectura.png used on input line 65
+1.
 (pdftex.def)             Requested size: 342.2953pt x 195.95607pt.
- [51
+ [52
 
  <./imagenes/rauflowarquitectura.png>] (./presentacion.toc
 LaTeX Info: Redefining \. on input line 2.
 LaTeX Info: Redefining \% on input line 2.
-) [52
+) [53
 
 ]
-<imagenes/Topologia.png, id=1518, 936.49875pt x 740.7675pt>
+<imagenes/Topologia.png, id=1547, 936.49875pt x 740.7675pt>
 File: imagenes/Topologia.png Graphic file (type png)
 
 <use imagenes/Topologia.png>
-Package pdftex.def Info: imagenes/Topologia.png used on input line 669.
+Package pdftex.def Info: imagenes/Topologia.png used on input line 678.
 (pdftex.def)             Requested size: 166.35669pt x 131.5804pt.
 
-<imagenes/laboratorio.jpg, id=1519, 963.6pt x 1445.4pt>
+<imagenes/laboratorio.jpg, id=1548, 963.6pt x 1445.4pt>
 File: imagenes/laboratorio.jpg Graphic file (type jpg)
 
 <use imagenes/laboratorio.jpg>
-Package pdftex.def Info: imagenes/laboratorio.jpg used on input line 669.
+Package pdftex.def Info: imagenes/laboratorio.jpg used on input line 678.
 (pdftex.def)             Requested size: 119.80544pt x 179.70413pt.
 
-Overfull \vbox (7.7891pt too high) detected at line 669
+Overfull \vbox (7.7891pt too high) detected at line 678
  []
 
-[53
+[54
 
- <./imagenes/Topologia.png> <./imagenes/laboratorio.jpg>] [54
-
-] [55
+ <./imagenes/Topologia.png> <./imagenes/laboratorio.jpg>] [55
 
 ] [56
+
+] [57
 
 ]
 (./presentacion.toc
 LaTeX Info: Redefining \. on input line 2.
 LaTeX Info: Redefining \% on input line 2.
-) [57
-
-] [58
+) [58
 
 ] [59
 
@@ -1611,10 +1627,10 @@ LaTeX Info: Redefining \% on input line 2.
 
 ] [67
 
-]
-[68
+] [68
 
-] [69
+]
+[69
 
 ] [70
 
@@ -1624,12 +1640,12 @@ LaTeX Info: Redefining \% on input line 2.
 
 ] [73
 
+] [74
+
 ] (./presentacion.toc
 LaTeX Info: Redefining \. on input line 2.
 LaTeX Info: Redefining \% on input line 2.
-) [74
-
-] [75
+) [75
 
 ] [76
 
@@ -1637,10 +1653,10 @@ LaTeX Info: Redefining \% on input line 2.
 
 ] [78
 
-]
-[79
+] [79
 
-] [80
+]
+[80
 
 ] [81
 
@@ -1649,6 +1665,8 @@ LaTeX Info: Redefining \% on input line 2.
 ] [83
 
 ] [84
+
+] [85
 
 ]
 \tf@nav=\write6
@@ -1660,14 +1678,14 @@ LaTeX Info: Redefining \% on input line 2.
 \tf@snm=\write8
 \openout8 = `presentacion.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 849.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 849.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 858.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 858.
  (./presentacion.aux
 LaTeX Info: Redefining \. on input line 26.
 LaTeX Info: Redefining \% on input line 26.
 )
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 849.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 849.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 858.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 858.
 Package rerunfilecheck Info: File `presentacion.out' has not changed.
 (rerunfilecheck)             Checksum: 9E7C01C0B2306AA4A01791641746FBF8;367.
 
@@ -1678,13 +1696,13 @@ LaTeX Font Warning: Size substitutions with differences
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 849.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 858.
  ) 
 Here is how much of TeX's memory you used:
- 20078 strings out of 493104
- 374081 string characters out of 6136932
+ 20085 strings out of 493104
+ 374215 string characters out of 6136932
  457330 words of memory out of 5000000
- 22838 multiletter control sequences out of 15000+600000
+ 22842 multiletter control sequences out of 15000+600000
  16744 words of font info for 61 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  56i,16n,62p,392b,928s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1693,10 +1711,10 @@ r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss17.pfb></usr/share/texl
 ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive/tex
 mf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb>
-Output written on presentacion.pdf (84 pages, 8467092 bytes).
+Output written on presentacion.pdf (85 pages, 8483332 bytes).
 PDF statistics:
- 2438 PDF objects out of 2487 (max. 8388607)
- 2275 compressed objects within 23 object streams
- 180 named destinations out of 1000 (max. 500000)
- 248 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 2470 PDF objects out of 2487 (max. 8388607)
+ 2303 compressed objects within 24 object streams
+ 182 named destinations out of 1000 (max. 500000)
+ 253 words of extra memory for PDF output out of 10000 (max. 10000000)
 
