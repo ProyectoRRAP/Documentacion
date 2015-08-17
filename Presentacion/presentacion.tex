@@ -295,7 +295,20 @@ Escribir algo mas, algun ejemplo. o que ultimamente esta de moda
 
 \end{frame}
 
+\begin{frame}
+\frametitle{SDN (Capas l\'ogicas)} 
 
+\begin{itemize}
+\item Tres capas: (1) capa de aplicaciones, (2) capa de control y (3) capa de infraestructura
+\item Dos interfaces de comunicaci\'on: interfaz sur e interfaz norte
+\end{itemize}
+ 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.6\textwidth]{imagenes/SDNArchitecture.png}
+\end{figure}
+\end{frame}
 
 \begin{frame}
 \frametitle{OpenFlow} 
@@ -308,11 +321,17 @@ Escribir algo mas, algun ejemplo. o que ultimamente esta de moda
 \end{minipage}
 \hfill
 \begin{minipage}{0.49\textwidth}
+\begin{itemize}
+\item Soluci\'on basada en el enfoque SDN
+\item Define tres capas:
+\item Capa de aplicaciones:
+\end{itemize}
 -Solucion basada en el enfoque SDN
 %Nos permite programar el control de la red en %
--Define tres grandes capas:
+-Define tres grandes capas: 
 Capa de aplicaciones:
 Permite programar el control de la red a partir de las primitivas proporcionadas por el controlador a partir de la interfaz norte
+
 
 
 
@@ -322,7 +341,7 @@ Permite programar el control de la red a partir de las primitivas proporcionadas
 
 
 \begin{frame}
-\frametitle{OpenFlow} 
+\frametitle{OpenFlow (Capa de Control)} 
 \begin{minipage}{0.50\textwidth}
 	\begin{figure}[H]
 		\raggedright
@@ -332,11 +351,10 @@ Permite programar el control de la red a partir de las primitivas proporcionadas
 \end{minipage}
 \hfill
 \begin{minipage}{0.49\textwidth}
-Capa de control
 \begin{itemize}
-\item   Software que ejecuta en hardware x86 (PC, Servidor)
-\item   Ofrece una api de alto nivel a los programadores (NorthBound) para controlar la red.
-\item  Cada operacion ofrecida por la api es traducida a reglas openflow y comunicadas por el canal openflow (SouthBound)hacia el dispositivo.
+\item Implementaci\'on en Software ejecutada en hardware convencional (x86)
+\item Ofrece una API de alto nivel para controlar los dispositivos de una Red (Interfaz Norte)
+\item Cada operaci\'on se traduce a reglas OpenFlow e instaladas en el dispositivo a trav\'es de la Interfaz Sur (protocolo OpenFlow)
 \end{itemize}
 
 
@@ -381,29 +399,17 @@ Tabla en un dispositivo
 
 \begin{frame}
 \frametitle{VPN (Red privada virtual)} 
-
-Extensión de una red privada sobre la infraestructura de una red pública.
-	\begin{figure}[H]
-		\raggedright
-		\includegraphics[width=0.7\textwidth, center]{imagenes/vpn.png}
-	\end{figure}
-Existen varias formas de implementar una VPN.
-Las podemos diferenciar por:
-
-A partir de que capa virtualizan la red.
-Ejs:
+Extensión de una red privada sobre la infraestructura de una red pública. Nos interesa diferenciarlas de acuerdo a:
 \begin{itemize}
-\item L2
-\item L3
+\item Qu\'e capa OSI virtualizan: L2 o L3
+\item Conexi\'on utilziada: punto a punto o multipunto
 \end{itemize}
-
-Que tecnologia utilizan para virtualizar
-Ejs:
-\begin{itemize}
-\item ATM-Frame Relay
-\item IP-MPLS 
-\end{itemize}
-%Siendo este ultimo el estandar de facto para crear VPN's%
+	
+\vspace{0.4cm}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.65\textwidth]{imagenes/vpn.png}
+\end{figure}
 
 \end{frame}
 
