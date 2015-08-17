@@ -355,6 +355,9 @@ INPUT ./imagenes/SDN-tradicional.png
 INPUT imagenes/SDN-distribuido.png
 INPUT ./imagenes/SDN-distribuido.png
 INPUT ./imagenes/SDN-distribuido.png
+INPUT imagenes/SDNArchitecture.png
+INPUT ./imagenes/SDNArchitecture.png
+INPUT ./imagenes/SDNArchitecture.png
 INPUT imagenes/openflowFull.png
 INPUT ./imagenes/openflowFull.png
 INPUT ./imagenes/openflowFull.png
