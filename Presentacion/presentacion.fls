@@ -347,8 +347,6 @@ INPUT ./imagenes/corerouter3.jpg
 INPUT ./imagenes/corerouter3.jpg
 INPUT presentacion.toc
 INPUT presentacion.toc
-INPUT presentacion.toc
-INPUT presentacion.toc
 INPUT imagenes/SDN-tradicional.png
 INPUT ./imagenes/SDN-tradicional.png
 INPUT ./imagenes/SDN-tradicional.png
@@ -422,10 +420,10 @@ INPUT presentacion.toc
 INPUT imagenes/arquitecturapropuesta.png
 INPUT ./imagenes/arquitecturapropuesta.png
 INPUT ./imagenes/arquitecturapropuesta.png
-INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmssbx10.tfm
 INPUT imagenes/ryuarch.png
 INPUT ./imagenes/ryuarch.png
 INPUT ./imagenes/ryuarch.png
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmssbx10.tfm
 INPUT imagenes/arquitecturapropuesta1.png
 INPUT ./imagenes/arquitecturapropuesta1.png
 INPUT ./imagenes/arquitecturapropuesta1.png
@@ -447,7 +445,6 @@ INPUT presentacion.toc
 INPUT presentacion.toc
 INPUT presentacion.toc
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmss17.tfm
-INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmssbx10.tfm
 OUTPUT presentacion.nav
 OUTPUT presentacion.toc
 OUTPUT presentacion.snm
@@ -456,5 +453,6 @@ INPUT ./presentacion.out
 INPUT ./presentacion.out
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb
+INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss17.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb

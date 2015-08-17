@@ -134,11 +134,11 @@ Instituto de Computaci\'on \\ Facultad de Ingeniería \\ Universidad de la Repú
 
 
 %------------------------------------------------
-\section{Motivaci\'on} 
+\section{Introducci\'on} 
 \frame{\tableofcontents[currentsection]}
 
 \begin{frame}
-\frametitle{Motivaci\'on} 
+\frametitle{Motivaci\'on I} 
 
 \begin{block}{Redes acad\'emicas}
 Internet no parece apropiada para su utilizaci\'on en el contexto académico en el desarrollo de nuevos protocolos y servicios, investigaci\'on y la innovaci\'on en el \'area.
@@ -153,7 +153,7 @@ Internet no parece apropiada para su utilizaci\'on en el contexto académico en 
 \end{frame}
 
 \begin{frame}
-\frametitle{Motivaci\'on} 
+\frametitle{Motivaci\'on II} 
 
 \begin{block}{Red Académica Uruguaya (RAU)}
 A nivel local, la RAU es un emprendimiento de la Universidad de la República administrado por el SeCIU con los objetivos de unir a las instituciones académicas nacionales en una red de alcance nacional y a trav\'es de ella conectarlas a Latinoam\'erica. 
@@ -172,7 +172,7 @@ Remplazo de la actual red académica, es una red avanzada de altas prestaciones 
 \end{frame}
 
 \begin{frame}
-\frametitle{Motivaci\'on} 
+\frametitle{Motivaci\'on III} 
 
 \begin{block}{Hardware comercial}
 Los equipos de red de backbone comerciales como HP, CISCO, Juniper son costos y generalmente de naturaleza cerrada. Las funcionalidades del hardware se restringen a las funcionalidades expuesta por
@@ -187,14 +187,9 @@ una API propietaria.
 \label{fig:figure3}
 \end{figure}
 \end{frame}
-%------------------------------------------------
-
-%------------------------------------------------
-\section{Definición del problema} 
-\frame{\tableofcontents[currentsection]}
 
 \begin{frame}
-\frametitle{Definición del problema} 
+\frametitle{Definición del problema I} 
 
 \begin{block}{Definición del Problema }
 Constru\'ir un prototipo para la RAU2 utilizando como plataforma PCs con placas de red aceleradas en hardware reconfigurable NetFPGA y el enfoque de las Redes Definidas por Software (SDN).
@@ -214,7 +209,7 @@ Constru\'ir un prototipo para la RAU2 utilizando como plataforma PCs con placas 
 \end{frame}
 
 \begin{frame}
-\frametitle{Definición del problema} 
+\frametitle{Definición del problema II} 
 
 Que características se esperan del prototipo, ¿cuales son los requerimientos?
 
@@ -234,7 +229,6 @@ Que características se esperan del prototipo, ¿cuales son los requerimientos?
 \pause
 Problema demasiado grande!
 
-(Ver como hacer para que al final dejar todo en gris y remarcar solo el requerimiento 1)
 \end{frame}
 
 %------------------------------------------------
@@ -475,7 +469,7 @@ OpenFlow Switch & Stanford University  \\
 \frame{\tableofcontents[currentsection]}
 
 \begin{frame}
-\frametitle{Arquitectura propuesta} 
+\frametitle{Arquitectura propuesta I} 
 
 \begin{itemize}
 \item ¿C\'omo implementamos clasificación de tr\'afico y separamos en categorías?
@@ -503,7 +497,7 @@ OpenFlow Switch & Stanford University  \\
 
 
 \begin{frame}
-\frametitle{Arquitectura propuesta} 
+\frametitle{Arquitectura propuesta II} 
 
 Utilizamos OpenFlow porque:
 
@@ -520,7 +514,7 @@ Utilizamos OpenFlow porque:
 \end{frame}
 
 \begin{frame}
-\frametitle{Arquitectura propuesta} 
+\frametitle{Arquitectura propuesta III} 
 
 Se propone una arquitectura h\'ibrida que combina el enfoque SDN con tecnologías actuales, basándose 
 en la implementaci\'on de OpenFlow.
@@ -534,11 +528,8 @@ en la implementaci\'on de OpenFlow.
 
 
 \begin{frame}
-\frametitle{Arquitectura de la soluci\'on} 
+\frametitle{Switch OpenFlow} 
 
-\textbf{Construir un switch OpenFlow} 
-
-\vspace{0.3cm}
 Se identifican dos alternativas utilizando hardware NetFPGA:
 \pause 
 \begin{enumerate}
@@ -572,9 +563,8 @@ Licencias full &  Licencias econ\'omicas \\
 \end{frame}
 
 \begin{frame}
-\frametitle{Arquitectura de la soluci\'on} 
+\frametitle{Controlador OpenFlow} 
 
-\textbf{Controlador} \\
 Utilizamos Ryu como software de control SDN
 
 \begin{itemize}
@@ -591,9 +581,8 @@ Utilizamos Ryu como software de control SDN
 \end{frame}
 
 \begin{frame}
-\frametitle{Arquitectura de la soluci\'on} 
+\frametitle{Algoritmo de Ruteo} 
 
-\textbf{Algoritmo de ruteo} \\
 \begin{itemize}
 \item Calculo de rutas en base a IP
 \item Utilizamos OSPF para la construcci\'on de una base de datos topol\'ogica (LSDB)
@@ -604,7 +593,7 @@ Utilizamos Ryu como software de control SDN
 \end{frame}
 
 \begin{frame}
-\frametitle{Arquitectura de la soluci\'on} 
+\frametitle{Agente SNMP} 
 
 \textbf{Agente SNMP} \\
 OpenFlow no prev\'e un mecanismo para informar al plano de control direccionamiento IP de un puerto en un dispositivo. \\
@@ -615,9 +604,7 @@ OpenFlow no prev\'e un mecanismo para informar al plano de control direccionamie
 \end{frame}
 
 \begin{frame}
-\frametitle{Arquitectura de la soluci\'on} 
-
-\textbf{Arquitectura propuesta} \\
+\frametitle{Arquitectura Propuesta III} 
 
 \begin{figure}[H]
 \centering
@@ -633,7 +620,7 @@ OpenFlow no prev\'e un mecanismo para informar al plano de control direccionamie
 \frame{\tableofcontents[currentsection]}
 
 \begin{frame}
-\frametitle{Implementaci\'on} 
+\frametitle{Implementaci\'on I} 
 
 Se implementaron dos componentes:
 
@@ -644,7 +631,7 @@ Se implementaron dos componentes:
 \end{frame}
 
 \begin{frame}
-\frametitle{Implementaci\'on} 
+\frametitle{Implementaci\'on II} 
 
 \begin{figure}[H]
 \centering
@@ -681,7 +668,7 @@ Se construye un laboratorio de experimentaci\'on compuesto por 4 nodos RAU-Switc
 \end{frame}
 
 \begin{frame}
-\frametitle{Experimentaci\'on} 
+\frametitle{Experimentaci\'on II} 
 
 Mediante la definici\'on de servicios en la aplicaci\'on RAUFlow, se configuran dos tipos de redes privadas:
 \begin{enumerate}
@@ -693,9 +680,7 @@ Mediante la definici\'on de servicios en la aplicaci\'on RAUFlow, se configuran 
 \end{frame}
 
 \begin{frame}
-\frametitle{Experimentaci\'on} 
-
-\textbf{VPN L3:}\\
+\frametitle{VPN L3} 
 
 Se configuran dos escenarios:
 
@@ -717,9 +702,7 @@ Las principales características de la implementaci\'on son:
 \end{frame}
 
 \begin{frame}
-\frametitle{Experimentaci\'on} 
-
-\textbf{VPN L2:}\\
+\frametitle{VPN L2} 
 
 Se configuran un \'unico escenario: Una organizaci\'on con dos sucursales f\'isicamente separadas.
 
@@ -854,7 +837,7 @@ Otras posibles l\'ineas:
 \begin{frame}
 \centering
 \Huge
-\textbf{¿Preguntas?}
+¿Preguntas?
 
 \end{frame}
 
