@@ -355,18 +355,12 @@ INPUT ./imagenes/SDN-tradicional.png
 INPUT imagenes/SDN-distribuido.png
 INPUT ./imagenes/SDN-distribuido.png
 INPUT ./imagenes/SDN-distribuido.png
-<<<<<<< HEAD
-INPUT imagenes/openflowFul.png
-INPUT ./imagenes/openflowFul.png
-INPUT ./imagenes/openflowFul.png
-=======
 INPUT imagenes/SDNArchitecture.png
 INPUT ./imagenes/SDNArchitecture.png
 INPUT ./imagenes/SDNArchitecture.png
-INPUT imagenes/openflowFull.png
-INPUT ./imagenes/openflowFull.png
-INPUT ./imagenes/openflowFull.png
->>>>>>> fb0059ed3eabad87514970032e9f28c82b1b5b9b
+INPUT imagenes/openflowApplication.png
+INPUT ./imagenes/openflowApplication.png
+INPUT ./imagenes/openflowApplication.png
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmmi10.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmmi8.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmmi6.tfm
