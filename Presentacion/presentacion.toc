@@ -1,0 +1,9 @@
+\beamer@endinputifotherversion {3.33pt}
+\select@language {spanish}
+\beamer@sectionintoc {1}{Introducci\'on}{3}{0}{1}
+\beamer@sectionintoc {2}{Conceptos preliminares}{19}{0}{2}
+\beamer@sectionintoc {3}{Arquitectura propuesta}{33}{0}{3}
+\beamer@sectionintoc {4}{Implementaci\'on}{50}{0}{4}
+\beamer@sectionintoc {5}{Experimentaci\'on}{53}{0}{5}
+\beamer@sectionintoc {6}{Conclusiones}{58}{0}{6}
+\beamer@sectionintoc {7}{Trabajo a futuro}{75}{0}{7}
