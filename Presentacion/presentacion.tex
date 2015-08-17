@@ -312,10 +312,19 @@ Escribir algo mas, algun ejemplo. o que ultimamente esta de moda
 
 \begin{frame}
 \frametitle{OpenFlow} 
+
+Soluci\'on basada en el enfoque SDN, ofrece una implementaci\'on est\'andar de la Interfaz Sur (protocolo OpenFlow).
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{OpenFlow} 
+
 \begin{minipage}{0.50\textwidth}
 	\begin{figure}[H]
-		\raggedright
-		\includegraphics[width=1.0\textwidth, right]{imagenes/openflowFull.png}
+		\centering
+		\includegraphics[width=1.0\textwidth]{imagenes/openflowFull.png}
 	\end{figure}
 
 \end{minipage}
@@ -339,61 +348,39 @@ Permite programar el control de la red a partir de las primitivas proporcionadas
 
 \end{frame}
 
-
 \begin{frame}
 \frametitle{OpenFlow (Capa de Control)} 
-\begin{minipage}{0.50\textwidth}
+\begin{minipage}{0.40\textwidth}
 	\begin{figure}[H]
-		\raggedright
-		\includegraphics[width=1.0\textwidth, right]{imagenes/openflowFull.png}
+		\centering
+		\includegraphics[width=1.0\textwidth]{imagenes/openflowFull.png}
 	\end{figure}
 
 \end{minipage}
 \hfill
-\begin{minipage}{0.49\textwidth}
+\begin{minipage}{0.58\textwidth}
 \begin{itemize}
 \item Implementaci\'on en Software ejecutada en hardware convencional (x86)
 \item Ofrece una API de alto nivel para controlar los dispositivos de una Red (Interfaz Norte)
 \item Cada operaci\'on se traduce a reglas OpenFlow e instaladas en el dispositivo a trav\'es de la Interfaz Sur (protocolo OpenFlow)
 \end{itemize}
 
-
 \end{minipage}
-
 \end{frame}
 
-
-
 \begin{frame}
-\frametitle{OpenFlow} 
-\begin{minipage}{0.60\textwidth}
+\frametitle{OpenFlow (Capa de Dispositivos)} 
+\begin{minipage}{0.40\textwidth}
 	\begin{figure}[H]
-		\raggedright
-		\includegraphics[width=1.0\textwidth, right]{imagenes/openflowFull.png}
+		\centering
+		\includegraphics[width=1.0\textwidth]{imagenes/openflowFull.png}
 	\end{figure}
-	
 
 \end{minipage}
-
-\begin{minipage}{0.49\textwidth}
-Capa de dispositivos:
-
-Dispositivo openflow-capable(Canal Openflow, Tablas)
-
-Canal openflow
-
-Tabla en un dispositivo
-
-%Cabe destacar que mediante firmware.... uno de los porque del exito de openflow..
-
-%(Match field, mostrar imagen famosa)
-%(Contador, estadisticas por flujo)
-%Instrucciones(Que hacer? reenviar ,modificar y reenviar, broadcast, multicast, normal).	
-	
-
+\hfill
+\begin{minipage}{0.58\textwidth}
+Capa de dispositivos
 \end{minipage}
-
-
 
 \end{frame}
 
