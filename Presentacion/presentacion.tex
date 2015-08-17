@@ -200,9 +200,9 @@ Constru\'ir un prototipo para la RAU2 utilizando como plataforma PCs con placas 
 \begin{itemize}
 \item Estado del arte en Redes Definidas por Software y hardware NetFPGA
 \pause
-\item Prototipo de aplicaci\'on de gesti\'on de red utilizando SDN y el hardware NetFPGA enfocado en los requerimientos recabados sobre la RAU2
+\item Prototipo de aplicaci\'on de gesti\'on de red utilizando SDN y el hardware NetFPGA (orientado a  los requerimientos de la RAU2)
 \pause
-\item Diseño e implementaci\'on de pruebas de verificaci\'on para el prototipo construido
+\item Diseño e implementaci\'on de pruebas de verificaci\'on
 \end{itemize}
 \end{block}
 
@@ -211,10 +211,10 @@ Constru\'ir un prototipo para la RAU2 utilizando como plataforma PCs con placas 
 \begin{frame}
 \frametitle{Definición del problema II} 
 
-Que características se esperan del prototipo, ¿cuales son los requerimientos?
+Qu\'e características se esperan del prototipo, ¿cuales son los requerimientos?
 
 \pause
-{\color{blue}R: Veamos cuales son los posibles requerimientos de la RAU2}
+{\color{blue}R: Pensemos en posibles requerimientos sobre la RAU2}
 
 \pause
 \begin{block}{Requerimientos}
@@ -222,7 +222,7 @@ Que características se esperan del prototipo, ¿cuales son los requerimientos?
 \item Clasificaci\'on y separaci\'on de tr\'afico seg\'un categorías
 \item Manejo de grandes vol\'umenes de datos
 \item Escalabilidad
-\item Red de entrega de contenidos
+%\item Red de entrega de contenidos
 \end{enumerate}
 \end{block}
 
@@ -285,8 +285,6 @@ de control controla varios dispositivos.
 		\includegraphics[width=0.5\textwidth, center]{imagenes/SDN-distribuido.png}
 	\end{figure}
 
-Escribir algo mas, algun ejemplo. o que ultimamente esta de moda
-
 \end{frame}
 
 \begin{frame}
@@ -325,10 +323,11 @@ Soluci\'on basada en el enfoque SDN, ofrece una implementaci\'on est\'andar de l
 \hfill
 \begin{minipage}{0.58\textwidth}
 
-
-En esta capa se encuentran los programas que a traves de la API, o interfaz norte del controlador controlan el comportamiento de la red.
-Son piezas de sofrware escritas en lenguajes de programacion convencionales.
- 
+\begin{itemize}
+\item El comportamiento de la red se implementa mediante aplicaciones
+\item Se escriben en lenguajes de programaci\'on y de alto nivel (C/C++, Java, Python)
+\item Se ejecutan sobre el Controlador OpenFlow y hacen uso de la API Norte
+\end{itemize}
 
 \end{minipage}
 
@@ -345,7 +344,7 @@ Son piezas de sofrware escritas en lenguajes de programacion convencionales.
 \hfill
 \begin{minipage}{0.58\textwidth}
 \begin{itemize}
-\item Implementaci\'on en Software ejecutada en hardware convencional (x86)
+\item Implementaci\'on en Software que se ejecuta en hardware convencional (x86)
 \item Ofrece una API de alto nivel para controlar los dispositivos de una Red (Interfaz Norte)
 \item Cada operaci\'on se traduce a reglas OpenFlow e instaladas en el dispositivo a trav\'es de la Interfaz Sur (protocolo OpenFlow)
 \end{itemize}
@@ -366,7 +365,6 @@ Son piezas de sofrware escritas en lenguajes de programacion convencionales.
 \begin{minipage}{0.58\textwidth}
 Todo dispositivo OpenFlow implementa un conjunto de \textbf{Tablas de Flujos}. Mediante esta tabla se configura el plano de datos de una red. Cada entrada de esta tabla se compone de:
 
-\pause
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.85\textwidth]{imagenes/OpenFlow.png}
@@ -386,7 +384,7 @@ Extensión de una red privada sobre la infraestructura de una red pública. Nos 
 \item Qu\'e capa OSI virtualizan: L2 o L3
 \item Conexi\'on utilziada: punto a punto o multipunto
 \end{itemize}
-
+	
 \vspace{0.4cm}
 \begin{figure}[H]
 \centering
