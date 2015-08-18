@@ -227,7 +227,9 @@ Constru\'ir un prototipo para la RAU2 utilizando como plataforma PCs con placas 
 \end{block}
 
 \pause
-Problema demasiado grande!
+Problema demasiado grande!\\
+\pause
+{\color{blue} Se hace foco en resolver (1)}
 
 \end{frame}
 
@@ -652,23 +654,46 @@ OpenFlow no prev\'e un mecanismo para informar al plano de control direccionamie
 \begin{frame}
 \frametitle{Algoritmo de ruteo} 
 
-\textbf{SPF(Shortest Path First):} Algoritmo del camino m\'as corto. Se utiliza implementaci\'on de algoritmo Dijkstra generalizado para multigrafos dirigidos.
+\textbf{SPF(Shortest Path First):} Algoritmo del camino m\'as corto utilizando el algoritmo Dijkstra generalizado para multigrafos dirigidos\footnote[frame]{\tiny Implementaci\'on basada en "Generalization of dijkstra's algorithm for extraction of the shortest paths in directed multigraphs".}.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.4\textwidth]{imagenes/dijkstra.jpg}
+\includegraphics[width=0.85\textwidth]{imagenes/dijkstraRed.png}
 \end{figure}
 
-
+\pause
 \textbf{CSPF(Constrained Shortest Path First):} Algoritmo SPF con restricciones.
-\begin{itemize}
-\item Mejor camino de \textbf{a} a \textbf{b} pasadndo por \textbf{k} nodos 
-\end{itemize}
 
 \end{frame}
 
 \begin{frame}
-\frametitle{Implementaci\'on} 
+\frametitle{Clasificaci\'on de tr\'afico} 
+
+\begin{itemize}
+\item Se implementa clasificaci\'on de tr\'afico utilizando matching fields OF en los nodos de ingreso a la red
+\item Cada definici\'on de servicio define una FEC que se traduce a un flujo OpenFlow para la clasificaci\'on de tr\'afico
+\end{itemize}
+
+\vspace{0.3cm}
+
+\begin{minipage}{0.45\textwidth}
+
+\begin{figure}[htp]
+\includegraphics[width=1.0\textwidth]{imagenes/rauflowsnap.png}
+\end{figure}
+
+\end{minipage}
+\hfill
+\begin{minipage}{0.54\textwidth}
+Yo aca voy a hablar de clasificacion
+\end{minipage}
+
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{RAUFlow} 
 
 \begin{figure}[H]
 \centering
