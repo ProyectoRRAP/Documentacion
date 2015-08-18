@@ -634,19 +634,19 @@ OpenFlow no prev\'e un mecanismo para informar al plano de control direccionamie
 \section{Implementaci\'on} 
 \frame{\tableofcontents[currentsection]}
 
+%\begin{frame}
+%\frametitle{Implementaci\'on I} 
+%
+%Se implementaron dos componentes:
+%
+%\begin{enumerate}
+%\item RAU-Switch: Dispositivo de red compatible con el protocolo OpenFlow
+%\item RAUFlow: Conjunto de aplicaciones de gesti\'on de redes, implementan plano de control en el prototipo
+%\end{enumerate}
+%\end{frame}
+
 \begin{frame}
-\frametitle{Implementaci\'on I} 
-
-Se implementaron dos componentes:
-
-\begin{enumerate}
-\item RAU-Switch: Dispositivo de red compatible con el protocolo OpenFlow
-\item RAUFlow: Conjunto de aplicaciones de gesti\'on de redes, implementan plano de control en el prototipo
-\end{enumerate}
-\end{frame}
-
-\begin{frame}
-\frametitle{Implementaci\'on II} 
+\frametitle{Implementaci\'on} 
 
 \begin{figure}[H]
 \centering
@@ -669,7 +669,7 @@ Se construye un laboratorio de experimentaci\'on compuesto por 4 nodos RAU-Switc
 \begin{minipage}{0.60\textwidth}
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.81\textwidth]{imagenes/Topologia.png}\hfill
+\includegraphics[width=0.81\textwidth]{imagenes/Topologia.png}
 \end{figure}
 \end{minipage}
 \hfill
@@ -738,24 +738,29 @@ Las principales características de la implementaci\'on son:
 \section{Conclusiones} 
 \frame{\tableofcontents[currentsection]}
 
+%\begin{frame}
+%\frametitle{Conclusiones} 
+%
+%\begin{itemize}
+%\item Se realiz\'o una investigaci\'on en profundidad del estado del arte de las redes definidas por software (SDN) y la plataforma de hardware NetFPGA.
+%\end{itemize}
+%\end{frame}
+
 \begin{frame}
 \frametitle{Conclusiones} 
 
-\begin{itemize}
-\item Se realiz\'o una investigaci\'on en profundidad del estado del arte de las redes definidas por software (SDN) y la plataforma de hardware NetFPGA.
-\end{itemize}
-\end{frame}
+\begin{itemize}[<+->]
 
-\begin{frame}
-\frametitle{Conclusiones} 
+\item Estado del arte en SDN y hardware NetFPGA
 
-Se implement\'o un prototipo de red de backbone utilizando el hardware NetFPGA y el enfoque SDN:
+\item Prototipo de red de backbone utilizando hardware NetFPGA y enfoque SDN:
 
+%Se implement\'o un prototipo de red de backbone utilizando el hardware NetFPGA y el enfoque SDN:
 \pause
 \begin{itemize}[<+->]
-\item \textbf{RAUswitch} Se construy\'o un router de backbone IP/MPLS compatible con el protocolo OpenFlow y OSPF utilizando el hardware NetFPGA
+\item \textbf{RAUswitch} router de backbone IP/MPLS compatible con el protocolo OpenFlow y OSPF utilizando el hardware NetFPGA
 
-\item \textbf{RAUflow} Se implement\'o una aplicaci\'on de control y gesti\'on de red utilizando el enfoque SDN con funcionalidades para la definici\'on de redes privadas virtuales
+\item \textbf{RAUflow} aplicaci\'on de control y gesti\'on de red utilizando el enfoque SDN con funcionalidades para la definici\'on de redes privadas virtuales
 
 \begin{itemize}
 \item Redefinici\'on del concepto de FEC
@@ -763,27 +768,15 @@ Se implement\'o un prototipo de red de backbone utilizando el hardware NetFPGA y
 \item Algoritmo de ruteo din\'amico SPF centralizado
 \end{itemize}
 \end{itemize}
-
-\end{frame}
-
-\begin{frame}
-\frametitle{Conclusiones} 
-
-Se construy\'o un laboratorio de pruebas para la verificaci\'on del prototipo:
-
-\pause
-\begin{itemize}[<+->]
-\item Se ejecutaron pruebas funcionales
-
-\item Se implementaron dos casos de uso:
+\item Laboratorio de experimentaci\'on
 \begin{itemize}
-\item VPN L3 multipunto
-\item VPN L2 punto a punto
+\item VPN L3 Multipunto
+\item VPN L2 Punto a Punto
 \end{itemize}
-
 \end{itemize}
 
 \end{frame}
+
 
 \begin{frame}
 \frametitle{Conclusiones} 
@@ -793,7 +786,7 @@ Se construy\'o un laboratorio de pruebas para la verificaci\'on del prototipo:
 
 \item Se contribuy\'o a la comunidad NetFPGA reportando dos BUGs
 
-\item Se escribió un articulo cient\'ifico el cual fue aceptado en la confenrencia Latin American Network Operations and Management Symposium (LANOMS) 2015
+\item Se escribió un articulo cient\'ifico el cual fue aceptado en la confenrencia Latin American Network Operations and Management Symposium 2015 (LANOMS)
 
 \item Se gener\'o un grupo de trabajo (GT SDNUY) uniendo profesionales del SeCIU, Centro de Capacitación y Desarrollo de ANTEL y del Centro Universitario de la Región Este (CURE) 
 

@@ -4,6 +4,6 @@
 \beamer@sectionintoc {2}{Conceptos preliminares}{18}{0}{2}
 \beamer@sectionintoc {3}{Arquitectura propuesta}{31}{0}{3}
 \beamer@sectionintoc {4}{Implementaci\'on}{48}{0}{4}
-\beamer@sectionintoc {5}{Experimentaci\'on}{51}{0}{5}
-\beamer@sectionintoc {6}{Conclusiones}{56}{0}{6}
-\beamer@sectionintoc {7}{Trabajo a futuro}{73}{0}{7}
+\beamer@sectionintoc {5}{Experimentaci\'on}{50}{0}{5}
+\beamer@sectionintoc {6}{Conclusiones}{55}{0}{6}
+\beamer@sectionintoc {7}{Trabajo a futuro}{71}{0}{7}

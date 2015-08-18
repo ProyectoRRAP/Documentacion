@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014/Debian) (preloaded format=pdflatex 2015.4.17)  17 AUG 2015 19:42
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014/Debian) (preloaded format=pdflatex 2015.4.17)  17 AUG 2015 21:10
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1547,32 +1547,30 @@ LaTeX Info: Redefining \. on input line 2.
 LaTeX Info: Redefining \% on input line 2.
 ) [48
 
-] [49
-
 ]
-<imagenes/rauflowarquitectura.png, id=1432, 2007.5pt x 1149.29375pt>
+<imagenes/rauflowarquitectura.png, id=1405, 2007.5pt x 1149.29375pt>
 File: imagenes/rauflowarquitectura.png Graphic file (type png)
 
 <use imagenes/rauflowarquitectura.png>
 Package pdftex.def Info: imagenes/rauflowarquitectura.png used on input line 65
 6.
 (pdftex.def)             Requested size: 342.2953pt x 195.95607pt.
- [50
+ [49
 
  <./imagenes/rauflowarquitectura.png>] (./presentacion.toc
 LaTeX Info: Redefining \. on input line 2.
 LaTeX Info: Redefining \% on input line 2.
-) [51
+) [50
 
 ]
-<imagenes/Topologia.png, id=1494, 936.49875pt x 740.7675pt>
+<imagenes/Topologia.png, id=1468, 936.49875pt x 740.7675pt>
 File: imagenes/Topologia.png Graphic file (type png)
 
 <use imagenes/Topologia.png>
 Package pdftex.def Info: imagenes/Topologia.png used on input line 683.
 (pdftex.def)             Requested size: 166.35669pt x 131.5804pt.
 
-<imagenes/laboratorio.jpg, id=1495, 963.6pt x 1445.4pt>
+<imagenes/laboratorio.jpg, id=1469, 963.6pt x 1445.4pt>
 File: imagenes/laboratorio.jpg Graphic file (type jpg)
 
 <use imagenes/laboratorio.jpg>
@@ -1582,19 +1580,21 @@ Package pdftex.def Info: imagenes/laboratorio.jpg used on input line 683.
 Overfull \vbox (7.7891pt too high) detected at line 683
  []
 
-[52
+[51
 
- <./imagenes/Topologia.png> <./imagenes/laboratorio.jpg>] [53
+ <./imagenes/Topologia.png> <./imagenes/laboratorio.jpg>] [52
+
+] [53
 
 ] [54
-
-] [55
 
 ]
 (./presentacion.toc
 LaTeX Info: Redefining \. on input line 2.
 LaTeX Info: Redefining \% on input line 2.
-) [56
+) [55
+
+] [56
 
 ] [57
 
@@ -1614,10 +1614,10 @@ LaTeX Info: Redefining \% on input line 2.
 
 ] [65
 
-] [66
-
 ]
-[67
+[66
+
+] [67
 
 ] [68
 
@@ -1625,14 +1625,14 @@ LaTeX Info: Redefining \% on input line 2.
 
 ] [70
 
-] [71
-
-] [72
-
 ] (./presentacion.toc
 LaTeX Info: Redefining \. on input line 2.
 LaTeX Info: Redefining \% on input line 2.
-) [73
+) [71
+
+] [72
+
+] [73
 
 ] [74
 
@@ -1640,20 +1640,16 @@ LaTeX Info: Redefining \% on input line 2.
 
 ] [76
 
-] [77
-
 ]
-[78
+[77
+
+] [78
 
 ] [79
 
 ] [80
 
 ] [81
-
-] [82
-
-] [83
 
 ]
 \tf@nav=\write6
@@ -1665,14 +1661,14 @@ LaTeX Info: Redefining \% on input line 2.
 \tf@snm=\write8
 \openout8 = `presentacion.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 863.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 863.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 856.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 856.
  (./presentacion.aux
 LaTeX Info: Redefining \. on input line 26.
 LaTeX Info: Redefining \% on input line 26.
 )
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 863.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 863.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 856.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 856.
 Package rerunfilecheck Info: File `presentacion.out' has not changed.
 (rerunfilecheck)             Checksum: 9E7C01C0B2306AA4A01791641746FBF8;367.
 
@@ -1683,25 +1679,26 @@ LaTeX Font Warning: Size substitutions with differences
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 863.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 856.
  ) 
 Here is how much of TeX's memory you used:
- 20081 strings out of 493104
- 374177 string characters out of 6136932
+ 20105 strings out of 493104
+ 375195 string characters out of 6136932
  457330 words of memory out of 5000000
- 22842 multiletter control sequences out of 15000+600000
- 16744 words of font info for 61 fonts, out of 8000000 for 9000
+ 22870 multiletter control sequences out of 15000+600000
+ 17038 words of font info for 62 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  56i,16n,62p,392b,928s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss17.pfb></usr/share/texl
 ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb>
-Output written on presentacion.pdf (83 pages, 8474496 bytes).
+mf-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmssbx10.pfb>
+Output written on presentacion.pdf (81 pages, 8485529 bytes).
 PDF statistics:
- 2414 PDF objects out of 2487 (max. 8388607)
- 2250 compressed objects within 23 object streams
- 178 named destinations out of 1000 (max. 500000)
+ 2365 PDF objects out of 2487 (max. 8388607)
+ 2202 compressed objects within 23 object streams
+ 174 named destinations out of 1000 (max. 500000)
  253 words of extra memory for PDF output out of 10000 (max. 10000000)
 
