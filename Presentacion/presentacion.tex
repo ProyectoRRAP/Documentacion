@@ -211,7 +211,7 @@ Constru\'ir un prototipo para la RAU2 utilizando como plataforma PCs con placas 
 \begin{frame}
 \frametitle{Definición del problema II} 
 
-Qu\'e características se esperan del prototipo, ¿cuales son los requerimientos?
+¿Qu\'e características se esperan del prototipo, cu\'ales son los requerimientos?
 
 \pause
 {\color{blue}R: Pensemos en posibles requerimientos sobre la RAU2}
@@ -368,16 +368,20 @@ Soluci\'on basada en el enfoque SDN, ofrece una implementaci\'on est\'andar de l
 \end{minipage}
 \hfill
 \begin{minipage}{0.58\textwidth}
-Todo dispositivo OpenFlow implementa un conjunto de \textbf{Tablas de Flujos}. Mediante esta tabla se configura el plano de datos de una red. Cada entrada de esta tabla se compone de:
+%Todo dispositivo OpenFlow implementa un conjunto de \textbf{Tablas de Flujos}. Mediante esta tabla se configura el plano de datos de una red. Cada entrada de esta tabla se compone de:
+
+Cada dispositivo OpenFlow implementa \\ \textbf{Tablas de Flujos}
 
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.85\textwidth]{imagenes/OpenFlow.png}
 	\end{figure}
-	
-	\textbf{Regla}: Define una clase de tr\'afico utilizando campos en los cabezales de dierentes protocolos (L1 a L4)\\
-	\textbf{Acci\'on}: Procesamiento de cada paquete (Drop, Output, Flood, GoToTable)\\
-	\textbf{Estad\'isticas}: Informaci\'on sobre paquetes procesados por cada regla, etc
+ 
+\begin{enumerate}
+\item \textbf{Regla}: Define una clase de tr\'afico
+\item \textbf{Acci\'on}: Define el procesamiento (Drop, Output, Flood, GoToTable)
+\item \textbf{Estad\'isticas}: Cantidad de paquetes procesados por cada flujo
+\end{enumerate}
 \end{minipage}
 
 \end{frame}
@@ -386,7 +390,7 @@ Todo dispositivo OpenFlow implementa un conjunto de \textbf{Tablas de Flujos}. M
 \frametitle{VPN (Red Privada Virtual)} 
 Extensión de una red privada sobre la infraestructura de una red pública. Nos interesa diferenciarlas de acuerdo a:
 \begin{itemize}
-\item Qu\'e capa OSI virtualizan: L2 o L3
+\item Que capa OSI virtualizan: L2 o L3
 \item Conexi\'on utilizada: punto a punto o multipunto
 \end{itemize}
 	
@@ -644,6 +648,24 @@ OpenFlow no prev\'e un mecanismo para informar al plano de control direccionamie
 %\item RAUFlow: Conjunto de aplicaciones de gesti\'on de redes, implementan plano de control en el prototipo
 %\end{enumerate}
 %\end{frame}
+
+\begin{frame}
+\frametitle{Algoritmo de ruteo} 
+
+\textbf{SPF(Shortest Path First):} Algoritmo del camino m\'as corto. Se utiliza implementaci\'on de algoritmo Dijkstra generalizado para multigrafos dirigidos.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.4\textwidth]{imagenes/dijkstra.jpg}
+\end{figure}
+
+
+\textbf{CSPF(Constrained Shortest Path First):} Algoritmo SPF con restricciones.
+\begin{itemize}
+\item Mejor camino de \textbf{a} a \textbf{b} pasadndo por \textbf{k} nodos 
+\end{itemize}
+
+\end{frame}
 
 \begin{frame}
 \frametitle{Implementaci\'on} 

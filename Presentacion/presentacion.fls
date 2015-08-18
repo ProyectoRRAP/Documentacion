@@ -432,6 +432,9 @@ INPUT ./imagenes/arquitecturapropuesta1.png
 INPUT ./imagenes/arquitecturapropuesta1.png
 INPUT presentacion.toc
 INPUT presentacion.toc
+INPUT imagenes/dijkstra.jpg
+INPUT ./imagenes/dijkstra.jpg
+INPUT ./imagenes/dijkstra.jpg
 INPUT imagenes/rauflowarquitectura.png
 INPUT ./imagenes/rauflowarquitectura.png
 INPUT ./imagenes/rauflowarquitectura.png
