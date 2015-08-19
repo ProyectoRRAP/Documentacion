@@ -454,6 +454,14 @@ INPUT ./imagenes/Topologia.png
 INPUT imagenes/laboratorio.jpg
 INPUT ./imagenes/laboratorio.jpg
 INPUT ./imagenes/laboratorio.jpg
+INPUT imagenes/VPNMultipunto.png
+INPUT ./imagenes/VPNMultipunto.png
+INPUT ./imagenes/VPNMultipunto.png
+INPUT imagenes/VPNPPE1.png
+INPUT ./imagenes/VPNPPE1.png
+INPUT ./imagenes/VPNPPE1.png
+INPUT imagenes/VPNPPE1.png
+INPUT ./imagenes/VPNPPE1.png
 INPUT presentacion.toc
 INPUT presentacion.toc
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmssbx10.tfm

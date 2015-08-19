@@ -5,5 +5,5 @@
 \beamer@sectionintoc {3}{Arquitectura propuesta}{32}{0}{3}
 \beamer@sectionintoc {4}{Implementaci\'on}{49}{0}{4}
 \beamer@sectionintoc {5}{Experimentaci\'on}{54}{0}{5}
-\beamer@sectionintoc {6}{Conclusiones}{59}{0}{6}
-\beamer@sectionintoc {7}{Trabajo a futuro}{75}{0}{7}
+\beamer@sectionintoc {6}{Conclusiones}{63}{0}{6}
+\beamer@sectionintoc {7}{Trabajo a futuro}{79}{0}{7}

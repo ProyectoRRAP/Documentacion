@@ -736,49 +736,99 @@ Se construye un laboratorio de experimentaci\'on compuesto por 4 nodos RAU-Switc
 \begin{frame}
 \frametitle{Experimentaci\'on II} 
 
-Mediante la definici\'on de servicios en la aplicaci\'on RAUFlow, se configuran dos tipos de redes privadas:
+\textbf{Objetivos:}
+\pause
 \begin{enumerate}
-\item VPN L3 multipunto
-\item VPN L2 punto a punto 
+\item Verificar funcionalmente la implementaci\'on del prototipo
+\begin{itemize}
+\item Algoritmo de Ruteo
+\item Algoritmo LDP
+\item Clasificaci\'on de tr\'afico
+\end{itemize}
+\pause
+\item Implementaci\'on de algunos casos de uso representativos para un prototipo de RAU2
+\begin{itemize}
+\item VPN L3
+\item VPN L2
+\end{itemize}
 \end{enumerate}
-
 
 \end{frame}
 
 \begin{frame}
 \frametitle{VPN L3} 
 
-Se configuran dos escenarios:
+Se configuraron dos escenarios diferentes de VPN L3:
 
 \begin{enumerate}
-\item Una organizaci\'on con tres sucursales f\'isicamente separadas
-\item Dos organizaciones con dos sucursales f\'isicamente separadas cada una
+\item E1: Una organizaci\'on con tres sucursales f\'isicamente separadas (VPN Multipunto)
+\item E2: Dos organizaciones con dos sucursales f\'isicamente separadas c/u (VPN Punto a Punto)
 \end{enumerate}
 
 \vspace{0.4cm}
 
-Las principales características de la implementaci\'on son:
+Se crearon los servicios de VPN y se verific\'o:
 \begin{itemize}
-\item Reducci\'on del MTU en 64bits (2 cabezales MPLS)
-\item Clasificaci\'on de tr\'afico basada en campos del cabezal OpenFlow
 \item Aislamiento del espacio de direcciones IP
+\item Correcta clasificaci\'on de tr\'afico
+\item Definici\'on de servicios mediante OF Matching Fields
 \end{itemize}
 
 
 \end{frame}
 
 \begin{frame}
+\frametitle{VPN L3 Escenario 1} 
+
+Se configur\'o una VPN L3 multipunto conectando 3 sucursales f\'isicamente separadas de una misma organizaci\'on.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\textwidth]{imagenes/VPNMultipunto.png}
+\end{figure}
+
+Sobre este escenario se verific\'o:
+\begin{itemize}
+\item Correcto enrutamiento a cada sucursal de la organizaci\'on
+\item Correcta clasificaci\'on de tr\'afico
+\item Definici\'on de servicios mediante OF Matching Fields
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{VPN L3 Escenario 2} 
+
+Se configuraron dos VPN L3 punto a punto conectando para dos organizaciones distintas y con la misma numeraci\'on IP en sus red, dos sucursales f\'isicamente separadas. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\textwidth]{imagenes/VPNPPE1.png}
+\end{figure}
+
+Sobre este escenario se verific\'o:
+\begin{itemize}
+\item Aislamiento del espacio de direcciones IP
+\end{itemize}
+
+
+\end{frame}
+
+
+\begin{frame}
 \frametitle{VPN L2} 
 
-Se configuran un \'unico escenario: Una organizaci\'on con dos sucursales f\'isicamente separadas.
+Se configur\'o una VPN L2 punto a punto para una organizaci\'on con dos sucursales f\'isicamente separadas.
 
-\vspace{0.4cm}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\textwidth]{imagenes/VPNPPE1.png}
+\end{figure}
 
-Las principales características de la implementaci\'on son:
+Sobre este escenario se verific\'o:
 \begin{itemize}
-\item Reducci\'on del MTU en 64bits (2 cabezales MPLS)
-\item Soporte para un conjunto de 43 ethertypes diferentes
-\item Se probo diferentes protocolos como ARP, IPv4 IPv6 e IP con tags de VLAN
+\item Soporte para un conjunto de 43 ethertypes diferentes independiente de la definici\'on del servicio
+\item En particular los protocolos ARP, IPv4 IPv6 e IP con tags de VLAN
 \end{itemize}
 
 
