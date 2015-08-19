@@ -353,7 +353,7 @@ Soluci\'on basada en el enfoque SDN, ofrece una implementaci\'on est\'andar de l
 \begin{itemize}
 \item Implementaci\'on en Software que se ejecuta en hardware convencional (x86)
 \item Ofrece una API de alto nivel para controlar los dispositivos de una Red (Interfaz Norte)
-\item Cada operaci\'on se traduce a reglas OpenFlow e instaladas en el dispositivo a trav\'es de la Interfaz Sur (protocolo OpenFlow)
+\item Cada operaci\'on se traduce a reglas OpenFlow y comunicadas al dispositivo a trav\'es de la Interfaz Sur (protocolo OpenFlow)
 \end{itemize}
 
 \end{minipage}
@@ -416,8 +416,8 @@ Arquitectura:\\
 \begin{itemize}
 \item Label: Etiqueta MPLS (20bits)
 \item Acci\'on: Pop, Push y Swap
-\item LSP: Camino de conmutaci\'on de etiquetas
 \item FEC: Clase de equivalencia de tr\'afico
+\item LSP: Camino de conmutaci\'on de etiquetas
 \item LDP: Protocolo de distribución de etiquetas
 \end{itemize}
 
@@ -435,8 +435,8 @@ Arquitectura:\\
 %	\begin{block}{Hardware}
 		Hardware: Placa PCI-E que cuenta con: 
 		\begin{enumerate}
-			\item Chip programable FPGA 
-			\item 15 GB RAM
+			\item Chip reconfigurable FPGA 
+			\item 27Mb SRAM + 288MBytes RLDRAM
 			\item 4 Puertos 10-Gigabit SFP+ Ethernet
 		\end{enumerate}
 		
@@ -734,28 +734,6 @@ Se construye un laboratorio de experimentaci\'on compuesto por 4 nodos RAU-Switc
 \end{frame}
 
 \begin{frame}
-\frametitle{Experimentaci\'on II} 
-
-\textbf{Objetivos:}
-\pause
-\begin{enumerate}
-\item Verificar funcionalmente la implementaci\'on del prototipo
-\begin{itemize}
-\item Algoritmo de Ruteo
-\item Algoritmo LDP
-\item Clasificaci\'on de tr\'afico
-\end{itemize}
-\pause
-\item Implementaci\'on de algunos casos de uso representativos para un prototipo de RAU2
-\begin{itemize}
-\item VPN L3
-\item VPN L2
-\end{itemize}
-\end{enumerate}
-
-\end{frame}
-
-\begin{frame}
 \frametitle{VPN L3} 
 
 Se configuraron dos escenarios diferentes de VPN L3:
@@ -848,42 +826,29 @@ Sobre este escenario se verific\'o:
 %\end{frame}
 
 \begin{frame}
-\frametitle{Conclusiones} 
+\frametitle{Conclusiones I} 
 
+Se alcanzaron los objetivos planteados al inicio del proyecto: 
 \begin{itemize}[<+->]
 
-\item Estado del arte en SDN y hardware NetFPGA
+\item Se explor\'o la aplicabilidad del enfoque SDN y el hardware NetFPGA para la construcci\'on de un prototipo para la RAU2
 
-\item Prototipo de red de backbone utilizando hardware NetFPGA y enfoque SDN:
+\item Se propuso una arquitectura h\'ibrida entre el paradigma de redes actual y el enfoque OpenFlow/SDN
 
-%Se implement\'o un prototipo de red de backbone utilizando el hardware NetFPGA y el enfoque SDN:
-\pause
-\begin{itemize}[<+->]
-\item \textbf{RAUswitch} router de backbone IP/MPLS compatible con el protocolo OpenFlow y OSPF utilizando el hardware NetFPGA
+\item Se implement\'o de prototipo de aplicaci\'on de control y gesti\'on de red utilizando SDN (RAUFlow) 
 
-\item \textbf{RAUflow} aplicaci\'on de control y gesti\'on de red utilizando el enfoque SDN con funcionalidades para la definici\'on de redes privadas virtuales
+\item Se construy\'o un laboratorio de pruebas e implement\'o un par de casos de uso representativos para la RAU2
 
-\begin{itemize}
-\item Redefinici\'on del concepto de FEC
-\item Clasificaci\'on de tr\'afico mediante protocolo OpenFlow 1.3.1
-\item Algoritmo de ruteo din\'amico SPF centralizado
 \end{itemize}
-\end{itemize}
-\item Laboratorio de experimentaci\'on
-\begin{itemize}
-\item VPN L3 Multipunto
-\item VPN L2 Punto a Punto
-\end{itemize}
-\end{itemize}
-
 \end{frame}
 
 
 \begin{frame}
-\frametitle{Conclusiones} 
+\frametitle{Conclusiones II} 
 
+Se obtuvieron resultados interesantes:
 \begin{itemize}[<+->]
-\item Se confeccion\'o un manual para la construcci\'on del dispositivo RAUswitch
+\item Se confeccion\'o un manual para la construcci\'on del dispositivo RAU-Switch
 
 \item Se contribuy\'o a la comunidad NetFPGA reportando dos BUGs
 

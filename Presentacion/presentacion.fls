@@ -464,7 +464,6 @@ INPUT imagenes/VPNPPE1.png
 INPUT ./imagenes/VPNPPE1.png
 INPUT presentacion.toc
 INPUT presentacion.toc
-INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmssbx10.tfm
 INPUT presentacion.toc
 INPUT presentacion.toc
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmss17.tfm
@@ -478,5 +477,4 @@ INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss17.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb
-INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb
