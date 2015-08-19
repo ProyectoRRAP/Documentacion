@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014/Debian) (preloaded format=pdflatex 2015.4.17)  19 AUG 2015 16:04
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014/Debian) (preloaded format=pdflatex 2015.4.17)  19 AUG 2015 16:20
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1638,17 +1638,19 @@ Package pdftex.def Info: imagenes/VPNPPE1.png used on input line 793.
  [58
 
  <./imagenes/VPNPPE1.png>]
-File: imagenes/VPNPPE1.png Graphic file (type png)
+<imagenes/VPNL2.png, id=1691, 782.925pt x 205.76875pt>
+File: imagenes/VPNL2.png Graphic file (type png)
 
-<use imagenes/VPNPPE1.png>
-Package pdftex.def Info: imagenes/VPNPPE1.png used on input line 813.
-(pdftex.def)             Requested size: 171.14764pt x 77.11859pt.
+<use imagenes/VPNL2.png>
+Package pdftex.def Info: imagenes/VPNL2.png used on input line 813.
+(pdftex.def)             Requested size: 171.14764pt x 44.9804pt.
  [59
 
-] (./presentacion.toc
+ <./imagenes/VPNL2.png>] (./presentacion.toc
 LaTeX Info: Redefining \. on input line 2.
 LaTeX Info: Redefining \% on input line 2.
-) [60
+)
+[60
 
 ] [61
 
@@ -1656,8 +1658,7 @@ LaTeX Info: Redefining \% on input line 2.
 
 ] [63
 
-]
-[64
+] [64
 
 ] [65
 
@@ -1674,7 +1675,8 @@ LaTeX Info: Redefining \% on input line 2.
 
 ] [70
 
-] [71
+]
+[71
 
 ] [72
 
@@ -1682,8 +1684,7 @@ LaTeX Info: Redefining \% on input line 2.
 
 ] [74
 
-]
-[75
+] [75
 
 ] [76
 
@@ -1724,10 +1725,10 @@ LaTeX Warning: There were multiply-defined labels.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 922.
  ) 
 Here is how much of TeX's memory you used:
- 20071 strings out of 493104
- 373817 string characters out of 6136932
+ 20076 strings out of 493104
+ 373917 string characters out of 6136932
  457330 words of memory out of 5000000
- 22835 multiletter control sequences out of 15000+600000
+ 22839 multiletter control sequences out of 15000+600000
  16744 words of font info for 61 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  56i,16n,62p,392b,928s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1736,10 +1737,10 @@ r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss17.pfb></usr/share/texl
 ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive/tex
 mf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb>
-Output written on presentacion.pdf (79 pages, 8734219 bytes).
+Output written on presentacion.pdf (79 pages, 8764959 bytes).
 PDF statistics:
- 2316 PDF objects out of 2487 (max. 8388607)
+ 2318 PDF objects out of 2487 (max. 8388607)
  2148 compressed objects within 22 object streams
  170 named destinations out of 1000 (max. 500000)
- 272 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 277 words of extra memory for PDF output out of 10000 (max. 10000000)
 
