@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014/Debian) (preloaded format=pdflatex 2015.4.17)  18 AUG 2015 23:31
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014/Debian) (preloaded format=pdflatex 2015.4.17)  19 AUG 2015 16:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1574,16 +1574,16 @@ File: imagenes/rauflowsnap.png Graphic file (type png)
 Package pdftex.def Info: imagenes/rauflowsnap.png used on input line 697.
 (pdftex.def)             Requested size: 136.91603pt x 115.59343pt.
 
-<imagenes/clast.png, id=1489, 1443.3925pt x 773.89125pt>
-File: imagenes/clast.png Graphic file (type png)
+<imagenes/clasificaciontra.png, id=1489, 926.46124pt x 426.59375pt>
+File: imagenes/clasificaciontra.png Graphic file (type png)
 
-<use imagenes/clast.png>
-Package pdftex.def Info: imagenes/clast.png used on input line 697.
-(pdftex.def)             Requested size: 181.75644pt x 97.44467pt.
+<use imagenes/clasificaciontra.png>
+Package pdftex.def Info: imagenes/clasificaciontra.png used on input line 697.
+(pdftex.def)             Requested size: 201.95297pt x 92.98517pt.
  [52
 
- <./imagenes/rauflowsnap.png> <./imagenes/clast.png>] <imagenes/rauflowarquitec
-tura.png, id=1517, 2007.5pt x 1149.29375pt>
+ <./imagenes/rauflowsnap.png> <./imagenes/clasificaciontra.png>]
+<imagenes/rauflowarquitectura.png, id=1517, 2007.5pt x 1149.29375pt>
 File: imagenes/rauflowarquitectura.png Graphic file (type png)
 
 <use imagenes/rauflowarquitectura.png>
@@ -1629,12 +1629,12 @@ Package pdftex.def Info: imagenes/VPNMultipunto.png used on input line 775.
  [57
 
  <./imagenes/VPNMultipunto.png>]
-<imagenes/VPNPPE1.png, id=1664, 813.0375pt x 353.32pt>
+<imagenes/VPNPPE1.png, id=1664, 813.0375pt x 366.36874pt>
 File: imagenes/VPNPPE1.png Graphic file (type png)
 
 <use imagenes/VPNPPE1.png>
 Package pdftex.def Info: imagenes/VPNPPE1.png used on input line 793.
-(pdftex.def)             Requested size: 171.14764pt x 74.3719pt.
+(pdftex.def)             Requested size: 171.14764pt x 77.11859pt.
  [58
 
  <./imagenes/VPNPPE1.png>]
@@ -1642,7 +1642,7 @@ File: imagenes/VPNPPE1.png Graphic file (type png)
 
 <use imagenes/VPNPPE1.png>
 Package pdftex.def Info: imagenes/VPNPPE1.png used on input line 813.
-(pdftex.def)             Requested size: 171.14764pt x 74.3719pt.
+(pdftex.def)             Requested size: 171.14764pt x 77.11859pt.
  [59
 
 ] (./presentacion.toc
@@ -1725,7 +1725,7 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 922.
  ) 
 Here is how much of TeX's memory you used:
  20071 strings out of 493104
- 373762 string characters out of 6136932
+ 373817 string characters out of 6136932
  457330 words of memory out of 5000000
  22835 multiletter control sequences out of 15000+600000
  16744 words of font info for 61 fonts, out of 8000000 for 9000
@@ -1736,7 +1736,7 @@ r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss17.pfb></usr/share/texl
 ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive/tex
 mf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb>
-Output written on presentacion.pdf (79 pages, 8790514 bytes).
+Output written on presentacion.pdf (79 pages, 8734219 bytes).
 PDF statistics:
  2316 PDF objects out of 2487 (max. 8388607)
  2148 compressed objects within 22 object streams
