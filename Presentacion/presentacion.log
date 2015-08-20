@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014/Debian) (preloaded format=pdflatex 2015.4.17)  20 AUG 2015 09:24
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014/Debian) (preloaded format=pdflatex 2015.4.17)  20 AUG 2015 10:13
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1692,8 +1692,6 @@ LaTeX Info: Redefining \% on input line 2.
 
 ] [78
 
-] [79
-
 ]
 \tf@nav=\write6
 \openout6 = `presentacion.nav'.
@@ -1725,8 +1723,8 @@ LaTeX Warning: There were multiply-defined labels.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 942.
  ) 
 Here is how much of TeX's memory you used:
- 20107 strings out of 493104
- 374926 string characters out of 6136932
+ 20105 strings out of 493104
+ 374907 string characters out of 6136932
  457330 words of memory out of 5000000
  22870 multiletter control sequences out of 15000+600000
  16744 words of font info for 61 fonts, out of 8000000 for 9000
@@ -1737,10 +1735,10 @@ r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss17.pfb></usr/share/texl
 ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive/tex
 mf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb>
-Output written on presentacion.pdf (79 pages, 8768929 bytes).
+Output written on presentacion.pdf (78 pages, 8766633 bytes).
 PDF statistics:
- 2320 PDF objects out of 2487 (max. 8388607)
- 2149 compressed objects within 22 object streams
- 170 named destinations out of 1000 (max. 500000)
+ 2292 PDF objects out of 2487 (max. 8388607)
+ 2122 compressed objects within 22 object streams
+ 168 named destinations out of 1000 (max. 500000)
  283 words of extra memory for PDF output out of 10000 (max. 10000000)
 
