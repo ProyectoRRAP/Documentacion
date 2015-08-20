@@ -293,7 +293,7 @@ de control controla varios dispositivos.
 
 \begin{itemize}
 \item Tres capas: (1) capa de aplicaciones, (2) capa de control y (3) capa de infraestructura
-\item Dos interfaces de comunicaci\'on: interfaz sur e interfaz norte
+\item Dos interfaces de comunicaci\'on: Interfaz Sur e Interfaz Norte
 \end{itemize}
  
 
@@ -389,7 +389,7 @@ Cada dispositivo OpenFlow implementa \\ \textbf{Tablas de Flujos}
 
 \begin{frame}
 \frametitle{VPN (Red Privada Virtual)} 
-Extensión de una red privada sobre la infraestructura de una red pública. Nos interesa diferenciarlas de acuerdo a:
+Extensión de una red privada sobre la infraestructura de una red pública, como por ejemplo Internet. Nos interesa diferenciarlas de acuerdo a:
 \begin{itemize}
 \item Que capa OSI virtualizan: L2 o L3
 \item Conexi\'on utilizada: punto a punto o multipunto
@@ -413,11 +413,11 @@ MPLS (Multiprotocol Label Switching) es la soluci\'on de facto para la implement
 Arquitectura:\\
 
 \begin{itemize}
+\item FEC: Clase de equivalencia de tr\'afico
 \item Label: Etiqueta MPLS (20bits)
 \item Acci\'on: Pop, Push y Swap
 \item LSP: Camino de conmutaci\'on de etiquetas
 \item LDP: Protocolo de distribución de etiquetas
-\item FEC: Clase de equivalencia de tr\'afico
 \end{itemize}
 
 \end{frame}
@@ -570,7 +570,7 @@ Se identifican dos alternativas utilizando hardware NetFPGA:
 \hline
 Velocidad de procesamiento & Prototipaci\'on \'agil \\
 Utilizaci\'on del hardaware &  Desarrollo de otras l\'ineas \\
-Conocimiento espec\'ifico &  No hay que utilizar HDLs \\
+Conocimiento espec\'ifico en HDLs &  No hay que utilizar HDLs \\
 Licencias full &  Licencias econ\'omicas \\
 
 \hline  
@@ -853,6 +853,8 @@ Se alcanzaron los objetivos planteados al inicio del proyecto:
 
 \item Se propuso una arquitectura h\'ibrida entre el paradigma de redes actual y el enfoque OpenFlow/SDN
 
+\item Se construy\'o un Router IP/MPLS libre y de c\'odigo abierto sin la complejidad de la implementaci\'on de MPLS-Linux
+
 \item Se implement\'o un prototipo de aplicaci\'on de control y gesti\'on de red utilizando SDN (RAUFlow) 
 
 \item Se construy\'o un laboratorio de pruebas e implement\'o un par de casos de uso representativos para la RAU2
@@ -901,7 +903,7 @@ Se identifican las siguientes l\'ineas de trabajo a futuro:
 
 \item Extender el algoritmo de ruteo SPF para implementar un CSPF
 
-\item Incorporar en RAUFlow la capacidad de soportar m\'ultiples caminos para un mismo Servicio,  balanceo de carga, QoS e Ingenier\'ia de tr\'afico
+\item Incorporar en RAUFlow la capacidad de soportar m\'ultiples caminos para un mismo Servicio,  balanceo de carga, QoS e Ingenier\'ia de tr\'afico (evaluando las limitantes de Open vSwitch)
 
 \end{itemize}
 
