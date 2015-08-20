@@ -175,8 +175,7 @@ Remplazo de la actual red académica, es una red avanzada de altas prestaciones 
 \frametitle{Motivaci\'on III} 
 
 \begin{block}{Hardware comercial}
-Los equipos de red de backbone comerciales como HP, CISCO, Juniper son costos y generalmente de naturaleza cerrada. Las funcionalidades del hardware se restringen a las funcionalidades expuesta por
-una API propietaria. 
+Los equipos de red de backbone comerciales como HP, CISCO, Juniper son costosos y generalmente de naturaleza cerrada. Las funcionalidades del hardware se restringen a las funcionalidades expuestas por una API propietaria. 
 \end{block}
 
 \begin{figure}[htp]
@@ -202,7 +201,7 @@ Constru\'ir un prototipo para la RAU2 utilizando como plataforma PCs con placas 
 \pause
 \item Prototipo de aplicaci\'on de gesti\'on de red utilizando SDN y el hardware NetFPGA (orientado a  los requerimientos de la RAU2)
 \pause
-\item Diseño e implementaci\'on de pruebas de verificaci\'on
+\item Diseño e implementaci\'on de pruebas funcionales
 \end{itemize}
 \end{block}
 
@@ -257,7 +256,7 @@ Problema demasiado grande!\\
 %La inteligencia y estado de la red se encuentra distribuida en los mismos dispositivos que reenvian la informacion
 
 \begin{block}{Plano de control}
-Es donde reside la inteligencia de la red, es la l\'ogica que controla el el comportamiento de reenv\'io. Ejs : OSPF, RIP,Firewalls
+Es donde reside la inteligencia de la red, es la l\'ogica que controla el comportamiento de reenv\'io. Ejs : OSPF, RIP,Firewalls
 %El cerebro de la red%
 \end{block}
 
@@ -407,7 +406,7 @@ Extensión de una red privada sobre la infraestructura de una red pública. Nos 
 \begin{frame}
 \frametitle{MPLS} 
 
-MPLS (Multilabel Protocol Switchig) es la soluci\'on de facto para la implementaci\'on de servicios de VPN L2 y L3. Permite transportar tr\'afico mediante la conmutaci\'on de etiquetas.\\
+MPLS (Multiprotocol Label Switching) es la soluci\'on de facto para la implementaci\'on de servicios de VPN L2 y L3. Permite transportar tr\'afico mediante la conmutaci\'on de etiquetas.\\
 
 \vspace{0.4cm}
 \pause
@@ -416,9 +415,9 @@ Arquitectura:\\
 \begin{itemize}
 \item Label: Etiqueta MPLS (20bits)
 \item Acci\'on: Pop, Push y Swap
-\item FEC: Clase de equivalencia de tr\'afico
 \item LSP: Camino de conmutaci\'on de etiquetas
 \item LDP: Protocolo de distribución de etiquetas
+\item FEC: Clase de equivalencia de tr\'afico
 \end{itemize}
 
 \end{frame}
@@ -502,7 +501,7 @@ OpenFlow Switch & Stanford University  \\
 \item ¿C\'omo implementamos Redes Privadas Virtuales?
 
 \pause
-{\color{blue}R: Utilizando MPLS (Multilabel Protocol Switch)}
+{\color{blue}R: Utilizando MPLS (Multiprotocol Label Switching)}
 
 \pause
 \vspace{0.5cm}
@@ -569,8 +568,8 @@ Se identifican dos alternativas utilizando hardware NetFPGA:
 \hline
 \multicolumn{1}{|l|}{(1) OpenFlow } & \multicolumn{1}{l|}{(2) ReferenceNIC y OvS } \\
 \hline
-Velocidad de procesamiento & Prototipaci\'on agil \\
-Utilizaci\'on del hardaware &  Tiempo libre para investigaci\'on \\
+Velocidad de procesamiento & Prototipaci\'on \'agil \\
+Utilizaci\'on del hardaware &  Desarrollo de otras l\'ineas \\
 Conocimiento espec\'ifico &  No hay que utilizar HDLs \\
 Licencias full &  Licencias econ\'omicas \\
 
@@ -591,7 +590,7 @@ Utilizamos Ryu como software de control SDN
 \begin{itemize}
 \item Compatible con OF hasta v1.4
 \item Acad\'emico, sencillo, liviano
-\item Libre y Open Source
+\item Software libre y gratuito
 \end{itemize}
 
 \begin{figure}[H]
@@ -613,16 +612,16 @@ Utilizamos Ryu como software de control SDN
 
 \end{frame}
 
-\begin{frame}
-\frametitle{Agente SNMP} 
-
-\textbf{Agente SNMP} \\
-OpenFlow no prev\'e un mecanismo para informar al plano de control direccionamiento IP de un puerto en un dispositivo. \\
-
-\vspace{0.5cm}
-\textbf{Soluci\'on:}  Utilizamos un agente SNMP en cada nodo de la red para obtener mapeo entre puertos OF y direcciones IP
-
-\end{frame}
+%\begin{frame}
+%\frametitle{Agente SNMP} 
+%
+%\textbf{Agente SNMP} \\
+%OpenFlow no prev\'e un mecanismo para informar al plano de control direccionamiento IP de un puerto en un dispositivo. \\
+%
+%\vspace{0.5cm}
+%\textbf{Soluci\'on:}  Utilizamos un agente SNMP en cada nodo de la red para obtener mapeo entre puertos OF y direcciones IP
+%
+%\end{frame}
 
 \begin{frame}
 \frametitle{Arquitectura Propuesta III} 
@@ -733,26 +732,45 @@ Se construye un laboratorio de experimentaci\'on compuesto por 4 nodos RAU-Switc
 
 \end{frame}
 
+%\begin{frame}
+%\frametitle{VPN L3} 
+%
+%Se configuraron dos escenarios diferentes de VPN L3:
+%
+%\begin{enumerate}
+%\item E1: Una organizaci\'on con tres sucursales f\'isicamente separadas (VPN Multipunto)
+%\item E2: Dos organizaciones con dos sucursales f\'isicamente separadas (VPN Punto a Punto)
+%\end{enumerate}
+%
+%\vspace{0.4cm}
+%
+%Se crearon los servicios de VPN y se verific\'o:
+%\begin{itemize}
+%\item Aislamiento del espacio de direcciones IP
+%\item Correcta clasificaci\'on de tr\'afico
+%\item Definici\'on de servicios mediante OF Matching Fields
+%\end{itemize}
+%
+%
+%\end{frame}
+
 \begin{frame}
-\frametitle{VPN L3} 
+\frametitle{Experimentaci\'on II} 
 
-Se configuraron dos escenarios diferentes de VPN L3:
-
+\textbf{Objetivos:}
 \begin{enumerate}
-\item E1: Una organizaci\'on con tres sucursales f\'isicamente separadas (VPN Multipunto)
-\item E2: Dos organizaciones con dos sucursales f\'isicamente separadas c/u (VPN Punto a Punto)
-\end{enumerate}
-
-\vspace{0.4cm}
-
-Se crearon los servicios de VPN y se verific\'o:
+\item Comprobar funcionalmente la implementaci\'on realizada:
 \begin{itemize}
-\item Aislamiento del espacio de direcciones IP
-\item Correcta clasificaci\'on de tr\'afico
-\item Definici\'on de servicios mediante OF Matching Fields
+\item Algoritmo de ruteo
+\item Algoritmo LDP
+\item Clasificaci\'on de tr\'afico
 \end{itemize}
-
-
+\item Validar la aplicabilidad del enfoque SDN en la construcci\'on de un prototipo para la RAU2:
+\begin{itemize}
+\item VPN L3
+\item VPN L2
+\end{itemize}
+\end{enumerate}
 \end{frame}
 
 \begin{frame}
@@ -835,7 +853,7 @@ Se alcanzaron los objetivos planteados al inicio del proyecto:
 
 \item Se propuso una arquitectura h\'ibrida entre el paradigma de redes actual y el enfoque OpenFlow/SDN
 
-\item Se implement\'o de prototipo de aplicaci\'on de control y gesti\'on de red utilizando SDN (RAUFlow) 
+\item Se implement\'o un prototipo de aplicaci\'on de control y gesti\'on de red utilizando SDN (RAUFlow) 
 
 \item Se construy\'o un laboratorio de pruebas e implement\'o un par de casos de uso representativos para la RAU2
 
@@ -850,11 +868,11 @@ Se obtuvieron resultados interesantes:
 \begin{itemize}[<+->]
 \item Se confeccion\'o un manual para la construcci\'on del dispositivo RAU-Switch
 
-\item Se contribuy\'o a la comunidad NetFPGA reportando dos BUGs
+\item Se contribuy\'o a la comunidad NetFPGA reportando dos errores
 
-\item Se escribió un articulo cient\'ifico el cual fue aceptado en la confenrencia Latin American Network Operations and Management Symposium 2015 (LANOMS)
+\item Se escribió un articulo cient\'ifico el cual fue aceptado en la conferencia Latin American Network Operations and Management Symposium 2015 (LANOMS)
 
-\item Se gener\'o un grupo de trabajo (GT SDNUY) uniendo profesionales del SeCIU, Centro de Capacitación y Desarrollo de ANTEL y del Centro Universitario de la Región Este (CURE) 
+\item Se gener\'o un grupo de trabajo (GT SDNUY) uniendo profesionales del SeCIU, del Centro de Capacitación y Desarrollo de ANTEL y del Centro Universitario de la Región Este (CURE) 
 
 \end{itemize}
 
